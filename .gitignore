@@ -1,0 +1,33 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+
+# --- Virtual environments ---
+.venv/
+venv/
+env/
+
+# --- Secrets / local config ---
+.env
+.env.*
+!.env.example
+
+# --- Editors / OS ---
+.vscode/
+.idea/
+Thumbs.db
+desktop.ini
+
+# NOTE: data/ is deliberately NOT ignored. phase_1_execution.md Step 5 specifies that the
+# seeded generator output (including data/_ground_truth/evidence_ledger.json) is committed,
+# so the dataset the pipeline and Phase 11 evaluation run against is reproducible from the repo.
+
+# --- Markdown documentation stays local ---
+# Per the project owner: all markdown docs (MASTER_PLAN, decisions_and_progress,
+# learning_guide, every phase_<N>_execution.md) are personal reference material and are not
+# pushed. README.md is the one exception — it is the repo's front page.
+*.md
+!README.md

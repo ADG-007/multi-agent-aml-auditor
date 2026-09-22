@@ -1,0 +1,22 @@
+# AML Auditor — Python dependencies (pip + requirements.txt, per phase_1_execution.md Step 1).
+# Unpinned during Phase 1; pin with `pip freeze` once the generator stack is confirmed working.
+
+# --- Schemas / core data ---
+pydantic          # all domain + stage I/O schemas (src/schemas/)
+numpy             # numeric helpers in the generators
+pandas            # tabular handling of transaction history
+
+# --- Synthetic data generation ---
+faker             # en_IN + foreign-locale identities (customers, KYC narratives, counterparties)
+networkx          # entity graph (accounts/devices/IPs/addresses/counterparties) -> data/graph.graphml
+
+# --- Documents & imaging (Stage 1 inputs) ---
+pillow            # ID document image rendering + visual tampering of the forged subset
+reportlab         # PDF/vector-quality document layout for ID templates
+pytesseract       # OCR wrapper; REQUIRES the Tesseract OS binary installed separately
+
+# --- Retrieval (Stage 6 rulebook RAG) ---
+chromadb          # vector store for rulebook clause embeddings -> data/rulebook/
+
+# --- LLM abstraction (src/llm/, used by Stages 3, 6, 7 in later phases) ---
+langchain         # unified chat-model interface + with_structured_output()
