@@ -1,0 +1,202 @@
+[
+  {
+    "clause_id": "STRUCT-001",
+    "title": "Cash transaction reporting threshold and sub-threshold structuring",
+    "text": "All cash transactions of a value exceeding ten lakh rupees, or their equivalent in foreign currency, must be reported to the Financial Intelligence Unit. Deposits deliberately kept below this ceiling in order to avoid the reporting obligation constitute structuring and are reportable as suspicious irrespective of the individual amounts involved. Activity concentrated in the band immediately beneath the threshold is to be treated as an indicator warranting examination, not as compliant conduct.",
+    "category": "STRUCTURING",
+    "sources": [
+      "PMLA (Maintenance of Records) Rules, 2005 - Rule 3(1)(A)",
+      "FATF Recommendation 20 (Reporting of suspicious transactions)"
+    ],
+    "metadata": {
+      "threshold_inr": 1000000,
+      "near_threshold_pct": 0.9
+    }
+  },
+  {
+    "clause_id": "STRUCT-002",
+    "title": "Series of integrally connected cash transactions",
+    "text": "Where a series of cash transactions is integrally connected to one another and the aggregate value within a calendar month exceeds ten lakh rupees, the series is to be treated as a single transaction for reporting purposes. Connectedness is assessed on the facts, including proximity in time, common counterparties, common handling and the absence of an independent commercial rationale for splitting the value.",
+    "category": "STRUCTURING",
+    "sources": [
+      "PMLA (Maintenance of Records) Rules, 2005 - Rule 3(1)(B)",
+      "FIU-IND Cash Transaction Report filing guidance"
+    ],
+    "metadata": {}
+  },
+  {
+    "clause_id": "STRUCT-003",
+    "title": "Sudden surge in account turnover",
+    "text": "A marked increase in the volume or value of transactions passing through an account, when set against that account's own established pattern and the customer's declared profile, requires examination. A surge that cannot be explained by a change in the customer's stated circumstances is an indicator of the account being used as a conduit rather than for the purpose for which it was opened.",
+    "category": "STRUCTURING",
+    "sources": [
+      "RBI Master Direction on KYC - transaction monitoring requirements",
+      "FATF Recommendation 20"
+    ],
+    "metadata": {}
+  },
+  {
+    "clause_id": "KYC-001",
+    "title": "Customer due diligence and risk categorisation",
+    "text": "Regulated entities must identify every customer, verify that identity using independent and reliable documents, understand the purpose and intended nature of the relationship, and assign a risk categorisation of low, medium or high. The categorisation must be reviewed when the customer's circumstances or account behaviour change materially. Due diligence is a continuing obligation, not a one-time step completed at account opening.",
+    "category": "KYC_CDD",
+    "sources": [
+      "RBI Master Direction on Know Your Customer, 2016 (as amended)",
+      "FATF Recommendation 10 (Customer due diligence)"
+    ],
+    "metadata": {}
+  },
+  {
+    "clause_id": "KYC-002",
+    "title": "Inconsistency between declared profile and observed activity",
+    "text": "Transactions inconsistent with a customer's declared occupation, declared income or stated source of funds must be examined, and the rationale for the activity established and recorded. Where the customer cannot satisfactorily explain activity materially exceeding the declared profile, or where the stated purpose of the account excludes the activity actually observed, the relationship must be escalated for suspicious transaction reporting consideration.",
+    "category": "KYC_CDD",
+    "sources": [
+      "RBI Master Direction on KYC - ongoing due diligence",
+      "FATF Recommendation 10"
+    ],
+    "metadata": {}
+  },
+  {
+    "clause_id": "KYC-003",
+    "title": "Periodic updation and change in customer profile",
+    "text": "Customer records must be updated periodically, at intervals determined by the assigned risk category, and whenever the entity becomes aware of a change in the customer's identity, address, occupation or beneficial ownership. A profile updated to state materially different circumstances requires the account's existing activity to be re-assessed against the revised profile rather than the superseded one.",
+    "category": "KYC_CDD",
+    "sources": [
+      "RBI Master Direction on KYC - periodic updation requirements"
+    ],
+    "metadata": {}
+  },
+  {
+    "clause_id": "SANC-001",
+    "title": "Designated persons and entities under Section 51A",
+    "text": "Funds, financial assets and economic resources held by or on behalf of an individual or entity designated under Section 51A must be frozen without delay and without prior notice to the party. No funds may be made available, directly or indirectly, for the benefit of a designated party. The obligation arises on designation and does not depend on a prior judicial finding against the party.",
+    "category": "SANCTIONS",
+    "sources": [
+      "Unlawful Activities (Prevention) Act, 1967 - Section 51A",
+      "UN Security Council Consolidated List (1267/1989 Committee)",
+      "FATF Recommendation 6 (Targeted financial sanctions - terrorism)"
+    ],
+    "metadata": {}
+  },
+  {
+    "clause_id": "SANC-002",
+    "title": "Name screening, aliases and match resolution",
+    "text": "Customers and counterparties must be screened against the designated lists at onboarding and whenever the lists are updated. Screening must account for known aliases, alternative transliterations and name order variation. A potential match must be resolved against corroborating identifiers such as date of birth, identification number or address before it is discounted; a match discounted on name alone is not a resolved match.",
+    "category": "SANCTIONS",
+    "sources": [
+      "FATF Recommendation 6",
+      "RBI Master Direction on KYC - screening against designated lists"
+    ],
+    "metadata": {}
+  },
+  {
+    "clause_id": "SANC-003",
+    "title": "Reporting obligations on a positive designation match",
+    "text": "A confirmed match against a designated party must be reported to the designated authority and to the Financial Intelligence Unit immediately, and the account must not be operated pending instruction. Attempted transactions by or on behalf of a designated party are themselves reportable, whether or not the transaction was completed.",
+    "category": "SANCTIONS",
+    "sources": [
+      "UAPA Section 51A read with the relevant MHA procedure",
+      "FATF Recommendation 7 (Targeted financial sanctions - proliferation)"
+    ],
+    "metadata": {}
+  },
+  {
+    "clause_id": "NET-001",
+    "title": "Beneficial ownership and control",
+    "text": "The natural person who ultimately owns or controls a customer, or on whose behalf a transaction is conducted, must be identified and verified. Where accounts in different names are in substance controlled by one person, the relationship must be assessed as a whole. Nominee arrangements that obscure the controlling person are a higher-risk indicator requiring enhanced due diligence.",
+    "category": "NETWORK",
+    "sources": [
+      "PMLA (Maintenance of Records) Rules, 2005 - beneficial ownership provisions",
+      "FATF Recommendations 24 and 25 (Transparency of legal persons and arrangements)"
+    ],
+    "metadata": {}
+  },
+  {
+    "clause_id": "NET-002",
+    "title": "Accounts linked by shared operating identifiers",
+    "text": "Unrelated accounts operated from a common device, a common network address, or registered to a common address without an evident family or business relationship are to be examined together rather than individually. Common operation is not by itself evidence of wrongdoing - shared household and shared business premises are ordinary - but it is a basis for examining whether the accounts form a single layering structure.",
+    "category": "NETWORK",
+    "sources": [
+      "RBI Master Direction on KYC - transaction monitoring",
+      "FATF Recommendation 20"
+    ],
+    "metadata": {}
+  },
+  {
+    "clause_id": "NET-003",
+    "title": "Politically exposed persons and close associates",
+    "text": "Relationships with politically exposed persons, their family members and close associates require senior management approval, establishment of the source of funds and the source of wealth, and enhanced ongoing monitoring. The requirement extends to a customer who becomes politically exposed during the relationship, not only to one identified as such at onboarding.",
+    "category": "NETWORK",
+    "sources": [
+      "RBI Master Direction on KYC - provisions relating to politically exposed persons",
+      "FATF Recommendation 12"
+    ],
+    "metadata": {}
+  },
+  {
+    "clause_id": "DOC-001",
+    "title": "Officially valid documents for identity and address",
+    "text": "Identity and address must be established using an officially valid document, which includes the passport, the driving licence, the Aadhaar number in the permitted form, the Voter's Identity Card, and the job card issued under MGNREGA. The Permanent Account Number is required separately for tax purposes and does not by itself establish address. Verification must be against the original or an equivalently reliable electronic verification.",
+    "category": "DOCUMENT_FORGERY",
+    "sources": [
+      "RBI Master Direction on KYC - definition of Officially Valid Document",
+      "FATF Recommendation 10"
+    ],
+    "metadata": {}
+  },
+  {
+    "clause_id": "DOC-002",
+    "title": "Indications of tampering or fabrication in submitted documents",
+    "text": "A document showing inconsistent typography, misaligned fields, irregularities in the background security pattern, or particulars that do not agree with the customer's other records must not be accepted as an officially valid document. The account must not be operated on the strength of the disputed document pending resolution, and the discrepancy must be escalated for a documented human decision rather than resolved by the verifying officer alone.",
+    "category": "DOCUMENT_FORGERY",
+    "sources": [
+      "RBI Master Direction on KYC - verification requirements",
+      "FATF Recommendation 10 (reliability of identification data)"
+    ],
+    "metadata": {}
+  },
+  {
+    "clause_id": "DOC-003",
+    "title": "Expired or invalid identity documents",
+    "text": "Where a document submitted for identity or address verification has expired, the customer must provide a current document within the permitted period. An account whose only officially valid document has lapsed is to be treated as having incomplete due diligence, and operations may be restricted until the record is regularised.",
+    "category": "DOCUMENT_FORGERY",
+    "sources": [
+      "RBI Master Direction on KYC - validity of documents obtained"
+    ],
+    "metadata": {}
+  },
+  {
+    "clause_id": "XB-001",
+    "title": "Originator and beneficiary information on cross-border transfers",
+    "text": "Cross-border wire transfers must carry accurate originator information - name, account number and address or an equivalent identifier - together with the beneficiary's name and account number, and that information must remain with the transfer throughout the payment chain. Transfers lacking required information must be held, rejected or made subject to follow-up, and repeated transfers with deficient information are reportable.",
+    "category": "CROSS_BORDER",
+    "sources": [
+      "FATF Recommendation 16 (Wire transfers)",
+      "RBI instructions on wire transfers and originator information"
+    ],
+    "metadata": {}
+  },
+  {
+    "clause_id": "XB-002",
+    "title": "Liberalised Remittance Scheme limits and permissible purposes",
+    "text": "A resident individual may remit up to the limit prescribed under the Liberalised Remittance Scheme in a financial year for permitted current and capital account transactions. Splitting remittances across family members or across accounts in order to exceed the individual limit is not permitted. Remittances for prohibited purposes, and remittances whose stated purpose is inconsistent with the underlying activity, must be refused and examined.",
+    "category": "CROSS_BORDER",
+    "sources": [
+      "Foreign Exchange Management Act, 1999",
+      "RBI Master Direction - Liberalised Remittance Scheme"
+    ],
+    "metadata": {}
+  },
+  {
+    "clause_id": "XB-003",
+    "title": "Remittances involving higher-risk jurisdictions and concentrated counterparties",
+    "text": "Enhanced due diligence must be applied to business relationships and transactions involving jurisdictions identified as higher risk. Repeated outward transfers from otherwise unrelated accounts to a small common set of overseas beneficiaries, particularly where those beneficiaries are registered in jurisdictions offering limited beneficial ownership transparency, require the commercial rationale to be established and recorded before the transfers are permitted to continue.",
+    "category": "CROSS_BORDER",
+    "sources": [
+      "FATF Recommendation 19 (Higher-risk countries)",
+      "RBI Master Direction on KYC - enhanced due diligence"
+    ],
+    "metadata": {}
+  }
+]

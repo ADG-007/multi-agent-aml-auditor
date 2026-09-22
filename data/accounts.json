@@ -1,0 +1,1802 @@
+[
+  {
+    "account_id": "ACC-0001",
+    "customer_id": "CUST-0001",
+    "opened_date": "2020-08-25",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0002",
+    "customer_id": "CUST-0002",
+    "opened_date": "2017-10-02",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0003",
+    "customer_id": "CUST-0003",
+    "opened_date": "2023-01-11",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0004",
+    "customer_id": "CUST-0004",
+    "opened_date": "2022-03-01",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0005",
+    "customer_id": "CUST-0005",
+    "opened_date": "2016-11-11",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0006",
+    "customer_id": "CUST-0006",
+    "opened_date": "2024-10-01",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0007",
+    "customer_id": "CUST-0007",
+    "opened_date": "2019-08-18",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0008",
+    "customer_id": "CUST-0008",
+    "opened_date": "2024-07-17",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0009",
+    "customer_id": "CUST-0009",
+    "opened_date": "2026-04-23",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0010",
+    "customer_id": "CUST-0010",
+    "opened_date": "2017-09-23",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0011",
+    "customer_id": "CUST-0011",
+    "opened_date": "2020-07-06",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0012",
+    "customer_id": "CUST-0012",
+    "opened_date": "2025-07-23",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0013",
+    "customer_id": "CUST-0013",
+    "opened_date": "2024-03-07",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0014",
+    "customer_id": "CUST-0014",
+    "opened_date": "2020-04-20",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0015",
+    "customer_id": "CUST-0015",
+    "opened_date": "2024-06-13",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0016",
+    "customer_id": "CUST-0016",
+    "opened_date": "2024-07-30",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0017",
+    "customer_id": "CUST-0017",
+    "opened_date": "2016-10-07",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0018",
+    "customer_id": "CUST-0018",
+    "opened_date": "2019-12-23",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0019",
+    "customer_id": "CUST-0019",
+    "opened_date": "2020-01-01",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0020",
+    "customer_id": "CUST-0020",
+    "opened_date": "2017-04-07",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0021",
+    "customer_id": "CUST-0021",
+    "opened_date": "2024-01-13",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0022",
+    "customer_id": "CUST-0022",
+    "opened_date": "2018-05-27",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0023",
+    "customer_id": "CUST-0023",
+    "opened_date": "2022-03-24",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0024",
+    "customer_id": "CUST-0024",
+    "opened_date": "2024-04-21",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0025",
+    "customer_id": "CUST-0025",
+    "opened_date": "2026-01-19",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0026",
+    "customer_id": "CUST-0026",
+    "opened_date": "2023-05-04",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0027",
+    "customer_id": "CUST-0027",
+    "opened_date": "2020-06-26",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0028",
+    "customer_id": "CUST-0028",
+    "opened_date": "2020-02-06",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0029",
+    "customer_id": "CUST-0029",
+    "opened_date": "2017-07-03",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0030",
+    "customer_id": "CUST-0030",
+    "opened_date": "2018-10-09",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0031",
+    "customer_id": "CUST-0031",
+    "opened_date": "2021-11-01",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0032",
+    "customer_id": "CUST-0032",
+    "opened_date": "2018-10-30",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0033",
+    "customer_id": "CUST-0033",
+    "opened_date": "2023-03-28",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0034",
+    "customer_id": "CUST-0034",
+    "opened_date": "2021-08-30",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0035",
+    "customer_id": "CUST-0035",
+    "opened_date": "2022-12-19",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0036",
+    "customer_id": "CUST-0036",
+    "opened_date": "2024-11-19",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0037",
+    "customer_id": "CUST-0037",
+    "opened_date": "2022-08-26",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0038",
+    "customer_id": "CUST-0038",
+    "opened_date": "2024-01-30",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0039",
+    "customer_id": "CUST-0039",
+    "opened_date": "2017-08-05",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0040",
+    "customer_id": "CUST-0040",
+    "opened_date": "2017-04-13",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0041",
+    "customer_id": "CUST-0041",
+    "opened_date": "2018-05-20",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0042",
+    "customer_id": "CUST-0042",
+    "opened_date": "2021-04-05",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0043",
+    "customer_id": "CUST-0043",
+    "opened_date": "2020-01-31",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0044",
+    "customer_id": "CUST-0044",
+    "opened_date": "2021-10-12",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0045",
+    "customer_id": "CUST-0045",
+    "opened_date": "2022-10-11",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0046",
+    "customer_id": "CUST-0046",
+    "opened_date": "2023-10-07",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0047",
+    "customer_id": "CUST-0047",
+    "opened_date": "2021-01-19",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0048",
+    "customer_id": "CUST-0048",
+    "opened_date": "2017-03-21",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0049",
+    "customer_id": "CUST-0049",
+    "opened_date": "2019-09-19",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0050",
+    "customer_id": "CUST-0050",
+    "opened_date": "2021-09-25",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0051",
+    "customer_id": "CUST-0051",
+    "opened_date": "2020-03-17",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0052",
+    "customer_id": "CUST-0052",
+    "opened_date": "2023-04-06",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0053",
+    "customer_id": "CUST-0053",
+    "opened_date": "2026-01-31",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0054",
+    "customer_id": "CUST-0054",
+    "opened_date": "2022-07-30",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0055",
+    "customer_id": "CUST-0055",
+    "opened_date": "2025-01-06",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0056",
+    "customer_id": "CUST-0056",
+    "opened_date": "2020-02-27",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0057",
+    "customer_id": "CUST-0057",
+    "opened_date": "2023-10-18",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0058",
+    "customer_id": "CUST-0058",
+    "opened_date": "2022-01-05",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0059",
+    "customer_id": "CUST-0059",
+    "opened_date": "2024-08-25",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0060",
+    "customer_id": "CUST-0060",
+    "opened_date": "2025-10-29",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0061",
+    "customer_id": "CUST-0061",
+    "opened_date": "2026-02-22",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0062",
+    "customer_id": "CUST-0062",
+    "opened_date": "2025-11-29",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0063",
+    "customer_id": "CUST-0063",
+    "opened_date": "2017-05-21",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0064",
+    "customer_id": "CUST-0064",
+    "opened_date": "2019-05-14",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0065",
+    "customer_id": "CUST-0065",
+    "opened_date": "2019-09-23",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0066",
+    "customer_id": "CUST-0066",
+    "opened_date": "2026-01-26",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0067",
+    "customer_id": "CUST-0067",
+    "opened_date": "2019-04-09",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0068",
+    "customer_id": "CUST-0068",
+    "opened_date": "2017-06-30",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0069",
+    "customer_id": "CUST-0069",
+    "opened_date": "2016-10-30",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0070",
+    "customer_id": "CUST-0070",
+    "opened_date": "2021-01-10",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0071",
+    "customer_id": "CUST-0071",
+    "opened_date": "2025-03-23",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0072",
+    "customer_id": "CUST-0072",
+    "opened_date": "2018-07-29",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0073",
+    "customer_id": "CUST-0073",
+    "opened_date": "2025-04-15",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0074",
+    "customer_id": "CUST-0074",
+    "opened_date": "2017-08-19",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0075",
+    "customer_id": "CUST-0075",
+    "opened_date": "2022-09-07",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0076",
+    "customer_id": "CUST-0076",
+    "opened_date": "2020-08-31",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0077",
+    "customer_id": "CUST-0077",
+    "opened_date": "2019-06-30",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0078",
+    "customer_id": "CUST-0078",
+    "opened_date": "2018-03-26",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0079",
+    "customer_id": "CUST-0079",
+    "opened_date": "2018-08-12",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0080",
+    "customer_id": "CUST-0080",
+    "opened_date": "2021-09-16",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0081",
+    "customer_id": "CUST-0081",
+    "opened_date": "2022-03-12",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0082",
+    "customer_id": "CUST-0082",
+    "opened_date": "2018-06-08",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0083",
+    "customer_id": "CUST-0083",
+    "opened_date": "2021-03-24",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0084",
+    "customer_id": "CUST-0084",
+    "opened_date": "2018-11-22",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0085",
+    "customer_id": "CUST-0085",
+    "opened_date": "2025-10-21",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0086",
+    "customer_id": "CUST-0086",
+    "opened_date": "2024-11-12",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0087",
+    "customer_id": "CUST-0087",
+    "opened_date": "2021-10-12",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0088",
+    "customer_id": "CUST-0088",
+    "opened_date": "2021-10-28",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0089",
+    "customer_id": "CUST-0089",
+    "opened_date": "2018-02-27",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0090",
+    "customer_id": "CUST-0090",
+    "opened_date": "2018-09-05",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0091",
+    "customer_id": "CUST-0091",
+    "opened_date": "2021-02-19",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0092",
+    "customer_id": "CUST-0092",
+    "opened_date": "2017-03-26",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0093",
+    "customer_id": "CUST-0093",
+    "opened_date": "2018-05-19",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0094",
+    "customer_id": "CUST-0094",
+    "opened_date": "2025-04-03",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0095",
+    "customer_id": "CUST-0095",
+    "opened_date": "2020-01-18",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0096",
+    "customer_id": "CUST-0096",
+    "opened_date": "2023-10-11",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0097",
+    "customer_id": "CUST-0097",
+    "opened_date": "2024-04-15",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0098",
+    "customer_id": "CUST-0098",
+    "opened_date": "2016-12-13",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0099",
+    "customer_id": "CUST-0099",
+    "opened_date": "2022-02-25",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0100",
+    "customer_id": "CUST-0100",
+    "opened_date": "2026-01-06",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0101",
+    "customer_id": "CUST-0101",
+    "opened_date": "2025-11-20",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0102",
+    "customer_id": "CUST-0102",
+    "opened_date": "2021-07-27",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0103",
+    "customer_id": "CUST-0103",
+    "opened_date": "2026-02-17",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0104",
+    "customer_id": "CUST-0104",
+    "opened_date": "2025-07-22",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0105",
+    "customer_id": "CUST-0105",
+    "opened_date": "2018-02-04",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0106",
+    "customer_id": "CUST-0106",
+    "opened_date": "2023-01-10",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0107",
+    "customer_id": "CUST-0107",
+    "opened_date": "2018-12-18",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0108",
+    "customer_id": "CUST-0108",
+    "opened_date": "2018-02-28",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0109",
+    "customer_id": "CUST-0109",
+    "opened_date": "2024-06-12",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0110",
+    "customer_id": "CUST-0110",
+    "opened_date": "2016-10-18",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0111",
+    "customer_id": "CUST-0111",
+    "opened_date": "2022-02-22",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0112",
+    "customer_id": "CUST-0112",
+    "opened_date": "2021-12-22",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0113",
+    "customer_id": "CUST-0113",
+    "opened_date": "2025-05-01",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0114",
+    "customer_id": "CUST-0114",
+    "opened_date": "2017-06-07",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0115",
+    "customer_id": "CUST-0115",
+    "opened_date": "2018-04-11",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0116",
+    "customer_id": "CUST-0116",
+    "opened_date": "2017-09-15",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0117",
+    "customer_id": "CUST-0117",
+    "opened_date": "2023-07-04",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0118",
+    "customer_id": "CUST-0118",
+    "opened_date": "2022-07-13",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0119",
+    "customer_id": "CUST-0119",
+    "opened_date": "2020-11-24",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0120",
+    "customer_id": "CUST-0120",
+    "opened_date": "2018-04-05",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0121",
+    "customer_id": "CUST-0121",
+    "opened_date": "2025-03-25",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0122",
+    "customer_id": "CUST-0122",
+    "opened_date": "2022-11-09",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0123",
+    "customer_id": "CUST-0123",
+    "opened_date": "2020-04-18",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0124",
+    "customer_id": "CUST-0124",
+    "opened_date": "2023-01-29",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0125",
+    "customer_id": "CUST-0125",
+    "opened_date": "2024-01-31",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0126",
+    "customer_id": "CUST-0126",
+    "opened_date": "2022-08-21",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0127",
+    "customer_id": "CUST-0127",
+    "opened_date": "2022-08-08",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0128",
+    "customer_id": "CUST-0128",
+    "opened_date": "2019-04-06",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0129",
+    "customer_id": "CUST-0129",
+    "opened_date": "2021-09-18",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0130",
+    "customer_id": "CUST-0130",
+    "opened_date": "2022-06-23",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0131",
+    "customer_id": "CUST-0131",
+    "opened_date": "2020-12-07",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0132",
+    "customer_id": "CUST-0132",
+    "opened_date": "2021-05-10",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0133",
+    "customer_id": "CUST-0133",
+    "opened_date": "2019-02-28",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0134",
+    "customer_id": "CUST-0134",
+    "opened_date": "2022-09-18",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0135",
+    "customer_id": "CUST-0135",
+    "opened_date": "2026-03-19",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0136",
+    "customer_id": "CUST-0136",
+    "opened_date": "2024-06-29",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0137",
+    "customer_id": "CUST-0137",
+    "opened_date": "2021-10-27",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0138",
+    "customer_id": "CUST-0138",
+    "opened_date": "2026-03-10",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0139",
+    "customer_id": "CUST-0139",
+    "opened_date": "2019-06-04",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0140",
+    "customer_id": "CUST-0140",
+    "opened_date": "2020-06-03",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0141",
+    "customer_id": "CUST-0141",
+    "opened_date": "2025-01-04",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0142",
+    "customer_id": "CUST-0142",
+    "opened_date": "2018-03-16",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0143",
+    "customer_id": "CUST-0143",
+    "opened_date": "2023-02-05",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0144",
+    "customer_id": "CUST-0144",
+    "opened_date": "2020-04-16",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0145",
+    "customer_id": "CUST-0145",
+    "opened_date": "2024-07-29",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0146",
+    "customer_id": "CUST-0146",
+    "opened_date": "2023-07-28",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0147",
+    "customer_id": "CUST-0147",
+    "opened_date": "2022-12-06",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0148",
+    "customer_id": "CUST-0148",
+    "opened_date": "2019-02-06",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0149",
+    "customer_id": "CUST-0149",
+    "opened_date": "2017-04-12",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0150",
+    "customer_id": "CUST-0150",
+    "opened_date": "2016-10-25",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0151",
+    "customer_id": "CUST-0151",
+    "opened_date": "2023-12-22",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0152",
+    "customer_id": "CUST-0152",
+    "opened_date": "2021-02-01",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0153",
+    "customer_id": "CUST-0153",
+    "opened_date": "2025-10-20",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0154",
+    "customer_id": "CUST-0154",
+    "opened_date": "2016-12-20",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0155",
+    "customer_id": "CUST-0155",
+    "opened_date": "2020-06-09",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0156",
+    "customer_id": "CUST-0156",
+    "opened_date": "2019-03-01",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0157",
+    "customer_id": "CUST-0157",
+    "opened_date": "2017-03-13",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0158",
+    "customer_id": "CUST-0158",
+    "opened_date": "2021-03-02",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0159",
+    "customer_id": "CUST-0159",
+    "opened_date": "2020-09-16",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0160",
+    "customer_id": "CUST-0160",
+    "opened_date": "2024-04-21",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0161",
+    "customer_id": "CUST-0161",
+    "opened_date": "2017-11-04",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0162",
+    "customer_id": "CUST-0162",
+    "opened_date": "2025-12-25",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0163",
+    "customer_id": "CUST-0163",
+    "opened_date": "2025-05-24",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0164",
+    "customer_id": "CUST-0164",
+    "opened_date": "2024-10-30",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0165",
+    "customer_id": "CUST-0165",
+    "opened_date": "2023-01-16",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0166",
+    "customer_id": "CUST-0166",
+    "opened_date": "2025-08-09",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0167",
+    "customer_id": "CUST-0167",
+    "opened_date": "2024-10-18",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0168",
+    "customer_id": "CUST-0168",
+    "opened_date": "2022-10-17",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0169",
+    "customer_id": "CUST-0169",
+    "opened_date": "2020-03-13",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0170",
+    "customer_id": "CUST-0170",
+    "opened_date": "2017-06-19",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0171",
+    "customer_id": "CUST-0171",
+    "opened_date": "2025-02-02",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0172",
+    "customer_id": "CUST-0172",
+    "opened_date": "2020-01-22",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0173",
+    "customer_id": "CUST-0173",
+    "opened_date": "2025-01-05",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0174",
+    "customer_id": "CUST-0174",
+    "opened_date": "2025-10-24",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0175",
+    "customer_id": "CUST-0175",
+    "opened_date": "2017-05-15",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0176",
+    "customer_id": "CUST-0176",
+    "opened_date": "2023-03-12",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0177",
+    "customer_id": "CUST-0177",
+    "opened_date": "2019-06-18",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0178",
+    "customer_id": "CUST-0178",
+    "opened_date": "2022-11-22",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0179",
+    "customer_id": "CUST-0179",
+    "opened_date": "2018-07-16",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0180",
+    "customer_id": "CUST-0180",
+    "opened_date": "2017-03-04",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0181",
+    "customer_id": "CUST-0181",
+    "opened_date": "2025-12-13",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0182",
+    "customer_id": "CUST-0182",
+    "opened_date": "2020-03-27",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0183",
+    "customer_id": "CUST-0183",
+    "opened_date": "2023-12-18",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0184",
+    "customer_id": "CUST-0184",
+    "opened_date": "2018-06-03",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0185",
+    "customer_id": "CUST-0185",
+    "opened_date": "2020-10-29",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0186",
+    "customer_id": "CUST-0186",
+    "opened_date": "2019-10-16",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0187",
+    "customer_id": "CUST-0187",
+    "opened_date": "2020-03-06",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0188",
+    "customer_id": "CUST-0188",
+    "opened_date": "2018-08-05",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0189",
+    "customer_id": "CUST-0189",
+    "opened_date": "2018-12-19",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0190",
+    "customer_id": "CUST-0190",
+    "opened_date": "2021-07-31",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0191",
+    "customer_id": "CUST-0191",
+    "opened_date": "2020-05-14",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0192",
+    "customer_id": "CUST-0192",
+    "opened_date": "2018-02-16",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0193",
+    "customer_id": "CUST-0193",
+    "opened_date": "2024-01-05",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0194",
+    "customer_id": "CUST-0194",
+    "opened_date": "2026-03-07",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0195",
+    "customer_id": "CUST-0195",
+    "opened_date": "2025-11-13",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0196",
+    "customer_id": "CUST-0196",
+    "opened_date": "2020-07-31",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0197",
+    "customer_id": "CUST-0197",
+    "opened_date": "2019-06-14",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0198",
+    "customer_id": "CUST-0198",
+    "opened_date": "2022-02-22",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0199",
+    "customer_id": "CUST-0199",
+    "opened_date": "2022-04-11",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0200",
+    "customer_id": "CUST-0200",
+    "opened_date": "2021-01-09",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0201",
+    "customer_id": "CUST-0201",
+    "opened_date": "2024-12-22",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0202",
+    "customer_id": "CUST-0202",
+    "opened_date": "2026-03-24",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0203",
+    "customer_id": "CUST-0203",
+    "opened_date": "2021-09-19",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0204",
+    "customer_id": "CUST-0204",
+    "opened_date": "2024-09-19",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0205",
+    "customer_id": "CUST-0205",
+    "opened_date": "2025-08-13",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0206",
+    "customer_id": "CUST-0206",
+    "opened_date": "2025-02-03",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0207",
+    "customer_id": "CUST-0207",
+    "opened_date": "2025-04-20",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0208",
+    "customer_id": "CUST-0208",
+    "opened_date": "2021-10-12",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0209",
+    "customer_id": "CUST-0209",
+    "opened_date": "2019-10-14",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0210",
+    "customer_id": "CUST-0210",
+    "opened_date": "2021-06-16",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0211",
+    "customer_id": "CUST-0211",
+    "opened_date": "2019-05-25",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0212",
+    "customer_id": "CUST-0212",
+    "opened_date": "2022-01-10",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0213",
+    "customer_id": "CUST-0213",
+    "opened_date": "2017-03-23",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0214",
+    "customer_id": "CUST-0214",
+    "opened_date": "2016-10-27",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0215",
+    "customer_id": "CUST-0215",
+    "opened_date": "2016-12-06",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0216",
+    "customer_id": "CUST-0216",
+    "opened_date": "2019-06-06",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0217",
+    "customer_id": "CUST-0217",
+    "opened_date": "2019-09-29",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0218",
+    "customer_id": "CUST-0218",
+    "opened_date": "2022-01-27",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0219",
+    "customer_id": "CUST-0219",
+    "opened_date": "2020-10-01",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0220",
+    "customer_id": "CUST-0220",
+    "opened_date": "2023-06-09",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0221",
+    "customer_id": "CUST-0221",
+    "opened_date": "2017-06-21",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0222",
+    "customer_id": "CUST-0222",
+    "opened_date": "2018-02-08",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0223",
+    "customer_id": "CUST-0223",
+    "opened_date": "2021-09-22",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0224",
+    "customer_id": "CUST-0224",
+    "opened_date": "2026-04-10",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0225",
+    "customer_id": "CUST-0225",
+    "opened_date": "2021-01-13",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0226",
+    "customer_id": "CUST-0226",
+    "opened_date": "2023-05-13",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0227",
+    "customer_id": "CUST-0227",
+    "opened_date": "2021-12-22",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0228",
+    "customer_id": "CUST-0228",
+    "opened_date": "2019-05-12",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0229",
+    "customer_id": "CUST-0229",
+    "opened_date": "2019-04-13",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0230",
+    "customer_id": "CUST-0230",
+    "opened_date": "2017-06-30",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0231",
+    "customer_id": "CUST-0231",
+    "opened_date": "2022-06-17",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0232",
+    "customer_id": "CUST-0232",
+    "opened_date": "2021-10-23",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0233",
+    "customer_id": "CUST-0233",
+    "opened_date": "2018-08-20",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0234",
+    "customer_id": "CUST-0234",
+    "opened_date": "2021-10-01",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0235",
+    "customer_id": "CUST-0235",
+    "opened_date": "2016-12-22",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0236",
+    "customer_id": "CUST-0236",
+    "opened_date": "2018-09-04",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0237",
+    "customer_id": "CUST-0237",
+    "opened_date": "2025-04-20",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0238",
+    "customer_id": "CUST-0238",
+    "opened_date": "2017-09-16",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0239",
+    "customer_id": "CUST-0239",
+    "opened_date": "2023-06-28",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0240",
+    "customer_id": "CUST-0240",
+    "opened_date": "2023-02-23",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0241",
+    "customer_id": "CUST-0241",
+    "opened_date": "2017-04-13",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0242",
+    "customer_id": "CUST-0242",
+    "opened_date": "2017-03-01",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0243",
+    "customer_id": "CUST-0243",
+    "opened_date": "2018-01-03",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0244",
+    "customer_id": "CUST-0244",
+    "opened_date": "2021-01-14",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0245",
+    "customer_id": "CUST-0245",
+    "opened_date": "2022-06-22",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0246",
+    "customer_id": "CUST-0246",
+    "opened_date": "2023-12-20",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0247",
+    "customer_id": "CUST-0247",
+    "opened_date": "2020-04-30",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0248",
+    "customer_id": "CUST-0248",
+    "opened_date": "2020-09-02",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0249",
+    "customer_id": "CUST-0249",
+    "opened_date": "2022-06-22",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0250",
+    "customer_id": "CUST-0250",
+    "opened_date": "2022-03-16",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0251",
+    "customer_id": "CUST-0251",
+    "opened_date": "2023-06-25",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0252",
+    "customer_id": "CUST-0252",
+    "opened_date": "2021-08-14",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0253",
+    "customer_id": "CUST-0253",
+    "opened_date": "2023-01-02",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0254",
+    "customer_id": "CUST-0254",
+    "opened_date": "2025-04-22",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0255",
+    "customer_id": "CUST-0255",
+    "opened_date": "2017-04-29",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0256",
+    "customer_id": "CUST-0256",
+    "opened_date": "2025-04-10",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0257",
+    "customer_id": "CUST-0257",
+    "opened_date": "2016-11-05",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0258",
+    "customer_id": "CUST-0258",
+    "opened_date": "2018-02-28",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0259",
+    "customer_id": "CUST-0259",
+    "opened_date": "2018-10-21",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0260",
+    "customer_id": "CUST-0260",
+    "opened_date": "2025-09-14",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0261",
+    "customer_id": "CUST-0261",
+    "opened_date": "2020-02-22",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0262",
+    "customer_id": "CUST-0262",
+    "opened_date": "2025-03-01",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0263",
+    "customer_id": "CUST-0263",
+    "opened_date": "2017-01-22",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0264",
+    "customer_id": "CUST-0264",
+    "opened_date": "2017-01-03",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0265",
+    "customer_id": "CUST-0265",
+    "opened_date": "2016-10-04",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0266",
+    "customer_id": "CUST-0266",
+    "opened_date": "2020-09-20",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0267",
+    "customer_id": "CUST-0267",
+    "opened_date": "2019-07-09",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0268",
+    "customer_id": "CUST-0268",
+    "opened_date": "2018-06-19",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0269",
+    "customer_id": "CUST-0269",
+    "opened_date": "2024-04-27",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0270",
+    "customer_id": "CUST-0270",
+    "opened_date": "2017-04-02",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0271",
+    "customer_id": "CUST-0271",
+    "opened_date": "2017-07-09",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0272",
+    "customer_id": "CUST-0272",
+    "opened_date": "2017-05-11",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0273",
+    "customer_id": "CUST-0273",
+    "opened_date": "2017-01-03",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0274",
+    "customer_id": "CUST-0274",
+    "opened_date": "2020-07-21",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0275",
+    "customer_id": "CUST-0275",
+    "opened_date": "2025-11-13",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0276",
+    "customer_id": "CUST-0276",
+    "opened_date": "2020-06-23",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0277",
+    "customer_id": "CUST-0277",
+    "opened_date": "2017-11-16",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0278",
+    "customer_id": "CUST-0278",
+    "opened_date": "2018-08-30",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0279",
+    "customer_id": "CUST-0279",
+    "opened_date": "2024-02-27",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0280",
+    "customer_id": "CUST-0280",
+    "opened_date": "2018-06-08",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0281",
+    "customer_id": "CUST-0281",
+    "opened_date": "2023-10-06",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0282",
+    "customer_id": "CUST-0282",
+    "opened_date": "2019-10-01",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0283",
+    "customer_id": "CUST-0283",
+    "opened_date": "2025-12-20",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0284",
+    "customer_id": "CUST-0284",
+    "opened_date": "2024-12-07",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0285",
+    "customer_id": "CUST-0285",
+    "opened_date": "2019-05-26",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0286",
+    "customer_id": "CUST-0286",
+    "opened_date": "2018-03-06",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0287",
+    "customer_id": "CUST-0287",
+    "opened_date": "2019-05-28",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0288",
+    "customer_id": "CUST-0288",
+    "opened_date": "2022-08-06",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0289",
+    "customer_id": "CUST-0289",
+    "opened_date": "2023-05-13",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0290",
+    "customer_id": "CUST-0290",
+    "opened_date": "2020-04-06",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0291",
+    "customer_id": "CUST-0291",
+    "opened_date": "2018-11-19",
+    "account_type": "CURRENT"
+  },
+  {
+    "account_id": "ACC-0292",
+    "customer_id": "CUST-0292",
+    "opened_date": "2023-09-19",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0293",
+    "customer_id": "CUST-0293",
+    "opened_date": "2025-02-27",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0294",
+    "customer_id": "CUST-0294",
+    "opened_date": "2020-07-10",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0295",
+    "customer_id": "CUST-0295",
+    "opened_date": "2023-12-11",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0296",
+    "customer_id": "CUST-0296",
+    "opened_date": "2019-01-21",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0297",
+    "customer_id": "CUST-0297",
+    "opened_date": "2020-07-09",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0298",
+    "customer_id": "CUST-0298",
+    "opened_date": "2024-09-18",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0299",
+    "customer_id": "CUST-0299",
+    "opened_date": "2026-02-17",
+    "account_type": "SAVINGS"
+  },
+  {
+    "account_id": "ACC-0300",
+    "customer_id": "CUST-0300",
+    "opened_date": "2020-09-02",
+    "account_type": "SAVINGS"
+  }
+]

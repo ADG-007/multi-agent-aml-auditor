@@ -1,0 +1,126 @@
+[
+  {
+    "ring_id": "RING-01",
+    "ring_type": "LOCAL",
+    "member_account_ids": [
+      "ACC-0024",
+      "ACC-0031",
+      "ACC-0124",
+      "ACC-0193"
+    ],
+    "shared_device_id": "DEV-B5FD6DBBC8E5",
+    "shared_ip_address": null,
+    "shared_address": null,
+    "foreign_counterparty_ids": []
+  },
+  {
+    "ring_id": "RING-02",
+    "ring_type": "LOCAL",
+    "member_account_ids": [
+      "ACC-0034",
+      "ACC-0139",
+      "ACC-0155",
+      "ACC-0169"
+    ],
+    "shared_device_id": "DEV-7387DC644F05",
+    "shared_ip_address": "106.161.249.77",
+    "shared_address": "2nd Floor, Sai Arcade, Old Madras Road, Bengaluru, Karnataka 560016",
+    "foreign_counterparty_ids": []
+  },
+  {
+    "ring_id": "RING-03",
+    "ring_type": "LOCAL",
+    "member_account_ids": [
+      "ACC-0001",
+      "ACC-0174",
+      "ACC-0199",
+      "ACC-0212"
+    ],
+    "shared_device_id": "DEV-1C35168F3EA8",
+    "shared_ip_address": "122.176.10.106",
+    "shared_address": "Unit 7, Laxmi Industrial Estate, Andheri West, Mumbai, Maharashtra 400053",
+    "foreign_counterparty_ids": []
+  },
+  {
+    "ring_id": "RING-04",
+    "ring_type": "LOCAL",
+    "member_account_ids": [
+      "ACC-0108",
+      "ACC-0111",
+      "ACC-0134",
+      "ACC-0167"
+    ],
+    "shared_device_id": "DEV-659BAFE2C9E4",
+    "shared_ip_address": null,
+    "shared_address": null,
+    "foreign_counterparty_ids": []
+  },
+  {
+    "ring_id": "RING-05",
+    "ring_type": "LOCAL",
+    "member_account_ids": [
+      "ACC-0012",
+      "ACC-0095",
+      "ACC-0136",
+      "ACC-0179"
+    ],
+    "shared_device_id": "DEV-ADC225A7AA98",
+    "shared_ip_address": null,
+    "shared_address": null,
+    "foreign_counterparty_ids": []
+  },
+  {
+    "ring_id": "RING-06",
+    "ring_type": "LOCAL",
+    "member_account_ids": [
+      "ACC-0059",
+      "ACC-0110",
+      "ACC-0197",
+      "ACC-0222"
+    ],
+    "shared_device_id": "DEV-EBED55047826",
+    "shared_ip_address": "103.48.32.240",
+    "shared_address": null,
+    "foreign_counterparty_ids": []
+  },
+  {
+    "ring_id": "RING-07",
+    "ring_type": "INTERNATIONAL",
+    "member_account_ids": [
+      "ACC-0090",
+      "ACC-0098",
+      "ACC-0249",
+      "ACC-0250"
+    ],
+    "shared_device_id": "DEV-10C23842C977",
+    "shared_ip_address": null,
+    "shared_address": null,
+    "foreign_counterparty_ids": [
+      "CPF-0001",
+      "CPF-0002",
+      "CPF-0003",
+      "CPF-0004",
+      "CPF-0005"
+    ]
+  },
+  {
+    "ring_id": "RING-08",
+    "ring_type": "INTERNATIONAL",
+    "member_account_ids": [
+      "ACC-0151",
+      "ACC-0190",
+      "ACC-0251",
+      "ACC-0289"
+    ],
+    "shared_device_id": "DEV-44501BAFE8E4",
+    "shared_ip_address": null,
+    "shared_address": null,
+    "foreign_counterparty_ids": [
+      "CPF-0001",
+      "CPF-0002",
+      "CPF-0003",
+      "CPF-0004",
+      "CPF-0005"
+    ]
+  }
+]

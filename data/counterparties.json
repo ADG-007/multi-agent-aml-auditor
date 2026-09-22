@@ -1,0 +1,1442 @@
+[
+  {
+    "counterparty_id": "CPF-0001",
+    "name": "Nelson FZE",
+    "country": "United Arab Emirates",
+    "is_foreign": true
+  },
+  {
+    "counterparty_id": "CPF-0002",
+    "name": "Freeman FZE",
+    "country": "Singapore",
+    "is_foreign": true
+  },
+  {
+    "counterparty_id": "CPF-0003",
+    "name": "Miller FZE",
+    "country": "United States",
+    "is_foreign": true
+  },
+  {
+    "counterparty_id": "CPF-0004",
+    "name": "Morgan Ltd",
+    "country": "United Kingdom",
+    "is_foreign": true
+  },
+  {
+    "counterparty_id": "CPF-0005",
+    "name": "Jones FZ-LLC",
+    "country": "Hong Kong",
+    "is_foreign": true
+  },
+  {
+    "counterparty_id": "CPD-0001",
+    "name": "Rege Agencies",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0002",
+    "name": "Patrick Raghavan",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0003",
+    "name": "Bimala Balakrishnan",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0004",
+    "name": "Kar Distributors",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0005",
+    "name": "Dada Motors",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0006",
+    "name": "Harish Dugar",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0007",
+    "name": "Varkey Traders",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0008",
+    "name": "Mitter Agencies",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0009",
+    "name": "Radhakrishnan Exports",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0010",
+    "name": "Eshana Parmar",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0011",
+    "name": "Hamsini Mandal",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0012",
+    "name": "Isaac Vaidya",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0013",
+    "name": "Boase Motors",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0014",
+    "name": "Chandra Agencies",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0015",
+    "name": "Madan Exports",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0016",
+    "name": "Murty Industries",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0017",
+    "name": "Bimala Banerjee",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0018",
+    "name": "Padmanabhan Distributors",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0019",
+    "name": "Gopal Sood",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0020",
+    "name": "Soni Constructions",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0021",
+    "name": "Ranbir De",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0022",
+    "name": "Yug Bawa",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0023",
+    "name": "Bassi Constructions",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0024",
+    "name": "Baljiwan Narasimhan",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0025",
+    "name": "Pingle Constructions",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0026",
+    "name": "Sudiksha Zachariah",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0027",
+    "name": "Dora & Sons",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0028",
+    "name": "Veda Shah",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0029",
+    "name": "Pal Motors",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0030",
+    "name": "Bassi & Sons",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0031",
+    "name": "Nakul Andra",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0032",
+    "name": "Kapoor Agencies",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0033",
+    "name": "Baghyawati Parikh",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0034",
+    "name": "Issac Traders",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0035",
+    "name": "Ravel Enterprises",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0036",
+    "name": "Jalsa Oak",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0037",
+    "name": "Chowdhury Constructions",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0038",
+    "name": "Daniel Sant",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0039",
+    "name": "Bava Textiles",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0040",
+    "name": "Som Industries",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0041",
+    "name": "Das Industries",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0042",
+    "name": "Praneel Ahluwalia",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0043",
+    "name": "Memon Enterprises",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0044",
+    "name": "Bhatnagar Distributors",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0045",
+    "name": "Magar Traders",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0046",
+    "name": "Borde Textiles",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0047",
+    "name": "Ahuja Constructions",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0048",
+    "name": "Anusha Gokhale",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0049",
+    "name": "Viswanathan & Sons",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0050",
+    "name": "Hans Textiles",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0051",
+    "name": "Ati Subramanian",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0052",
+    "name": "Lala Motors",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0053",
+    "name": "Yauvani Narayan",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0054",
+    "name": "Dhruv Mander",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0055",
+    "name": "Swaminathan Motors",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0056",
+    "name": "Nandini Rau",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0057",
+    "name": "Mittal Textiles",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0058",
+    "name": "Sengupta Exports",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0059",
+    "name": "Eesha Krishnan",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0060",
+    "name": "Deep Distributors",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0061",
+    "name": "Deo Textiles",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0062",
+    "name": "Deo Traders",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0063",
+    "name": "Borde Textiles",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0064",
+    "name": "Meghana Pai",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0065",
+    "name": "Frado Mahal",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0066",
+    "name": "Deol & Sons",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0067",
+    "name": "Mallick Traders",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0068",
+    "name": "Walla Exports",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0069",
+    "name": "Xavier Banerjee",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0070",
+    "name": "Vinaya Bora",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0071",
+    "name": "Thaman Exports",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0072",
+    "name": "Magar Enterprises",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0073",
+    "name": "Liam Sethi",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0074",
+    "name": "Karan Kata",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0075",
+    "name": "Isaiah Nagar",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0076",
+    "name": "Nanda Traders",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0077",
+    "name": "Taneja Enterprises",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0078",
+    "name": "Dhillon Industries",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0079",
+    "name": "Agrawal Agencies",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0080",
+    "name": "Brar Agencies",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0081",
+    "name": "Ravi Textiles",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0082",
+    "name": "Lavanya Tripathi",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0083",
+    "name": "Theodore Kannan",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0084",
+    "name": "Manbir Ahluwalia",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0085",
+    "name": "Nath Traders",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0086",
+    "name": "Akshay Wason",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0087",
+    "name": "Kai Ganesan",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0088",
+    "name": "Guha Textiles",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0089",
+    "name": "Faras Dara",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0090",
+    "name": "Mahika Walla",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0091",
+    "name": "Thaker Textiles",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0092",
+    "name": "Behl Enterprises",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0093",
+    "name": "Neha Dave",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0094",
+    "name": "Neel Bhavsar",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0095",
+    "name": "Eiravati Mani",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0096",
+    "name": "Babu Traders",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0097",
+    "name": "Banerjee Distributors",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0098",
+    "name": "Jha Agencies",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0099",
+    "name": "Robert Babu",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0100",
+    "name": "Faqid Ghose",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0101",
+    "name": "D\u2019Alia Enterprises",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0102",
+    "name": "Dugar Traders",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0103",
+    "name": "Sanghvi Agencies",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0104",
+    "name": "Mahajan Agencies",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0105",
+    "name": "Kavya Kothari",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0106",
+    "name": "Maharaj Industries",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0107",
+    "name": "Dixit Agencies",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0108",
+    "name": "Mistry Motors",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0109",
+    "name": "Nidhi Gade",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0110",
+    "name": "Gera & Sons",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0111",
+    "name": "Srinivasan Traders",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0112",
+    "name": "Bhavani Seshadri",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0113",
+    "name": "Sura Enterprises",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0114",
+    "name": "Sodhi Textiles",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0115",
+    "name": "Mandal Agencies",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0116",
+    "name": "Mishra Agencies",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0117",
+    "name": "Saxena & Sons",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0118",
+    "name": "Taneja Constructions",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0119",
+    "name": "Vasana Shankar",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0120",
+    "name": "Choudhury Traders",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0121",
+    "name": "Mallick Motors",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0122",
+    "name": "Zayan Kar",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0123",
+    "name": "Srinivasan Exports",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0124",
+    "name": "Ghosh Exports",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0125",
+    "name": "Pai Constructions",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0126",
+    "name": "Januja Kar",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0127",
+    "name": "Pushti Mohan",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0128",
+    "name": "Anjali Yohannan",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0129",
+    "name": "Sarkar Textiles",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0130",
+    "name": "Chatterjee Industries",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0131",
+    "name": "Victor Yogi",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0132",
+    "name": "Anirudh Gera",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0133",
+    "name": "Kade Motors",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0134",
+    "name": "Nair Enterprises",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0135",
+    "name": "Sachi Tank",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0136",
+    "name": "Champak Master",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0137",
+    "name": "Ganguly Motors",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0138",
+    "name": "Kapadia Motors",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0139",
+    "name": "Oak Industries",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0140",
+    "name": "Andra Constructions",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0141",
+    "name": "Pall Textiles",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0142",
+    "name": "Gara Textiles",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0143",
+    "name": "Vansha Bava",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0144",
+    "name": "Dayita Rajagopal",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0145",
+    "name": "Dara Traders",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0146",
+    "name": "Gaba Enterprises",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0147",
+    "name": "Sastry Motors",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0148",
+    "name": "David Kashyap",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0149",
+    "name": "Wali Textiles",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0150",
+    "name": "Ishita Brahmbhatt",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0151",
+    "name": "Ben Enterprises",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0152",
+    "name": "Bhagat Enterprises",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0153",
+    "name": "Badami Enterprises",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0154",
+    "name": "Watika Choudhury",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0155",
+    "name": "Zacharia Exports",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0156",
+    "name": "Narula Industries",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0157",
+    "name": "Veer Walla",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0158",
+    "name": "Sur Motors",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0159",
+    "name": "Balan Textiles",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0160",
+    "name": "Basu Constructions",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0161",
+    "name": "Anne Exports",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0162",
+    "name": "Raman Textiles",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0163",
+    "name": "Babu Industries",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0164",
+    "name": "Chana Enterprises",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0165",
+    "name": "Theodore Saraf",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0166",
+    "name": "Lopa Subramanian",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0167",
+    "name": "Faraj Walia",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0168",
+    "name": "Raghavan Constructions",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0169",
+    "name": "Chowdhury Distributors",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0170",
+    "name": "Vohra Motors",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0171",
+    "name": "Deol Exports",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0172",
+    "name": "Johal Enterprises",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0173",
+    "name": "Aadhya Maharaj",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0174",
+    "name": "Mallick Exports",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0175",
+    "name": "Kata Traders",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0176",
+    "name": "Wason & Sons",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0177",
+    "name": "Frederick Vaidya",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0178",
+    "name": "Avi Natarajan",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0179",
+    "name": "Oviya Atwal",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPD-0180",
+    "name": "Sen & Sons",
+    "country": "India",
+    "is_foreign": false
+  },
+  {
+    "counterparty_id": "CPF-0006",
+    "name": "Smith Holdings Ltd",
+    "country": "United States",
+    "is_foreign": true
+  },
+  {
+    "counterparty_id": "CPF-0007",
+    "name": "Campbell Ltd",
+    "country": "Seychelles",
+    "is_foreign": true
+  },
+  {
+    "counterparty_id": "CPF-0008",
+    "name": "Wilson Pte Ltd",
+    "country": "Cyprus",
+    "is_foreign": true
+  },
+  {
+    "counterparty_id": "CPF-0009",
+    "name": "Collins LLC",
+    "country": "British Virgin Islands",
+    "is_foreign": true
+  },
+  {
+    "counterparty_id": "CPF-0010",
+    "name": "Paul Ltd",
+    "country": "United Kingdom",
+    "is_foreign": true
+  },
+  {
+    "counterparty_id": "CPF-0011",
+    "name": "Johnson FZ-LLC",
+    "country": "Switzerland",
+    "is_foreign": true
+  },
+  {
+    "counterparty_id": "CPF-0012",
+    "name": "Weber Pte Ltd",
+    "country": "Hong Kong",
+    "is_foreign": true
+  },
+  {
+    "counterparty_id": "CPF-0013",
+    "name": "Taylor LLC",
+    "country": "Switzerland",
+    "is_foreign": true
+  },
+  {
+    "counterparty_id": "CPF-0014",
+    "name": "Pope Pte Ltd",
+    "country": "Cyprus",
+    "is_foreign": true
+  },
+  {
+    "counterparty_id": "CPF-0015",
+    "name": "Mclaughlin Holdings Ltd",
+    "country": "Mauritius",
+    "is_foreign": true
+  },
+  {
+    "counterparty_id": "CPF-0016",
+    "name": "Clark FZE",
+    "country": "British Virgin Islands",
+    "is_foreign": true
+  },
+  {
+    "counterparty_id": "CPF-0017",
+    "name": "Charles FZE",
+    "country": "British Virgin Islands",
+    "is_foreign": true
+  },
+  {
+    "counterparty_id": "CPF-0018",
+    "name": "Love LLC",
+    "country": "Cyprus",
+    "is_foreign": true
+  },
+  {
+    "counterparty_id": "CPF-0019",
+    "name": "Jones Trading DMCC",
+    "country": "United States",
+    "is_foreign": true
+  },
+  {
+    "counterparty_id": "CPF-0020",
+    "name": "Russell Trading DMCC",
+    "country": "Hong Kong",
+    "is_foreign": true
+  },
+  {
+    "counterparty_id": "CPF-0021",
+    "name": "Graves FZE",
+    "country": "Mauritius",
+    "is_foreign": true
+  },
+  {
+    "counterparty_id": "CPF-0022",
+    "name": "Leblanc LLC",
+    "country": "United Arab Emirates",
+    "is_foreign": true
+  },
+  {
+    "counterparty_id": "CPF-0023",
+    "name": "Jackson FZE",
+    "country": "Malaysia",
+    "is_foreign": true
+  },
+  {
+    "counterparty_id": "CPF-0024",
+    "name": "King LLC",
+    "country": "Mauritius",
+    "is_foreign": true
+  },
+  {
+    "counterparty_id": "CPF-0025",
+    "name": "Hampton FZE",
+    "country": "Hong Kong",
+    "is_foreign": true
+  },
+  {
+    "counterparty_id": "CPF-0026",
+    "name": "Estes Trading DMCC",
+    "country": "United Arab Emirates",
+    "is_foreign": true
+  },
+  {
+    "counterparty_id": "CPF-0027",
+    "name": "Davis FZ-LLC",
+    "country": "Cyprus",
+    "is_foreign": true
+  },
+  {
+    "counterparty_id": "CPF-0028",
+    "name": "Davis Holdings Ltd",
+    "country": "British Virgin Islands",
+    "is_foreign": true
+  },
+  {
+    "counterparty_id": "CPF-0029",
+    "name": "Potter Ltd",
+    "country": "Switzerland",
+    "is_foreign": true
+  },
+  {
+    "counterparty_id": "CPF-0030",
+    "name": "Stewart Pte Ltd",
+    "country": "Malaysia",
+    "is_foreign": true
+  },
+  {
+    "counterparty_id": "CPF-0031",
+    "name": "Hughes Ltd",
+    "country": "Cyprus",
+    "is_foreign": true
+  },
+  {
+    "counterparty_id": "CPF-0032",
+    "name": "Walter Ltd",
+    "country": "Cyprus",
+    "is_foreign": true
+  },
+  {
+    "counterparty_id": "CPF-0033",
+    "name": "Reese LLC",
+    "country": "United Kingdom",
+    "is_foreign": true
+  },
+  {
+    "counterparty_id": "CPF-0034",
+    "name": "Guerrero Holdings Ltd",
+    "country": "United States",
+    "is_foreign": true
+  },
+  {
+    "counterparty_id": "CPF-0035",
+    "name": "Dillon Ltd",
+    "country": "United States",
+    "is_foreign": true
+  },
+  {
+    "counterparty_id": "CPF-0036",
+    "name": "Dennis FZ-LLC",
+    "country": "Seychelles",
+    "is_foreign": true
+  },
+  {
+    "counterparty_id": "CPF-0037",
+    "name": "Patrick Ltd",
+    "country": "Mauritius",
+    "is_foreign": true
+  },
+  {
+    "counterparty_id": "CPF-0038",
+    "name": "Day Trading DMCC",
+    "country": "Cyprus",
+    "is_foreign": true
+  },
+  {
+    "counterparty_id": "CPF-0039",
+    "name": "Watkins FZ-LLC",
+    "country": "Hong Kong",
+    "is_foreign": true
+  },
+  {
+    "counterparty_id": "CPF-0040",
+    "name": "Brown Trading DMCC",
+    "country": "Switzerland",
+    "is_foreign": true
+  },
+  {
+    "counterparty_id": "CPF-0041",
+    "name": "Browning FZ-LLC",
+    "country": "United States",
+    "is_foreign": true
+  },
+  {
+    "counterparty_id": "CPF-0042",
+    "name": "Buck FZE",
+    "country": "Singapore",
+    "is_foreign": true
+  },
+  {
+    "counterparty_id": "CPF-0043",
+    "name": "Bell Holdings Ltd",
+    "country": "United Arab Emirates",
+    "is_foreign": true
+  },
+  {
+    "counterparty_id": "CPF-0044",
+    "name": "Sims FZ-LLC",
+    "country": "Malaysia",
+    "is_foreign": true
+  },
+  {
+    "counterparty_id": "CPF-0045",
+    "name": "Smith Ltd",
+    "country": "Switzerland",
+    "is_foreign": true
+  },
+  {
+    "counterparty_id": "CPF-0046",
+    "name": "Porter Ltd",
+    "country": "United States",
+    "is_foreign": true
+  },
+  {
+    "counterparty_id": "CPF-0047",
+    "name": "Hanson FZE",
+    "country": "United States",
+    "is_foreign": true
+  },
+  {
+    "counterparty_id": "CPF-0048",
+    "name": "Carter Holdings Ltd",
+    "country": "Cyprus",
+    "is_foreign": true
+  },
+  {
+    "counterparty_id": "CPF-0049",
+    "name": "Perry Trading DMCC",
+    "country": "Panama",
+    "is_foreign": true
+  },
+  {
+    "counterparty_id": "CPF-0050",
+    "name": "Houston Trading DMCC",
+    "country": "Malaysia",
+    "is_foreign": true
+  },
+  {
+    "counterparty_id": "CPF-0051",
+    "name": "Thomas LLC",
+    "country": "Cyprus",
+    "is_foreign": true
+  },
+  {
+    "counterparty_id": "CPF-0052",
+    "name": "Gibson LLC",
+    "country": "United States",
+    "is_foreign": true
+  },
+  {
+    "counterparty_id": "CPF-0053",
+    "name": "Miller Ltd",
+    "country": "Seychelles",
+    "is_foreign": true
+  },
+  {
+    "counterparty_id": "CPF-0054",
+    "name": "Cruz Ltd",
+    "country": "Seychelles",
+    "is_foreign": true
+  },
+  {
+    "counterparty_id": "CPF-0055",
+    "name": "Khan Trading DMCC",
+    "country": "Panama",
+    "is_foreign": true
+  },
+  {
+    "counterparty_id": "CPF-0056",
+    "name": "Salazar Ltd",
+    "country": "Mauritius",
+    "is_foreign": true
+  },
+  {
+    "counterparty_id": "CPF-0057",
+    "name": "Johnson FZ-LLC",
+    "country": "United States",
+    "is_foreign": true
+  },
+  {
+    "counterparty_id": "CPF-0058",
+    "name": "Trevino Ltd",
+    "country": "British Virgin Islands",
+    "is_foreign": true
+  },
+  {
+    "counterparty_id": "CPF-0059",
+    "name": "Barrett FZE",
+    "country": "British Virgin Islands",
+    "is_foreign": true
+  },
+  {
+    "counterparty_id": "CPF-0060",
+    "name": "Meyer Ltd",
+    "country": "Malaysia",
+    "is_foreign": true
+  }
+]

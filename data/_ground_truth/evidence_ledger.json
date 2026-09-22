@@ -1,0 +1,3086 @@
+[
+  {
+    "account_id": "ACC-0001",
+    "customer_id": "CUST-0001",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": "ADVERSE_NEWS",
+    "graph_ring_membership": "RING-03",
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0002",
+    "customer_id": "CUST-0002",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0003",
+    "customer_id": "CUST-0003",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0004",
+    "customer_id": "CUST-0004",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": "ADVERSE_NEWS",
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0005",
+    "customer_id": "CUST-0005",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": "ADVERSE_NEWS",
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0006",
+    "customer_id": "CUST-0006",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": true,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0007",
+    "customer_id": "CUST-0007",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": true,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0008",
+    "customer_id": "CUST-0008",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": [
+      "round_amount"
+    ]
+  },
+  {
+    "account_id": "ACC-0009",
+    "customer_id": "CUST-0009",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": [
+      "graph_coincidence"
+    ]
+  },
+  {
+    "account_id": "ACC-0010",
+    "customer_id": "CUST-0010",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": true,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0011",
+    "customer_id": "CUST-0011",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0012",
+    "customer_id": "CUST-0012",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": "CONFIRMED_SANCTIONS",
+    "graph_ring_membership": "RING-05",
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0013",
+    "customer_id": "CUST-0013",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": [
+      "graph_coincidence"
+    ]
+  },
+  {
+    "account_id": "ACC-0014",
+    "customer_id": "CUST-0014",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0015",
+    "customer_id": "CUST-0015",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": true,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0016",
+    "customer_id": "CUST-0016",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0017",
+    "customer_id": "CUST-0017",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0018",
+    "customer_id": "CUST-0018",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0019",
+    "customer_id": "CUST-0019",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0020",
+    "customer_id": "CUST-0020",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0021",
+    "customer_id": "CUST-0021",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0022",
+    "customer_id": "CUST-0022",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": "NAME_SIMILARITY_ONLY",
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": [
+      "name_similarity"
+    ]
+  },
+  {
+    "account_id": "ACC-0023",
+    "customer_id": "CUST-0023",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0024",
+    "customer_id": "CUST-0024",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": "ADVERSE_NEWS",
+    "graph_ring_membership": "RING-01",
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0025",
+    "customer_id": "CUST-0025",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0026",
+    "customer_id": "CUST-0026",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": [
+      "round_amount"
+    ]
+  },
+  {
+    "account_id": "ACC-0027",
+    "customer_id": "CUST-0027",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": "ADVERSE_NEWS",
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0028",
+    "customer_id": "CUST-0028",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0029",
+    "customer_id": "CUST-0029",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0030",
+    "customer_id": "CUST-0030",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": true,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0031",
+    "customer_id": "CUST-0031",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": "RING-01",
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0032",
+    "customer_id": "CUST-0032",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0033",
+    "customer_id": "CUST-0033",
+    "structuring_planted": true,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0034",
+    "customer_id": "CUST-0034",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": "ADVERSE_NEWS",
+    "graph_ring_membership": "RING-02",
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0035",
+    "customer_id": "CUST-0035",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": [
+      "graph_coincidence"
+    ]
+  },
+  {
+    "account_id": "ACC-0036",
+    "customer_id": "CUST-0036",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": "NAME_SIMILARITY_ONLY",
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": [
+      "name_similarity"
+    ]
+  },
+  {
+    "account_id": "ACC-0037",
+    "customer_id": "CUST-0037",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0038",
+    "customer_id": "CUST-0038",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": true,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0039",
+    "customer_id": "CUST-0039",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": [
+      "round_amount"
+    ]
+  },
+  {
+    "account_id": "ACC-0040",
+    "customer_id": "CUST-0040",
+    "structuring_planted": true,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0041",
+    "customer_id": "CUST-0041",
+    "structuring_planted": true,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0042",
+    "customer_id": "CUST-0042",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0043",
+    "customer_id": "CUST-0043",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0044",
+    "customer_id": "CUST-0044",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": true,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0045",
+    "customer_id": "CUST-0045",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0046",
+    "customer_id": "CUST-0046",
+    "structuring_planted": true,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": "ADVERSE_NEWS",
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0047",
+    "customer_id": "CUST-0047",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0048",
+    "customer_id": "CUST-0048",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0049",
+    "customer_id": "CUST-0049",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0050",
+    "customer_id": "CUST-0050",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": "NAME_SIMILARITY_ONLY",
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": [
+      "name_similarity"
+    ]
+  },
+  {
+    "account_id": "ACC-0051",
+    "customer_id": "CUST-0051",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0052",
+    "customer_id": "CUST-0052",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0053",
+    "customer_id": "CUST-0053",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": true,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0054",
+    "customer_id": "CUST-0054",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": true,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0055",
+    "customer_id": "CUST-0055",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": [
+      "graph_coincidence"
+    ]
+  },
+  {
+    "account_id": "ACC-0056",
+    "customer_id": "CUST-0056",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0057",
+    "customer_id": "CUST-0057",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0058",
+    "customer_id": "CUST-0058",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0059",
+    "customer_id": "CUST-0059",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": "ADVERSE_NEWS",
+    "graph_ring_membership": "RING-06",
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0060",
+    "customer_id": "CUST-0060",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0061",
+    "customer_id": "CUST-0061",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0062",
+    "customer_id": "CUST-0062",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": "ADVERSE_NEWS",
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0063",
+    "customer_id": "CUST-0063",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": [
+      "round_amount"
+    ]
+  },
+  {
+    "account_id": "ACC-0064",
+    "customer_id": "CUST-0064",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0065",
+    "customer_id": "CUST-0065",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0066",
+    "customer_id": "CUST-0066",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": "ADVERSE_NEWS",
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0067",
+    "customer_id": "CUST-0067",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0068",
+    "customer_id": "CUST-0068",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0069",
+    "customer_id": "CUST-0069",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0070",
+    "customer_id": "CUST-0070",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0071",
+    "customer_id": "CUST-0071",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0072",
+    "customer_id": "CUST-0072",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0073",
+    "customer_id": "CUST-0073",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0074",
+    "customer_id": "CUST-0074",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": [
+      "round_amount"
+    ]
+  },
+  {
+    "account_id": "ACC-0075",
+    "customer_id": "CUST-0075",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": true,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0076",
+    "customer_id": "CUST-0076",
+    "structuring_planted": true,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0077",
+    "customer_id": "CUST-0077",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": "NAME_SIMILARITY_ONLY",
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": [
+      "name_similarity"
+    ]
+  },
+  {
+    "account_id": "ACC-0078",
+    "customer_id": "CUST-0078",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": [
+      "round_amount"
+    ]
+  },
+  {
+    "account_id": "ACC-0079",
+    "customer_id": "CUST-0079",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": true,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0080",
+    "customer_id": "CUST-0080",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0081",
+    "customer_id": "CUST-0081",
+    "structuring_planted": true,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0082",
+    "customer_id": "CUST-0082",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": [
+      "round_amount"
+    ]
+  },
+  {
+    "account_id": "ACC-0083",
+    "customer_id": "CUST-0083",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0084",
+    "customer_id": "CUST-0084",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0085",
+    "customer_id": "CUST-0085",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0086",
+    "customer_id": "CUST-0086",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": "ADVERSE_NEWS",
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0087",
+    "customer_id": "CUST-0087",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0088",
+    "customer_id": "CUST-0088",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0089",
+    "customer_id": "CUST-0089",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": true,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0090",
+    "customer_id": "CUST-0090",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": "RING-07",
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0091",
+    "customer_id": "CUST-0091",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0092",
+    "customer_id": "CUST-0092",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": true,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0093",
+    "customer_id": "CUST-0093",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0094",
+    "customer_id": "CUST-0094",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": [
+      "round_amount"
+    ]
+  },
+  {
+    "account_id": "ACC-0095",
+    "customer_id": "CUST-0095",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": "RING-05",
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0096",
+    "customer_id": "CUST-0096",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": "CONFIRMED_SANCTIONS",
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0097",
+    "customer_id": "CUST-0097",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0098",
+    "customer_id": "CUST-0098",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": "ADVERSE_NEWS",
+    "graph_ring_membership": "RING-07",
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0099",
+    "customer_id": "CUST-0099",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0100",
+    "customer_id": "CUST-0100",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0101",
+    "customer_id": "CUST-0101",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0102",
+    "customer_id": "CUST-0102",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0103",
+    "customer_id": "CUST-0103",
+    "structuring_planted": true,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0104",
+    "customer_id": "CUST-0104",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0105",
+    "customer_id": "CUST-0105",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": true,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0106",
+    "customer_id": "CUST-0106",
+    "structuring_planted": true,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0107",
+    "customer_id": "CUST-0107",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0108",
+    "customer_id": "CUST-0108",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": "ADVERSE_NEWS",
+    "graph_ring_membership": "RING-04",
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0109",
+    "customer_id": "CUST-0109",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0110",
+    "customer_id": "CUST-0110",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": "RING-06",
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0111",
+    "customer_id": "CUST-0111",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": true,
+    "adverse_media_hit": null,
+    "graph_ring_membership": "RING-04",
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0112",
+    "customer_id": "CUST-0112",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0113",
+    "customer_id": "CUST-0113",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0114",
+    "customer_id": "CUST-0114",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": [
+      "round_amount"
+    ]
+  },
+  {
+    "account_id": "ACC-0115",
+    "customer_id": "CUST-0115",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0116",
+    "customer_id": "CUST-0116",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0117",
+    "customer_id": "CUST-0117",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0118",
+    "customer_id": "CUST-0118",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0119",
+    "customer_id": "CUST-0119",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0120",
+    "customer_id": "CUST-0120",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": "ADVERSE_NEWS",
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0121",
+    "customer_id": "CUST-0121",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0122",
+    "customer_id": "CUST-0122",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0123",
+    "customer_id": "CUST-0123",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0124",
+    "customer_id": "CUST-0124",
+    "structuring_planted": true,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": "RING-01",
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0125",
+    "customer_id": "CUST-0125",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0126",
+    "customer_id": "CUST-0126",
+    "structuring_planted": true,
+    "kyc_mismatch_planted": true,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0127",
+    "customer_id": "CUST-0127",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": [
+      "graph_coincidence"
+    ]
+  },
+  {
+    "account_id": "ACC-0128",
+    "customer_id": "CUST-0128",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0129",
+    "customer_id": "CUST-0129",
+    "structuring_planted": true,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0130",
+    "customer_id": "CUST-0130",
+    "structuring_planted": true,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0131",
+    "customer_id": "CUST-0131",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": "NAME_SIMILARITY_ONLY",
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": [
+      "name_similarity"
+    ]
+  },
+  {
+    "account_id": "ACC-0132",
+    "customer_id": "CUST-0132",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": true,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0133",
+    "customer_id": "CUST-0133",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0134",
+    "customer_id": "CUST-0134",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": "RING-04",
+    "forged_document_planted": true,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0135",
+    "customer_id": "CUST-0135",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0136",
+    "customer_id": "CUST-0136",
+    "structuring_planted": true,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": "RING-05",
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0137",
+    "customer_id": "CUST-0137",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0138",
+    "customer_id": "CUST-0138",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": true,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": true,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0139",
+    "customer_id": "CUST-0139",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": "RING-02",
+    "forged_document_planted": true,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0140",
+    "customer_id": "CUST-0140",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": [
+      "graph_coincidence"
+    ]
+  },
+  {
+    "account_id": "ACC-0141",
+    "customer_id": "CUST-0141",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0142",
+    "customer_id": "CUST-0142",
+    "structuring_planted": true,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0143",
+    "customer_id": "CUST-0143",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": "ADVERSE_NEWS",
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0144",
+    "customer_id": "CUST-0144",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": true,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0145",
+    "customer_id": "CUST-0145",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0146",
+    "customer_id": "CUST-0146",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0147",
+    "customer_id": "CUST-0147",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0148",
+    "customer_id": "CUST-0148",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0149",
+    "customer_id": "CUST-0149",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0150",
+    "customer_id": "CUST-0150",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0151",
+    "customer_id": "CUST-0151",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": "ADVERSE_NEWS",
+    "graph_ring_membership": "RING-08",
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0152",
+    "customer_id": "CUST-0152",
+    "structuring_planted": true,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": "ADVERSE_NEWS",
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0153",
+    "customer_id": "CUST-0153",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0154",
+    "customer_id": "CUST-0154",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": true,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0155",
+    "customer_id": "CUST-0155",
+    "structuring_planted": true,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": "RING-02",
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0156",
+    "customer_id": "CUST-0156",
+    "structuring_planted": true,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0157",
+    "customer_id": "CUST-0157",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0158",
+    "customer_id": "CUST-0158",
+    "structuring_planted": true,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0159",
+    "customer_id": "CUST-0159",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0160",
+    "customer_id": "CUST-0160",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0161",
+    "customer_id": "CUST-0161",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0162",
+    "customer_id": "CUST-0162",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": [
+      "round_amount"
+    ]
+  },
+  {
+    "account_id": "ACC-0163",
+    "customer_id": "CUST-0163",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0164",
+    "customer_id": "CUST-0164",
+    "structuring_planted": true,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0165",
+    "customer_id": "CUST-0165",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0166",
+    "customer_id": "CUST-0166",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0167",
+    "customer_id": "CUST-0167",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": "RING-04",
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0168",
+    "customer_id": "CUST-0168",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0169",
+    "customer_id": "CUST-0169",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": "RING-02",
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0170",
+    "customer_id": "CUST-0170",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0171",
+    "customer_id": "CUST-0171",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": [
+      "graph_coincidence"
+    ]
+  },
+  {
+    "account_id": "ACC-0172",
+    "customer_id": "CUST-0172",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0173",
+    "customer_id": "CUST-0173",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0174",
+    "customer_id": "CUST-0174",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": true,
+    "adverse_media_hit": null,
+    "graph_ring_membership": "RING-03",
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0175",
+    "customer_id": "CUST-0175",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0176",
+    "customer_id": "CUST-0176",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0177",
+    "customer_id": "CUST-0177",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0178",
+    "customer_id": "CUST-0178",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0179",
+    "customer_id": "CUST-0179",
+    "structuring_planted": true,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": "RING-05",
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0180",
+    "customer_id": "CUST-0180",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": [
+      "graph_coincidence"
+    ]
+  },
+  {
+    "account_id": "ACC-0181",
+    "customer_id": "CUST-0181",
+    "structuring_planted": true,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0182",
+    "customer_id": "CUST-0182",
+    "structuring_planted": true,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0183",
+    "customer_id": "CUST-0183",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0184",
+    "customer_id": "CUST-0184",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0185",
+    "customer_id": "CUST-0185",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0186",
+    "customer_id": "CUST-0186",
+    "structuring_planted": true,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0187",
+    "customer_id": "CUST-0187",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0188",
+    "customer_id": "CUST-0188",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0189",
+    "customer_id": "CUST-0189",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0190",
+    "customer_id": "CUST-0190",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": true,
+    "adverse_media_hit": null,
+    "graph_ring_membership": "RING-08",
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0191",
+    "customer_id": "CUST-0191",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0192",
+    "customer_id": "CUST-0192",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0193",
+    "customer_id": "CUST-0193",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": "RING-01",
+    "forged_document_planted": true,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0194",
+    "customer_id": "CUST-0194",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0195",
+    "customer_id": "CUST-0195",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0196",
+    "customer_id": "CUST-0196",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0197",
+    "customer_id": "CUST-0197",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": true,
+    "adverse_media_hit": null,
+    "graph_ring_membership": "RING-06",
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0198",
+    "customer_id": "CUST-0198",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0199",
+    "customer_id": "CUST-0199",
+    "structuring_planted": true,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": "RING-03",
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0200",
+    "customer_id": "CUST-0200",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0201",
+    "customer_id": "CUST-0201",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0202",
+    "customer_id": "CUST-0202",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0203",
+    "customer_id": "CUST-0203",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": "NAME_SIMILARITY_ONLY",
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": [
+      "name_similarity"
+    ]
+  },
+  {
+    "account_id": "ACC-0204",
+    "customer_id": "CUST-0204",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": "NAME_SIMILARITY_ONLY",
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": [
+      "name_similarity"
+    ]
+  },
+  {
+    "account_id": "ACC-0205",
+    "customer_id": "CUST-0205",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": true,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0206",
+    "customer_id": "CUST-0206",
+    "structuring_planted": true,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0207",
+    "customer_id": "CUST-0207",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0208",
+    "customer_id": "CUST-0208",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": "NAME_SIMILARITY_ONLY",
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": [
+      "name_similarity"
+    ]
+  },
+  {
+    "account_id": "ACC-0209",
+    "customer_id": "CUST-0209",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0210",
+    "customer_id": "CUST-0210",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": true,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0211",
+    "customer_id": "CUST-0211",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0212",
+    "customer_id": "CUST-0212",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": "RING-03",
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0213",
+    "customer_id": "CUST-0213",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": "NAME_SIMILARITY_ONLY",
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": [
+      "name_similarity"
+    ]
+  },
+  {
+    "account_id": "ACC-0214",
+    "customer_id": "CUST-0214",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": "ADVERSE_NEWS",
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0215",
+    "customer_id": "CUST-0215",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0216",
+    "customer_id": "CUST-0216",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0217",
+    "customer_id": "CUST-0217",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0218",
+    "customer_id": "CUST-0218",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0219",
+    "customer_id": "CUST-0219",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0220",
+    "customer_id": "CUST-0220",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0221",
+    "customer_id": "CUST-0221",
+    "structuring_planted": true,
+    "kyc_mismatch_planted": true,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0222",
+    "customer_id": "CUST-0222",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": "RING-06",
+    "forged_document_planted": true,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0223",
+    "customer_id": "CUST-0223",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0224",
+    "customer_id": "CUST-0224",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0225",
+    "customer_id": "CUST-0225",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0226",
+    "customer_id": "CUST-0226",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0227",
+    "customer_id": "CUST-0227",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0228",
+    "customer_id": "CUST-0228",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": "NAME_SIMILARITY_ONLY",
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": [
+      "name_similarity"
+    ]
+  },
+  {
+    "account_id": "ACC-0229",
+    "customer_id": "CUST-0229",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": [
+      "round_amount"
+    ]
+  },
+  {
+    "account_id": "ACC-0230",
+    "customer_id": "CUST-0230",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": "ADVERSE_NEWS",
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0231",
+    "customer_id": "CUST-0231",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": true,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0232",
+    "customer_id": "CUST-0232",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0233",
+    "customer_id": "CUST-0233",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": true,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0234",
+    "customer_id": "CUST-0234",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0235",
+    "customer_id": "CUST-0235",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": [
+      "round_amount"
+    ]
+  },
+  {
+    "account_id": "ACC-0236",
+    "customer_id": "CUST-0236",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": "NAME_SIMILARITY_ONLY",
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": [
+      "name_similarity"
+    ]
+  },
+  {
+    "account_id": "ACC-0237",
+    "customer_id": "CUST-0237",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0238",
+    "customer_id": "CUST-0238",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0239",
+    "customer_id": "CUST-0239",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0240",
+    "customer_id": "CUST-0240",
+    "structuring_planted": true,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0241",
+    "customer_id": "CUST-0241",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0242",
+    "customer_id": "CUST-0242",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0243",
+    "customer_id": "CUST-0243",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0244",
+    "customer_id": "CUST-0244",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0245",
+    "customer_id": "CUST-0245",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": true,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": true,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0246",
+    "customer_id": "CUST-0246",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0247",
+    "customer_id": "CUST-0247",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0248",
+    "customer_id": "CUST-0248",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0249",
+    "customer_id": "CUST-0249",
+    "structuring_planted": true,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": "RING-07",
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0250",
+    "customer_id": "CUST-0250",
+    "structuring_planted": true,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": "RING-07",
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0251",
+    "customer_id": "CUST-0251",
+    "structuring_planted": true,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": "RING-08",
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0252",
+    "customer_id": "CUST-0252",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0253",
+    "customer_id": "CUST-0253",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0254",
+    "customer_id": "CUST-0254",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": "NAME_SIMILARITY_ONLY",
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": [
+      "name_similarity"
+    ]
+  },
+  {
+    "account_id": "ACC-0255",
+    "customer_id": "CUST-0255",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": "NAME_SIMILARITY_ONLY",
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": [
+      "name_similarity"
+    ]
+  },
+  {
+    "account_id": "ACC-0256",
+    "customer_id": "CUST-0256",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": "NAME_SIMILARITY_ONLY",
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": [
+      "name_similarity"
+    ]
+  },
+  {
+    "account_id": "ACC-0257",
+    "customer_id": "CUST-0257",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0258",
+    "customer_id": "CUST-0258",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": "NAME_SIMILARITY_ONLY",
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": [
+      "name_similarity"
+    ]
+  },
+  {
+    "account_id": "ACC-0259",
+    "customer_id": "CUST-0259",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0260",
+    "customer_id": "CUST-0260",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0261",
+    "customer_id": "CUST-0261",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0262",
+    "customer_id": "CUST-0262",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0263",
+    "customer_id": "CUST-0263",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0264",
+    "customer_id": "CUST-0264",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0265",
+    "customer_id": "CUST-0265",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": [
+      "round_amount"
+    ]
+  },
+  {
+    "account_id": "ACC-0266",
+    "customer_id": "CUST-0266",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0267",
+    "customer_id": "CUST-0267",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0268",
+    "customer_id": "CUST-0268",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0269",
+    "customer_id": "CUST-0269",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0270",
+    "customer_id": "CUST-0270",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0271",
+    "customer_id": "CUST-0271",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0272",
+    "customer_id": "CUST-0272",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": "ADVERSE_NEWS",
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0273",
+    "customer_id": "CUST-0273",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0274",
+    "customer_id": "CUST-0274",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0275",
+    "customer_id": "CUST-0275",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0276",
+    "customer_id": "CUST-0276",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0277",
+    "customer_id": "CUST-0277",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0278",
+    "customer_id": "CUST-0278",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0279",
+    "customer_id": "CUST-0279",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0280",
+    "customer_id": "CUST-0280",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0281",
+    "customer_id": "CUST-0281",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0282",
+    "customer_id": "CUST-0282",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0283",
+    "customer_id": "CUST-0283",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0284",
+    "customer_id": "CUST-0284",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": [
+      "graph_coincidence"
+    ]
+  },
+  {
+    "account_id": "ACC-0285",
+    "customer_id": "CUST-0285",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": [
+      "graph_coincidence"
+    ]
+  },
+  {
+    "account_id": "ACC-0286",
+    "customer_id": "CUST-0286",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": [
+      "graph_coincidence"
+    ]
+  },
+  {
+    "account_id": "ACC-0287",
+    "customer_id": "CUST-0287",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0288",
+    "customer_id": "CUST-0288",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": [
+      "round_amount"
+    ]
+  },
+  {
+    "account_id": "ACC-0289",
+    "customer_id": "CUST-0289",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": "RING-08",
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0290",
+    "customer_id": "CUST-0290",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0291",
+    "customer_id": "CUST-0291",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0292",
+    "customer_id": "CUST-0292",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": [
+      "round_amount"
+    ]
+  },
+  {
+    "account_id": "ACC-0293",
+    "customer_id": "CUST-0293",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0294",
+    "customer_id": "CUST-0294",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0295",
+    "customer_id": "CUST-0295",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": [
+      "graph_coincidence"
+    ]
+  },
+  {
+    "account_id": "ACC-0296",
+    "customer_id": "CUST-0296",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0297",
+    "customer_id": "CUST-0297",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0298",
+    "customer_id": "CUST-0298",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0299",
+    "customer_id": "CUST-0299",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": true,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0300",
+    "customer_id": "CUST-0300",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "decoy_types": []
+  }
+]
