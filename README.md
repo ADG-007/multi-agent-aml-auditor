@@ -33,7 +33,7 @@ src/
   orchestration/  Pipeline wiring
   evaluation/     Scoring / evaluation harness
   demo/           Demo + live-injection surface
-data/             Generated, seed-reproducible dataset (committed)
+data/             Generated, seed-reproducible dataset (JSON committed; images and index rebuilt locally)
   _ground_truth/  Evidence ledger — evaluation only, never read by a pipeline stage
 ```
 
@@ -45,6 +45,8 @@ Requires Python and, for OCR in later phases, the Tesseract binary installed at 
 python -m venv .venv
 .venv\Scripts\activate        # Windows
 pip install -r requirements.txt
+python -m src.generators.rulebook      # build the rulebook search index (not committed)
+python -m src.generators.id_documents  # render the identity document images (not committed)
 ```
 
 ## Regenerating the dataset

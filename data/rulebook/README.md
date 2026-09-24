@@ -1,6 +1,6 @@
 # Policy Rulebook
 
-18 clauses across six categories.
+20 clauses across six categories.
 
 ## STRUCTURING
 
@@ -37,3 +37,5 @@
 - **XB-001** - Originator and beneficiary information on cross-border transfers
 - **XB-002** - Liberalised Remittance Scheme limits and permissible purposes
 - **XB-003** - Remittances involving higher-risk jurisdictions and concentrated counterparties
+- **XB-004** - Reporting of cross-border wire transfers above five lakh rupees
+- **XB-005** - Round-tripping of funds through overseas entities

@@ -7,6 +7,7 @@ from src.schemas.common import (
     STAGE_WEIGHTS,
     AccountType,
     Disposition,
+    Gender,
     IdDocumentType,
     PipelineStatus,
     ReasoningStep,
@@ -16,6 +17,7 @@ from src.schemas.common import (
     SeverityTier,
     StageName,
     StageStatus,
+    TransactionDirection,
     TransactionType,
 )
 from src.schemas.domain import (
@@ -51,6 +53,7 @@ __all__ = [
     "Counterparty",
     "Customer",
     "Disposition",
+    "Gender",
     "EvidenceLedgerEntry",
     "FraudRing",
     "IdDocumentType",
@@ -73,5 +76,6 @@ __all__ = [
     "StageName",
     "StageStatus",
     "Transaction",
+    "TransactionDirection",
     "TransactionType",
 ]

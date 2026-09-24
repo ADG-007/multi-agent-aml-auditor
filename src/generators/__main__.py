@@ -9,9 +9,14 @@ fixed once, and every generator downstream reads it rather than deciding indepen
 which is what keeps a structuring case in the transaction data and a structuring row in the
 ledger describing the same account.
 
-Output lands in data/, and is committed to the repository rather than regenerated per run.
-That is deliberate: a library version change in a different environment would otherwise
-shift the data underneath the ground-truth labels without anything appearing to break.
+Output lands in data/, and the JSON is committed to the repository rather than regenerated
+per run. That is deliberate: a library version change in a different environment would
+otherwise shift the data underneath the ground-truth labels without anything appearing to
+break. The two binary outputs are the exception - the document images and the rulebook's
+search index are rebuilt locally from the committed JSON:
+
+    python -m src.generators.id_documents
+    python -m src.generators.rulebook
 """
 
 from __future__ import annotations
@@ -64,17 +69,17 @@ def main(seed: int = cfg.SEED, skip_embeddings: bool = False) -> None:
     print(f"Generating the AML Auditor synthetic dataset (seed={seed})\n")
 
     started = _step(1, total, "customers and accounts")
-    customers, accounts = customers_module.generate(rng)
+    customers, accounts, cohorts = customers_module.generate(rng)
     _write_models(cfg.CUSTOMERS_FILE, customers)
     _write_models(cfg.ACCOUNTS_FILE, accounts)
     _done(started, f"{len(customers)} customers, {len(accounts)} accounts")
 
     started = _step(2, total, "fraud rings")
-    fraud_rings = rings_module.generate(rng, customers, accounts)
+    fraud_rings = rings_module.generate(rng, customers, accounts, cohorts)
     _done(started, f"{len(fraud_rings)} rings covering {sum(len(r.member_account_ids) for r in fraud_rings)} accounts")
 
     started = _step(3, total, "planting plan (drives every channel below)")
-    plan = ledger_module.build_planting_plan(rng, accounts, fraud_rings)
+    plan = ledger_module.build_planting_plan(rng, accounts, fraud_rings, cohorts)
     escalate = sum(1 for a in accounts if plan.real_channels_for(a.account_id) >= 2)
     monitor = sum(1 for a in accounts if plan.real_channels_for(a.account_id) == 1)
     _done(started, f"{escalate} escalate-worthy, {monitor} monitor-worthy")
@@ -88,21 +93,21 @@ def main(seed: int = cfg.SEED, skip_embeddings: bool = False) -> None:
     _done(started, f"{len(transactions)} transactions, {len(counterparties)} counterparties")
 
     started = _step(5, total, "KYC profiles")
-    profiles = kyc_module.generate(rng, customers, accounts, transactions, plan)
+    profiles = kyc_module.generate(rng, customers, accounts, transactions, counterparties, plan)
     _write_models(cfg.KYC_PROFILES_FILE, profiles)
     _done(started, f"{len(profiles)} narratives")
 
     started = _step(6, total, "identity document images")
-    manifest = documents_module.generate(rng, customers, accounts, plan)
+    manifest = documents_module.generate(customers, accounts, plan.forged_document, seed)
     _done(started, f"{len(manifest)} images rendered")
 
     started = _step(7, total, "adverse media corpus")
-    entries = adverse_media_module.generate(rng, customers, accounts, plan)
+    entries = adverse_media_module.generate(rng, customers, accounts, plan, counterparties)
     _write_models(cfg.ADVERSE_MEDIA_FILE, entries)
     _done(started, f"{len(entries)} entries")
 
     started = _step(8, total, "entity graph")
-    graph = graph_module.build(customers, accounts, transactions, counterparties, plan)
+    graph = graph_module.build(customers, accounts, transactions, counterparties, plan, fraud_rings)
     graph_module.write(graph)
     _done(started, f"{graph.number_of_nodes()} nodes, {graph.number_of_edges()} edges")
 

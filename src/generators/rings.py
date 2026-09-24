@@ -5,9 +5,13 @@ and Stage 5 has to rediscover the cluster from graph topology alone. That separa
 whole point: if the ring label reached the graph, Stage 5 would be reading the answer rather
 than finding it, and Phase 11's per-stage recall number would mean nothing.
 
-Eight rings, six local and two international. A ring is a set of accounts sharing an
-identifier with no legitimate reason to share one - the same handset, the same broadband
-connection, sometimes the same registered address.
+Eleven rings: six local, two international and three round-trip. A ring is a set of
+accounts sharing an identifier with no legitimate reason to share one - the same handset, the
+same broadband connection, sometimes the same registered address.
+
+A round-trip ring sends money abroad to one foreign company and receives it back from a
+second one registered at the same premises, so that the return looks like unrelated foreign
+income. Its members come from the cross-border block in customers.py.
 """
 
 from __future__ import annotations
@@ -15,6 +19,7 @@ from __future__ import annotations
 import random
 
 from src.generators import config as cfg
+from src.generators.addresses import indian_address
 from src.generators.identifiers import device_id, ip_address
 from src.schemas import Account, Customer, FraudRing, ResidencyStatus, RingType
 
@@ -23,6 +28,17 @@ from src.schemas import Account, Customer, FraudRing, ResidencyStatus, RingType
 #: agree on the cluster without either one importing the other's output.
 FOREIGN_RING_CLUSTER_IDS: tuple[str, ...] = tuple(
     f"CPF-{i + 1:04d}" for i in range(cfg.FOREIGN_RING_CLUSTER_SIZE)
+)
+
+#: Reserved counterparty IDs for the round-trip rings: one (outbound, return) pair per ring,
+#: each pair registered at the same foreign address. Numbered straight after the offshore
+#: cluster so transactions.py can create them in a fixed position.
+ROUND_TRIP_ENTITY_PAIRS: tuple[tuple[str, str], ...] = tuple(
+    (
+        f"CPF-{cfg.FOREIGN_RING_CLUSTER_SIZE + 2 * i + 1:04d}",
+        f"CPF-{cfg.FOREIGN_RING_CLUSTER_SIZE + 2 * i + 2:04d}",
+    )
+    for i in range(cfg.NUM_ROUND_TRIP_RINGS)
 )
 
 #: Addresses a ring re-registers several accounts against. Deliberately mundane commercial
@@ -44,18 +60,21 @@ def generate(
     rng: random.Random,
     customers: list[Customer],
     accounts: list[Account],
+    cohorts: dict[str, str],
 ) -> list[FraudRing]:
-    """Assemble the eight rings and assign their members.
+    """Assemble the rings and assign their members.
 
     International rings are seeded preferentially from NRI accounts, because a cross-border
     funnel run entirely through resident accounts would be an odd shape for the cross-border
-    clause category to cite. Local rings draw from domestic accounts.
+    clause category to cite. Local rings draw from domestic accounts outside the cross-border
+    block, and round-trip rings from that block's round_trip cohort.
     """
     residency_by_customer = {c.customer_id: c.residency_status for c in customers}
     domestic_accounts = [
         a.account_id
         for a in accounts
         if residency_by_customer[a.customer_id] == ResidencyStatus.DOMESTIC
+        and a.account_id not in cohorts
     ]
     nri_accounts = [
         a.account_id
@@ -70,7 +89,7 @@ def generate(
 
     rings: list[FraudRing] = []
 
-    for index in range(cfg.NUM_RINGS):
+    for index in range(cfg.NUM_LOCAL_RINGS + cfg.NUM_INTERNATIONAL_RINGS):
         is_international = index >= cfg.NUM_LOCAL_RINGS
         ring_id = f"RING-{index + 1:02d}"
 
@@ -85,7 +104,7 @@ def generate(
         members.sort()
 
         # Every ring shares a handset. A shared device is the hard identifier Stage 5 is
-        # meant to weight most heavily, so it is the one signal present in all eight.
+        # meant to weight most heavily, so it is the one signal present in every ring.
         shared_device = device_id(rng)
 
         # Roughly half also share a connection, and a quarter also share a registered
@@ -105,6 +124,23 @@ def generate(
                 foreign_counterparty_ids=(
                     list(FOREIGN_RING_CLUSTER_IDS) if is_international else []
                 ),
+            )
+        )
+
+    # Round-trip rings. They share a handset like every other ring - the money moves through
+    # foreign companies, but the accounts sending it are still run together.
+    round_trip_pool = sorted(a for a, cohort in cohorts.items() if cohort == "round_trip")
+    rng.shuffle(round_trip_pool)
+    for pair_index, entity_pair in enumerate(ROUND_TRIP_ENTITY_PAIRS):
+        members = sorted(round_trip_pool[pair_index * cfg.RING_SIZE : (pair_index + 1) * cfg.RING_SIZE])
+        rings.append(
+            FraudRing(
+                ring_id=f"RING-{len(rings) + 1:02d}",
+                ring_type=RingType.ROUND_TRIP,
+                member_account_ids=members,
+                shared_device_id=device_id(rng),
+                shared_ip_address=ip_address(rng) if rng.random() < 0.55 else None,
+                foreign_counterparty_ids=list(entity_pair),
             )
         )
 
@@ -136,8 +172,10 @@ def generate_coincidence_clusters(
                 "member_account_ids": pair,
                 "shared_device_id": device_id(rng),
                 "shared_ip_address": ip_address(rng),
-                # Half are a household (shared address too), half a shared business line.
-                "shared_address": RING_SHARED_ADDRESSES[index] if share_address else None,
+                # Half are a household (shared address too), half a shared business line. A
+                # household's address is a home of its own, never one of the rings' premises -
+                # reusing those would wire an innocent couple straight into a real ring.
+                "shared_address": indian_address(rng) if share_address else None,
                 "reason": "household" if share_address else "shared business premises",
             }
         )

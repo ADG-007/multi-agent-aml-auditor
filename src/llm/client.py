@@ -25,6 +25,7 @@ from __future__ import annotations
 
 import logging
 import re
+from dataclasses import replace
 from typing import Any, TypeVar
 
 from pydantic import BaseModel
@@ -86,10 +87,15 @@ def looks_like_refusal(text: str | None, finish_reason: str | None = None) -> bo
 
 
 def soften_prompt(prompt: str) -> str:
-    """Step 3 of the refusal chain: same scenario, less classifier-triggering vocabulary."""
+    """Step 3 of the refusal chain: same scenario, less classifier-triggering vocabulary.
+
+    Whole words only, so "suspected" is left alone rather than becoming "subjected". Applied
+    to the stage's own prompt before the preamble is added, never to the preamble itself.
+    """
     softened = prompt
     for original, replacement in _SOFTENING_SUBSTITUTIONS:
-        softened = re.sub(re.escape(original), replacement, softened, flags=re.IGNORECASE)
+        pattern = rf"\b{re.escape(original)}\b"
+        softened = re.sub(pattern, replacement, softened, flags=re.IGNORECASE)
     return softened
 
 
@@ -198,6 +204,7 @@ def get_structured_response(
     model_id = config.model_id
     assert provider is not None and model_id is not None  # narrowed by is_decided
     framed = build_prompt(prompt, config)
+    softened = build_prompt(soften_prompt(prompt), config)
 
     # Steps 2-3: first attempt, then one softened retry if a safety classifier declined.
     try:
@@ -214,7 +221,7 @@ def get_structured_response(
 
     try:
         return _invoke_once(
-            soften_prompt(framed), schema, provider, model_id, config.temperature, stage_name
+            softened, schema, provider, model_id, config.temperature, stage_name
         )
     except LLMStageFailure as second_failure:
         if second_failure.reason != LLMFailureReason.CONTENT_POLICY_REFUSAL:
@@ -243,8 +250,11 @@ def get_structured_response(
         config.fallback_provider.value,
         config.fallback_model_id,
     )
+    # The fallback may be a different provider family, so the prompt is re-framed for it: a
+    # local fallback gets no preamble, a cloud one does.
+    fallback_config = replace(config, provider=config.fallback_provider)
     return _invoke_once(
-        soften_prompt(framed),
+        build_prompt(soften_prompt(prompt), fallback_config),
         schema,
         config.fallback_provider,
         config.fallback_model_id,

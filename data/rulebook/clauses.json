@@ -198,5 +198,29 @@
       "RBI Master Direction on KYC - enhanced due diligence"
     ],
     "metadata": {}
+  },
+  {
+    "clause_id": "XB-004",
+    "title": "Reporting of cross-border wire transfers above five lakh rupees",
+    "text": "Every cross-border wire transfer of more than five lakh rupees, or its equivalent in foreign currency, where either the origin or the destination of the funds is in India, must be recorded and reported to FIU-IND in the monthly Cross-Border Wire Transfer Report. The threshold applies to each transfer individually. The purpose code declared for the remittance must be consistent with the customer's profile; a declared purpose the customer's circumstances cannot support is a ground for further examination.",
+    "category": "CROSS_BORDER",
+    "sources": [
+      "Prevention of Money-laundering (Maintenance of Records) Rules, 2005 - Rule 3",
+      "FIU-IND Cross-Border Wire Transfer Report (CBWTR) guidance"
+    ],
+    "metadata": {
+      "threshold_inr": 500000
+    }
+  },
+  {
+    "clause_id": "XB-005",
+    "title": "Round-tripping of funds through overseas entities",
+    "text": "Funds remitted from India to an overseas entity that return to India, to the same customer or to connected parties, from that entity or from an entity linked to it - by common registered address, ownership or control - must be treated as potential round-tripping. Overseas investment structures that route money back into India are permitted only within the limits of the Overseas Investment Rules. Where remittances out and receipts back are close in amount and timing and the declared purposes differ, the commercial rationale must be established, and a suspicious transaction report considered if it cannot be.",
+    "category": "CROSS_BORDER",
+    "sources": [
+      "Foreign Exchange Management (Overseas Investment) Rules, 2022 - Rule 19(3)",
+      "FATF Recommendation 20 (Reporting of suspicious transactions)"
+    ],
+    "metadata": {}
   }
 ]

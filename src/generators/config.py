@@ -64,14 +64,30 @@ FRAUD_RINGS_FILE = GROUND_TRUTH_DIR / "fraud_rings.json"
 #: escalate-worthy cases swings Phase 11's reported recall by more than 13 points; 300
 #: halves that swing to about 6.7 points, which is the best stability-per-generation-cost
 #: point before diminishing returns.
-NUM_CUSTOMERS = 300
+NUM_BASE_CUSTOMERS = 300
 
-#: 75% domestic / 25% NRI.
-NUM_DOMESTIC = 225
+#: 75% domestic / 25% NRI across the base 300.
+NUM_BASE_DOMESTIC = 225
 NUM_NRI = 75
 
-#: One account per customer keeps "one case, one verdict, per account" clean for Phase 11.
-ACCOUNTS_PER_CUSTOMER = 1
+#: The cross-border block, added on top of the base 300 (all domestic residents). Each cohort
+#: is either a planted typology or its legitimate look-alike:
+#:   round_trip            money sent abroad that comes back from a linked foreign entity
+#:   unexplained_inward    foreign money arriving that the customer's profile cannot explain
+#:   family_inward         relatives abroad sending household money home (legitimate)
+#:   education_outward     parents paying a child's university fees abroad (legitimate)
+#:   lrs_outward           gifts and investments abroad within the LRS (legitimate)
+CROSS_BORDER_COHORTS: tuple[tuple[str, int], ...] = (
+    ("round_trip", 12),
+    ("unexplained_inward", 8),
+    ("family_inward", 10),
+    ("education_outward", 8),
+    ("lrs_outward", 6),
+)
+NUM_CROSS_BORDER_CUSTOMERS = sum(count for _, count in CROSS_BORDER_COHORTS)
+
+NUM_CUSTOMERS = NUM_BASE_CUSTOMERS + NUM_CROSS_BORDER_CUSTOMERS
+NUM_DOMESTIC = NUM_BASE_DOMESTIC + NUM_CROSS_BORDER_CUSTOMERS
 
 #: Declared annual income spread, INR.
 INCOME_MIN = 300_000
@@ -94,9 +110,10 @@ NEAR_THRESHOLD_PCT = 0.9
 STRUCTURING_BAND_LOW = int(CTR_THRESHOLD_INR * NEAR_THRESHOLD_PCT)
 STRUCTURING_BAND_HIGH = CTR_THRESHOLD_INR
 
-#: Ordinary retail transaction range.
-NORMAL_AMOUNT_MIN = 500
-NORMAL_AMOUNT_MAX = 200_000
+#: Cross-Border Wire Transfer Report threshold. PMLA (Maintenance of Records) Rules 2005,
+#: Rule 3 - every cross-border wire above five lakh rupees, in either direction, is reported
+#: to FIU-IND monthly. Judged per transfer, not aggregated.
+CBWTR_THRESHOLD_INR = 500_000
 
 #: Values a benign customer plausibly transacts at, and the basis of the round-amount decoy.
 ROUND_AMOUNTS = (1_000, 5_000, 10_000, 25_000, 50_000, 100_000)
@@ -120,9 +137,10 @@ STRUCTURING_TXN_MAX = 8
 # Fraud rings
 # --------------------------------------------------------------------------------------
 
-NUM_RINGS = 8
 NUM_LOCAL_RINGS = 6
 NUM_INTERNATIONAL_RINGS = 2
+NUM_ROUND_TRIP_RINGS = 3
+NUM_RINGS = NUM_LOCAL_RINGS + NUM_INTERNATIONAL_RINGS + NUM_ROUND_TRIP_RINGS
 RING_SIZE = 4
 
 #: Per ring: this many members sit in the escalate-worthy group with a second planted
@@ -135,13 +153,12 @@ RING_CORE_MEMBERS = 3
 # --------------------------------------------------------------------------------------
 
 #: Two or more real evidence channels -> SUSPICIOUS-ESCALATE-worthy (~10% of accounts).
-NUM_ESCALATE_WORTHY = 30
+#: 30 from the base population, plus the 9 round-trip core members (ring + KYC mismatch).
+NUM_ESCALATE_WORTHY = 30 + NUM_ROUND_TRIP_RINGS * 3
 
-#: Exactly one real channel -> MONITOR-worthy (~20%).
-NUM_MONITOR_WORTHY = 60
-
-#: Escalate-worthy accounts that are not ring members, carrying two non-graph channels.
-NUM_NON_RING_ESCALATE = NUM_ESCALATE_WORTHY - (NUM_RINGS * RING_CORE_MEMBERS)
+#: Exactly one real channel -> MONITOR-worthy (~20%). 60 from the base population, plus the
+#: 3 round-trip solo members (ring only) and the unexplained-inward cohort (KYC mismatch only).
+NUM_MONITOR_WORTHY = 60 + NUM_ROUND_TRIP_RINGS + 8
 
 # --------------------------------------------------------------------------------------
 # Deliberate false-positive decoys (all three types, per Phase 11)
@@ -155,6 +172,9 @@ NUM_GRAPH_COINCIDENCE_PAIRS = 6
 
 #: Clean accounts that transact heavily at round amounts without any sub-threshold pattern.
 NUM_ROUND_AMOUNT_DECOYS = 15
+
+#: Legitimate cross-border customers: family_inward + education_outward + lrs_outward.
+NUM_CROSS_BORDER_DECOYS = 24
 
 # --------------------------------------------------------------------------------------
 # Adverse media corpus
@@ -172,7 +192,6 @@ NUM_LINKED_ENTRIES = 32
 # --------------------------------------------------------------------------------------
 
 NUM_DOMESTIC_COUNTERPARTIES = 180
-NUM_FOREIGN_COUNTERPARTIES = 60
 
 #: The shared foreign cluster the two international rings funnel into.
 FOREIGN_RING_CLUSTER_SIZE = 5
@@ -188,23 +207,6 @@ NRI_COUNTRIES = (
     ("Canada", 0.09),
     ("Australia", 0.06),
     ("Qatar", 0.05),
-)
-
-#: Jurisdictions used for foreign counterparties. The offshore-financial-centre entries are
-#: what make the cross-border clause category meaningful rather than decorative.
-FOREIGN_COUNTERPARTY_COUNTRIES = (
-    "United Arab Emirates",
-    "Singapore",
-    "United States",
-    "United Kingdom",
-    "Hong Kong",
-    "Mauritius",
-    "Cyprus",
-    "Panama",
-    "Seychelles",
-    "British Virgin Islands",
-    "Switzerland",
-    "Malaysia",
 )
 
 # --------------------------------------------------------------------------------------

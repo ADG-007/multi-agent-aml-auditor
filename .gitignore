@@ -24,6 +24,13 @@ desktop.ini
 # NOTE: data/ is deliberately NOT ignored. phase_1_execution.md Step 5 specifies that the
 # seeded generator output (including data/_ground_truth/evidence_ledger.json) is committed,
 # so the dataset the pipeline and Phase 11 evaluation run against is reproducible from the repo.
+# The exceptions are the two binary outputs, rebuilt locally from the committed JSON instead:
+#   - the rulebook's ChromaDB index, which never rebuilds byte-identically anyway
+#         python -m src.generators.rulebook
+#   - the rendered identity document images (manifest.json stays committed)
+#         python -m src.generators.id_documents
+data/rulebook/chroma/
+data/documents/*.png
 
 # --- Markdown documentation stays local ---
 # Per the project owner: all markdown docs (MASTER_PLAN, decisions_and_progress,

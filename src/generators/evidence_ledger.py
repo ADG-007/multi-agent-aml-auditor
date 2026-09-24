@@ -28,7 +28,10 @@ from dataclasses import dataclass, field
 
 from src.generators import config as cfg
 from src.generators import rings as rings_module
-from src.schemas import Account, EvidenceLedgerEntry, FraudRing, SeverityTier
+from src.schemas import Account, EvidenceLedgerEntry, FraudRing, RingType, SeverityTier
+
+#: Cross-border cohorts that are legitimate look-alikes rather than planted typologies.
+CROSS_BORDER_DECOY_COHORTS = frozenset({"family_inward", "education_outward", "lrs_outward"})
 
 
 @dataclass
@@ -44,6 +47,31 @@ class PlantingPlan:
     name_similarity_decoys: set[str] = field(default_factory=set)
     round_amount_decoys: set[str] = field(default_factory=set)
     coincidence_clusters: list[dict] = field(default_factory=list)
+
+    #: The cross-border block: account -> cohort (see config.CROSS_BORDER_COHORTS).
+    cross_border_cohorts: dict[str, str] = field(default_factory=dict)
+    #: Round-trip ring members who complete the loop (money out, money back). The ring's
+    #: fourth member only sends money out: the one who places funds into the scheme.
+    round_trip_core: set[str] = field(default_factory=set)
+    round_trip_solo: set[str] = field(default_factory=set)
+
+    def cohort(self, account_id: str) -> str | None:
+        return self.cross_border_cohorts.get(account_id)
+
+    @property
+    def cross_border_decoys(self) -> set[str]:
+        return {a for a, c in self.cross_border_cohorts.items() if c in CROSS_BORDER_DECOY_COHORTS}
+
+    @property
+    def cross_border_mismatch(self) -> set[str]:
+        """KYC mismatches whose contradiction is foreign money, not inflated domestic turnover.
+
+        transactions.py keeps these accounts' ordinary activity at a clean level and lets the
+        foreign flows carry the mismatch, so the contradiction is the one the typology is
+        actually about.
+        """
+        unexplained = {a for a, c in self.cross_border_cohorts.items() if c == "unexplained_inward"}
+        return self.round_trip_core | unexplained
 
     @property
     def graph_coincidence_decoys(self) -> set[str]:
@@ -81,6 +109,7 @@ def build_planting_plan(
     rng: random.Random,
     accounts: list[Account],
     fraud_rings: list[FraudRing],
+    cohorts: dict[str, str],
 ) -> PlantingPlan:
     """Decide the full planting layout.
 
@@ -90,11 +119,33 @@ def build_planting_plan(
     account is deliberate: it is monitor-worthy on a single circumstantial signal, and it is
     exactly the case Stage 5 has to catch without any corroboration from the other stages.
     """
-    plan = PlantingPlan()
+    plan = PlantingPlan(cross_border_cohorts=dict(cohorts))
 
     for ring in fraud_rings:
         for account_id in ring.member_account_ids:
             plan.ring_membership[account_id] = ring.ring_id
+
+    # ---------------------------------------------------------------------------------
+    # Round-trip rings: three members complete the loop and also carry a KYC mismatch (the
+    # money that comes back is foreign income their profile cannot explain), so they are
+    # escalate-worthy. The fourth only sends money out and carries ring membership alone.
+    # Handled separately from the other rings, whose second channels are drawn below.
+    # ---------------------------------------------------------------------------------
+    round_trip_rings = [r for r in fraud_rings if r.ring_type == RingType.ROUND_TRIP]
+    for ring in round_trip_rings:
+        members = list(ring.member_account_ids)
+        rng.shuffle(members)
+        for account_id in members[: cfg.RING_CORE_MEMBERS]:
+            plan.round_trip_core.add(account_id)
+            plan.kyc_mismatch.add(account_id)
+        plan.round_trip_solo.update(members[cfg.RING_CORE_MEMBERS :])
+
+    # Unexplained foreign money: a KYC mismatch on its own, so monitor-worthy.
+    for account_id, cohort in cohorts.items():
+        if cohort == "unexplained_inward":
+            plan.kyc_mismatch.add(account_id)
+
+    fraud_rings = [r for r in fraud_rings if r.ring_type != RingType.ROUND_TRIP]
 
     # ---------------------------------------------------------------------------------
     # Ring members: 3 core (escalate-worthy) + 1 solo (monitor-worthy) per ring.
@@ -130,7 +181,8 @@ def build_planting_plan(
     # ---------------------------------------------------------------------------------
     # Non-ring escalate-worthy accounts: two non-graph channels each.
     # ---------------------------------------------------------------------------------
-    unplanted = sorted({a.account_id for a in accounts} - ring_member_ids)
+    # The cross-border block is fully planned above and never drawn into other channels.
+    unplanted = sorted({a.account_id for a in accounts} - ring_member_ids - set(cohorts))
     rng.shuffle(unplanted)
 
     for account_id in _take(unplanted, 2):
@@ -193,6 +245,8 @@ def build_ledger(accounts: list[Account], plan: PlantingPlan) -> list[EvidenceLe
             decoys.append("graph_coincidence")
         if account_id in plan.round_amount_decoys:
             decoys.append("round_amount")
+        if account_id in plan.cross_border_decoys:
+            decoys.append("cross_border_legitimate")
 
         ledger.append(
             EvidenceLedgerEntry(

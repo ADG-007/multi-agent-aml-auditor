@@ -13,9 +13,13 @@ citation meaningless, while inventing customers costs nothing.
 The clause text is paraphrase rather than transcription - the substance of each obligation
 in the register a bank's internal policy manual uses.
 
-Eighteen clauses across six categories, three each. The categories deliberately mirror what
-the evidence stages actually detect, so policy_gap_identified stays rare in practice rather
-than firing on every case because the rulebook never covered the finding.
+Twenty clauses across six categories: three each, plus two more cross-border clauses added
+with the round-tripping typology. The categories deliberately mirror what the evidence stages
+actually detect, so policy_gap_identified stays rare in practice rather than firing on every
+case because the rulebook never covered the finding.
+
+The rulebook is a fixed document: clauses are added when a scenario the data contains is not
+covered, never regenerated or reworded run to run.
 """
 
 from __future__ import annotations
@@ -34,9 +38,9 @@ COLLECTION_NAME = "rulebook"
 def build_clauses() -> list[RulebookClause]:
     """The authored clause set.
 
-    STRUCT-001 is the only clause carrying machine-readable metadata, and it carries both
-    numbers rather than one: the reporting ceiling and the lower edge of the structuring
-    band. Stage 0's routing check and Stage 2's confidence formula both read from here, so a
+    Two clauses carry machine-readable metadata. XB-004 carries the cross-border wire
+    reporting threshold. STRUCT-001 carries two numbers rather than one: the reporting
+    ceiling and the lower edge of the structuring band. Stage 0's routing check and Stage 2's confidence formula both read from here, so a
     policy update injected at demo time moves both together and can never move only one.
     """
     return [
@@ -356,14 +360,54 @@ def build_clauses() -> list[RulebookClause]:
                 "recorded before the transfers are permitted to continue."
             ),
         ),
+        RulebookClause(
+            clause_id="XB-004",
+            title="Reporting of cross-border wire transfers above five lakh rupees",
+            category=RulebookCategory.CROSS_BORDER,
+            sources=[
+                "Prevention of Money-laundering (Maintenance of Records) Rules, 2005 - Rule 3",
+                "FIU-IND Cross-Border Wire Transfer Report (CBWTR) guidance",
+            ],
+            text=(
+                "Every cross-border wire transfer of more than five lakh rupees, or its "
+                "equivalent in foreign currency, where either the origin or the destination "
+                "of the funds is in India, must be recorded and reported to FIU-IND in the "
+                "monthly Cross-Border Wire Transfer Report. The threshold applies to each "
+                "transfer individually. The purpose code declared for the remittance must be "
+                "consistent with the customer's profile; a declared purpose the customer's "
+                "circumstances cannot support is a ground for further examination."
+            ),
+            metadata={"threshold_inr": cfg.CBWTR_THRESHOLD_INR},
+        ),
+        RulebookClause(
+            clause_id="XB-005",
+            title="Round-tripping of funds through overseas entities",
+            category=RulebookCategory.CROSS_BORDER,
+            sources=[
+                "Foreign Exchange Management (Overseas Investment) Rules, 2022 - Rule 19(3)",
+                "FATF Recommendation 20 (Reporting of suspicious transactions)",
+            ],
+            text=(
+                "Funds remitted from India to an overseas entity that return to India, to the "
+                "same customer or to connected parties, from that entity or from an entity "
+                "linked to it - by common registered address, ownership or control - must be "
+                "treated as potential round-tripping. Overseas investment structures that "
+                "route money back into India are permitted only within the limits of the "
+                "Overseas Investment Rules. Where remittances out and receipts back are close "
+                "in amount and timing and the declared purposes differ, the commercial "
+                "rationale must be established, and a suspicious transaction report "
+                "considered if it cannot be."
+            ),
+        ),
     ]
 
 
 def write_markdown(clauses: list[RulebookClause]) -> None:
     """Write one tagged markdown file per clause, plus a combined index.
 
-    Markdown is the authored source of record: a human can read and edit it, and the
-    ChromaDB collection is a derived artefact rebuilt from it.
+    A human-readable copy for browsing. The committed source of record is clauses.json
+    (the markdown files are gitignored with the rest of the project's markdown), and the
+    ChromaDB collection is rebuilt from that.
     """
     cfg.RULEBOOK_MARKDOWN_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -456,3 +500,19 @@ def embed(clauses: list[RulebookClause]) -> int:
         ],
     )
     return collection.count()
+
+
+def rebuild_index() -> int:
+    """Rebuild only the ChromaDB index from the committed clauses.json.
+
+    The index is not committed - ChromaDB stamps internal ids and timestamps, so two builds
+    from identical clauses never produce identical bytes. clauses.json is the committed
+    source of truth; this rebuilds the searchable copy from it after a clone.
+    """
+    raw = json.loads(cfg.RULEBOOK_JSON_FILE.read_text(encoding="utf-8"))
+    return embed([RulebookClause.model_validate(item) for item in raw])
+
+
+if __name__ == "__main__":
+    count = rebuild_index()
+    print(f"Rebuilt {cfg.RULEBOOK_CHROMA_DIR} with {count} clauses.")

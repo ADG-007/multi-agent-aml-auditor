@@ -3,8 +3,8 @@
     python -m src.generators.verify
 
 Two jobs, and the distinction matters. The assertions check that the data on disk matches
-the exact quantities phase_1_execution.md decided - 300 customers, 8 rings, 160 adverse-media
-entries, 30 escalate-worthy accounts. They exist to catch a generator bug immediately, at the
+the exact quantities phase_1_execution.md decided - 344 customers (300 plus the cross-border
+block), 11 rings, 160 adverse-media entries, 39 escalate-worthy accounts. They exist to catch a generator bug immediately, at the
 point it is cheap to find, rather than in Phase 11 when the evaluation numbers look strange
 and the cause is six phases back. They are not Phase 2's boundary tests and do not pretend to
 be.
@@ -55,6 +55,13 @@ def _load(path, model):
     return [model.model_validate(row) for row in json.loads(path.read_text(encoding="utf-8"))]
 
 
+def _lakh_phrase(amount: float) -> str:
+    """An amount as the KYC narratives write it (kyc_profiles._lakh)."""
+    from src.generators.kyc_profiles import _lakh
+
+    return _lakh(amount)
+
+
 def _rupees(amount: float) -> str:
     if amount >= 10_000_000:
         return f"Rs {amount / 10_000_000:,.2f} cr"
@@ -97,6 +104,14 @@ RETRIEVAL_PROBES: tuple[tuple[str, frozenset[str]], ...] = (
     (
         "repeated outward transfers to offshore companies in one jurisdiction",
         frozenset({"XB-003", "XB-001"}),
+    ),
+    (
+        "money wired to an overseas company came back from a linked company at the same address",
+        frozenset({"XB-005", "XB-003"}),
+    ),
+    (
+        "foreign wire above five lakh rupees with a purpose code the profile cannot support",
+        frozenset({"XB-004", "XB-002", "XB-001"}),
     ),
 )
 
@@ -154,14 +169,14 @@ def _check_retrieval(clause_count: int) -> None:
         f"every probe retrieves a covering clause within k=5 "
         f"({in_top_k}/{len(RETRIEVAL_PROBES)})",
     )
-    # Reported rather than asserted. MASTER_PLAN.md Phase 8 proposes discarding results
-    # beyond 0.5 cosine distance; these are the numbers that bar has to be set against, and
-    # setting it is Phase 8's decision, not this phase's.
+    # Reported rather than asserted. The Phase 8 relevance cutoff was raised from 0.5 to 0.75
+    # on these measurements (correct matches ~0.35-0.53, an irrelevant query ~0.96); this
+    # note is what shows whether that bar still holds if the clauses change.
     print(
         f"  [note] top-hit cosine distances "
         f"{min(top_distances):.3f}-{max(top_distances):.3f} "
-        f"(Phase 8's proposed 0.5 cutoff would drop "
-        f"{sum(1 for d in top_distances if d > 0.5)}/{len(top_distances)} top hits)"
+        f"(the 0.75 cutoff agreed for Phase 8 would drop "
+        f"{sum(1 for d in top_distances if d > 0.75)}/{len(top_distances)} top hits)"
     )
 
 
@@ -193,7 +208,14 @@ def _check_ocr(customers, accounts, ledger) -> None:
     for entry in clean_entries:
         customer = customers_by_id[entry.customer_id]
         text = read(customer)
-        if customer.dob.strftime("%d/%m/%Y") in text and customer.id_number.split()[0] in text:
+        # Aadhaar prints gender in full; the passport's single-letter "Sex" is too short to
+        # search for reliably in OCR output, so it is only checked on Aadhaar.
+        gender_ok = customer.id_document_type.value != "AADHAAR" or customer.gender.value in text
+        if (
+            customer.dob.strftime("%d/%m/%Y") in text
+            and customer.id_number.split()[0] in text
+            and gender_ok
+        ):
             clean_ok += 1
     check(
         clean_ok == len(clean_entries),
@@ -256,6 +278,35 @@ def main() -> int:
     residency = Counter(c.residency_status.value for c in customers)
     check(residency["DOMESTIC"] == cfg.NUM_DOMESTIC, f"{cfg.NUM_DOMESTIC} domestic customers")
     check(residency["NRI"] == cfg.NUM_NRI, f"{cfg.NUM_NRI} NRI customers")
+    from src.generators.addresses import INDIAN_LOCALITIES
+
+    valid_tails = {
+        f"{locality}, {city}, {state} {pin}"
+        for city, state, localities in INDIAN_LOCALITIES
+        for locality, pin in localities
+    }
+    check(
+        all(
+            any(c.address.endswith(tail) for tail in valid_tails)
+            for c in customers
+            if c.residency_status.value == "DOMESTIC"
+        ),
+        "every Indian address carries the real PIN code for its locality and city",
+    )
+    check(
+        all(c.country in c.address for c in customers if c.residency_status.value == "NRI"),
+        "every NRI address names the customer's country of residence",
+    )
+    nri_customers = {c.customer_id for c in customers if c.residency_status.value == "NRI"}
+    check(
+        all((a.account_type.value == "NRE") == (a.customer_id in nri_customers) for a in accounts),
+        "every NRI holds an NRE account, and only NRIs do",
+    )
+    genders = Counter(c.gender.value for c in customers)
+    check(
+        min(genders.values()) >= cfg.NUM_CUSTOMERS * 0.35 and len(genders) == 2,
+        f"both genders well represented ({dict(genders)})",
+    )
     check(
         all(cfg.INCOME_MIN <= c.stated_income <= cfg.INCOME_MAX for c in customers),
         f"stated incomes within {_rupees(cfg.INCOME_MIN)} - {_rupees(cfg.INCOME_MAX)}",
@@ -272,6 +323,17 @@ def main() -> int:
         all(c.id_number[0] not in "01" for c in customers if c.id_document_type.value == "AADHAAR"),
         "no Aadhaar number begins 0 or 1",
     )
+    from src.generators.names import WESTERN_FIRST_NAMES
+
+    check(
+        not any(c.name.split()[0] in WESTERN_FIRST_NAMES for c in customers)
+        and not any(
+            cp.name.split()[0] in WESTERN_FIRST_NAMES
+            for cp in counterparties
+            if cp.country == "India" or not cp.registered_address
+        ),
+        "every customer and individual counterparty has an Indian first name",
+    )
 
     # ==================================================================================
     print("\n=== Fraud rings ===")
@@ -283,6 +345,10 @@ def main() -> int:
     check(
         sum(1 for r in rings if r.ring_type.value == "INTERNATIONAL") == cfg.NUM_INTERNATIONAL_RINGS,
         f"{cfg.NUM_INTERNATIONAL_RINGS} international rings",
+    )
+    check(
+        sum(1 for r in rings if r.ring_type.value == "ROUND_TRIP") == cfg.NUM_ROUND_TRIP_RINGS,
+        f"{cfg.NUM_ROUND_TRIP_RINGS} round-trip rings",
     )
     ring_members = [m for r in rings for m in r.member_account_ids]
     check(len(ring_members) == len(set(ring_members)), "no account belongs to two rings")
@@ -307,6 +373,54 @@ def main() -> int:
         all(t.amount <= 100_000 for t in upi),
         "UPI transactions respect the real Rs 1,00,000 per-transaction ceiling",
     )
+    from src.generators.transactions import (
+        DIGITAL_RAILS,
+        FIXED_DIRECTION,
+        INWARD_PURPOSE_CODES,
+        OUTWARD_PURPOSE_CODES,
+    )
+
+    check(
+        all(FIXED_DIRECTION.get(t.type, t.direction) == t.direction for t in transactions),
+        "cash deposits are credits; withdrawals, ATM and card payments are debits",
+    )
+    check(
+        all(
+            (t.device_id is not None and t.ip_address is not None)
+            == (t.direction.value == "DEBIT" and t.type in DIGITAL_RAILS)
+            for t in transactions
+        ),
+        "phone and IP recorded only on transactions the customer sent digitally "
+        f"({sum(1 for t in transactions if t.device_id):,} of {len(transactions):,})",
+    )
+    counterparty_by_id = {c.counterparty_id: c for c in counterparties}
+    swift = [t for t in transactions if t.type.value == "SWIFT"]
+    check(
+        all(counterparty_by_id[t.counterparty_id].is_foreign == (t.type.value == "SWIFT") for t in transactions),
+        "foreign counterparties appear only on SWIFT, and every SWIFT wire has a foreign counterparty",
+    )
+    check(
+        all((t.purpose_code is not None) == (t.type.value == "SWIFT") for t in transactions),
+        "purpose codes appear on SWIFT wires and nowhere else",
+    )
+    check(
+        all(
+            (t.direction.value == "DEBIT" and t.purpose_code in OUTWARD_PURPOSE_CODES)
+            or (t.direction.value == "CREDIT" and t.purpose_code in INWARD_PURPOSE_CODES)
+            for t in swift
+        ),
+        "outgoing wires carry an RBI S-code and incoming wires a P-code",
+    )
+    raw_rows = json.loads(cfg.TRANSACTIONS_FILE.read_text(encoding="utf-8"))
+    check(
+        all(r["is_cross_border"] == (r["type"] == "SWIFT") for r in raw_rows),
+        "is_cross_border is stored on every row and true exactly for SWIFT",
+    )
+    print(
+        f"  [note] {sum(1 for t in swift if t.amount > cfg.CBWTR_THRESHOLD_INR)} of {len(swift)} "
+        f"SWIFT wires exceed the {_rupees(cfg.CBWTR_THRESHOLD_INR)} CBWTR threshold"
+    )
+
     band = [
         t
         for t in transactions
@@ -316,6 +430,38 @@ def main() -> int:
     check(
         all(t.amount < cfg.CTR_THRESHOLD_INR for t in band),
         "no planted structuring transaction crosses the CTR threshold",
+    )
+    check(all(t.direction.value == "CREDIT" for t in band), "structuring deposits are all credits")
+
+    # Every round-trip core member's loop has to actually close: a debit to the ring's
+    # outbound company, then a credit from its return company - registered at the same
+    # address - for most of the same money.
+    ring_by_id = {r.ring_id: r for r in rings}
+    loops_closed = 0
+    core_members = 0
+    for entry in ledger:
+        ring = ring_by_id.get(entry.graph_ring_membership or "")
+        if not ring or ring.ring_type.value != "ROUND_TRIP" or not entry.kyc_mismatch_planted:
+            continue
+        core_members += 1
+        outbound_id, return_id = ring.foreign_counterparty_ids
+        mine = [t for t in swift if t.account_id == entry.account_id]
+        outs = [t for t in mine if t.counterparty_id == outbound_id and t.direction.value == "DEBIT"]
+        backs = [t for t in mine if t.counterparty_id == return_id and t.direction.value == "CREDIT"]
+        same_address = (
+            counterparty_by_id[outbound_id].registered_address
+            == counterparty_by_id[return_id].registered_address
+        )
+        closes = any(
+            0.85 <= b.amount / o.amount <= 1.0 and o.timestamp < b.timestamp
+            for o in outs
+            for b in backs
+        )
+        if same_address and closes:
+            loops_closed += 1
+    check(
+        core_members == cfg.NUM_ROUND_TRIP_RINGS * cfg.RING_CORE_MEMBERS and loops_closed == core_members,
+        f"every round-trip loop closes through two companies at one address ({loops_closed}/{core_members})",
     )
 
     # ==================================================================================
@@ -398,6 +544,19 @@ def main() -> int:
         min(mismatch_ratios) > max(clean_ratios) * 0.9,
         "planted mismatches sit above the clean population, not inside it",
     )
+    money_in: dict[str, float] = {}
+    money_out: dict[str, float] = {}
+    for txn in transactions:
+        if txn.type.value == "SWIFT":
+            continue
+        side = money_in if txn.direction.value == "CREDIT" else money_out
+        side[txn.account_id] = side.get(txn.account_id, 0.0) + txn.amount
+    balance = [money_in.get(a, 0.0) / money_out[a] for a in untouched if money_out.get(a)]
+    check(
+        all(0.5 <= r <= 2.0 for r in balance),
+        f"clean accounts' domestic money in and out stay level "
+        f"(in/out ratio {min(balance):.2f}-{max(balance):.2f})",
+    )
 
     # ==================================================================================
     print("\n=== Decoys (false-positive bait) ===")
@@ -410,8 +569,32 @@ def main() -> int:
         f"{cfg.NUM_GRAPH_COINCIDENCE_PAIRS * 2} graph-coincidence decoy accounts",
     )
     check(len(round_decoys) == cfg.NUM_ROUND_AMOUNT_DECOYS, f"{cfg.NUM_ROUND_AMOUNT_DECOYS} round-amount decoys")
+    cross_border_decoys = [e for e in ledger if "cross_border_legitimate" in e.decoy_types]
     check(
-        all(e.real_channel_count == 0 for e in name_decoys + graph_decoys + round_decoys),
+        len(cross_border_decoys) == cfg.NUM_CROSS_BORDER_DECOYS,
+        f"{cfg.NUM_CROSS_BORDER_DECOYS} legitimate cross-border look-alikes",
+    )
+    check(
+        all(any(t.account_id == e.account_id for t in swift) for e in cross_border_decoys),
+        "every cross-border look-alike actually has foreign wires",
+    )
+    shared_foreign_addresses = Counter(
+        c.registered_address for c in counterparties if c.registered_address
+    )
+    round_trip_ids = {cp for r in rings if r.ring_type.value == "ROUND_TRIP" for cp in r.foreign_counterparty_ids}
+    cluster_ids = {cp for r in rings if r.ring_type.value == "INTERNATIONAL" for cp in r.foreign_counterparty_ids}
+    innocent_shared = [
+        c for c in counterparties
+        if c.registered_address
+        and shared_foreign_addresses[c.registered_address] > 1
+        and c.counterparty_id not in round_trip_ids | cluster_ids
+    ]
+    check(
+        len(innocent_shared) >= 4,
+        f"unrelated legitimate foreign companies share registered addresses ({len(innocent_shared)} companies)",
+    )
+    check(
+        all(e.real_channel_count == 0 for e in name_decoys + graph_decoys + round_decoys + cross_border_decoys),
         "no decoy account also carries a real evidence channel",
     )
 
@@ -433,6 +616,43 @@ def main() -> int:
         {customer_of[a] for a in ledger_media_accounts} <= linked_customers,
         "every planted adverse-media account has a corpus entry",
     )
+    # Stage 4 screens counterparties too. A counterparty whose name sits close to a corpus
+    # entry would give every account that pays it a hit nobody planted. difflib stands in
+    # for Stage 4's matcher here, at Stage 4's own 85 cutoff.
+    from difflib import SequenceMatcher
+
+    corpus_names = [n.lower() for m in media for n in [m.entity_name, *m.aliases]]
+    counterparty_collisions = [
+        cp.counterparty_id
+        for cp in counterparties
+        if any(SequenceMatcher(None, cp.name.lower(), n).ratio() >= 0.85 for n in corpus_names)
+    ]
+    check(
+        not counterparty_collisions,
+        f"no counterparty name comes within 85% of a corpus entry ({len(counterparty_collisions)} found)",
+    )
+
+    # ==================================================================================
+    print("\n=== KYC profiles ===")
+    import re
+
+    narrative_of = {p.customer_id: p.narrative for p in profiles}
+    check(
+        all(_lakh_phrase(c.stated_income) in narrative_of[c.customer_id] for c in customers),
+        "every narrative states the income on the customer record, mismatches included",
+    )
+    check(
+        not any(re.search(r"\ba [aeiou]", n, re.IGNORECASE) for n in narrative_of.values()),
+        'no narrative reads "a" before a vowel',
+    )
+    check(
+        not any(
+            "pension credit" in narrative_of[c.customer_id]
+            for c in customers
+            if "retired" not in c.occupation.lower()
+        ),
+        "only retired customers describe a pension credit",
+    )
 
     # ==================================================================================
     print("\n=== Documents ===")
@@ -442,7 +662,11 @@ def main() -> int:
     )
     rendered = {entry["file"] for entry in manifest}
     on_disk = {path.name for path in cfg.DOCUMENTS_DIR.glob("*.png")}
-    check(rendered <= on_disk, "every manifest entry exists on disk")
+    check(
+        rendered <= on_disk,
+        "every manifest entry exists on disk"
+        + ("" if on_disk else " - run `python -m src.generators.id_documents` to render them"),
+    )
     doc_types = Counter(entry["document_type"] for entry in manifest)
     check(doc_types["PAN"] == cfg.NUM_CUSTOMERS, "every customer has a PAN card")
     check(doc_types["AADHAAR"] == cfg.NUM_DOMESTIC, "every domestic customer has an Aadhaar")
@@ -472,6 +696,13 @@ def main() -> int:
         if data.get("node_type") == "counterparty" and data.get("is_foreign")
     ]
     check(len(foreign_cp) > 0, "foreign counterparty nodes carry is_foreign")
+    relations = Counter(data.get("relation") for _, _, data in graph.edges(data=True))
+    check(relations["REGISTERED_AT"] > 0, "foreign companies are linked to their registered-address nodes")
+    flow_edges = [d for _, _, d in graph.edges(data=True) if d.get("relation") == "TRANSACTED_WITH"]
+    check(
+        all("amount_in" in d and "amount_out" in d for d in flow_edges),
+        "every account-counterparty edge records money in and money out separately",
+    )
     check(
         not any("ring" in str(key).lower() for _, data in graph.nodes(data=True) for key in data),
         "graph leaks no ring membership",
@@ -481,11 +712,31 @@ def main() -> int:
         for node, data in graph.nodes(data=True)
         if data.get("node_type") == "device" and graph.degree(node) > 1
     ]
-    check(len(shared_devices) >= cfg.NUM_RINGS, "shared-device clusters are visible in the graph")
+    check(
+        len(shared_devices) == cfg.NUM_RINGS + cfg.NUM_GRAPH_COINCIDENCE_PAIRS,
+        f"shared phones visible for every ring and every household look-alike ({len(shared_devices)})",
+    )
+    check(
+        all(graph.has_edge(m, r.shared_device_id) for r in rings for m in r.member_account_ids),
+        "every ring member is linked to the ring's shared phone, even with phones on sent payments only",
+    )
+
+    def address_node(address: str) -> str:
+        return "ADDR::" + " ".join(address.split()).lower()
+
+    ring_addresses = [r for r in rings if r.shared_address]
+    check(
+        bool(ring_addresses)
+        and all(
+            set(graph.neighbors(address_node(r.shared_address))) == set(r.member_account_ids)
+            for r in ring_addresses
+        ),
+        f"every ring's shared address is in the graph, linking exactly its members ({len(ring_addresses)} rings)",
+    )
 
     # ==================================================================================
     print("\n=== Rulebook ===")
-    check(len(clauses) >= 12, f"{len(clauses)} clauses (12-18 expected)")
+    check(len(clauses) == 20, f"{len(clauses)} clauses (20 expected)")
     categories = Counter(c.category.value for c in clauses)
     check(len(categories) == 6, "all six categories covered")
     struct001 = next((c for c in clauses if c.clause_id == "STRUCT-001"), None)
@@ -499,6 +750,11 @@ def main() -> int:
             struct001.metadata.get("near_threshold_pct") == cfg.NEAR_THRESHOLD_PCT,
             f"STRUCT-001 carries near_threshold_pct = {cfg.NEAR_THRESHOLD_PCT}",
         )
+    xb004 = next((c for c in clauses if c.clause_id == "XB-004"), None)
+    check(
+        xb004 is not None and xb004.metadata.get("threshold_inr") == cfg.CBWTR_THRESHOLD_INR,
+        f"XB-004 carries the CBWTR threshold_inr = {cfg.CBWTR_THRESHOLD_INR:,}",
+    )
     check(all(c.sources for c in clauses), "every clause cites a real published source")
     check(cfg.RULEBOOK_CHROMA_DIR.exists(), "ChromaDB store written")
     _check_retrieval(len(clauses))
@@ -551,6 +807,9 @@ def _summary(customers, accounts, transactions, counterparties, profiles, media,
     print(f"   total          {len(transactions):>8,}")
     print(f"   per account    {len(transactions) / len(accounts):>8.1f} avg")
     print(f"   total value    {_rupees(sum(t.amount for t in transactions)):>8}")
+    print(f"   cross-border   {sum(1 for t in transactions if t.type.value == 'SWIFT'):>8,}")
+    for direction, count in Counter(t.direction.value for t in transactions).most_common():
+        print(f"   {direction.lower():<14} {count:>8,}")
     print("   by payment rail:")
     for rail, count in Counter(t.type.value for t in transactions).most_common():
         print(f"     {rail:<16} {count:>6,}")
@@ -597,7 +856,11 @@ def _summary(customers, accounts, transactions, counterparties, profiles, media,
     print("SAMPLE RECORDS")
     print("=" * 78)
 
-    sample_account = next(e for e in ledger if e.real_channel_count >= 2)
+    # An escalate-worthy structuring case, so the sample transaction below really is a
+    # sub-threshold deposit.
+    sample_account = next(
+        e for e in ledger if e.real_channel_count >= 2 and e.structuring_planted
+    )
     customer = next(c for c in customers if c.customer_id == sample_account.customer_id)
     print(f"\n-- Customer ({customer.customer_id}, an escalate-worthy case) --")
     for key, value in customer.model_dump(mode="json").items():

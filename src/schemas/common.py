@@ -18,6 +18,14 @@ from pydantic import BaseModel, Field
 # --------------------------------------------------------------------------------------
 
 
+class Gender(str, Enum):
+    """Gender as printed on the identity documents. The Aadhaar card prints it in full, the
+    passport data page as a single letter under "Sex"."""
+
+    MALE = "MALE"
+    FEMALE = "FEMALE"
+
+
 class ResidencyStatus(str, Enum):
     """Whether the customer banks from inside India or is a Non-Resident Indian."""
 
@@ -34,14 +42,20 @@ class IdDocumentType(str, Enum):
 
 
 class AccountType(str, Enum):
+    """SAVINGS and CURRENT are resident accounts. An NRI may not hold a resident savings
+    account under FEMA, so every NRI holds an NRE (Non-Resident External) account instead."""
+
     SAVINGS = "SAVINGS"
     CURRENT = "CURRENT"
+    NRE = "NRE"
 
 
 class TransactionType(str, Enum):
     """Real Indian payment-mode categories, replacing PaySim-style generic labels.
 
-    NEFT/RTGS/IMPS/UPI are the four interbank rails; the rest are branch/card channels.
+    NEFT/RTGS/IMPS/UPI are the four interbank rails; CASH/CHEQUE/ATM/POS are branch and card
+    channels. SWIFT is the only cross-border rail: money entering or leaving India arrives as
+    a SWIFT wire, never over UPI, NEFT or a card.
     """
 
     NEFT = "NEFT"
@@ -53,6 +67,14 @@ class TransactionType(str, Enum):
     CHEQUE = "CHEQUE"
     ATM = "ATM"
     POS = "POS"
+    SWIFT = "SWIFT"
+
+
+class TransactionDirection(str, Enum):
+    """Which way the money moved, from the account holder's side."""
+
+    CREDIT = "CREDIT"
+    DEBIT = "DEBIT"
 
 
 class SeverityTier(str, Enum):
@@ -70,6 +92,7 @@ class SeverityTier(str, Enum):
 class RingType(str, Enum):
     LOCAL = "LOCAL"
     INTERNATIONAL = "INTERNATIONAL"
+    ROUND_TRIP = "ROUND_TRIP"
 
 
 class RulebookCategory(str, Enum):

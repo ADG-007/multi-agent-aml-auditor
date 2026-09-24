@@ -12,15 +12,17 @@ from __future__ import annotations
 
 from datetime import date, datetime
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, computed_field
 
 from src.schemas.common import (
     AccountType,
+    Gender,
     IdDocumentType,
     ResidencyStatus,
     RingType,
     RulebookCategory,
     SeverityTier,
+    TransactionDirection,
     TransactionType,
 )
 
@@ -31,6 +33,7 @@ class Customer(BaseModel):
     customer_id: str
     name: str
     dob: date
+    gender: Gender = Field(description="Printed on the Aadhaar card and the passport data page.")
     occupation: str
     stated_income: int = Field(description="Declared annual income in INR (3,00,000-50,00,000).")
     address: str
@@ -60,13 +63,40 @@ class Transaction(BaseModel):
 
     transaction_id: str
     account_id: str
-    amount: float = Field(description="INR. Positive for every type; direction is implied by type.")
+    amount: float = Field(description="INR, always positive. Which way it moved is `direction`.")
+    direction: TransactionDirection
     type: TransactionType
     timestamp: datetime
-    device_id: str
-    ip_address: str
+    device_id: str | None = Field(
+        default=None,
+        description=(
+            "The customer's phone or computer, recorded only when the customer initiated the "
+            "transaction digitally (an outgoing UPI/IMPS/NEFT/RTGS transfer or SWIFT wire). "
+            "Empty on money coming in, which the sender initiated, and on cash, cheque, ATM "
+            "and card transactions, which no customer device takes part in."
+        ),
+    )
+    ip_address: str | None = Field(
+        default=None,
+        description="The connection used, recorded under the same rule as device_id.",
+    )
     counterparty_id: str
     counterparty_name: str
+    purpose_code: str | None = Field(
+        default=None,
+        description=(
+            "RBI purpose code, carried only by SWIFT wires: an S-code on money leaving India, "
+            "a P-code on money arriving. Declared by the customer, so it can be checked "
+            "against what the money actually did."
+        ),
+    )
+
+    @computed_field
+    @property
+    def is_cross_border(self) -> bool:
+        """The national/international split. Derived from the rail rather than stored
+        independently, so the two can never disagree."""
+        return self.type == TransactionType.SWIFT
 
 
 class Counterparty(BaseModel):
@@ -80,6 +110,13 @@ class Counterparty(BaseModel):
     name: str
     country: str
     is_foreign: bool
+    registered_address: str | None = Field(
+        default=None,
+        description=(
+            "Foreign entities only. Becomes an address node in the graph, which is how two "
+            "companies registered at the same premises become visibly linked."
+        ),
+    )
 
 
 class KYCProfile(BaseModel):
@@ -146,7 +183,10 @@ class FraudRing(BaseModel):
     shared_address: str | None = None
     foreign_counterparty_ids: list[str] = Field(
         default_factory=list,
-        description="INTERNATIONAL rings funnel to this shared foreign-counterparty cluster.",
+        description=(
+            "INTERNATIONAL rings funnel to this shared foreign-counterparty cluster; a ROUND_TRIP "
+            "ring's pair is [outbound entity, return entity]."
+        ),
     )
 
 
@@ -167,7 +207,10 @@ class EvidenceLedgerEntry(BaseModel):
     forged_document_planted: bool = False
     decoy_types: list[str] = Field(
         default_factory=list,
-        description="Deliberate false-positive bait: name_similarity, graph_coincidence, round_amount.",
+        description=(
+            "Deliberate false-positive bait: name_similarity, graph_coincidence, round_amount, "
+            "cross_border_legitimate."
+        ),
     )
 
     @property

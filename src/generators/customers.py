@@ -3,11 +3,20 @@
 Produces the reference data Stages 0, 1, 3, 5 and 7 all read. Runs first because every
 other generator keys off customer_id / account_id.
 
-Two populations, 75/25: domestic customers living in India, and Non-Resident Indians. NRIs
-are modelled as Indian nationals resident abroad rather than as foreign nationals - that is
-what the term actually means, and it is why an NRI here carries an Indian name, a foreign
+Three blocks, in customer_id order:
+  - 225 domestic customers living in India
+  - 75 Non-Resident Indians
+  - 44 domestic customers in the cross-border block: planted cross-border typologies and
+    their legitimate look-alikes, added on top of the base 300
+
+NRIs are modelled as Indian nationals resident abroad rather than as foreign nationals - that
+is what the term actually means, and it is why an NRI here carries an Indian name, a foreign
 residential address and a passport as the primary identity document, while a domestic
-customer carries an Aadhaar.
+customer carries an Aadhaar. Every NRI holds an NRE account: FEMA does not allow a
+non-resident to keep an ordinary resident savings account.
+
+Which cross-border cohort each account belongs to is ground truth, so it is returned to the
+caller rather than written anywhere a pipeline stage could read it.
 """
 
 from __future__ import annotations
@@ -18,12 +27,14 @@ from datetime import date, timedelta
 from faker import Faker
 
 from src.generators import config as cfg
+from src.generators.addresses import foreign_address, indian_address
+from src.generators.names import indian_name
 from src.generators.identifiers import (
     aadhaar_number,
     account_number,
     passport_number,
 )
-from src.schemas import Account, AccountType, Customer, IdDocumentType, ResidencyStatus
+from src.schemas import Account, AccountType, Customer, Gender, IdDocumentType, ResidencyStatus
 
 #: Occupation paired with the annual-income band that occupation plausibly earns, in INR,
 #: and the account type it would normally open. Stage 3 judges whether a customer's stated
@@ -72,19 +83,30 @@ NRI_OCCUPATIONS: tuple[tuple[str, int, int, AccountType], ...] = (
 )
 
 
-def gender_for(customer_id: str) -> str:
-    """Derive a customer's gender deterministically from their id.
-
-    Computed rather than stored, so that customers.py can pick a gendered name and
-    id_documents.py can print the matching gender on the card without either one holding a
-    field the approved schema does not have. A card reading "Aryan Maharaj / FEMALE" is
-    exactly the kind of detail a reader notices immediately, so the two have to agree.
-
-    Uses the numeric part of the id rather than a hash, because Python's string hashing is
-    randomised per process and would break reproducibility across runs.
-    """
-    digits = int("".join(ch for ch in customer_id if ch.isdigit()) or 0)
-    return "MALE" if digits % 2 == 0 else "FEMALE"
+#: Occupations each cross-border cohort draws from. The legitimate look-alikes need an
+#: occupation that makes their foreign activity make sense - a parent paying overseas
+#: university fees earns enough to, a household receiving family money is a pensioner or a
+#: homemaker. The unexplained-inward cohort is deliberately modest earners, because that
+#: typology is foreign money arriving that the stated profile cannot account for.
+COHORT_OCCUPATIONS: dict[str, tuple[str, ...] | None] = {
+    "round_trip": None,  # any occupation - round-tripping is not tied to a profession
+    "unexplained_inward": (
+        "Postgraduate student", "Homemaker", "Government school teacher", "Staff nurse",
+        "Clerk, public sector bank", "Freelance graphic designer",
+    ),
+    "family_inward": (
+        "Retired, state government pension", "Homemaker", "Agricultural landholder",
+        "Government school teacher",
+    ),
+    "education_outward": (
+        "Software engineer", "Senior software architect", "Chartered accountant",
+        "Consulting physician", "Practising advocate",
+    ),
+    "lrs_outward": (
+        "Senior software architect", "Chartered accountant", "Consulting physician",
+        "Jewellery shop proprietor", "Software engineer",
+    ),
+}
 
 
 def _weighted_country(rng: random.Random) -> str:
@@ -98,48 +120,52 @@ def _weighted_country(rng: random.Random) -> str:
     return cfg.NRI_COUNTRIES[-1][0]
 
 
-def _foreign_address(faker_intl: Faker, rng: random.Random, country: str) -> str:
-    """A residential address abroad, ending in the country of residence."""
-    street = faker_intl.street_address().replace("\n", ", ")
-    city = faker_intl.city()
-    return f"{street}, {city}, {country}"
-
-
-def _domestic_address(faker_in: Faker) -> str:
-    """An Indian residential address, flattened to a single line with a PIN code."""
-    return faker_in.address().replace("\n", ", ")
-
-
-def generate(rng: random.Random) -> tuple[list[Customer], list[Account]]:
+def generate(rng: random.Random) -> tuple[list[Customer], list[Account], dict[str, str]]:
     """Build the customer and account population.
 
-    The domestic block is emitted first and the NRI block second, so customer_id ordering is
-    stable and a reader can tell the two populations apart at a glance in the JSON.
+    Returns the customers, their accounts, and the cross-border cohort of each account in the
+    cross-border block (ground truth - see the module docstring).
     """
     faker_in = Faker("en_IN")
-    faker_intl = Faker("en_US")
     faker_in.seed_instance(cfg.SEED)
-    faker_intl.seed_instance(cfg.SEED + 1)
 
     customers: list[Customer] = []
     accounts: list[Account] = []
 
     today = cfg.REFERENCE_DATE
 
+    # Cohorts are shuffled across the cross-border block rather than laid out in order, so
+    # a customer's position in the file says nothing about which typology it carries.
+    cohort_labels = [label for label, count in cfg.CROSS_BORDER_COHORTS for _ in range(count)]
+    rng.shuffle(cohort_labels)
+    cohorts: dict[str, str] = {}
+
     for index in range(cfg.NUM_CUSTOMERS):
-        is_nri = index >= cfg.NUM_DOMESTIC
+        is_nri = cfg.NUM_BASE_DOMESTIC <= index < cfg.NUM_BASE_CUSTOMERS
+        cohort = (
+            cohort_labels[index - cfg.NUM_BASE_CUSTOMERS]
+            if index >= cfg.NUM_BASE_CUSTOMERS
+            else None
+        )
         customer_id = f"CUST-{index + 1:04d}"
         account_id = f"ACC-{index + 1:04d}"
 
         # Indian name for both populations: an NRI is an Indian national living abroad.
-        # Gendered so the name agrees with the gender printed on the rendered Aadhaar.
-        gender = gender_for(customer_id)
-        name = faker_in.name_male() if gender == "MALE" else faker_in.name_female()
+        # Gender is drawn first so the name can agree with it - a card reading
+        # "Aryan Maharaj / FEMALE" is exactly the kind of detail a reader notices.
+        gender = Gender.MALE if rng.random() < 0.5 else Gender.FEMALE
+        name = indian_name(faker_in, gender.value)
         surname = name.split()[-1]
 
-        occupation, income_low, income_high, account_type = rng.choice(
-            NRI_OCCUPATIONS if is_nri else OCCUPATIONS
-        )
+        if is_nri:
+            options = NRI_OCCUPATIONS
+        elif cohort and COHORT_OCCUPATIONS[cohort]:
+            options = tuple(o for o in OCCUPATIONS if o[0] in COHORT_OCCUPATIONS[cohort])
+        else:
+            options = OCCUPATIONS
+        occupation, income_low, income_high, account_type = rng.choice(options)
+        if is_nri:
+            account_type = AccountType.NRE
         stated_income = rng.randrange(
             max(income_low, cfg.INCOME_MIN),
             min(income_high, cfg.INCOME_MAX) + 1,
@@ -157,7 +183,7 @@ def generate(rng: random.Random) -> tuple[list[Customer], list[Account]]:
 
         if is_nri:
             country = _weighted_country(rng)
-            address = _foreign_address(faker_intl, rng, country)
+            address = foreign_address(rng, country)
             id_document_type = IdDocumentType.PASSPORT
             id_number = passport_number(rng)
             # Indian passports are issued with ten years' validity. A small slice is left
@@ -168,7 +194,7 @@ def generate(rng: random.Random) -> tuple[list[Customer], list[Account]]:
                 id_expiration_date = today + timedelta(days=rng.randint(200, 3650))
         else:
             country = "India"
-            address = _domestic_address(faker_in)
+            address = indian_address(rng)
             id_document_type = IdDocumentType.AADHAAR
             id_number = aadhaar_number(rng)
             # Aadhaar does not expire, so the field stays empty rather than being faked.
@@ -179,6 +205,7 @@ def generate(rng: random.Random) -> tuple[list[Customer], list[Account]]:
                 customer_id=customer_id,
                 name=name,
                 dob=dob,
+                gender=gender,
                 occupation=occupation,
                 stated_income=stated_income,
                 address=address,
@@ -201,8 +228,10 @@ def generate(rng: random.Random) -> tuple[list[Customer], list[Account]]:
                 account_type=account_type,
             )
         )
+        if cohort:
+            cohorts[account_id] = cohort
 
-    return customers, accounts
+    return customers, accounts, cohorts
 
 
 def account_numbers_for(accounts: list[Account], rng: random.Random) -> dict[str, str]:

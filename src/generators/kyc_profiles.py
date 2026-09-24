@@ -22,6 +22,7 @@ from src.generators import config as cfg
 from src.schemas import (
     Account,
     AccountType,
+    Counterparty,
     Customer,
     KYCProfile,
     ResidencyStatus,
@@ -73,15 +74,13 @@ def _observed(transactions: list[Transaction]) -> dict:
     total = sum(t.amount for t in transactions)
     cash_in = sum(t.amount for t in transactions if t.type == TransactionType.CASH_DEPOSIT)
     largest = max((t.amount for t in transactions), default=0.0)
-    foreign_like = sum(
-        1 for t in transactions if t.type in (TransactionType.NEFT, TransactionType.RTGS)
-    )
+    foreign_wires = sum(1 for t in transactions if t.type == TransactionType.SWIFT)
     return {
         "count": len(transactions),
         "total": total,
         "cash_in": cash_in,
         "largest": largest,
-        "wire_count": foreign_like,
+        "swift_count": foreign_wires,
         # Extrapolated from 90 days to a year, which is the basis on which a stated annual
         # income can be compared to observed activity at all.
         "annualised": total * (365 / 90),
@@ -121,11 +120,50 @@ def _purpose_for(rng: random.Random, customer: Customer, account: Account) -> st
     )
 
 
+def _foreign_line(
+    cohort: str | None,
+    is_nri: bool,
+    is_round_trip_solo: bool,
+    swift: list[tuple[Transaction, Counterparty]],
+) -> str:
+    """The sentence a branch officer records about expected foreign activity.
+
+    A legitimate cross-border customer declares the activity up front - that declaration is
+    exactly what separates them from the typology they resemble, and what Stage 3 weighs.
+    """
+    if is_nri:
+        return (
+            " Overseas earnings are credited to the NRE account by inward remittance from "
+            "the customer's country of residence."
+        )
+    if not swift:
+        return ""
+    _first_txn, first_cp = swift[0]
+    if cohort == "family_inward":
+        return (
+            f" Customer receives monthly family-maintenance remittances from a son or "
+            f"daughter working in {_country_name(first_cp.country)}."
+        )
+    if cohort == "education_outward":
+        return (
+            f" Customer funds a child's university education at {first_cp.name}, "
+            f"{first_cp.country}; fee remittances are made each term under the Liberalised "
+            f"Remittance Scheme."
+        )
+    if cohort == "lrs_outward" or is_round_trip_solo:
+        return (
+            " Customer makes occasional remittances abroad under the Liberalised Remittance "
+            "Scheme, for gifts to family and overseas investments."
+        )
+    return ""
+
+
 def _clean_narrative(
     rng: random.Random,
     customer: Customer,
     account: Account,
     observed: dict,
+    foreign_line: str = "",
 ) -> str:
     """A profile that holds up against the account's actual behaviour."""
     is_nri = customer.residency_status == ResidencyStatus.NRI
@@ -133,22 +171,47 @@ def _clean_narrative(
     opener = rng.choice(OPENERS)
 
     residency_line = (
-        f"Customer is a Non-Resident Indian currently residing in {customer.country}, "
+        f"Customer is a Non-Resident Indian currently residing in {_country_name(customer.country)}, "
         f"and visits India periodically."
         if is_nri
         else f"Customer resides at the address on record in India."
     )
 
     return (
-        f"{opener} {customer.name}, aged {_age(customer)}, works as a "
-        f"{customer.occupation.lower()} and declares an annual income of "
-        f"{_lakh(customer.stated_income)}. {residency_line} The {account.account_type.value.lower()} "
-        f"account is maintained for {purpose}. Expected activity is in the range of "
+        f"{opener} {customer.name}, aged {_age(customer)}, {_occupation_phrase(customer)} "
+        f"and declares an annual income of "
+        f"{_lakh(customer.stated_income)}. {residency_line} The {_account_label(account)} "
+        f"account is maintained for {purpose}.{foreign_line} Expected activity is in the range of "
         f"{_lakh(customer.stated_income / 12 * 1.5)} per month across roughly "
         f"{max(1, observed['count'] // 3)} transactions, mostly through digital channels. "
         f"Source of funds is stated as {_source_of_funds(customer)}. No adverse information "
         f"was noted at the time of verification."
     )
+
+
+def _occupation_phrase(customer: Customer) -> str:
+    """The occupation as a clause that reads correctly for every occupation, including the
+    ones that are not jobs - "works as a retired, state government pension" does not."""
+    occupation = customer.occupation.lower()
+    if occupation.startswith("retired"):
+        return "is retired and draws a state government pension,"
+    article = "an" if occupation[0] in "aeiou" else "a"
+    if occupation in ("homemaker", "postgraduate student", "agricultural landholder"):
+        return f"is {article} {occupation}"
+    return f"works as {article} {occupation}"
+
+
+#: Country names that take "the" in running prose.
+_COUNTRIES_WITH_ARTICLE = frozenset({"United Arab Emirates", "United States", "United Kingdom"})
+
+
+def _country_name(country: str) -> str:
+    return f"the {country}" if country in _COUNTRIES_WITH_ARTICLE else country
+
+
+def _account_label(account: Account) -> str:
+    """How an officer names the account type in prose."""
+    return "NRE" if account.account_type == AccountType.NRE else account.account_type.value.lower()
 
 
 def _age(customer: Customer) -> int:
@@ -180,6 +243,7 @@ def _mismatch_narrative(
     customer: Customer,
     account: Account,
     observed: dict,
+    cross_border: bool = False,
 ) -> str:
     """A profile that contradicts the account's behaviour in a specific, checkable way.
 
@@ -190,47 +254,71 @@ def _mismatch_narrative(
     """
     is_nri = customer.residency_status == ResidencyStatus.NRI
     opener = rng.choice(OPENERS)
-    shape = rng.choice(("income", "purpose", "occupation"))
+    shape = "cross_border" if cross_border else rng.choice(("income", "purpose", "occupation"))
 
-    # A declared income well below what the account moves. Understating it is the point.
-    understated = max(300_000, int(customer.stated_income * rng.uniform(0.25, 0.45)))
+    if shape == "cross_border":
+        # The typology is foreign money the profile cannot explain, so the profile states,
+        # specifically, that there will be none.
+        return (
+            f"{opener} {customer.name}, aged {_age(customer)}, {_occupation_phrase(customer)} "
+            f"and declares an annual income of "
+            f"{_lakh(customer.stated_income)} from {_source_of_funds(customer)}. The "
+            f"{_account_label(account)} account is for domestic household use only. Customer "
+            f"confirmed that no remittances to or from abroad are expected, that they hold no "
+            f"overseas business interests or investments, and that no relative abroad sends "
+            f"them money."
+        )
+
+    # The declared income is the one on the customer record. The contradiction lies in what
+    # the account actually moves - many times that income - never in the profile disagreeing
+    # with the record, which would let a plain number comparison flag every planted case
+    # without any judgement at all.
+    income = _lakh(customer.stated_income)
 
     if shape == "income":
         return (
-            f"{opener} {customer.name}, aged {_age(customer)}, is employed as a "
-            f"{customer.occupation.lower()} with a declared annual income of "
-            f"{_lakh(understated)}. Customer stated that the account would see modest "
-            f"activity of around {_lakh(understated / 24)} per month, consistent with a "
-            f"single salary credit and routine household withdrawals. Source of funds is "
-            f"stated as {_source_of_funds(customer)} only. Customer confirmed no other "
-            f"income streams, business interests or third-party deposits."
+            f"{opener} {customer.name}, aged {_age(customer)}, {_occupation_phrase(customer)} "
+            f"with a declared annual income of {income}. Customer stated that the account "
+            f"would see modest activity of around {_lakh(customer.stated_income / 24)} per "
+            f"month, consistent with a single regular income credit and routine household "
+            f"withdrawals. Source of funds is stated as {_source_of_funds(customer)} only. "
+            f"Customer confirmed no other income streams, business interests or third-party "
+            f"deposits."
         )
 
     if shape == "purpose":
-        purpose = (
-            "receiving monthly remittances from the customer's own overseas salary, with no "
-            "third-party credits expected"
-            if is_nri
-            else "receiving the monthly pension credit and paying household utility bills, "
-            "with no business use whatsoever"
-        )
+        if is_nri:
+            purpose = (
+                "receiving monthly remittances from the customer's own overseas salary, with "
+                "no third-party credits expected"
+            )
+        elif "retired" in customer.occupation.lower():
+            purpose = (
+                "receiving the monthly pension credit and paying household utility bills, "
+                "with no business use whatsoever"
+            )
+        else:
+            purpose = (
+                "personal savings and paying household utility bills, with no business use "
+                "whatsoever"
+            )
         return (
             f"{opener} {customer.name}, aged {_age(customer)}, described the "
-            f"{account.account_type.value.lower()} account as being opened solely for "
-            f"{purpose}. Customer declares an annual income of {_lakh(customer.stated_income)} "
+            f"{_account_label(account)} account as being opened solely for "
+            f"{purpose}. Customer declares an annual income of {income} "
             f"from {_source_of_funds(customer)} and stated that no cash deposits would be "
             f"made into the account at any point. Customer declined to nominate any "
             f"authorised signatory and confirmed the account is operated personally."
         )
 
     return (
-        f"{opener} {customer.name}, aged {_age(customer)}, is recorded as a "
-        f"{customer.occupation.lower()} earning {_lakh(understated)} annually. Customer "
-        f"explained that the account is used for personal purposes only and that all "
-        f"receipts are salary credits from a single employer. Customer stated they have no "
-        f"involvement in trading, commission work or handling of cash on behalf of others, "
-        f"and that they do not deal with overseas counterparties. Address and employment "
-        f"details were verified against the officially valid document on file."
+        f"{opener} {customer.name}, aged {_age(customer)}, {_occupation_phrase(customer)} "
+        f"and declares an annual income of {income}. Customer explained that the account is "
+        f"used for personal purposes only and that all receipts come from that single "
+        f"source. Customer stated they have no involvement in trading, commission work or "
+        f"handling of cash on behalf of others, and that they do not deal with overseas "
+        f"counterparties. Address and employment details were verified against the "
+        f"officially valid document on file."
     )
 
 
@@ -239,12 +327,14 @@ def generate(
     customers: list[Customer],
     accounts: list[Account],
     transactions: list[Transaction],
+    counterparties: list[Counterparty],
     plan,
 ) -> list[KYCProfile]:
     """One narrative per customer, matched or deliberately mismatched per the planting plan."""
     by_account: dict[str, list[Transaction]] = defaultdict(list)
     for txn in transactions:
         by_account[txn.account_id].append(txn)
+    counterparty_by_id = {c.counterparty_id: c for c in counterparties}
 
     account_by_customer = {a.customer_id: a for a in accounts}
 
@@ -254,9 +344,26 @@ def generate(
         observed = _observed(by_account.get(account.account_id, []))
 
         if account.account_id in plan.kyc_mismatch:
-            narrative = _mismatch_narrative(rng, customer, account, observed)
+            narrative = _mismatch_narrative(
+                rng,
+                customer,
+                account,
+                observed,
+                cross_border=account.account_id in plan.cross_border_mismatch,
+            )
         else:
-            narrative = _clean_narrative(rng, customer, account, observed)
+            swift = [
+                (t, counterparty_by_id[t.counterparty_id])
+                for t in by_account.get(account.account_id, [])
+                if t.type == TransactionType.SWIFT
+            ]
+            foreign_line = _foreign_line(
+                plan.cohort(account.account_id),
+                customer.residency_status == ResidencyStatus.NRI,
+                account.account_id in plan.round_trip_solo,
+                swift,
+            )
+            narrative = _clean_narrative(rng, customer, account, observed, foreign_line)
 
         profiles.append(KYCProfile(customer_id=customer.customer_id, narrative=narrative))
 

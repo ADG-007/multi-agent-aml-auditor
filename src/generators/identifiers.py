@@ -22,23 +22,6 @@ import string
 #: Every customer here is a natural person, so P is the only correct value.
 PAN_HOLDER_TYPE_INDIVIDUAL = "P"
 
-#: Public-sector and private bank codes that really do prefix IFSC codes.
-BANK_CODES = (
-    "SBIN",
-    "HDFC",
-    "ICIC",
-    "UTIB",
-    "PUNB",
-    "KKBK",
-    "BARB",
-    "CNRB",
-    "IDIB",
-    "YESB",
-)
-
-#: UPI handles actually in use.
-UPI_HANDLES = ("okhdfcbank", "oksbi", "okicici", "okaxis", "ybl", "paytm", "apl", "ibl")
-
 
 def aadhaar_number(rng: random.Random) -> str:
     """Twelve digits, grouped 4-4-4, first digit 2-9.
@@ -79,23 +62,10 @@ def passport_number(rng: random.Random) -> str:
     return f"{letter}{digits}"
 
 
-def ifsc_code(rng: random.Random, bank_code: str | None = None) -> str:
-    """Eleven characters: four-letter bank code, a reserved zero, six-character branch code."""
-    bank = bank_code or rng.choice(BANK_CODES)
-    branch = "".join(rng.choice(string.digits) for _ in range(6))
-    return f"{bank}0{branch}"
-
-
 def account_number(rng: random.Random) -> str:
     """Eleven to sixteen digits, the range Indian banks actually issue in."""
     length = rng.choice((11, 12, 13, 14, 15, 16))
     return "".join(str(rng.randint(0, 9)) for _ in range(length))
-
-
-def upi_id(rng: random.Random, name: str) -> str:
-    """A handle of the shape a real UPI VPA takes."""
-    slug = "".join(ch for ch in name.lower() if ch.isalnum())[:12] or "user"
-    return f"{slug}{rng.randint(10, 99)}@{rng.choice(UPI_HANDLES)}"
 
 
 def device_id(rng: random.Random) -> str:
@@ -112,24 +82,3 @@ def ip_address(rng: random.Random) -> str:
     """
     prefix = rng.choice(("49", "103", "106", "117", "122", "157", "182", "223"))
     return f"{prefix}.{rng.randint(0, 255)}.{rng.randint(0, 255)}.{rng.randint(1, 254)}"
-
-
-def reference_number(rng: random.Random, txn_type: str) -> str:
-    """The transaction reference a customer would see on a statement.
-
-    Each rail uses a different shape in reality, and matching the shape is cheap: NEFT and
-    RTGS quote a sixteen-character UTR, IMPS and UPI a twelve-digit RRN, cheques a six-digit
-    serial, cards a twelve-digit retrieval reference. The digits themselves are random -
-    reproducing each rail's real generation algorithm is the kind of internal detail
-    phase_1_execution.md explicitly rules out.
-    """
-    if txn_type in ("NEFT", "RTGS"):
-        bank = rng.choice(BANK_CODES)
-        return bank + "".join(str(rng.randint(0, 9)) for _ in range(12))
-    if txn_type in ("IMPS", "UPI"):
-        return "".join(str(rng.randint(0, 9)) for _ in range(12))
-    if txn_type == "CHEQUE":
-        return "".join(str(rng.randint(0, 9)) for _ in range(6))
-    if txn_type in ("ATM", "POS"):
-        return "".join(str(rng.randint(0, 9)) for _ in range(12))
-    return "".join(str(rng.randint(0, 9)) for _ in range(10))

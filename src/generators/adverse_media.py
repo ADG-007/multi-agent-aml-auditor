@@ -28,7 +28,8 @@ from difflib import SequenceMatcher
 from faker import Faker
 
 from src.generators import config as cfg
-from src.schemas import AdverseMediaEntry, Customer, SeverityTier
+from src.generators.names import indian_name
+from src.schemas import AdverseMediaEntry, Counterparty, Customer, SeverityTier
 
 #: Narrative shapes borrowed from how designations and enforcement reporting are actually
 #: written - a designation states the basis, a news item states the allegation and source.
@@ -155,6 +156,7 @@ def generate(
     customers: list[Customer],
     accounts,
     plan,
+    counterparties: list[Counterparty],
 ) -> list[AdverseMediaEntry]:
     """Build the 160-entry corpus.
 
@@ -168,7 +170,10 @@ def generate(
 
     customer_by_account = {a.account_id: a.customer_id for a in accounts}
     customers_by_id = {c.customer_id: c for c in customers}
-    all_customer_names = [c.name for c in customers]
+    # Stage 4 screens counterparties as well as account holders, so a background name must
+    # stay clear of both - a counterparty colliding with a corpus entry would hand every
+    # account that pays it a hit nobody planted.
+    screened_names = [c.name for c in customers] + [c.name for c in counterparties]
 
     entries: list[AdverseMediaEntry] = []
     serial = 0
@@ -252,8 +257,8 @@ def generate(
         )
 
     # ---------------------------------------------------------------------------------
-    # Background corpus. Names are checked against every real customer before being
-    # accepted: an accidental collision here would create an adverse-media hit nobody
+    # Background corpus. Names are checked against every customer and counterparty before
+    # being accepted: an accidental collision here would create an adverse-media hit nobody
     # planted, and the ground-truth labels would silently stop matching the data.
     # ---------------------------------------------------------------------------------
     indian_so_far = len(entries)  # every entry above uses an Indian customer name
@@ -270,13 +275,13 @@ def generate(
     def safe_name(generator) -> str:
         for _ in range(40):
             candidate = generator()
-            if all(_similar(candidate, existing) < 80 for existing in all_customer_names):
+            if all(_similar(candidate, existing) < 80 for existing in screened_names):
                 return candidate
         return candidate
 
     for index in range(indian_background + foreign_background):
         is_foreign = index >= indian_background
-        name = safe_name(faker_intl.name if is_foreign else faker_in.name)
+        name = safe_name(faker_intl.name if is_foreign else (lambda: indian_name(faker_in)))
         tier = background_tiers[index]
         if tier == SeverityTier.CONFIRMED_SANCTIONS:
             description = rng.choice(SANCTIONS_DESCRIPTIONS)

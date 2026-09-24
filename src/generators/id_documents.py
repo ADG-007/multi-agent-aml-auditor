@@ -4,14 +4,15 @@ Used exclusively by Stage 1, which OCRs these with Tesseract and cross-checks th
 fields against the customer record. No vision model is involved anywhere in the pipeline.
 
 Two documents per customer, paired the way a real file is: a domestic customer submits
-Aadhaar plus PAN, an NRI submits passport plus PAN. Six hundred images in total.
+Aadhaar plus PAN, an NRI submits passport plus PAN - two images per customer.
 
 Layouts follow the real documents' field sets and proportions - CR80 card geometry for
-Aadhaar and PAN, a passport data page with a two-line machine-readable zone. Following
-phase_1_execution.md's calibration, the MRZ is built to the right shape and length rather
-than to ICAO 9303's exact check-digit construction, and the Aadhaar number carries no
-Verhoeff digit. Nothing downstream depends on either: forgery detection works from visual
-tampering and from field cross-checking, not from arithmetic on the number.
+Aadhaar and PAN, and a passport data page. The passport's machine-readable zone is left off:
+Tesseract cannot read it without a specialist OCR-B reader, Stage 1 reads the printed fields
+instead, and a zone nothing reads is decoration. Following phase_1_execution.md's
+calibration, the Aadhaar number carries no Verhoeff digit. Nothing downstream depends on it:
+forgery detection works from visual tampering and from field cross-checking, not from
+arithmetic on the number.
 
 The forged subset gets real visual tampering - a field re-rendered in the wrong typeface, a
 value overlaid slightly out of alignment, a patch of background painted over and rewritten -
@@ -29,8 +30,8 @@ from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
 
 from src.generators import config as cfg
-from src.generators.customers import gender_for
 from src.generators.identifiers import pan_number
+from src.generators.names import INDIAN_MALE_FIRST_NAMES
 from src.schemas import Customer, IdDocumentType, ResidencyStatus
 
 # CR80 card geometry at 300 dpi - the real dimensions of an Aadhaar or PAN card.
@@ -39,14 +40,11 @@ CARD_WIDTH, CARD_HEIGHT = 1011, 638
 # A passport data page at roughly 200 dpi.
 PAGE_WIDTH, PAGE_HEIGHT = 984, 693
 
-#: Font families to try, in order. Tesseract reads clean sans and serif faces well; the
-#: monospace entry is for the machine-readable zone, which is set in a fixed-pitch face on a
-#: real passport.
+#: Font families to try, in order. Tesseract reads clean sans and serif faces well.
 FONT_CANDIDATES = {
     "sans": ("arial.ttf", "DejaVuSans.ttf", "LiberationSans-Regular.ttf", "Helvetica.ttc"),
     "sans_bold": ("arialbd.ttf", "DejaVuSans-Bold.ttf", "LiberationSans-Bold.ttf"),
     "serif": ("times.ttf", "DejaVuSerif.ttf", "LiberationSerif-Regular.ttf"),
-    "mono": ("cour.ttf", "consola.ttf", "DejaVuSansMono.ttf", "LiberationMono-Regular.ttf"),
 }
 
 FONT_SEARCH_DIRS = (
@@ -96,23 +94,30 @@ def resolved_font_family(style: str = "sans") -> str:
     return getattr(font, "path", "PIL default bitmap font")
 
 
-def _photo_placeholder(draw: ImageDraw.ImageDraw, box: tuple[int, int, int, int]) -> None:
+def _photo_placeholder(image: Image.Image, box: tuple[int, int, int, int]) -> None:
     """A neutral silhouette where a photograph would be.
 
     Deliberately not a synthesised face: the document only needs the photo region to exist
     so the layout is right and OCR is not confused by an empty rectangle.
+
+    Drawn on a tile the size of the frame and pasted in, so the shoulders are cut off at the
+    frame's edge the way a cropped photograph is, rather than spilling over the card below.
     """
     x0, y0, x1, y1 = box
-    draw.rectangle(box, fill=(226, 228, 232), outline=(140, 144, 150), width=2)
-    head_r = (x1 - x0) // 6
-    cx = (x0 + x1) // 2
-    cy = y0 + (y1 - y0) // 3
-    draw.ellipse((cx - head_r, cy - head_r, cx + head_r, cy + head_r), fill=(170, 174, 180))
-    body_w = (x1 - x0) // 2
-    draw.ellipse(
-        (cx - body_w, cy + head_r // 2, cx + body_w, y1 + (y1 - y0) // 3),
+    width, height = x1 - x0, y1 - y0
+    tile = Image.new("RGB", (width, height), (226, 228, 232))
+    tile_draw = ImageDraw.Draw(tile)
+    head_r = width // 6
+    cx = width // 2
+    cy = height // 3
+    tile_draw.ellipse((cx - head_r, cy - head_r, cx + head_r, cy + head_r), fill=(170, 174, 180))
+    body_w = width // 2
+    tile_draw.ellipse(
+        (cx - body_w, cy + head_r // 2, cx + body_w, height + height // 3),
         fill=(170, 174, 180),
     )
+    image.paste(tile, (x0, y0))
+    ImageDraw.Draw(image).rectangle(box, outline=(140, 144, 150), width=2)
 
 
 def _guilloche(draw: ImageDraw.ImageDraw, size: tuple[int, int], colour: tuple[int, int, int]) -> None:
@@ -168,9 +173,8 @@ def render_aadhaar(customer: Customer, rng: random.Random) -> Image.Image:
     )
     draw.ellipse((40, 14, 120, 82), outline=(255, 255, 255), width=3)
 
-    _photo_placeholder(draw, (44, 140, 214, 380))
+    _photo_placeholder(image, (44, 140, 214, 380))
 
-    gender = gender_for(customer.customer_id)
     _field(draw, (250, 150), "Name", customer.name, label_font, value_font)
     _field(
         draw,
@@ -180,13 +184,19 @@ def render_aadhaar(customer: Customer, rng: random.Random) -> Image.Image:
         label_font,
         value_font,
     )
-    _field(draw, (250, 306), "Gender", gender, label_font, value_font)
+    _field(draw, (250, 306), "Gender", customer.gender.value, label_font, value_font)
 
     address_font = load_font("sans", 18)
     draw.text((250, 384), "Address", font=label_font, fill=(90, 94, 100))
-    wrapped = customer.address
-    for index in range(0, min(len(wrapped), 150), 52):
-        draw.text((250, 408 + (index // 52) * 22), wrapped[index : index + 52], font=address_font, fill=(40, 42, 46))
+    # Wrapped at the commas between address parts, as the printed card does, never mid-word.
+    lines: list[str] = []
+    for part in customer.address.split(", "):
+        if lines and len(lines[-1]) + 2 + len(part) <= 52:
+            lines[-1] += f", {part}"
+        else:
+            lines.append(part)
+    for row, line in enumerate(lines[:3]):
+        draw.text((250, 408 + row * 22), line, font=address_font, fill=(40, 42, 46))
 
     # The Aadhaar number sits in dark type on the light card body, immediately above the
     # green band - which is where the real card prints it, and also the only way Tesseract
@@ -240,7 +250,8 @@ def render_pan(customer: Customer, pan: str, rng: random.Random) -> Image.Image:
         draw,
         (36, 330),
         "Father's Name",
-        f"{customer.name.split()[-1].upper()} (GUARDIAN)",
+        # A real PAN card prints the father's full name. He shares the holder's surname.
+        f"{rng.choice(INDIAN_MALE_FIRST_NAMES)} {customer.name.split()[-1]}".upper(),
         label_font,
         value_font,
     )
@@ -253,7 +264,7 @@ def render_pan(customer: Customer, pan: str, rng: random.Random) -> Image.Image:
         value_font,
     )
 
-    _photo_placeholder(draw, (CARD_WIDTH - 250, 150, CARD_WIDTH - 60, 410))
+    _photo_placeholder(image, (CARD_WIDTH - 250, 150, CARD_WIDTH - 60, 410))
 
     draw.line((CARD_WIDTH - 250, CARD_HEIGHT - 96, CARD_WIDTH - 60, CARD_HEIGHT - 96), fill=(90, 94, 100), width=2)
     draw.text(
@@ -265,33 +276,8 @@ def render_pan(customer: Customer, pan: str, rng: random.Random) -> Image.Image:
     return image
 
 
-def _mrz_lines(customer: Customer, passport_no: str) -> tuple[str, str]:
-    """A two-line machine-readable zone of the correct shape and length.
-
-    Real MRZ construction fills every field position exactly and carries computed check
-    digits. phase_1_execution.md rules that out as effort nobody verifies; what is kept is
-    what a reader notices - two lines of exactly 44 characters, the P<IND prefix, the
-    surname and given names separated by a double filler, and the dates in YYMMDD.
-    """
-    parts = customer.name.upper().replace(".", "").split()
-    surname = parts[-1]
-    given = "<".join(parts[:-1]) or "X"
-    line1 = f"P<IND{surname}<<{given}"
-    line1 = (line1 + "<" * 44)[:44]
-
-    expiry = customer.id_expiration_date or (cfg.REFERENCE_DATE + timedelta(days=3650))
-    line2 = (
-        f"{passport_no}<IND"
-        f"{customer.dob.strftime('%y%m%d')}"
-        f"{'M' if len(surname) % 2 == 0 else 'F'}"
-        f"{expiry.strftime('%y%m%d')}"
-    )
-    line2 = (line2 + "<" * 44)[:44]
-    return line1, line2
-
-
 def render_passport(customer: Customer, rng: random.Random) -> Image.Image:
-    """The passport data page, including the machine-readable zone."""
+    """The passport data page's printed particulars."""
     image = Image.new("RGB", (PAGE_WIDTH, PAGE_HEIGHT), (243, 238, 230))
     draw = ImageDraw.Draw(image)
     _guilloche(draw, (PAGE_WIDTH, PAGE_HEIGHT), (234, 226, 214))
@@ -303,7 +289,7 @@ def render_passport(customer: Customer, rng: random.Random) -> Image.Image:
     draw.text((32, 22), "REPUBLIC OF INDIA", font=header_font, fill=(60, 22, 22))
     draw.text((32, 58), "PASSPORT", font=load_font("serif", 21), fill=(60, 22, 22))
 
-    _photo_placeholder(draw, (32, 110, 250, 390))
+    _photo_placeholder(image, (32, 110, 250, 390))
 
     parts = customer.name.upper().split()
     surname = parts[-1]
@@ -326,15 +312,9 @@ def render_passport(customer: Customer, rng: random.Random) -> Image.Image:
         value_font,
     )
     _field(draw, (left, 374), "Place of Issue", rng.choice(("MUMBAI", "DELHI", "CHENNAI", "KOCHI", "HYDERABAD")), label_font, value_font)
+    _field(draw, (left + 260, 374), "Sex", customer.gender.value[0], label_font, value_font)
     _field(draw, (left, 440), "Date of Issue", issue.strftime("%d/%m/%Y"), label_font, value_font)
     _field(draw, (left + 260, 440), "Date of Expiry", expiry.strftime("%d/%m/%Y"), label_font, value_font)
-
-    # Machine-readable zone on its own light band, as on the real page.
-    draw.rectangle((0, PAGE_HEIGHT - 110, PAGE_WIDTH, PAGE_HEIGHT), fill=(250, 248, 244))
-    mrz_font = load_font("mono", 26)
-    line1, line2 = _mrz_lines(customer, customer.id_number)
-    draw.text((24, PAGE_HEIGHT - 96), line1, font=mrz_font, fill=(20, 20, 20))
-    draw.text((24, PAGE_HEIGHT - 56), line2, font=mrz_font, fill=(20, 20, 20))
     return image
 
 
@@ -411,7 +391,10 @@ def apply_tampering(
             # The patch interrupts the background pattern, which is the edge discontinuity
             # the image-forensic half of Stage 1 is meant to notice.
             x, y, _width, _height = blank("date_of_birth")
-            shifted = customer.dob.replace(year=customer.dob.year - rng.choice((3, 5, 7)))
+            year = customer.dob.year - rng.choice((3, 5, 7))
+            # A 29 February birthday has no counterpart in a non-leap year; the 28th stands in.
+            day = min(customer.dob.day, 28) if customer.dob.month == 2 else customer.dob.day
+            shifted = customer.dob.replace(year=year, day=day)
             draw.text(
                 (x + 2, y + 2),
                 shifted.strftime("%d/%m/%Y"),
@@ -446,11 +429,18 @@ def apply_tampering(
     return tampered, applied
 
 
+#: Offset from the global seed for this generator's own random stream. Rendering draws from
+#: a stream of its own, not the shared one, so it can be re-run by itself from the committed
+#: JSON and produce the same images - the images are not committed, only the data they are
+#: drawn from.
+DOCUMENTS_SEED_OFFSET = 5
+
+
 def generate(
-    rng: random.Random,
     customers: list[Customer],
     accounts,
-    plan,
+    forged_account_ids: set[str],
+    seed: int = cfg.SEED,
 ) -> list[dict]:
     """Render every document and write the manifest.
 
@@ -459,6 +449,7 @@ def generate(
     forged flag is ground truth and lives in the evidence ledger, and publishing the
     rendered values would let Stage 1 skip OCR entirely and compare two records instead.
     """
+    rng = random.Random(seed + DOCUMENTS_SEED_OFFSET)
     cfg.DOCUMENTS_DIR.mkdir(parents=True, exist_ok=True)
 
     account_by_customer = {a.customer_id: a.account_id for a in accounts}
@@ -466,7 +457,7 @@ def generate(
 
     for customer in customers:
         account_id = account_by_customer[customer.customer_id]
-        is_forged_case = account_id in plan.forged_document
+        is_forged_case = account_id in forged_account_ids
         pan = pan_number(rng, customer.name.split()[-1])
 
         if customer.residency_status == ResidencyStatus.DOMESTIC:
@@ -502,3 +493,27 @@ def generate(
 
     cfg.DOCUMENT_MANIFEST_FILE.write_text(json.dumps(manifest, indent=2), encoding="utf-8")
     return manifest
+
+
+def render_from_committed_data(seed: int = cfg.SEED) -> list[dict]:
+    """Re-render every image from the committed JSON, without re-running the other generators.
+
+    Which documents are forged comes from the evidence ledger. That is ground truth, and
+    reading it is correct here: this is the generator that planted the forgeries, not a
+    pipeline stage.
+    """
+    from src.schemas import Account, EvidenceLedgerEntry
+
+    def load(path, model):
+        return [model.model_validate(item) for item in json.loads(path.read_text(encoding="utf-8"))]
+
+    customers = load(cfg.CUSTOMERS_FILE, Customer)
+    accounts = load(cfg.ACCOUNTS_FILE, Account)
+    ledger = load(cfg.EVIDENCE_LEDGER_FILE, EvidenceLedgerEntry)
+    forged = {entry.account_id for entry in ledger if entry.forged_document_planted}
+    return generate(customers, accounts, forged, seed)
+
+
+if __name__ == "__main__":
+    rendered = render_from_committed_data()
+    print(f"Rendered {len(rendered)} document images into {cfg.DOCUMENTS_DIR}.")
