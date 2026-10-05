@@ -1,4 +1,4 @@
-"""Generator 6 of 9 - the adverse-media and sanctions corpus.
+"""Generator 4 of 9 - the adverse-media and sanctions corpus.
 
 The primary input to Stage 4, and a cheap pre-filter input to Stage 0.
 
@@ -17,6 +17,11 @@ Three tiers, and the distinction between them carries the entire false-positive 
 Phase 6 screens at a similarity of 85 for the first two tiers and a stricter 92 for the
 third, so the decoys here are built to sit just inside that stricter band - close enough to
 register as a hit, far enough to be discriminable.
+
+The corpus is a fixed external list. Its background names are screened against the founding
+population (config.CORPUS_SCREENED_BLOCKS) and every entry draws from a stream of its own, so
+it never changes when a block is added; a later block instead keeps its own customer and
+counterparty names clear of the corpus (clear_later_block_names).
 """
 
 from __future__ import annotations
@@ -25,11 +30,10 @@ import random
 from datetime import date, timedelta
 from difflib import SequenceMatcher
 
-from faker import Faker
-
 from src.generators import config as cfg
-from src.generators.names import indian_name
-from src.schemas import AdverseMediaEntry, Counterparty, Customer, SeverityTier
+from src.generators.names import WESTERN_FIRST_NAMES, indian_name
+from src.generators.streams import Streams
+from src.schemas import AdverseMediaEntry, Counterparty, Customer, SeverityTier, Transaction
 
 #: Narrative shapes borrowed from how designations and enforcement reporting are actually
 #: written - a designation states the basis, a news item states the allegation and source.
@@ -151,8 +155,15 @@ def _dob_string(rng: random.Random, reference: date | None = None) -> str:
     return born.isoformat()
 
 
+def _founding(entity_id: str) -> bool:
+    """Whether a customer or counterparty belongs to the population the corpus screens."""
+    if entity_id.startswith(("CUST-", "ACC-")):
+        return cfg.block_of(entity_id) in cfg.CORPUS_SCREENED_BLOCKS
+    return not entity_id.startswith("CPM-")  # the mule block's own counterparties
+
+
 def generate(
-    rng: random.Random,
+    streams: Streams,
     customers: list[Customer],
     accounts,
     plan,
@@ -163,17 +174,14 @@ def generate(
     Linked entries come first so that every planted adverse-media account is guaranteed a
     matching record; decoys and background noise fill the rest.
     """
-    faker_in = Faker("en_IN")
-    faker_intl = Faker("en_US")
-    faker_in.seed_instance(cfg.SEED + 4)
-    faker_intl.seed_instance(cfg.SEED + 5)
-
     customer_by_account = {a.account_id: a.customer_id for a in accounts}
     customers_by_id = {c.customer_id: c for c in customers}
     # Stage 4 screens counterparties as well as account holders, so a background name must
     # stay clear of both - a counterparty colliding with a corpus entry would hand every
     # account that pays it a hit nobody planted.
-    screened_names = [c.name for c in customers] + [c.name for c in counterparties]
+    screened_names = [c.name for c in customers if _founding(c.customer_id)] + [
+        c.name for c in counterparties if _founding(c.counterparty_id)
+    ]
 
     entries: list[AdverseMediaEntry] = []
     serial = 0
@@ -198,6 +206,7 @@ def generate(
 
     linked_accounts = sorted(real_hits)
     for account_id in linked_accounts:
+        rng = streams.rng("adverse_media", "linked", account_id)
         tier = real_hits[account_id]
         customer = customers_by_id[customer_by_account[account_id]]
         descriptions = (
@@ -220,7 +229,11 @@ def generate(
 
     # Extra records for a subset, to reach the 32 linked entries the plan calls for.
     extra_needed = cfg.NUM_LINKED_ENTRIES - len(entries)
-    for account_id in rng.sample(linked_accounts, k=min(extra_needed, len(linked_accounts))):
+    extras = streams.rng("adverse_media", "extras").sample(
+        linked_accounts, k=min(extra_needed, len(linked_accounts))
+    )
+    for account_id in extras:
+        rng = streams.rng("adverse_media", "extra", account_id)
         tier = real_hits[account_id]
         customer = customers_by_id[customer_by_account[account_id]]
         alias_name = _aliases(rng, customer.name, 1)
@@ -242,6 +255,7 @@ def generate(
     # actor, no supporting detail. These are what the false-positive rate is measured on.
     # ---------------------------------------------------------------------------------
     for account_id in sorted(plan.name_similarity_decoys):
+        rng = streams.rng("adverse_media", "decoy", account_id)
         customer = customers_by_id[customer_by_account[account_id]]
         entries.append(
             AdverseMediaEntry(
@@ -270,7 +284,7 @@ def generate(
         + [SeverityTier.ADVERSE_NEWS] * 60
         + [SeverityTier.NAME_SIMILARITY_ONLY] * (indian_background + foreign_background - 78)
     )
-    rng.shuffle(background_tiers)
+    streams.rng("adverse_media", "background_tiers").shuffle(background_tiers)
 
     def safe_name(generator) -> str:
         for _ in range(40):
@@ -280,8 +294,13 @@ def generate(
         return candidate
 
     for index in range(indian_background + foreign_background):
+        rng = streams.rng("adverse_media", "background", index)
         is_foreign = index >= indian_background
-        name = safe_name(faker_intl.name if is_foreign else (lambda: indian_name(faker_in)))
+        if is_foreign:
+            name = safe_name(streams.faker("en_US", "adverse_media", "background", index).name)
+        else:
+            faker_in = streams.faker("en_IN", "adverse_media", "background", index)
+            name = safe_name(lambda: indian_name(faker_in))
         tier = background_tiers[index]
         if tier == SeverityTier.CONFIRMED_SANCTIONS:
             description = rng.choice(SANCTIONS_DESCRIPTIONS)
@@ -310,3 +329,82 @@ def generate(
         )
 
     return entries
+
+
+#: How close a later block's name may come to a corpus name. Stricter than Stage 4's 85
+#: cutoff, and the same bar the background corpus is held to against the founding population.
+CLEARANCE_SIMILARITY = 80
+
+
+def clear_later_block_names(
+    streams: Streams,
+    entries: list[AdverseMediaEntry],
+    customers: list[Customer],
+    counterparties: list[Counterparty],
+    transactions: list[Transaction],
+) -> tuple[list[Customer], list[Counterparty], list[Transaction], int]:
+    """Rename any later-block customer or counterparty whose name sits near a corpus entry.
+
+    The corpus is fixed, so a block added after it has to stay out of its way: a mule-block
+    payer who happened to share a sanctioned person's name would hand that account a hit
+    nobody planted. A colliding name keeps its surname (so relatives still share one) and
+    redraws the first word from the entity's own stream until it is clear. Transactions carry
+    the counterparty's name too, so they are updated to match.
+
+    Returns the updated lists and how many names changed.
+    """
+    corpus = [n.lower() for m in entries for n in [m.entity_name, *m.aliases]]
+
+    def collides(name: str) -> bool:
+        lowered = name.lower()
+        for other in corpus:
+            matcher = SequenceMatcher(None, lowered, other)
+            if matcher.real_quick_ratio() * 100 >= CLEARANCE_SIMILARITY and (
+                matcher.quick_ratio() * 100 >= CLEARANCE_SIMILARITY
+                and matcher.ratio() * 100 >= CLEARANCE_SIMILARITY
+            ):
+                return True
+        return False
+
+    def cleared(entity_id: str, name: str, gender: str | None = None) -> str:
+        attempt = 0
+        while collides(name):
+            attempt += 1
+            faker = streams.faker("en_IN", "clearance", entity_id, attempt)
+            if gender:
+                name = indian_name(faker, gender)
+                continue
+            first = faker.first_name()
+            if first in WESTERN_FIRST_NAMES:
+                continue
+            name = " ".join([first, *name.split()[1:]])
+        return name
+
+    renamed = 0
+    new_customers = []
+    for customer in customers:
+        if not _founding(customer.customer_id):
+            name = cleared(customer.customer_id, customer.name, customer.gender.value)
+            if name != customer.name:
+                customer = customer.model_copy(update={"name": name})
+                renamed += 1
+        new_customers.append(customer)
+
+    new_names: dict[str, str] = {}
+    new_counterparties = []
+    for counterparty in counterparties:
+        if not _founding(counterparty.counterparty_id):
+            name = cleared(counterparty.counterparty_id, counterparty.name)
+            if name != counterparty.name:
+                counterparty = counterparty.model_copy(update={"name": name})
+                new_names[counterparty.counterparty_id] = name
+                renamed += 1
+        new_counterparties.append(counterparty)
+
+    new_transactions = [
+        t.model_copy(update={"counterparty_name": new_names[t.counterparty_id]})
+        if t.counterparty_id in new_names
+        else t
+        for t in transactions
+    ]
+    return new_customers, new_counterparties, new_transactions, renamed

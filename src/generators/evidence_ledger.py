@@ -4,7 +4,7 @@ Two responsibilities that belong together:
 
 `build_planting_plan` decides, once and deterministically, which accounts get which evidence
 channels. Every other generator reads that decision rather than making its own, which is
-what keeps the five channels consistent - an account marked as a structuring case gets the
+what keeps the six channels consistent - an account marked as a structuring case gets the
 sub-threshold deposits in transactions.py, and the same account is what the ledger records.
 Letting each generator plant independently would eventually drift, and the drift would show
 up as unexplainable Phase 11 metrics rather than as an obvious bug.
@@ -18,20 +18,35 @@ Planting density follows phase_1_execution.md: about 10% of accounts carry two o
 channels (escalate-worthy), about 20% carry exactly one (monitor-worthy), and the remaining
 70% carry none - though a good number of those still carry a deliberate decoy, which is what
 makes the false-positive rate measurable.
+
+The base population is planted from a stream of its own and from pools that never contain a
+later block, and each later block plants its own cases. That is what lets a block be added at
+any phase without moving a single existing label (streams.py).
 """
 
 from __future__ import annotations
 
 import json
-import random
 from dataclasses import dataclass, field
 
 from src.generators import config as cfg
 from src.generators import rings as rings_module
+from src.generators.streams import Streams
 from src.schemas import Account, EvidenceLedgerEntry, FraudRing, RingType, SeverityTier
 
 #: Cross-border cohorts that are legitimate look-alikes rather than planted typologies.
 CROSS_BORDER_DECOY_COHORTS = frozenset({"family_inward", "education_outward", "lrs_outward"})
+
+#: Mule-block cohorts that carry the pass-through channel.
+PASS_THROUGH_COHORTS = frozenset({"network_mule", "solo_mule", "complicit_merchant"})
+
+#: The legitimate life events, dealt out across the life_event cohort in this order. Each is
+#: one sudden spike an ordinary customer can have for a perfectly good reason, and each looks
+#: like pass-through for a few days:
+#:   moneylender_payoff  relatives chip in over a day or two; the lot goes to one lender
+#:   medical_emergency   relatives send money; it goes to a hospital within hours
+#:   windfall            one large receipt (a share of a land sale) spread to new payees
+LIFE_EVENT_KINDS = ("moneylender_payoff", "medical_emergency", "windfall")
 
 
 @dataclass
@@ -43,24 +58,40 @@ class PlantingPlan:
     adverse_media: dict[str, SeverityTier] = field(default_factory=dict)
     forged_document: set[str] = field(default_factory=set)
     ring_membership: dict[str, str] = field(default_factory=dict)
+    pass_through: set[str] = field(default_factory=set)
 
     name_similarity_decoys: set[str] = field(default_factory=set)
     round_amount_decoys: set[str] = field(default_factory=set)
     coincidence_clusters: list[dict] = field(default_factory=list)
 
-    #: The cross-border block: account -> cohort (see config.CROSS_BORDER_COHORTS).
-    cross_border_cohorts: dict[str, str] = field(default_factory=dict)
+    #: Every cohort block's accounts: account -> cohort (config.CROSS_BORDER_COHORTS,
+    #: config.MULE_BLOCK_COHORTS).
+    cohorts: dict[str, str] = field(default_factory=dict)
     #: Round-trip ring members who complete the loop (money out, money back). The ring's
     #: fourth member only sends money out: the one who places funds into the scheme.
     round_trip_core: set[str] = field(default_factory=set)
     round_trip_solo: set[str] = field(default_factory=set)
 
+    #: Where each pass-through account sweeps victims' money: its network's collector, its
+    #: own collector for a solo mule, or a network's collector for a complicit merchant.
+    mule_collector: dict[str, str] = field(default_factory=dict)
+    #: Which legitimate life event each life_event account goes through.
+    life_events: dict[str, str] = field(default_factory=dict)
+
     def cohort(self, account_id: str) -> str | None:
-        return self.cross_border_cohorts.get(account_id)
+        return self.cohorts.get(account_id)
 
     @property
     def cross_border_decoys(self) -> set[str]:
-        return {a for a, c in self.cross_border_cohorts.items() if c in CROSS_BORDER_DECOY_COHORTS}
+        return {a for a, c in self.cohorts.items() if c in CROSS_BORDER_DECOY_COHORTS}
+
+    @property
+    def merchant_lookalike_decoys(self) -> set[str]:
+        return {a for a, c in self.cohorts.items() if c == "merchant_lookalike"}
+
+    @property
+    def life_event_decoys(self) -> set[str]:
+        return set(self.life_events)
 
     @property
     def cross_border_mismatch(self) -> set[str]:
@@ -70,7 +101,7 @@ class PlantingPlan:
         foreign flows carry the mismatch, so the contradiction is the one the typology is
         actually about.
         """
-        unexplained = {a for a, c in self.cross_border_cohorts.items() if c == "unexplained_inward"}
+        unexplained = {a for a, c in self.cohorts.items() if c == "unexplained_inward"}
         return self.round_trip_core | unexplained
 
     @property
@@ -95,6 +126,7 @@ class PlantingPlan:
                 tier is not None and tier != SeverityTier.NAME_SIMILARITY_ONLY,
                 account_id in self.ring_membership,
                 account_id in self.forged_document,
+                account_id in self.pass_through,
             ]
         )
 
@@ -106,7 +138,7 @@ def _take(pool: list[str], count: int) -> list[str]:
 
 
 def build_planting_plan(
-    rng: random.Random,
+    streams: Streams,
     accounts: list[Account],
     fraud_rings: list[FraudRing],
     cohorts: dict[str, str],
@@ -119,7 +151,8 @@ def build_planting_plan(
     account is deliberate: it is monitor-worthy on a single circumstantial signal, and it is
     exactly the case Stage 5 has to catch without any corroboration from the other stages.
     """
-    plan = PlantingPlan(cross_border_cohorts=dict(cohorts))
+    plan = PlantingPlan(cohorts=dict(cohorts))
+    rng = streams.rng("planting", "base")
 
     for ring in fraud_rings:
         for account_id in ring.member_account_ids:
@@ -134,7 +167,7 @@ def build_planting_plan(
     round_trip_rings = [r for r in fraud_rings if r.ring_type == RingType.ROUND_TRIP]
     for ring in round_trip_rings:
         members = list(ring.member_account_ids)
-        rng.shuffle(members)
+        streams.rng("planting", ring.ring_id).shuffle(members)
         for account_id in members[: cfg.RING_CORE_MEMBERS]:
             plan.round_trip_core.add(account_id)
             plan.kyc_mismatch.add(account_id)
@@ -145,13 +178,15 @@ def build_planting_plan(
         if cohort == "unexplained_inward":
             plan.kyc_mismatch.add(account_id)
 
-    fraud_rings = [r for r in fraud_rings if r.ring_type != RingType.ROUND_TRIP]
+    # Round-trip rings are planned above and mule networks by _plant_mule_block below; only
+    # the local and international rings take their second channels from here.
+    base_rings = [r for r in fraud_rings if r.ring_type in (RingType.LOCAL, RingType.INTERNATIONAL)]
 
     # ---------------------------------------------------------------------------------
     # Ring members: 3 core (escalate-worthy) + 1 solo (monitor-worthy) per ring.
     # ---------------------------------------------------------------------------------
     core_members: list[str] = []
-    for ring in fraud_rings:
+    for ring in base_rings:
         members = list(ring.member_account_ids)
         rng.shuffle(members)
         core = sorted(members[: cfg.RING_CORE_MEMBERS])
@@ -181,7 +216,7 @@ def build_planting_plan(
     # ---------------------------------------------------------------------------------
     # Non-ring escalate-worthy accounts: two non-graph channels each.
     # ---------------------------------------------------------------------------------
-    # The cross-border block is fully planned above and never drawn into other channels.
+    # The cohort blocks are fully planned on their own and never drawn into other channels.
     unplanted = sorted({a.account_id for a in accounts} - ring_member_ids - set(cohorts))
     rng.shuffle(unplanted)
 
@@ -225,10 +260,47 @@ def build_planting_plan(
 
     still_clean = [a for a in accounts if a.account_id in set(clean_pool)]
     plan.coincidence_clusters = rings_module.generate_coincidence_clusters(
-        rng, still_clean, ring_member_ids
+        streams, still_clean, ring_member_ids
     )
 
+    _plant_mule_block(plan, fraud_rings, cohorts)
     return plan
+
+
+def _plant_mule_block(plan: PlantingPlan, fraud_rings: list[FraudRing], cohorts: dict[str, str]) -> None:
+    """The mule block's planting, fixed entirely by cohort - no random draws needed.
+
+    Network mules carry ring membership (from rings.py) plus pass-through, so they are
+    escalate-worthy. Solo mules and complicit merchants carry pass-through alone and are
+    monitor-worthy: a solo mule is the case Stage 2 must catch on its own, a complicit
+    merchant the case where the illicit layer hides inside real trade and the collector link
+    is what gives it away. The look-alikes and life events carry nothing and are decoys.
+    """
+    mule_rings = sorted(
+        (r for r in fraud_rings if r.ring_type == RingType.MULE), key=lambda r: r.ring_id
+    )
+    for ring in mule_rings:
+        for account_id in ring.member_account_ids:
+            plan.mule_collector[account_id] = ring.collector_counterparty_id
+
+    solo = sorted(a for a, c in cohorts.items() if c == "solo_mule")
+    for account_id, collector_id in zip(solo, rings_module.SOLO_MULE_COLLECTOR_IDS):
+        plan.mule_collector[account_id] = collector_id
+
+    # Each complicit merchant feeds one network's collector, so both collectors are shared by
+    # accounts that have no phone in common - the link Stage 5 has to notice.
+    complicit = sorted(a for a, c in cohorts.items() if c == "complicit_merchant")
+    for position, account_id in enumerate(complicit):
+        if mule_rings:
+            plan.mule_collector[account_id] = mule_rings[position % len(mule_rings)].collector_counterparty_id
+
+    for account_id, cohort in cohorts.items():
+        if cohort in PASS_THROUGH_COHORTS:
+            plan.pass_through.add(account_id)
+
+    life = sorted(a for a, c in cohorts.items() if c == "life_event")
+    for position, account_id in enumerate(life):
+        plan.life_events[account_id] = LIFE_EVENT_KINDS[position % len(LIFE_EVENT_KINDS)]
 
 
 def build_ledger(accounts: list[Account], plan: PlantingPlan) -> list[EvidenceLedgerEntry]:
@@ -247,6 +319,10 @@ def build_ledger(accounts: list[Account], plan: PlantingPlan) -> list[EvidenceLe
             decoys.append("round_amount")
         if account_id in plan.cross_border_decoys:
             decoys.append("cross_border_legitimate")
+        if account_id in plan.merchant_lookalike_decoys:
+            decoys.append("merchant_lookalike")
+        if account_id in plan.life_event_decoys:
+            decoys.append("life_event")
 
         ledger.append(
             EvidenceLedgerEntry(
@@ -257,6 +333,7 @@ def build_ledger(accounts: list[Account], plan: PlantingPlan) -> list[EvidenceLe
                 adverse_media_hit=plan.adverse_media.get(account_id),
                 graph_ring_membership=plan.ring_membership.get(account_id),
                 forged_document_planted=account_id in plan.forged_document,
+                pass_through_planted=account_id in plan.pass_through,
                 decoy_types=decoys,
             )
         )

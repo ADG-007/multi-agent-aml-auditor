@@ -3,10 +3,10 @@
     python -m src.generators.verify
 
 Two jobs, and the distinction matters. The assertions check that the data on disk matches
-the exact quantities phase_1_execution.md decided - 344 customers (300 plus the cross-border
-block), 11 rings, 160 adverse-media entries, 39 escalate-worthy accounts. They exist to catch a generator bug immediately, at the
-point it is cheap to find, rather than in Phase 11 when the evaluation numbers look strange
-and the cause is six phases back. They are not Phase 2's boundary tests and do not pretend to
+the exact quantities phase_1_execution.md decided - 370 customers (300 plus the cross-border
+and mule blocks), 13 rings, 160 adverse-media entries, 47 escalate-worthy accounts. They exist
+to catch a generator bug immediately, at the point it is cheap to find, rather than in Phase
+11 when the evaluation numbers look strange and the cause is six phases back. They are not Phase 2's boundary tests and do not pretend to
 be.
 
 The summary then prints the data back in human-readable form, including one full sample
@@ -17,8 +17,12 @@ subtly wrong in a way only a person reading it will notice.
 from __future__ import annotations
 
 import json
+import re
+import statistics
 import sys
-from collections import Counter
+from collections import Counter, defaultdict
+from datetime import timedelta
+from difflib import SequenceMatcher
 
 import networkx as nx
 
@@ -112,6 +116,10 @@ RETRIEVAL_PROBES: tuple[tuple[str, frozenset[str]], ...] = (
     (
         "foreign wire above five lakh rupees with a purpose code the profile cannot support",
         frozenset({"XB-004", "XB-002", "XB-001"}),
+    ),
+    (
+        "payments from many unrelated people forwarded to one account within hours of arriving",
+        frozenset({"MULE-002", "MULE-001"}),
     ),
 )
 
@@ -350,6 +358,11 @@ def main() -> int:
         sum(1 for r in rings if r.ring_type.value == "ROUND_TRIP") == cfg.NUM_ROUND_TRIP_RINGS,
         f"{cfg.NUM_ROUND_TRIP_RINGS} round-trip rings",
     )
+    check(
+        sum(1 for r in rings if r.ring_type.value == "MULE") == cfg.NUM_MULE_RINGS
+        and all(r.collector_counterparty_id for r in rings if r.ring_type.value == "MULE"),
+        f"{cfg.NUM_MULE_RINGS} mule networks, each with a collector",
+    )
     ring_members = [m for r in rings for m in r.member_account_ids]
     check(len(ring_members) == len(set(ring_members)), "no account belongs to two rings")
     check(all(r.shared_device_id for r in rings), "every ring shares a device identifier")
@@ -357,6 +370,24 @@ def main() -> int:
     # ==================================================================================
     print("\n=== Transactions ===")
     check(len(transactions) > 0, "transactions generated")
+    check(
+        len({t.transaction_id for t in transactions}) == len(transactions),
+        "every transaction id is unique",
+    )
+    check(
+        all(
+            re.fullmatch(r"TXN-\d{8}-\d{6}-\d{4}(-\d+)?", t.transaction_id)
+            and t.transaction_id[4:19] == t.timestamp.strftime("%Y%m%d-%H%M%S")
+            and t.transaction_id[20:24] == t.account_id.split("-")[1]
+            for t in transactions
+        ),
+        "transaction ids encode their own posting time and account (TXN-YYYYMMDD-HHMMSS-NNNN)",
+    )
+    by_time = sorted(transactions, key=lambda t: (t.timestamp, t.account_id))
+    check(
+        [t.transaction_id for t in by_time] == sorted(t.transaction_id for t in transactions),
+        "transaction ids sort bank-wide in time order",
+    )
     per_account = Counter(t.account_id for t in transactions)
     check(len(per_account) == cfg.NUM_CUSTOMERS, "every account has transaction history")
     check(
@@ -465,6 +496,10 @@ def main() -> int:
     )
 
     # ==================================================================================
+    print("\n=== Money-mule pass-through (Amendment 2) ===")
+    _check_mules(ledger, rings, transactions, counterparties)
+
+    # ==================================================================================
     print("\n=== Evidence ledger (ground truth) ===")
     check(len(ledger) == cfg.NUM_CUSTOMERS, "one ledger row per account")
     escalate = [e for e in ledger if e.real_channel_count >= 2]
@@ -531,6 +566,7 @@ def main() -> int:
     untouched = {e.account_id for e in ledger if e.real_channel_count == 0}
     clean_ratios = [r for a, r in ratios.items() if a in untouched]
     mismatch_ratios = [r for a, r in ratios.items() if a in mismatch_accounts]
+    pass_through_ratios = [r for a, r in ratios.items() if a in {e.account_id for e in ledger if e.pass_through_planted}]
     check(
         max(clean_ratios) < 8.0,
         f"accounts with no planted channel stay under 8x declared income "
@@ -543,6 +579,14 @@ def main() -> int:
     check(
         min(mismatch_ratios) > max(clean_ratios) * 0.9,
         "planted mismatches sit above the clean population, not inside it",
+    )
+    # A mule's giveaway is the shape of its money, not the size. If pass-through accounts
+    # moved as much as a planted KYC mismatch, the KYC channel would be planted on them too
+    # without the ledger saying so.
+    check(
+        not pass_through_ratios or max(pass_through_ratios) < min(mismatch_ratios),
+        f"pass-through accounts stay below planted KYC-mismatch turnover "
+        f"(max {max(pass_through_ratios or [0]):.1f}x vs {min(mismatch_ratios):.1f}x)",
     )
     money_in: dict[str, float] = {}
     money_out: dict[str, float] = {}
@@ -593,8 +637,18 @@ def main() -> int:
         len(innocent_shared) >= 4,
         f"unrelated legitimate foreign companies share registered addresses ({len(innocent_shared)} companies)",
     )
+    merchant_decoys = [e for e in ledger if "merchant_lookalike" in e.decoy_types]
+    life_decoys = [e for e in ledger if "life_event" in e.decoy_types]
     check(
-        all(e.real_channel_count == 0 for e in name_decoys + graph_decoys + round_decoys + cross_border_decoys),
+        len(merchant_decoys) == cfg.NUM_MERCHANT_LOOKALIKE_DECOYS,
+        f"{cfg.NUM_MERCHANT_LOOKALIKE_DECOYS} personal-UPI merchant look-alikes",
+    )
+    check(len(life_decoys) == cfg.NUM_LIFE_EVENT_DECOYS, f"{cfg.NUM_LIFE_EVENT_DECOYS} life-event look-alikes")
+    check(
+        all(
+            e.real_channel_count == 0
+            for e in name_decoys + graph_decoys + round_decoys + cross_border_decoys + merchant_decoys + life_decoys
+        ),
         "no decoy account also carries a real evidence channel",
     )
 
@@ -618,23 +672,37 @@ def main() -> int:
     )
     # Stage 4 screens counterparties too. A counterparty whose name sits close to a corpus
     # entry would give every account that pays it a hit nobody planted. difflib stands in
-    # for Stage 4's matcher here, at Stage 4's own 85 cutoff.
-    from difflib import SequenceMatcher
-
+    # for Stage 4's matcher here, at Stage 4's own 85 cutoff. The cheap upper bounds are
+    # checked first only to keep this fast over thousands of mule-block payers.
     corpus_names = [n.lower() for m in media for n in [m.entity_name, *m.aliases]]
-    counterparty_collisions = [
-        cp.counterparty_id
-        for cp in counterparties
-        if any(SequenceMatcher(None, cp.name.lower(), n).ratio() >= 0.85 for n in corpus_names)
-    ]
+
+    def near_corpus(name: str) -> bool:
+        for other in corpus_names:
+            matcher = SequenceMatcher(None, name.lower(), other)
+            if matcher.real_quick_ratio() >= 0.85 and matcher.quick_ratio() >= 0.85 and matcher.ratio() >= 0.85:
+                return True
+        return False
+
+    counterparty_collisions = [cp.counterparty_id for cp in counterparties if near_corpus(cp.name)]
     check(
         not counterparty_collisions,
         f"no counterparty name comes within 85% of a corpus entry ({len(counterparty_collisions)} found)",
     )
+    planted_actors = {m.linked_actor_id for m in media if m.linked_actor_id}
+    later_block_collisions = [
+        c.customer_id
+        for c in customers
+        if cfg.block_of(c.customer_id) not in cfg.CORPUS_SCREENED_BLOCKS
+        and c.customer_id not in planted_actors
+        and near_corpus(c.name)
+    ]
+    check(
+        not later_block_collisions,
+        f"no later-block customer name comes within 85% of a corpus entry ({len(later_block_collisions)} found)",
+    )
 
     # ==================================================================================
     print("\n=== KYC profiles ===")
-    import re
 
     narrative_of = {p.customer_id: p.narrative for p in profiles}
     check(
@@ -736,9 +804,14 @@ def main() -> int:
 
     # ==================================================================================
     print("\n=== Rulebook ===")
-    check(len(clauses) == 20, f"{len(clauses)} clauses (20 expected)")
+    check(len(clauses) == 22, f"{len(clauses)} clauses (22 expected)")
     categories = Counter(c.category.value for c in clauses)
-    check(len(categories) == 6, "all six categories covered")
+    check(len(categories) == 7, "all seven categories covered")
+    mule002 = next((c for c in clauses if c.clause_id == "MULE-002"), None)
+    check(
+        mule002 is not None and mule002.metadata.get("txn_floor_inr") == cfg.MULE_TXN_FLOOR_INR,
+        f"MULE-002 carries the suspected-mule transaction floor txn_floor_inr = {cfg.MULE_TXN_FLOOR_INR:,}",
+    )
     struct001 = next((c for c in clauses if c.clause_id == "STRUCT-001"), None)
     check(struct001 is not None, "STRUCT-001 exists")
     if struct001:
@@ -785,6 +858,121 @@ def main() -> int:
         return 1
     print("All checks passed.")
     return 0
+
+
+def _check_mules(ledger, rings, transactions, counterparties) -> None:
+    """The pass-through typology and its look-alikes are separable by shape, as designed.
+
+    Checked from the data itself, the way a reader would: where each account's money goes,
+    and how long it stays. Nothing here reads a cohort label, because none is written to
+    pipeline-readable data - only the ledger knows which account is which.
+    """
+    by_account: dict[str, list] = defaultdict(list)
+    for txn in transactions:
+        by_account[txn.account_id].append(txn)
+
+    from src.generators.rings import MULE_NETWORK_COLLECTOR_IDS, SOLO_MULE_COLLECTOR_IDS
+
+    mule_rings = [r for r in rings if r.ring_type.value == "MULE"]
+    network_collectors = {r.collector_counterparty_id for r in mule_rings}
+    all_collectors = set(MULE_NETWORK_COLLECTOR_IDS) | set(SOLO_MULE_COLLECTOR_IDS)
+    check(
+        len({c.counterparty_id for c in counterparties}) == len(counterparties),
+        "every counterparty id is unique",
+    )
+    # The generator times flows to the minute. If planted postings all landed on :00 seconds,
+    # or collectors carried a telling id, a stage could find the planted cases without doing
+    # any analysis at all.
+    zero_seconds = sum(1 for t in transactions if t.timestamp.second == 0) / len(transactions)
+    check(zero_seconds < 0.05, f"postings are not marked by round seconds ({zero_seconds:.1%} on :00)")
+    check(
+        not any(re.search(r"COL|MULE|VICTIM", c.counterparty_id) for c in counterparties),
+        "no counterparty id names its role",
+    )
+    senders_to: dict[str, set[str]] = defaultdict(set)
+    for txn in transactions:
+        if txn.counterparty_id in all_collectors and txn.direction.value == "DEBIT":
+            senders_to[txn.counterparty_id].add(txn.account_id)
+
+    pass_through = [e for e in ledger if e.pass_through_planted]
+    lookalikes = [e for e in ledger if "merchant_lookalike" in e.decoy_types or "life_event" in e.decoy_types]
+    check(len(pass_through) == 12, f"12 pass-through accounts ({len(pass_through)})")
+
+    check(
+        all(senders_to[r.collector_counterparty_id] >= set(r.member_account_ids) for r in mule_rings),
+        "every network mule sweeps into its network's collector",
+    )
+    ring_of = {m: r.ring_id for r in rings for m in r.member_account_ids}
+    complicit = [e.account_id for e in pass_through if e.account_id not in ring_of and any(
+        t.counterparty_id in network_collectors for t in by_account[e.account_id])]
+    solo = [e.account_id for e in pass_through if e.account_id not in ring_of and e.account_id not in complicit]
+    check(
+        len(complicit) == 2 and all(len(senders_to[c]) == cfg.RING_SIZE + 1 for c in network_collectors),
+        "each network collector also receives from one complicit merchant with no phone in common",
+    )
+    solo_collectors = all_collectors - network_collectors
+    check(
+        len(solo) == 2 and all(len(senders_to[c]) == 1 for c in solo_collectors),
+        "each solo mule's collector is used by that mule alone - no graph link to lean on",
+    )
+    check(
+        not any(senders_to[c] & {e.account_id for e in lookalikes} for c in all_collectors),
+        "no look-alike ever pays a collector",
+    )
+
+    def hold_hours(account_id: str, is_onward) -> list[float]:
+        """Hours from each payment by a stranger (a victim, a walk-in customer - the account's
+        own CPM- payers) until the next onward payment."""
+        rows = sorted(by_account[account_id], key=lambda t: t.timestamp)
+        onward = [t.timestamp for t in rows if t.direction.value == "DEBIT" and is_onward(t)]
+        waits = []
+        for t in rows:
+            if t.direction.value == "CREDIT" and t.counterparty_id.startswith("CPM-"):
+                later = [o for o in onward if o >= t.timestamp]
+                if later:
+                    waits.append((later[0] - t.timestamp).total_seconds() / 3600)
+        return waits
+
+    mule_holds = [
+        statistics.median(hold_hours(a, lambda t: t.counterparty_id in all_collectors or t.type.value == "ATM"))
+        for a in solo + [m for r in mule_rings for m in r.member_account_ids]
+    ]
+    merchant_holds = [
+        statistics.median(hold_hours(e.account_id, lambda t: t.type.value in ("NEFT", "RTGS")))
+        for e in ledger
+        if "merchant_lookalike" in e.decoy_types
+    ]
+    check(
+        max(mule_holds) < 4 and min(merchant_holds) > 24,
+        f"mules hold money for hours (median at most {max(mule_holds):.1f}h), look-alike merchants "
+        f"for days (median at least {min(merchant_holds):.0f}h)",
+    )
+
+    last_day = max(t.timestamp for t in transactions).date()
+    layer_start = last_day - timedelta(days=cfg.COMPLICIT_LAYER_DAYS)
+    check(
+        all(
+            t.timestamp.date() >= layer_start
+            for a in complicit
+            for t in by_account[a]
+            if t.counterparty_id in network_collectors
+        ),
+        f"complicit merchants' forwarding sits only in the last {cfg.COMPLICIT_LAYER_DAYS} days",
+    )
+
+    def repeat_share(account_id: str) -> float:
+        payers = Counter(
+            t.counterparty_id for t in by_account[account_id]
+            if t.direction.value == "CREDIT" and t.type.value in ("UPI", "IMPS")
+        )
+        total = sum(payers.values())
+        return sum(n for n in payers.values() if n > 1) / total if total else 0.0
+
+    check(
+        all(repeat_share(a) == 0 for a in solo + [m for r in mule_rings for m in r.member_account_ids])
+        and all(repeat_share(e.account_id) < 0.5 for e in ledger if "merchant_lookalike" in e.decoy_types),
+        "mule victims each pay once, and look-alike merchants' payers are mostly one-time too",
+    )
 
 
 def _summary(customers, accounts, transactions, counterparties, profiles, media, clauses, ledger, rings, graph) -> None:
@@ -844,6 +1032,7 @@ def _summary(customers, accounts, transactions, counterparties, profiles, media,
         ),
         "graph_ring": sum(1 for e in ledger if e.graph_ring_membership),
         "forged_document": sum(1 for e in ledger if e.forged_document_planted),
+        "pass_through": sum(1 for e in ledger if e.pass_through_planted),
     }
     for channel, count in channels.items():
         print(f"   {channel:<22} {count:>4}")

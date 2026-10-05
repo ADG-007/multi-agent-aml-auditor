@@ -23,6 +23,12 @@ and the legitimate look-alikes each one needs:
   - benign round-amount clustering, against structuring
   - NRIs' own remittances into their NRE accounts, family money sent home, university fees
     and LRS gifts or investments abroad, against the cross-border typologies
+The mule block's flows - money-mule pass-through and its look-alikes - live in mules.py.
+
+Every account draws from a stream keyed by its own id, and transaction ids are built from
+each transaction's own posting time and account number (TXN-20260722-143512-0042) rather
+than a bank-wide serial, so appending a block of customers changes no existing transaction
+(streams.py).
 """
 
 from __future__ import annotations
@@ -38,11 +44,13 @@ from src.generators.addresses import foreign_business_address
 from src.generators.identifiers import device_id, ip_address
 from src.generators.names import indian_name
 from src.generators.rings import FOREIGN_RING_CLUSTER_IDS, ROUND_TRIP_ENTITY_PAIRS
+from src.generators.streams import Streams
 from src.schemas import (
     Account,
     Counterparty,
     Customer,
     FraudRing,
+    RingType,
     Transaction,
     TransactionDirection,
     TransactionType,
@@ -305,8 +313,8 @@ def _company_name(faker_intl: Faker, rng: random.Random, country: str) -> str:
     return f"{faker_intl.last_name()} {rng.choice(suffixes)}"
 
 
-def generate_counterparties(rng: random.Random) -> list[Counterparty]:
-    """The pool every transaction draws its other side from.
+def generate_counterparties(streams: Streams) -> list[Counterparty]:
+    """The base pool every transaction draws its other side from.
 
     Foreign counterparties are purpose-built rather than a generic pool, because every
     foreign wire in the data belongs to a specific flow: the offshore cluster, a round-trip
@@ -314,11 +322,15 @@ def generate_counterparties(rng: random.Random) -> list[Counterparty]:
     unexplained foreign payer. The reserved CPF block comes first, in the order rings.py
     expects, so both generators agree on those IDs without either importing the other's
     output.
+
+    This list is fixed: a later population block brings counterparties of its own rather
+    than drawing new ones here, so the base pool never changes.
     """
+    rng = streams.rng("counterparties", "base")
     faker_in = Faker("en_IN")
     faker_intl = Faker("en_US")
-    faker_in.seed_instance(cfg.SEED + 2)
-    faker_intl.seed_instance(cfg.SEED + 3)
+    faker_in.seed_instance(streams.seed_for("counterparties", "base", "en_IN"))
+    faker_intl.seed_instance(streams.seed_for("counterparties", "base", "en_US"))
 
     counterparties: list[Counterparty] = []
 
@@ -336,8 +348,10 @@ def generate_counterparties(rng: random.Random) -> list[Counterparty]:
     # The offshore cluster the international rings funnel into. Companies in one
     # jurisdiction share a registered address - a single formation agent's office, which is
     # how shell companies set up together usually look.
+    # Sorted, not set order: Python randomises string hashing per process, so iterating the
+    # set directly drew these addresses in a different order from run to run.
     cluster_addresses = {
-        country: foreign_business_address(rng, country) for country in set(CLUSTER_JURISDICTIONS)
+        country: foreign_business_address(rng, country) for country in sorted(set(CLUSTER_JURISDICTIONS))
     }
     for country in CLUSTER_JURISDICTIONS:
         add_foreign(_company_name(faker_intl, rng, country), country, cluster_addresses[country])
@@ -391,7 +405,7 @@ def generate_counterparties(rng: random.Random) -> list[Counterparty]:
 
 
 def _account_identifiers(
-    rng: random.Random,
+    streams: Streams,
     accounts: list[Account],
     fraud_rings: list[FraudRing],
     coincidence_clusters: list[dict],
@@ -400,10 +414,12 @@ def _account_identifiers(
 
     An ordinary customer has one or two devices and a couple of IPs. A ring member also has
     the ring's shared handset, and uses it often enough for the shared edge to be visible in
-    the graph without the account's own device disappearing.
+    the graph without the account's own device disappearing. A mule network's handler runs
+    the rented accounts' banking themselves, so there the shared handset dominates.
     """
     identifiers: dict[str, dict] = {}
     for account in accounts:
+        rng = streams.rng("identifiers", account.account_id)
         identifiers[account.account_id] = {
             "own_devices": [device_id(rng) for _ in range(rng.randint(1, 2))],
             "own_ips": [ip_address(rng) for _ in range(rng.randint(1, 3))],
@@ -415,13 +431,17 @@ def _account_identifiers(
     for ring in fraud_rings:
         for account_id in ring.member_account_ids:
             entry = identifiers[account_id]
+            rng = streams.rng("identifiers", account_id, "shared")
             entry["shared_device"] = ring.shared_device_id
             entry["shared_ip"] = ring.shared_ip_address
-            entry["shared_use_rate"] = rng.uniform(0.35, 0.60)
+            entry["shared_use_rate"] = (
+                rng.uniform(0.75, 0.95) if ring.ring_type == RingType.MULE else rng.uniform(0.35, 0.60)
+            )
 
     for cluster in coincidence_clusters:
         for account_id in cluster["member_account_ids"]:
             entry = identifiers[account_id]
+            rng = streams.rng("identifiers", account_id, "shared")
             entry["shared_device"] = cluster["shared_device_id"]
             entry["shared_ip"] = cluster["shared_ip_address"]
             # A household shares a handset heavily - the decoy has to be at least as strong
@@ -472,8 +492,59 @@ def _swift_amount(rng: random.Random, target: float) -> float:
     return _avoid_structuring_band(rng, float(round(max(10_000.0, target), 2)))
 
 
-def generate(
+def ordinary_rows(
     rng: random.Random,
+    row,
+    count: int,
+    mean_amount: float,
+    domestic_cps: list[Counterparty],
+    is_round_decoy: bool = False,
+) -> list[dict]:
+    """Everyday domestic activity spread across the 90 days, directions not yet assigned.
+
+    Shared with mules.py, so every account's everyday life is drawn the same way whatever
+    else is planted on top of it.
+    """
+    window_start = cfg.REFERENCE_DATE - timedelta(days=cfg.HISTORY_DAYS)
+    rows: list[dict] = []
+    for _ in range(count):
+        # Transaction sizes are heavily right-skewed in real accounts - many small payments
+        # and a few large ones - so a lognormal draw around the mean fits far better than a
+        # uniform one.
+        amount = mean_amount * rng.lognormvariate(-0.3, 0.75)
+        amount = min(max(amount, 500.0), 2_500_000.0)
+
+        if is_round_decoy and rng.random() < 0.55:
+            # The benign round-amount decoy: a shopkeeper banking takings in neat figures.
+            # Round, repetitive and entirely legitimate - and well below the structuring
+            # band, which is the only thing separating it from a real case.
+            amount = float(min(cfg.ROUND_AMOUNTS, key=lambda value: abs(value - amount)))
+        elif rng.random() < 0.18:
+            # Everyone transacts at round figures sometimes.
+            amount = float(min(cfg.ROUND_AMOUNTS, key=lambda value: abs(value - amount)))
+
+        amount = _avoid_structuring_band(rng, float(round(amount, 2)))
+        txn_type = _rail_for_amount(rng, amount)
+        day = window_start + timedelta(days=rng.randint(0, cfg.HISTORY_DAYS - 1))
+        rows.append(row(amount, txn_type, day, rng.choice(domestic_cps)))
+    return rows
+
+
+def _transaction_id(txn: Transaction, clash: int) -> str:
+    """TXN-<posting date>-<posting time>-<account number>, e.g. TXN-20260722-143512-0042.
+
+    Built only from the transaction's own posting time and account, the way a real payment
+    reference encodes its date and time (a UPI reference number opens with the year, day of
+    year and hour), so ids still sort bank-wide in time order - and adding customers never
+    renumbers anyone else's. `clash` numbers a second posting by one account in one second.
+    """
+    stamp = txn.timestamp.strftime("%Y%m%d-%H%M%S")
+    suffix = f"-{clash}" if clash > 1 else ""
+    return f"TXN-{stamp}-{txn.account_id.split('-')[1]}{suffix}"
+
+
+def generate(
+    streams: Streams,
     customers: list[Customer],
     accounts: list[Account],
     fraud_rings: list[FraudRing],
@@ -484,7 +555,10 @@ def generate(
     `plan` is the PlantingPlan from evidence_ledger; it is typed loosely here only to avoid
     a circular import between the two generator modules.
     """
-    counterparties = generate_counterparties(rng)
+    # Imported here: mules.py builds on this module's helpers.
+    from src.generators import mules as mules_module
+
+    counterparties = generate_counterparties(streams)
     by_name = {c.name: c for c in counterparties}
     by_id = {c.counterparty_id: c for c in counterparties}
     domestic_cps = [c for c in counterparties if not c.is_foreign]
@@ -503,7 +577,13 @@ def generate(
     unexplained_payers = [c for c in foreign_companies if c.registered_address]
     relatives_abroad = [c for c in foreign_companies if not c.registered_address]
 
-    identifiers = _account_identifiers(rng, accounts, fraud_rings, plan.coincidence_clusters)
+    identifiers = _account_identifiers(streams, accounts, fraud_rings, plan.coincidence_clusters)
+
+    # The mule block's collectors, and the counterparties each of its accounts brings.
+    collectors = {c.counterparty_id: c for c in mules_module.collector_counterparties(streams)}
+    if any(cfg.block_of(a.account_id) == "mule" for a in accounts):
+        counterparties.extend(collectors.values())
+    ring_of = {m: r.ring_id for r in fraud_rings for m in r.member_account_ids}
 
     customer_by_id = {c.customer_id: c for c in customers}
     international_ring_members = {
@@ -529,6 +609,7 @@ def generate(
 
     for account in accounts:
         account_id = account.account_id
+        rng = streams.rng("transactions", account_id)
         entry = identifiers[account_id]
         customer = customer_by_id[account.customer_id]
         income = customer.stated_income
@@ -543,22 +624,34 @@ def generate(
         def row(
             amount: float,
             txn_type: TransactionType,
-            day: date,
+            when: date | datetime,
             counterparty: Counterparty,
             direction: TransactionDirection | None = None,
             purpose_code: str | None = None,
         ) -> dict:
+            """One pending row. A bare date gets a plausible hour for its rail; a datetime
+            is used as given, for flows whose timing is the point (a mule's sweep)."""
             device, ip = _pick_device_ip(rng, entry)
             return {
                 "amount": amount,
                 "type": txn_type,
-                "timestamp": _timestamp_for(rng, day, txn_type),
+                "timestamp": when if isinstance(when, datetime) else _timestamp_for(rng, when, txn_type),
                 "device_id": device,
                 "ip_address": ip,
                 "counterparty": counterparty,
                 "direction": direction,
                 "purpose_code": purpose_code,
             }
+
+        if cfg.block_of(account_id) == "mule":
+            ordinary, planted, own_counterparties = mules_module.account_activity(
+                streams, rng, account_id, customer, cohort, plan, collectors, domestic_cps, row,
+                mules_module.burst_start_day(streams, account_id, ring_of.get(account_id)),
+            )
+            counterparties.extend(own_counterparties)
+            _assign_directions(ordinary)
+            _finish_account(rng, account_id, entry, ordinary + planted, transactions)
+            continue
 
         baseline_count = rng.randint(cfg.TXNS_PER_ACCOUNT_MIN, cfg.TXNS_PER_ACCOUNT_MAX)
         is_round_decoy = account_id in plan.round_amount_decoys
@@ -578,27 +671,7 @@ def generate(
         # ---------------------------------------------------------------------------
         # Ordinary domestic activity across the full 90 days.
         # ---------------------------------------------------------------------------
-        for _ in range(baseline_count):
-            # Transaction sizes are heavily right-skewed in real accounts - many small
-            # payments and a few large ones - so a lognormal draw around the mean fits far
-            # better than a uniform one.
-            amount = mean_amount * rng.lognormvariate(-0.3, 0.75)
-            amount = min(max(amount, 500.0), 2_500_000.0)
-
-            if is_round_decoy and rng.random() < 0.55:
-                # The benign round-amount decoy: a shopkeeper banking takings in neat
-                # figures. Round, repetitive and entirely legitimate - and well below the
-                # structuring band, which is the only thing separating it from a real case.
-                amount = float(min(cfg.ROUND_AMOUNTS, key=lambda value: abs(value - amount)))
-            elif rng.random() < 0.18:
-                # Everyone transacts at round figures sometimes.
-                amount = float(min(cfg.ROUND_AMOUNTS, key=lambda value: abs(value - amount)))
-
-            amount = _avoid_structuring_band(rng, float(round(amount, 2)))
-            txn_type = _rail_for_amount(rng, amount)
-            day = day_at(rng.randint(0, cfg.HISTORY_DAYS - 1))
-            ordinary.append(row(amount, txn_type, day, rng.choice(domestic_cps)))
-
+        ordinary = ordinary_rows(rng, row, baseline_count, mean_amount, domestic_cps, is_round_decoy)
         _assign_directions(ordinary)
 
         # ---------------------------------------------------------------------------
@@ -732,50 +805,62 @@ def generate(
                 planted.append(row(amount, TransactionType.SWIFT, day_at(rng.randint(0, cfg.HISTORY_DAYS - 1)),
                                    counterparty, DEBIT, purpose))
 
-        # A device and IP are drawn for every row, so the shared random stream is the same
-        # either way, and then kept only where the customer's own device took part.
-        rows = ordinary + planted
-        for item in rows:
-            if not (item["direction"] == DEBIT and item["type"] in DIGITAL_RAILS):
-                item["device_id"] = item["ip_address"] = None
+        _finish_account(rng, account_id, entry, ordinary + planted, transactions)
 
-        # A ring member or household look-alike must actually show the shared phone. With
-        # phones recorded only on payments the customer sent, an account that sends few of
-        # them could otherwise miss it by chance, and the ring would silently lose a member
-        # in the graph. The earliest sent payment is moved onto the shared phone if needed.
-        if entry["shared_device"]:
-            sent = sorted((r for r in rows if r["device_id"]), key=lambda r: r["timestamp"])
-            if sent and not any(r["device_id"] == entry["shared_device"] for r in sent):
-                sent[0]["device_id"] = entry["shared_device"]
-                sent[0]["ip_address"] = entry["shared_ip"] or sent[0]["ip_address"]
-
-        for item in rows:
-            counterparty = item["counterparty"]
-            transactions.append(
-                Transaction(
-                    transaction_id="TXN-PENDING",
-                    account_id=account_id,
-                    amount=item["amount"],
-                    direction=item["direction"],
-                    type=item["type"],
-                    timestamp=item["timestamp"],
-                    device_id=item["device_id"],
-                    ip_address=item["ip_address"],
-                    counterparty_id=counterparty.counterparty_id,
-                    counterparty_name=counterparty.name,
-                    purpose_code=item["purpose_code"],
-                )
-            )
-
-    # A bank's core system numbers postings as they happen, bank-wide, so ids are assigned
-    # in timestamp order - a later transaction always carries a higher id.
+    # Ids come from each transaction's own posting time and account, so they still sort
+    # bank-wide in time order without a serial that a new block would renumber.
     transactions.sort(key=lambda t: (t.timestamp, t.account_id, t.amount))
-    transactions = [
-        t.model_copy(update={"transaction_id": f"TXN-{serial:07d}"})
-        for serial, t in enumerate(transactions, start=1)
-    ]
+    clashes: dict[str, int] = defaultdict(int)
+    numbered = []
+    for txn in transactions:
+        key = f"{txn.account_id}|{txn.timestamp.isoformat()}"
+        clashes[key] += 1
+        numbered.append(txn.model_copy(update={"transaction_id": _transaction_id(txn, clashes[key])}))
 
     # Time-ordered batches, not isolated rows - Stage 2's velocity comparison reads the
     # history in sequence, so the committed file is sorted the way it will be consumed.
-    transactions.sort(key=lambda t: (t.account_id, t.timestamp))
-    return transactions, counterparties
+    numbered.sort(key=lambda t: (t.account_id, t.timestamp))
+    return numbered, counterparties
+
+
+def _finish_account(
+    rng: random.Random,
+    account_id: str,
+    entry: dict,
+    rows: list[dict],
+    transactions: list[Transaction],
+) -> None:
+    """Apply the device rule to one account's rows and append them as transactions."""
+    # A device and IP are drawn for every row, so the account's stream is the same either
+    # way, and then kept only where the customer's own device took part.
+    for item in rows:
+        if not (item["direction"] == DEBIT and item["type"] in DIGITAL_RAILS):
+            item["device_id"] = item["ip_address"] = None
+
+    # A ring member or household look-alike must actually show the shared phone. With
+    # phones recorded only on payments the customer sent, an account that sends few of
+    # them could otherwise miss it by chance, and the ring would silently lose a member
+    # in the graph. The earliest sent payment is moved onto the shared phone if needed.
+    if entry["shared_device"]:
+        sent = sorted((r for r in rows if r["device_id"]), key=lambda r: r["timestamp"])
+        if sent and not any(r["device_id"] == entry["shared_device"] for r in sent):
+            sent[0]["device_id"] = entry["shared_device"]
+            sent[0]["ip_address"] = entry["shared_ip"] or sent[0]["ip_address"]
+
+    for item in rows:
+        counterparty = item["counterparty"]
+        transactions.append(
+            Transaction(
+                transaction_id="TXN-PENDING",
+                account_id=account_id,
+                amount=item["amount"],
+                direction=item["direction"],
+                type=item["type"],
+                timestamp=item["timestamp"],
+                device_id=item["device_id"],
+                ip_address=item["ip_address"],
+                counterparty_id=counterparty.counterparty_id,
+                counterparty_name=counterparty.name,
+                purpose_code=item["purpose_code"],
+            )
+        )

@@ -15,9 +15,10 @@ from pathlib import Path
 # Reproducibility
 # --------------------------------------------------------------------------------------
 
-#: Applied to random, Faker and numpy at generator entry. The generated dataset is
-#: committed to the repo rather than regenerated per run, so that a library version change
-#: in someone else's environment cannot silently shift the ground-truth labels.
+#: Every random stream in the generators is derived from this plus a key naming what the
+#: stream is for (streams.py). The generated dataset is committed to the repo rather than
+#: regenerated per run, so that a library version change in someone else's environment
+#: cannot silently shift the ground-truth labels.
 SEED = 42
 
 #: The "today" every generator works backwards from.
@@ -86,8 +87,52 @@ CROSS_BORDER_COHORTS: tuple[tuple[str, int], ...] = (
 )
 NUM_CROSS_BORDER_CUSTOMERS = sum(count for _, count in CROSS_BORDER_COHORTS)
 
-NUM_CUSTOMERS = NUM_BASE_CUSTOMERS + NUM_CROSS_BORDER_CUSTOMERS
-NUM_DOMESTIC = NUM_BASE_DOMESTIC + NUM_CROSS_BORDER_CUSTOMERS
+#: The mule block (Amendment 2), added on top of the cross-border block (all domestic
+#: residents). Planted money-mule typologies and their legitimate look-alikes:
+#:   network_mule        one of four accounts run from a handler's shared phone, forwarding
+#:                       victims' money to the network's collector within minutes to hours
+#:   solo_mule           the same pass-through on its own phone and its own collector
+#:   complicit_merchant  a genuine busy merchant with a thin layer of victims' money in its
+#:                       last 30 days, forwarded to a network's collector
+#:   merchant_lookalike  a fuel outlet or roadside electronics shop taking customer payments
+#:                       on a personal UPI ID (legitimate)
+#:   life_event          a salaried customer with one sudden, legitimate spike (legitimate)
+MULE_BLOCK_COHORTS: tuple[tuple[str, int], ...] = (
+    ("network_mule", 8),
+    ("solo_mule", 2),
+    ("complicit_merchant", 2),
+    ("merchant_lookalike", 8),
+    ("life_event", 6),
+)
+NUM_MULE_BLOCK_CUSTOMERS = sum(count for _, count in MULE_BLOCK_COHORTS)
+
+#: The population is built in blocks, in customer-id order. A block is only ever appended,
+#: never inserted, and each draws from its own random streams (streams.py), so adding a block
+#: at any phase leaves every earlier block's data unchanged.
+POPULATION_BLOCKS: tuple[tuple[str, int], ...] = (
+    ("base", NUM_BASE_CUSTOMERS),
+    ("cross_border", NUM_CROSS_BORDER_CUSTOMERS),
+    ("mule", NUM_MULE_BLOCK_CUSTOMERS),
+)
+
+#: The blocks the adverse-media corpus was screened against when it was built. The corpus is
+#: fixed against these; every later block keeps its own names clear of the corpus instead
+#: (adverse_media.clear_later_block_names), so adding a block never changes the corpus.
+CORPUS_SCREENED_BLOCKS: tuple[str, ...] = ("base", "cross_border")
+
+NUM_CUSTOMERS = sum(count for _, count in POPULATION_BLOCKS)
+NUM_DOMESTIC = NUM_CUSTOMERS - NUM_NRI
+
+
+def block_of(entity_id: str) -> str:
+    """Which population block a CUST-/ACC- id belongs to."""
+    index = int(entity_id.rsplit("-", 1)[1])
+    start = 0
+    for name, count in POPULATION_BLOCKS:
+        if index <= start + count:
+            return name
+        start += count
+    raise ValueError(f"{entity_id} is outside every population block")
 
 #: Declared annual income spread, INR.
 INCOME_MIN = 300_000
@@ -140,7 +185,9 @@ STRUCTURING_TXN_MAX = 8
 NUM_LOCAL_RINGS = 6
 NUM_INTERNATIONAL_RINGS = 2
 NUM_ROUND_TRIP_RINGS = 3
-NUM_RINGS = NUM_LOCAL_RINGS + NUM_INTERNATIONAL_RINGS + NUM_ROUND_TRIP_RINGS
+#: Mule networks: the mule block's network_mule cohort, four accounts each.
+NUM_MULE_RINGS = 2
+NUM_RINGS = NUM_LOCAL_RINGS + NUM_INTERNATIONAL_RINGS + NUM_ROUND_TRIP_RINGS + NUM_MULE_RINGS
 RING_SIZE = 4
 
 #: Per ring: this many members sit in the escalate-worthy group with a second planted
@@ -153,12 +200,14 @@ RING_CORE_MEMBERS = 3
 # --------------------------------------------------------------------------------------
 
 #: Two or more real evidence channels -> SUSPICIOUS-ESCALATE-worthy (~10% of accounts).
-#: 30 from the base population, plus the 9 round-trip core members (ring + KYC mismatch).
-NUM_ESCALATE_WORTHY = 30 + NUM_ROUND_TRIP_RINGS * 3
+#: 30 from the base population, plus the 9 round-trip core members (ring + KYC mismatch),
+#: plus the 8 network mules (ring + pass-through).
+NUM_ESCALATE_WORTHY = 30 + NUM_ROUND_TRIP_RINGS * 3 + NUM_MULE_RINGS * 4
 
 #: Exactly one real channel -> MONITOR-worthy (~20%). 60 from the base population, plus the
-#: 3 round-trip solo members (ring only) and the unexplained-inward cohort (KYC mismatch only).
-NUM_MONITOR_WORTHY = 60 + NUM_ROUND_TRIP_RINGS + 8
+#: 3 round-trip solo members (ring only), the unexplained-inward cohort (KYC mismatch only),
+#: and the 2 solo mules and 2 complicit merchants (pass-through only).
+NUM_MONITOR_WORTHY = 60 + NUM_ROUND_TRIP_RINGS + 8 + 2 + 2
 
 # --------------------------------------------------------------------------------------
 # Deliberate false-positive decoys (all three types, per Phase 11)
@@ -175,6 +224,37 @@ NUM_ROUND_AMOUNT_DECOYS = 15
 
 #: Legitimate cross-border customers: family_inward + education_outward + lrs_outward.
 NUM_CROSS_BORDER_DECOYS = 24
+
+#: Legitimate pass-through look-alikes from the mule block.
+NUM_MERCHANT_LOOKALIKE_DECOYS = 8
+NUM_LIFE_EVENT_DECOYS = 6
+
+# --------------------------------------------------------------------------------------
+# Money mules (Amendment 2)
+# --------------------------------------------------------------------------------------
+
+#: How long a mule holds victims' money before sweeping it on, in minutes. Mule accounts
+#: are rented precisely so money does not sit where it can be frozen: published red flags
+#: describe funds leaving within hours of arriving.
+MULE_SWEEP_DELAY_MINUTES = (5, 180)
+
+#: The share of what arrives that a mule forwards; the rest is the mule's commission.
+MULE_FORWARD_SHARE = (0.88, 0.97)
+
+#: What a mule moves over its burst, as a share of the holder's declared annual income.
+#: Kept modest on purpose: the giveaway is the shape of the money, not its size, so the
+#: account's turnover stays inside what the profile could plausibly explain and the KYC
+#: channel is not silently planted as well.
+MULE_INFLOW_SHARE_OF_INCOME = (0.3, 0.6)
+
+#: The complicit merchant's illicit layer, as a share of its genuine 90-day takings, and
+#: the recent window it sits in.
+COMPLICIT_LAYER_SHARE = (0.05, 0.10)
+COMPLICIT_LAYER_DAYS = 30
+
+#: RBI's draft SOP on suspected money-mule accounts defines a suspected mule transaction as
+#: one of Rs 1,000 or more flagged by transaction monitoring. Carried in MULE-002's metadata.
+MULE_TXN_FLOOR_INR = 1_000
 
 # --------------------------------------------------------------------------------------
 # Adverse media corpus

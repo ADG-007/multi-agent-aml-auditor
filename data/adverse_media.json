@@ -1,1831 +1,1835 @@
 [
   {
     "entry_id": "AM-0001",
-    "entity_name": "Tanish Rastogi",
+    "entity_name": "Sai Dass",
     "severity_tier": "ADVERSE_NEWS",
-    "description": "Subject of press reporting alleging diversion of trade advances to unrelated parties. The party has publicly denied the allegation.",
+    "description": "Reported as a person of interest in an ongoing inquiry into over-invoiced import consignments and associated outward remittances.",
     "linked_actor_id": "CUST-0022",
     "aliases": [
-      "Rastogi Tanish"
+      "Dass Sai"
     ],
-    "date_of_birth": "1985-04-14",
-    "listing_date": "2021-11-19"
+    "date_of_birth": "1973-08-08",
+    "listing_date": "2024-02-05"
   },
   {
     "entry_id": "AM-0002",
-    "entity_name": "Imaran Devi",
+    "entity_name": "Tanay Oza",
     "severity_tier": "ADVERSE_NEWS",
-    "description": "Reported in national financial press as being under investigation by the Directorate of Enforcement in connection with alleged irregular fund movement through shell entities. No charges have been framed at the time of reporting.",
-    "linked_actor_id": "CUST-0023",
+    "description": "Subject of press reporting alleging diversion of trade advances to unrelated parties. The party has publicly denied the allegation.",
+    "linked_actor_id": "CUST-0034",
     "aliases": [
-      "Devi Imaran"
+      "Oza Tanay"
     ],
-    "date_of_birth": "1998-09-26",
-    "listing_date": "2025-09-04"
+    "date_of_birth": "1992-09-13",
+    "listing_date": "2023-05-24"
   },
   {
     "entry_id": "AM-0003",
-    "entity_name": "Teerth Dugar",
-    "severity_tier": "CONFIRMED_SANCTIONS",
-    "description": "Subject of a targeted financial sanction for involvement in the financing of proscribed activity. All dealings are prohibited and any match must be reported to the Financial Intelligence Unit.",
-    "linked_actor_id": "CUST-0030",
+    "entity_name": "Wakeeta Mandal",
+    "severity_tier": "ADVERSE_NEWS",
+    "description": "Reported as a person of interest in an ongoing inquiry into over-invoiced import consignments and associated outward remittances.",
+    "linked_actor_id": "CUST-0038",
     "aliases": [
-      "Dugar Teerth",
-      "Tirth Dugar"
+      "Mandal Wakeeta"
     ],
-    "date_of_birth": "1968-06-08",
-    "listing_date": "2022-01-12"
+    "date_of_birth": "1966-08-17",
+    "listing_date": "2022-05-28"
   },
   {
     "entry_id": "AM-0004",
-    "entity_name": "Yashica Issac",
-    "severity_tier": "ADVERSE_NEWS",
-    "description": "Named in an income tax survey report covering undisclosed cash receipts routed through multiple current accounts. Matter reported as under assessment.",
-    "linked_actor_id": "CUST-0033",
+    "entity_name": "Vedhika Shroff",
+    "severity_tier": "CONFIRMED_SANCTIONS",
+    "description": "Listed pursuant to a Ministry of Home Affairs notification giving effect to a UNSC 1267 Committee designation. Reporting entities are required to freeze assets and report any attempted transaction without delay.",
+    "linked_actor_id": "CUST-0060",
     "aliases": [
-      "iashica Issac"
+      "Shroff Vedhika"
     ],
-    "date_of_birth": "1975-05-02",
-    "listing_date": "2021-01-07"
+    "date_of_birth": "1990-01-26",
+    "listing_date": "2024-02-11"
   },
   {
     "entry_id": "AM-0005",
-    "entity_name": "Warjas Ray",
+    "entity_name": "Qadim Bhatt",
     "severity_tier": "ADVERSE_NEWS",
-    "description": "Reported as a person of interest in an ongoing inquiry into over-invoiced import consignments and associated outward remittances.",
-    "linked_actor_id": "CUST-0051",
+    "description": "Referenced in a regulatory enforcement order for accepting deposits without authorisation. Penalty proceedings reported as pending.",
+    "linked_actor_id": "CUST-0062",
     "aliases": [
-      "Ray Warjas"
+      "Bhatt Qadim"
     ],
-    "date_of_birth": "1958-07-10",
-    "listing_date": "2023-05-08"
+    "date_of_birth": "1988-08-14",
+    "listing_date": "2021-06-10"
   },
   {
     "entry_id": "AM-0006",
-    "entity_name": "Champak Chatterjee",
+    "entity_name": "Warjas Das",
     "severity_tier": "ADVERSE_NEWS",
-    "description": "Named in an income tax survey report covering undisclosed cash receipts routed through multiple current accounts. Matter reported as under assessment.",
-    "linked_actor_id": "CUST-0052",
+    "description": "Reported as a person of interest in an ongoing inquiry into over-invoiced import consignments and associated outward remittances.",
+    "linked_actor_id": "CUST-0069",
     "aliases": [
-      "Chatterjee Champak"
+      "Das Warjas"
     ],
-    "date_of_birth": "1983-11-07",
-    "listing_date": "2020-10-31"
+    "date_of_birth": "1970-10-24",
+    "listing_date": "2021-04-26"
   },
   {
     "entry_id": "AM-0007",
-    "entity_name": "Karan Edwin",
+    "entity_name": "Wridesh Chander",
     "severity_tier": "ADVERSE_NEWS",
-    "description": "Named in investigative reporting on a network of entities sharing common registered addresses and directors, used to layer cash receipts.",
-    "linked_actor_id": "CUST-0093",
+    "description": "Referenced in a regulatory enforcement order for accepting deposits without authorisation. Penalty proceedings reported as pending.",
+    "linked_actor_id": "CUST-0072",
     "aliases": [
-      "Edwin Karan"
+      "Chander Wridesh"
     ],
-    "date_of_birth": "1989-05-07",
-    "listing_date": "2025-11-06"
+    "date_of_birth": "1965-11-13",
+    "listing_date": "2023-01-18"
   },
   {
     "entry_id": "AM-0008",
-    "entity_name": "Sai Barad",
+    "entity_name": "Ekbal Chandra",
     "severity_tier": "ADVERSE_NEWS",
-    "description": "Reported as a person of interest in an ongoing inquiry into over-invoiced import consignments and associated outward remittances.",
-    "linked_actor_id": "CUST-0104",
+    "description": "Reported in national financial press as being under investigation by the Directorate of Enforcement in connection with alleged irregular fund movement through shell entities. No charges have been framed at the time of reporting.",
+    "linked_actor_id": "CUST-0073",
     "aliases": [
-      "Barad Sai"
+      "Chandra Ekbal"
     ],
-    "date_of_birth": "1982-11-25",
-    "listing_date": "2024-06-09"
+    "date_of_birth": "1968",
+    "listing_date": "2022-01-22"
   },
   {
     "entry_id": "AM-0009",
-    "entity_name": "Nirja Sarin",
-    "severity_tier": "ADVERSE_NEWS",
-    "description": "Referenced in a regulatory enforcement order for accepting deposits without authorisation. Penalty proceedings reported as pending.",
-    "linked_actor_id": "CUST-0111",
+    "entity_name": "Fiyaz Aggarwal",
+    "severity_tier": "CONFIRMED_SANCTIONS",
+    "description": "Subject of a targeted financial sanction for involvement in the financing of proscribed activity. All dealings are prohibited and any match must be reported to the Financial Intelligence Unit.",
+    "linked_actor_id": "CUST-0074",
     "aliases": [
-      "Sarin Nirja"
+      "Aggarwal Fiyaz"
     ],
-    "date_of_birth": "1969-07-12",
-    "listing_date": "2024-06-14"
+    "date_of_birth": "2001-01-06",
+    "listing_date": "2025-06-20"
   },
   {
     "entry_id": "AM-0010",
-    "entity_name": "Samarth Narain",
-    "severity_tier": "CONFIRMED_SANCTIONS",
-    "description": "Listed pursuant to a Ministry of Home Affairs notification giving effect to a UNSC 1267 Committee designation. Reporting entities are required to freeze assets and report any attempted transaction without delay.",
-    "linked_actor_id": "CUST-0116",
+    "entity_name": "Zayyan Deshmukh",
+    "severity_tier": "ADVERSE_NEWS",
+    "description": "Referenced in a regulatory enforcement order for accepting deposits without authorisation. Penalty proceedings reported as pending.",
+    "linked_actor_id": "CUST-0090",
     "aliases": [
-      "Narain Samarth"
+      "Deshmukh Zayyan"
     ],
-    "date_of_birth": "1984-09-02",
-    "listing_date": "2022-01-16"
+    "date_of_birth": "1995-12-06",
+    "listing_date": "2023-12-12"
   },
   {
     "entry_id": "AM-0011",
-    "entity_name": "Shivansh Raghavan",
-    "severity_tier": "CONFIRMED_SANCTIONS",
-    "description": "Subject of a targeted financial sanction for involvement in the financing of proscribed activity. All dealings are prohibited and any match must be reported to the Financial Intelligence Unit.",
-    "linked_actor_id": "CUST-0118",
+    "entity_name": "Maanav Bahri",
+    "severity_tier": "ADVERSE_NEWS",
+    "description": "Reported as a person of interest in an ongoing inquiry into over-invoiced import consignments and associated outward remittances.",
+    "linked_actor_id": "CUST-0099",
     "aliases": [
-      "Raghavan Shivansh"
+      "Bahri Maanav",
+      "Manav Bahri"
     ],
-    "date_of_birth": "1973-12-06",
-    "listing_date": "2021-03-15"
+    "date_of_birth": "1984-07-17",
+    "listing_date": "2022-12-04"
   },
   {
     "entry_id": "AM-0012",
-    "entity_name": "Vyanjana Bora",
-    "severity_tier": "CONFIRMED_SANCTIONS",
-    "description": "Listed pursuant to a Ministry of Home Affairs notification giving effect to a UNSC 1267 Committee designation. Reporting entities are required to freeze assets and report any attempted transaction without delay.",
-    "linked_actor_id": "CUST-0125",
+    "entity_name": "Turvi Oza",
+    "severity_tier": "ADVERSE_NEWS",
+    "description": "Named in an income tax survey report covering undisclosed cash receipts routed through multiple current accounts. Matter reported as under assessment.",
+    "linked_actor_id": "CUST-0113",
     "aliases": [
-      "wyanjana Bora",
-      "Bora Vyanjana"
+      "Oza Turvi"
     ],
-    "date_of_birth": "1980-09-01",
-    "listing_date": "2020-11-24"
+    "date_of_birth": "1987-01-15",
+    "listing_date": "2022-08-24"
   },
   {
     "entry_id": "AM-0013",
-    "entity_name": "Samar Narayanan",
+    "entity_name": "Krish Sahota",
     "severity_tier": "ADVERSE_NEWS",
-    "description": "Referenced in a regulatory enforcement order for accepting deposits without authorisation. Penalty proceedings reported as pending.",
-    "linked_actor_id": "CUST-0139",
+    "description": "Subject of press reporting alleging diversion of trade advances to unrelated parties. The party has publicly denied the allegation.",
+    "linked_actor_id": "CUST-0122",
     "aliases": [
-      "Narayanan Samar"
+      "Sahota Krish"
     ],
-    "date_of_birth": "1968-04-06",
-    "listing_date": "2020-12-24"
+    "date_of_birth": "1974-03-15",
+    "listing_date": "2025-10-01"
   },
   {
     "entry_id": "AM-0014",
-    "entity_name": "Hitesh Sha",
-    "severity_tier": "ADVERSE_NEWS",
-    "description": "Named in an income tax survey report covering undisclosed cash receipts routed through multiple current accounts. Matter reported as under assessment.",
-    "linked_actor_id": "CUST-0151",
+    "entity_name": "Garima Bir",
+    "severity_tier": "CONFIRMED_SANCTIONS",
+    "description": "Subject of a targeted financial sanction for involvement in the financing of proscribed activity. All dealings are prohibited and any match must be reported to the Financial Intelligence Unit.",
+    "linked_actor_id": "CUST-0123",
     "aliases": [
-      "Sha Hitesh"
+      "Bir Garima"
     ],
-    "date_of_birth": "2003-09-01",
-    "listing_date": "2024-12-24"
+    "date_of_birth": "1985-08-14",
+    "listing_date": "2024-03-11"
   },
   {
     "entry_id": "AM-0015",
-    "entity_name": "Harish Bahri",
+    "entity_name": "Manthan Narasimhan",
     "severity_tier": "ADVERSE_NEWS",
-    "description": "Subject of press reporting alleging diversion of trade advances to unrelated parties. The party has publicly denied the allegation.",
-    "linked_actor_id": "CUST-0157",
+    "description": "Reported in national financial press as being under investigation by the Directorate of Enforcement in connection with alleged irregular fund movement through shell entities. No charges have been framed at the time of reporting.",
+    "linked_actor_id": "CUST-0143",
     "aliases": [
-      "Bahri Harish"
+      "Narasimhan Manthan"
     ],
-    "date_of_birth": "1990-06-16",
-    "listing_date": "2022-08-31"
+    "date_of_birth": "1982-04-01",
+    "listing_date": "2023-08-09"
   },
   {
     "entry_id": "AM-0016",
-    "entity_name": "Pahal Balakrishnan",
+    "entity_name": "Udarsh Sengupta",
     "severity_tier": "ADVERSE_NEWS",
-    "description": "Referenced in a regulatory enforcement order for accepting deposits without authorisation. Penalty proceedings reported as pending.",
-    "linked_actor_id": "CUST-0173",
+    "description": "Subject of press reporting alleging diversion of trade advances to unrelated parties. The party has publicly denied the allegation.",
+    "linked_actor_id": "CUST-0146",
     "aliases": [
-      "Balakrishnan Pahal"
+      "Sengupta Udarsh"
     ],
-    "date_of_birth": "1994-01-26",
-    "listing_date": "2021-02-24"
+    "date_of_birth": "1984-05-08",
+    "listing_date": "2024-02-07"
   },
   {
     "entry_id": "AM-0017",
-    "entity_name": "Lajita Sridhar",
-    "severity_tier": "CONFIRMED_SANCTIONS",
-    "description": "Listed pursuant to a Ministry of Home Affairs notification giving effect to a UNSC 1267 Committee designation. Reporting entities are required to freeze assets and report any attempted transaction without delay.",
-    "linked_actor_id": "CUST-0196",
+    "entity_name": "Naveen Swamy",
+    "severity_tier": "ADVERSE_NEWS",
+    "description": "Reported as a person of interest in an ongoing inquiry into over-invoiced import consignments and associated outward remittances.",
+    "linked_actor_id": "CUST-0161",
     "aliases": [
-      "Sridhar Lajita"
+      "Naween Swamy",
+      "Swamy Naveen"
     ],
-    "date_of_birth": "1967-06-18",
-    "listing_date": "2021-03-26"
+    "date_of_birth": "1989-10-21",
+    "listing_date": "2022-10-02"
   },
   {
     "entry_id": "AM-0018",
-    "entity_name": "Tanish Mody",
-    "severity_tier": "ADVERSE_NEWS",
-    "description": "Reported by a state police economic offences wing as under inquiry for a deposit collection scheme. Proceedings reported as at an early stage.",
-    "linked_actor_id": "CUST-0202",
+    "entity_name": "Kashvi Nayar",
+    "severity_tier": "CONFIRMED_SANCTIONS",
+    "description": "Listed pursuant to a Ministry of Home Affairs notification giving effect to a UNSC 1267 Committee designation. Reporting entities are required to freeze assets and report any attempted transaction without delay.",
+    "linked_actor_id": "CUST-0171",
     "aliases": [
-      "Tanish Modi",
-      "Tanis Mody"
+      "Nayar Kashvi"
     ],
-    "date_of_birth": "1993-12-02",
-    "listing_date": "2024-12-13"
+    "date_of_birth": "1992-03-21",
+    "listing_date": "2021-10-19"
   },
   {
     "entry_id": "AM-0019",
-    "entity_name": "Jagdish Ghose",
+    "entity_name": "Ranbir Mandal",
     "severity_tier": "ADVERSE_NEWS",
-    "description": "Reported in national financial press as being under investigation by the Directorate of Enforcement in connection with alleged irregular fund movement through shell entities. No charges have been framed at the time of reporting.",
-    "linked_actor_id": "CUST-0204",
+    "description": "Named in investigative reporting on a network of entities sharing common registered addresses and directors, used to layer cash receipts.",
+    "linked_actor_id": "CUST-0190",
     "aliases": [
-      "Ghose Jagdish"
+      "Mandal Ranbir"
     ],
-    "date_of_birth": "1969-05-13",
-    "listing_date": "2024-10-23"
+    "date_of_birth": "1975-09-08",
+    "listing_date": "2021-06-06"
   },
   {
     "entry_id": "AM-0020",
-    "entity_name": "Nitesh Sabharwal",
-    "severity_tier": "CONFIRMED_SANCTIONS",
-    "description": "Subject of a targeted financial sanction for involvement in the financing of proscribed activity. All dealings are prohibited and any match must be reported to the Financial Intelligence Unit.",
-    "linked_actor_id": "CUST-0223",
+    "entity_name": "Ayush Bhakta",
+    "severity_tier": "ADVERSE_NEWS",
+    "description": "Referenced in a regulatory enforcement order for accepting deposits without authorisation. Penalty proceedings reported as pending.",
+    "linked_actor_id": "CUST-0253",
     "aliases": [
-      "Sabharwal Nitesh"
+      "Bhakta Ayush"
     ],
-    "date_of_birth": "2002-07-05",
-    "listing_date": "2023-09-28"
+    "date_of_birth": "1960-08-18",
+    "listing_date": "2026-02-18"
   },
   {
     "entry_id": "AM-0021",
-    "entity_name": "Ishani Loke",
+    "entity_name": "Zayyan Palan",
     "severity_tier": "ADVERSE_NEWS",
-    "description": "Reported in national financial press as being under investigation by the Directorate of Enforcement in connection with alleged irregular fund movement through shell entities. No charges have been framed at the time of reporting.",
-    "linked_actor_id": "CUST-0230",
+    "description": "Named in investigative reporting on a network of entities sharing common registered addresses and directors, used to layer cash receipts.",
+    "linked_actor_id": "CUST-0278",
     "aliases": [
-      "Loke Ishani",
-      "Isani Loke"
+      "Palan Zayyan",
+      "Zaiyan Palan"
     ],
-    "date_of_birth": "1974-04-25",
-    "listing_date": "2023-07-30"
+    "date_of_birth": "1974-01-14",
+    "listing_date": "2024-08-27"
   },
   {
     "entry_id": "AM-0022",
-    "entity_name": "Mitali Sarma",
+    "entity_name": "Ira Shenoy",
     "severity_tier": "ADVERSE_NEWS",
-    "description": "Reported in national financial press as being under investigation by the Directorate of Enforcement in connection with alleged irregular fund movement through shell entities. No charges have been framed at the time of reporting.",
-    "linked_actor_id": "CUST-0231",
+    "description": "Subject of press reporting alleging diversion of trade advances to unrelated parties. The party has publicly denied the allegation.",
+    "linked_actor_id": "CUST-0286",
     "aliases": [
-      "Sarma Mitali"
+      "Shenoy Ira",
+      "Ira Shenoi"
     ],
-    "date_of_birth": "1968-06-19",
-    "listing_date": "2023-09-21"
+    "date_of_birth": "1977-04-16",
+    "listing_date": "2023-10-03"
   },
   {
     "entry_id": "AM-0023",
-    "entity_name": "Rastogi Tanish",
+    "entity_name": "Tanai Oza",
     "severity_tier": "ADVERSE_NEWS",
-    "description": "Reported as a person of interest in an ongoing inquiry into over-invoiced import consignments and associated outward remittances.",
-    "linked_actor_id": "CUST-0022",
+    "description": "Named in an income tax survey report covering undisclosed cash receipts routed through multiple current accounts. Matter reported as under assessment.",
+    "linked_actor_id": "CUST-0034",
     "aliases": [
-      "Tanish Rastogi"
+      "Tanay Oza"
     ],
-    "date_of_birth": "1985-04-14",
-    "listing_date": "2023-05-17"
+    "date_of_birth": "1969-08-07",
+    "listing_date": "2025-05-17"
   },
   {
     "entry_id": "AM-0024",
-    "entity_name": "Sridhar Lajita",
+    "entity_name": "Chandra Ekbal",
     "severity_tier": "ADVERSE_NEWS",
-    "description": "Reported by a state police economic offences wing as under inquiry for a deposit collection scheme. Proceedings reported as at an early stage.",
-    "linked_actor_id": "CUST-0196",
+    "description": "Subject of press reporting alleging diversion of trade advances to unrelated parties. The party has publicly denied the allegation.",
+    "linked_actor_id": "CUST-0073",
     "aliases": [
-      "Lajita Sridhar"
+      "Ekbal Chandra"
     ],
-    "date_of_birth": "1986-03-24",
-    "listing_date": "2025-01-15"
+    "date_of_birth": "2000-12-21",
+    "listing_date": "2025-01-23"
   },
   {
     "entry_id": "AM-0025",
-    "entity_name": "Imaran Dewi",
+    "entity_name": "Shroff Vedhika",
     "severity_tier": "ADVERSE_NEWS",
-    "description": "Named in investigative reporting on a network of entities sharing common registered addresses and directors, used to layer cash receipts.",
-    "linked_actor_id": "CUST-0023",
+    "description": "Reported in national financial press as being under investigation by the Directorate of Enforcement in connection with alleged irregular fund movement through shell entities. No charges have been framed at the time of reporting.",
+    "linked_actor_id": "CUST-0060",
     "aliases": [
-      "Imaran Devi"
+      "Vedhika Shroff"
     ],
-    "date_of_birth": "1998-09-26",
-    "listing_date": "2023-11-28"
+    "date_of_birth": "1990-01-26",
+    "listing_date": "2024-06-26"
   },
   {
     "entry_id": "AM-0026",
-    "entity_name": "Loke Ishani",
+    "entity_name": "Mandal Wakeeta",
     "severity_tier": "ADVERSE_NEWS",
-    "description": "Named in an income tax survey report covering undisclosed cash receipts routed through multiple current accounts. Matter reported as under assessment.",
-    "linked_actor_id": "CUST-0230",
+    "description": "Referenced in a regulatory enforcement order for accepting deposits without authorisation. Penalty proceedings reported as pending.",
+    "linked_actor_id": "CUST-0038",
     "aliases": [
-      "Ishani Loke"
+      "Wakeeta Mandal"
     ],
-    "date_of_birth": "1993-03-26",
-    "listing_date": "2024-02-20"
+    "date_of_birth": "1993-05-15",
+    "listing_date": "2024-10-02"
   },
   {
     "entry_id": "AM-0027",
-    "entity_name": "Yasica Issac",
+    "entity_name": "Bhatt Qadim",
     "severity_tier": "ADVERSE_NEWS",
-    "description": "Named in investigative reporting on a network of entities sharing common registered addresses and directors, used to layer cash receipts.",
-    "linked_actor_id": "CUST-0033",
+    "description": "Reported as a person of interest in an ongoing inquiry into over-invoiced import consignments and associated outward remittances.",
+    "linked_actor_id": "CUST-0062",
     "aliases": [
-      "Yashica Issac"
+      "Qadim Bhatt"
     ],
-    "date_of_birth": "1972-03-28",
-    "listing_date": "2022-09-01"
+    "date_of_birth": "1962",
+    "listing_date": "2026-02-17"
   },
   {
     "entry_id": "AM-0028",
-    "entity_name": "Sarma Mitali",
+    "entity_name": "Bir Garima",
     "severity_tier": "ADVERSE_NEWS",
     "description": "Named in an income tax survey report covering undisclosed cash receipts routed through multiple current accounts. Matter reported as under assessment.",
-    "linked_actor_id": "CUST-0231",
+    "linked_actor_id": "CUST-0123",
     "aliases": [
-      "Mitali Sarma"
+      "Garima Bir"
     ],
-    "date_of_birth": "1968-06-19",
-    "listing_date": "2024-02-16"
+    "date_of_birth": "1976-01-15",
+    "listing_date": "2022-10-28"
   },
   {
     "entry_id": "AM-0029",
-    "entity_name": "Narayanan Samar",
+    "entity_name": "Sengupta Udarsh",
     "severity_tier": "ADVERSE_NEWS",
-    "description": "Named in investigative reporting on a network of entities sharing common registered addresses and directors, used to layer cash receipts.",
-    "linked_actor_id": "CUST-0139",
+    "description": "Reported by a state police economic offences wing as under inquiry for a deposit collection scheme. Proceedings reported as at an early stage.",
+    "linked_actor_id": "CUST-0146",
     "aliases": [
-      "Samar Narayanan"
+      "Udarsh Sengupta"
     ],
-    "date_of_birth": "1968-04-06",
-    "listing_date": "2025-01-24"
+    "date_of_birth": "1986-04-02",
+    "listing_date": "2022-10-26"
   },
   {
     "entry_id": "AM-0030",
-    "entity_name": "Raghavan Shivansh",
+    "entity_name": "Swamy Naveen",
     "severity_tier": "ADVERSE_NEWS",
-    "description": "Named in an income tax survey report covering undisclosed cash receipts routed through multiple current accounts. Matter reported as under assessment.",
-    "linked_actor_id": "CUST-0118",
+    "description": "Reported by a state police economic offences wing as under inquiry for a deposit collection scheme. Proceedings reported as at an early stage.",
+    "linked_actor_id": "CUST-0161",
     "aliases": [
-      "Shivansh Raghavan"
+      "Naveen Swamy"
     ],
-    "date_of_birth": "1973-12-06",
-    "listing_date": "2023-04-14"
+    "date_of_birth": "1978",
+    "listing_date": "2024-03-25"
   },
   {
     "entry_id": "AM-0031",
-    "entity_name": "Ghose Jagdish",
+    "entity_name": "Fiiaz Aggarwal",
     "severity_tier": "ADVERSE_NEWS",
     "description": "Subject of press reporting alleging diversion of trade advances to unrelated parties. The party has publicly denied the allegation.",
-    "linked_actor_id": "CUST-0204",
+    "linked_actor_id": "CUST-0074",
     "aliases": [
-      "Jagdish Ghose"
+      "Fiyaz Aggarwal"
     ],
-    "date_of_birth": "1969-05-13",
-    "listing_date": "2025-07-02"
+    "date_of_birth": "2001-01-06",
+    "listing_date": "2023-01-30"
   },
   {
     "entry_id": "AM-0032",
-    "entity_name": "Balakrishnan Pahal",
+    "entity_name": "Mandal Ranbir",
     "severity_tier": "ADVERSE_NEWS",
-    "description": "Reported as a person of interest in an ongoing inquiry into over-invoiced import consignments and associated outward remittances.",
-    "linked_actor_id": "CUST-0173",
+    "description": "Reported by a state police economic offences wing as under inquiry for a deposit collection scheme. Proceedings reported as at an early stage.",
+    "linked_actor_id": "CUST-0190",
     "aliases": [
-      "Pahal Balakrishnan"
+      "Ranbir Mandal"
     ],
-    "date_of_birth": "1994-01-26",
-    "listing_date": "2022-10-15"
+    "date_of_birth": "1975-09-08",
+    "listing_date": "2023-05-04"
   },
   {
     "entry_id": "AM-0033",
-    "entity_name": "Girish Yadaav",
+    "entity_name": "Risii Kibe",
     "severity_tier": "NAME_SIMILARITY_ONLY",
     "description": "Name-only record with no supporting narrative, no issuing authority and no reference to any proceeding. Requires independent corroboration before any action.",
     "linked_actor_id": null,
     "aliases": [],
     "date_of_birth": null,
-    "listing_date": "2021-12-26"
+    "listing_date": "2022-04-14"
   },
   {
     "entry_id": "AM-0034",
-    "entity_name": "Chatrush Dugal",
+    "entity_name": "Chandrresh Deo",
     "severity_tier": "NAME_SIMILARITY_ONLY",
-    "description": "Name-only record with no supporting narrative, no issuing authority and no reference to any proceeding. Requires independent corroboration before any action.",
+    "description": "Low-confidence record sourced from a bulk name feed with no date of birth, identification number or jurisdiction attached. Retained to avoid silent suppression, not as evidence.",
     "linked_actor_id": null,
     "aliases": [],
     "date_of_birth": null,
-    "listing_date": "2025-08-05"
+    "listing_date": "2022-12-25"
   },
   {
     "entry_id": "AM-0035",
-    "entity_name": "Devansh Barmaan",
+    "entity_name": "Rakiha Cheema",
     "severity_tier": "NAME_SIMILARITY_ONLY",
     "description": "Name-only record with no supporting narrative, no issuing authority and no reference to any proceeding. Requires independent corroboration before any action.",
     "linked_actor_id": null,
     "aliases": [],
     "date_of_birth": null,
-    "listing_date": "2024-10-31"
+    "listing_date": "2024-05-21"
   },
   {
     "entry_id": "AM-0036",
-    "entity_name": "Raagini Raay",
+    "entity_name": "Chaaaya Garg",
     "severity_tier": "NAME_SIMILARITY_ONLY",
-    "description": "Low-confidence record sourced from a bulk name feed with no date of birth, identification number or jurisdiction attached. Retained to avoid silent suppression, not as evidence.",
+    "description": "Entry retained for screening completeness only. The record originates from an unverified aggregated watchlist feed and carries no corroborating detail beyond a name. Not to be treated as adverse information on its own.",
     "linked_actor_id": null,
     "aliases": [],
     "date_of_birth": null,
-    "listing_date": "2025-04-15"
+    "listing_date": "2026-06-17"
   },
   {
     "entry_id": "AM-0037",
-    "entity_name": "Jagat Gaaba",
+    "entity_name": "Paavani Wadhwa",
     "severity_tier": "NAME_SIMILARITY_ONLY",
-    "description": "Low-confidence record sourced from a bulk name feed with no date of birth, identification number or jurisdiction attached. Retained to avoid silent suppression, not as evidence.",
+    "description": "Entry retained for screening completeness only. The record originates from an unverified aggregated watchlist feed and carries no corroborating detail beyond a name. Not to be treated as adverse information on its own.",
     "linked_actor_id": null,
     "aliases": [],
     "date_of_birth": null,
-    "listing_date": "2022-05-01"
+    "listing_date": "2022-10-10"
   },
   {
     "entry_id": "AM-0038",
-    "entity_name": "Pushti Mody",
+    "entity_name": "Suuhani Balan",
     "severity_tier": "NAME_SIMILARITY_ONLY",
     "description": "Entry retained for screening completeness only. The record originates from an unverified aggregated watchlist feed and carries no corroborating detail beyond a name. Not to be treated as adverse information on its own.",
     "linked_actor_id": null,
     "aliases": [],
     "date_of_birth": null,
-    "listing_date": "2022-03-26"
+    "listing_date": "2023-07-25"
   },
   {
     "entry_id": "AM-0039",
-    "entity_name": "Jaalsa Bhatt",
+    "entity_name": "Tanveeer Bansal",
     "severity_tier": "NAME_SIMILARITY_ONLY",
-    "description": "Low-confidence record sourced from a bulk name feed with no date of birth, identification number or jurisdiction attached. Retained to avoid silent suppression, not as evidence.",
+    "description": "Entry retained for screening completeness only. The record originates from an unverified aggregated watchlist feed and carries no corroborating detail beyond a name. Not to be treated as adverse information on its own.",
     "linked_actor_id": null,
     "aliases": [],
     "date_of_birth": null,
-    "listing_date": "2025-03-09"
+    "listing_date": "2025-11-07"
   },
   {
     "entry_id": "AM-0040",
-    "entity_name": "Shivansh Ramachanddran",
+    "entity_name": "Lopa Ramessh",
     "severity_tier": "NAME_SIMILARITY_ONLY",
     "description": "Name-only record with no supporting narrative, no issuing authority and no reference to any proceeding. Requires independent corroboration before any action.",
     "linked_actor_id": null,
     "aliases": [],
     "date_of_birth": null,
-    "listing_date": "2025-01-02"
+    "listing_date": "2024-01-20"
   },
   {
     "entry_id": "AM-0041",
-    "entity_name": "Vihaan Goppal",
+    "entity_name": "Yatan Deevi",
     "severity_tier": "NAME_SIMILARITY_ONLY",
     "description": "Low-confidence record sourced from a bulk name feed with no date of birth, identification number or jurisdiction attached. Retained to avoid silent suppression, not as evidence.",
     "linked_actor_id": null,
     "aliases": [],
     "date_of_birth": null,
-    "listing_date": "2021-12-22"
+    "listing_date": "2022-10-11"
   },
   {
     "entry_id": "AM-0042",
-    "entity_name": "Leeua Raghavan",
+    "entity_name": "Advay Darra",
     "severity_tier": "NAME_SIMILARITY_ONLY",
-    "description": "Entry retained for screening completeness only. The record originates from an unverified aggregated watchlist feed and carries no corroborating detail beyond a name. Not to be treated as adverse information on its own.",
+    "description": "Low-confidence record sourced from a bulk name feed with no date of birth, identification number or jurisdiction attached. Retained to avoid silent suppression, not as evidence.",
     "linked_actor_id": null,
     "aliases": [],
     "date_of_birth": null,
-    "listing_date": "2022-02-13"
+    "listing_date": "2023-01-17"
   },
   {
     "entry_id": "AM-0043",
-    "entity_name": "Paahal Raghavan",
+    "entity_name": "Harish Grewal",
+    "severity_tier": "NAME_SIMILARITY_ONLY",
+    "description": "Low-confidence record sourced from a bulk name feed with no date of birth, identification number or jurisdiction attached. Retained to avoid silent suppression, not as evidence.",
+    "linked_actor_id": null,
+    "aliases": [],
+    "date_of_birth": null,
+    "listing_date": "2025-09-01"
+  },
+  {
+    "entry_id": "AM-0044",
+    "entity_name": "Karan Sodhi",
     "severity_tier": "NAME_SIMILARITY_ONLY",
     "description": "Entry retained for screening completeness only. The record originates from an unverified aggregated watchlist feed and carries no corroborating detail beyond a name. Not to be treated as adverse information on its own.",
     "linked_actor_id": null,
     "aliases": [],
     "date_of_birth": null,
-    "listing_date": "2025-01-28"
-  },
-  {
-    "entry_id": "AM-0044",
-    "entity_name": "Waarhi Malhotra",
-    "severity_tier": "NAME_SIMILARITY_ONLY",
-    "description": "Name-only record with no supporting narrative, no issuing authority and no reference to any proceeding. Requires independent corroboration before any action.",
-    "linked_actor_id": null,
-    "aliases": [],
-    "date_of_birth": null,
-    "listing_date": "2026-03-10"
+    "listing_date": "2025-02-27"
   },
   {
     "entry_id": "AM-0045",
-    "entity_name": "Urvashi Bucch",
+    "entity_name": "Gopal Pau",
+    "severity_tier": "NAME_SIMILARITY_ONLY",
+    "description": "Low-confidence record sourced from a bulk name feed with no date of birth, identification number or jurisdiction attached. Retained to avoid silent suppression, not as evidence.",
+    "linked_actor_id": null,
+    "aliases": [],
+    "date_of_birth": null,
+    "listing_date": "2026-03-02"
+  },
+  {
+    "entry_id": "AM-0046",
+    "entity_name": "Forum Saachar",
+    "severity_tier": "NAME_SIMILARITY_ONLY",
+    "description": "Entry retained for screening completeness only. The record originates from an unverified aggregated watchlist feed and carries no corroborating detail beyond a name. Not to be treated as adverse information on its own.",
+    "linked_actor_id": null,
+    "aliases": [],
+    "date_of_birth": null,
+    "listing_date": "2024-11-22"
+  },
+  {
+    "entry_id": "AM-0047",
+    "entity_name": "Yaashica Rattan",
     "severity_tier": "NAME_SIMILARITY_ONLY",
     "description": "Name-only record with no supporting narrative, no issuing authority and no reference to any proceeding. Requires independent corroboration before any action.",
     "linked_actor_id": null,
     "aliases": [],
     "date_of_birth": null,
-    "listing_date": "2025-12-01"
-  },
-  {
-    "entry_id": "AM-0046",
-    "entity_name": "Maaanas Rattan",
-    "severity_tier": "NAME_SIMILARITY_ONLY",
-    "description": "Low-confidence record sourced from a bulk name feed with no date of birth, identification number or jurisdiction attached. Retained to avoid silent suppression, not as evidence.",
-    "linked_actor_id": null,
-    "aliases": [],
-    "date_of_birth": null,
-    "listing_date": "2022-11-06"
-  },
-  {
-    "entry_id": "AM-0047",
-    "entity_name": "Nitara Suura",
-    "severity_tier": "NAME_SIMILARITY_ONLY",
-    "description": "Low-confidence record sourced from a bulk name feed with no date of birth, identification number or jurisdiction attached. Retained to avoid silent suppression, not as evidence.",
-    "linked_actor_id": null,
-    "aliases": [],
-    "date_of_birth": null,
-    "listing_date": "2024-03-13"
+    "listing_date": "2022-08-19"
   },
   {
     "entry_id": "AM-0048",
-    "entity_name": "Mugdha Baral",
+    "entity_name": "Vasudha Bera",
+    "severity_tier": "NAME_SIMILARITY_ONLY",
+    "description": "Entry retained for screening completeness only. The record originates from an unverified aggregated watchlist feed and carries no corroborating detail beyond a name. Not to be treated as adverse information on its own.",
+    "linked_actor_id": null,
+    "aliases": [],
+    "date_of_birth": null,
+    "listing_date": "2022-08-22"
+  },
+  {
+    "entry_id": "AM-0049",
+    "entity_name": "Aadhya Misra",
+    "severity_tier": "ADVERSE_NEWS",
+    "description": "Named in an income tax survey report covering undisclosed cash receipts routed through multiple current accounts. Matter reported as under assessment.",
+    "linked_actor_id": null,
+    "aliases": [
+      "adhya Misra",
+      "Aadhia Misra"
+    ],
+    "date_of_birth": "1983-12-24",
+    "listing_date": "2025-06-08"
+  },
+  {
+    "entry_id": "AM-0050",
+    "entity_name": "Eiravati Ratta",
     "severity_tier": "ADVERSE_NEWS",
     "description": "Subject of press reporting alleging diversion of trade advances to unrelated parties. The party has publicly denied the allegation.",
     "linked_actor_id": null,
     "aliases": [
-      "Baral Mugdha"
+      "Eirawati Ratta"
     ],
-    "date_of_birth": "1986",
-    "listing_date": "2025-06-10"
+    "date_of_birth": "1991",
+    "listing_date": "2025-04-17"
   },
   {
-    "entry_id": "AM-0049",
-    "entity_name": "Zaitra Doshi",
+    "entry_id": "AM-0051",
+    "entity_name": "Atharv Chandran",
+    "severity_tier": "CONFIRMED_SANCTIONS",
+    "description": "Listed pursuant to a Ministry of Home Affairs notification giving effect to a UNSC 1267 Committee designation. Reporting entities are required to freeze assets and report any attempted transaction without delay.",
+    "linked_actor_id": null,
+    "aliases": [
+      "Atarv Chandran"
+    ],
+    "date_of_birth": "1966",
+    "listing_date": "2025-10-10"
+  },
+  {
+    "entry_id": "AM-0052",
+    "entity_name": "Jagrati Mannan",
+    "severity_tier": "NAME_SIMILARITY_ONLY",
+    "description": "Low-confidence record sourced from a bulk name feed with no date of birth, identification number or jurisdiction attached. Retained to avoid silent suppression, not as evidence.",
+    "linked_actor_id": null,
+    "aliases": [],
+    "date_of_birth": null,
+    "listing_date": "2019-03-19"
+  },
+  {
+    "entry_id": "AM-0053",
+    "entity_name": "Chameli Tank",
+    "severity_tier": "ADVERSE_NEWS",
+    "description": "Named in an income tax survey report covering undisclosed cash receipts routed through multiple current accounts. Matter reported as under assessment.",
+    "linked_actor_id": null,
+    "aliases": [
+      "Tank Chameli"
+    ],
+    "date_of_birth": "1982-12-18",
+    "listing_date": "2019-09-17"
+  },
+  {
+    "entry_id": "AM-0054",
+    "entity_name": "Amara Oza",
+    "severity_tier": "NAME_SIMILARITY_ONLY",
+    "description": "Entry retained for screening completeness only. The record originates from an unverified aggregated watchlist feed and carries no corroborating detail beyond a name. Not to be treated as adverse information on its own.",
+    "linked_actor_id": null,
+    "aliases": [],
+    "date_of_birth": null,
+    "listing_date": "2018-09-02"
+  },
+  {
+    "entry_id": "AM-0055",
+    "entity_name": "Neelima Menon",
+    "severity_tier": "CONFIRMED_SANCTIONS",
+    "description": "Named in a designation order for acting on behalf of, or at the direction of, an already-listed entity. Asset freezing obligations apply to accounts held directly or through associates.",
+    "linked_actor_id": null,
+    "aliases": [
+      "Menon Neelima"
+    ],
+    "date_of_birth": "1992",
+    "listing_date": "2024-07-20"
+  },
+  {
+    "entry_id": "AM-0056",
+    "entity_name": "Nihal Muni",
+    "severity_tier": "ADVERSE_NEWS",
+    "description": "Subject of press reporting alleging diversion of trade advances to unrelated parties. The party has publicly denied the allegation.",
+    "linked_actor_id": null,
+    "aliases": [
+      "Muni Nihal"
+    ],
+    "date_of_birth": "1980",
+    "listing_date": "2024-11-22"
+  },
+  {
+    "entry_id": "AM-0057",
+    "entity_name": "Ekaja Bhatia",
+    "severity_tier": "ADVERSE_NEWS",
+    "description": "Reported as a person of interest in an ongoing inquiry into over-invoiced import consignments and associated outward remittances.",
+    "linked_actor_id": null,
+    "aliases": [
+      "Bhatia Ekaja"
+    ],
+    "date_of_birth": "1977-03-10",
+    "listing_date": "2021-08-09"
+  },
+  {
+    "entry_id": "AM-0058",
+    "entity_name": "Ojasvi Walia",
+    "severity_tier": "ADVERSE_NEWS",
+    "description": "Reported by a state police economic offences wing as under inquiry for a deposit collection scheme. Proceedings reported as at an early stage.",
+    "linked_actor_id": null,
+    "aliases": [
+      "Walia Ojasvi",
+      "Ojaswi Walia"
+    ],
+    "date_of_birth": "1980-06-03",
+    "listing_date": "2024-03-23"
+  },
+  {
+    "entry_id": "AM-0059",
+    "entity_name": "Krishna Kapoor",
     "severity_tier": "ADVERSE_NEWS",
     "description": "Reported in national financial press as being under investigation by the Directorate of Enforcement in connection with alleged irregular fund movement through shell entities. No charges have been framed at the time of reporting.",
     "linked_actor_id": null,
     "aliases": [
-      "Doshi Zaitra"
+      "Krishna Kapur",
+      "Kapoor Krishna"
     ],
-    "date_of_birth": "1992-10-06",
-    "listing_date": "2020-07-28"
+    "date_of_birth": "1968",
+    "listing_date": "2025-10-13"
   },
   {
-    "entry_id": "AM-0050",
-    "entity_name": "Azaan Biswas",
+    "entry_id": "AM-0060",
+    "entity_name": "Anusha Suresh",
     "severity_tier": "CONFIRMED_SANCTIONS",
     "description": "Subject of a targeted financial sanction for involvement in the financing of proscribed activity. All dealings are prohibited and any match must be reported to the Financial Intelligence Unit.",
     "linked_actor_id": null,
     "aliases": [
-      "Biswas Azaan"
+      "Suresh Anusha"
     ],
-    "date_of_birth": "1983-09-08",
-    "listing_date": "2024-05-07"
+    "date_of_birth": "1995-01-04",
+    "listing_date": "2023-02-12"
   },
   {
-    "entry_id": "AM-0051",
-    "entity_name": "Chatura Balasubramanian",
+    "entry_id": "AM-0061",
+    "entity_name": "Onkar Mander",
+    "severity_tier": "ADVERSE_NEWS",
+    "description": "Subject of press reporting alleging diversion of trade advances to unrelated parties. The party has publicly denied the allegation.",
+    "linked_actor_id": null,
+    "aliases": [
+      "Mander Onkar"
+    ],
+    "date_of_birth": "1961-12-17",
+    "listing_date": "2026-08-13"
+  },
+  {
+    "entry_id": "AM-0062",
+    "entity_name": "Ojasvi Patil",
+    "severity_tier": "ADVERSE_NEWS",
+    "description": "Reported in national financial press as being under investigation by the Directorate of Enforcement in connection with alleged irregular fund movement through shell entities. No charges have been framed at the time of reporting.",
+    "linked_actor_id": null,
+    "aliases": [
+      "Patil Ojasvi"
+    ],
+    "date_of_birth": "1957-09-08",
+    "listing_date": "2019-07-08"
+  },
+  {
+    "entry_id": "AM-0063",
+    "entity_name": "Janya Kanda",
+    "severity_tier": "ADVERSE_NEWS",
+    "description": "Reported in national financial press as being under investigation by the Directorate of Enforcement in connection with alleged irregular fund movement through shell entities. No charges have been framed at the time of reporting.",
+    "linked_actor_id": null,
+    "aliases": [
+      "Jania Kanda"
+    ],
+    "date_of_birth": "1977-03-08",
+    "listing_date": "2026-03-12"
+  },
+  {
+    "entry_id": "AM-0064",
+    "entity_name": "Prisha Swaminathan",
+    "severity_tier": "NAME_SIMILARITY_ONLY",
+    "description": "Name-only record with no supporting narrative, no issuing authority and no reference to any proceeding. Requires independent corroboration before any action.",
+    "linked_actor_id": null,
+    "aliases": [],
+    "date_of_birth": null,
+    "listing_date": "2026-05-17"
+  },
+  {
+    "entry_id": "AM-0065",
+    "entity_name": "Omkaar Kari",
+    "severity_tier": "NAME_SIMILARITY_ONLY",
+    "description": "Name-only record with no supporting narrative, no issuing authority and no reference to any proceeding. Requires independent corroboration before any action.",
+    "linked_actor_id": null,
+    "aliases": [],
+    "date_of_birth": null,
+    "listing_date": "2018-07-25"
+  },
+  {
+    "entry_id": "AM-0066",
+    "entity_name": "Vidhi Lata",
+    "severity_tier": "NAME_SIMILARITY_ONLY",
+    "description": "Name-only record with no supporting narrative, no issuing authority and no reference to any proceeding. Requires independent corroboration before any action.",
+    "linked_actor_id": null,
+    "aliases": [],
+    "date_of_birth": null,
+    "listing_date": "2021-03-19"
+  },
+  {
+    "entry_id": "AM-0067",
+    "entity_name": "Diya Loke",
+    "severity_tier": "ADVERSE_NEWS",
+    "description": "Named in an income tax survey report covering undisclosed cash receipts routed through multiple current accounts. Matter reported as under assessment.",
+    "linked_actor_id": null,
+    "aliases": [
+      "Loke Diya"
+    ],
+    "date_of_birth": "1963-12-24",
+    "listing_date": "2022-10-10"
+  },
+  {
+    "entry_id": "AM-0068",
+    "entity_name": "Chasmum Hari",
+    "severity_tier": "ADVERSE_NEWS",
+    "description": "Reported in national financial press as being under investigation by the Directorate of Enforcement in connection with alleged irregular fund movement through shell entities. No charges have been framed at the time of reporting.",
+    "linked_actor_id": null,
+    "aliases": [
+      "Hari Chasmum"
+    ],
+    "date_of_birth": "1975-05-11",
+    "listing_date": "2019-03-02"
+  },
+  {
+    "entry_id": "AM-0069",
+    "entity_name": "Libni Raja",
+    "severity_tier": "ADVERSE_NEWS",
+    "description": "Reported in national financial press as being under investigation by the Directorate of Enforcement in connection with alleged irregular fund movement through shell entities. No charges have been framed at the time of reporting.",
+    "linked_actor_id": null,
+    "aliases": [
+      "Raja Libni"
+    ],
+    "date_of_birth": "1964",
+    "listing_date": "2018-07-13"
+  },
+  {
+    "entry_id": "AM-0070",
+    "entity_name": "Hredhaan Bains",
+    "severity_tier": "ADVERSE_NEWS",
+    "description": "Named in an income tax survey report covering undisclosed cash receipts routed through multiple current accounts. Matter reported as under assessment.",
+    "linked_actor_id": null,
+    "aliases": [
+      "Bains Hredhaan"
+    ],
+    "date_of_birth": "1982",
+    "listing_date": "2024-01-31"
+  },
+  {
+    "entry_id": "AM-0071",
+    "entity_name": "Vasudha Sachar",
+    "severity_tier": "ADVERSE_NEWS",
+    "description": "Reported in national financial press as being under investigation by the Directorate of Enforcement in connection with alleged irregular fund movement through shell entities. No charges have been framed at the time of reporting.",
+    "linked_actor_id": null,
+    "aliases": [
+      "Sachar Vasudha",
+      "wasudha Sachar"
+    ],
+    "date_of_birth": "1978-12-05",
+    "listing_date": "2024-10-06"
+  },
+  {
+    "entry_id": "AM-0072",
+    "entity_name": "Chatresh Samra",
+    "severity_tier": "ADVERSE_NEWS",
+    "description": "Reported in national financial press as being under investigation by the Directorate of Enforcement in connection with alleged irregular fund movement through shell entities. No charges have been framed at the time of reporting.",
+    "linked_actor_id": null,
+    "aliases": [
+      "Samra Chatresh"
+    ],
+    "date_of_birth": "1961-08-23",
+    "listing_date": "2021-10-13"
+  },
+  {
+    "entry_id": "AM-0073",
+    "entity_name": "Januja Gaba",
     "severity_tier": "ADVERSE_NEWS",
     "description": "Referenced in a regulatory enforcement order for accepting deposits without authorisation. Penalty proceedings reported as pending.",
     "linked_actor_id": null,
     "aliases": [
-      "Balasubramanian Chatura"
+      "Gaba Januja"
     ],
-    "date_of_birth": "1966-05-02",
-    "listing_date": "2024-10-19"
+    "date_of_birth": "1966-04-04",
+    "listing_date": "2025-04-18"
   },
   {
-    "entry_id": "AM-0052",
-    "entity_name": "Chakrika Wable",
+    "entry_id": "AM-0074",
+    "entity_name": "Ekapad Sampath",
+    "severity_tier": "ADVERSE_NEWS",
+    "description": "Subject of press reporting alleging diversion of trade advances to unrelated parties. The party has publicly denied the allegation.",
+    "linked_actor_id": null,
+    "aliases": [
+      "Sampath Ekapad"
+    ],
+    "date_of_birth": "1995",
+    "listing_date": "2020-05-15"
+  },
+  {
+    "entry_id": "AM-0075",
+    "entity_name": "Edhitha Chauhan",
+    "severity_tier": "ADVERSE_NEWS",
+    "description": "Referenced in a regulatory enforcement order for accepting deposits without authorisation. Penalty proceedings reported as pending.",
+    "linked_actor_id": null,
+    "aliases": [
+      "Chauhan Edhitha"
+    ],
+    "date_of_birth": "1959-07-20",
+    "listing_date": "2022-03-01"
+  },
+  {
+    "entry_id": "AM-0076",
+    "entity_name": "Kritika Ratta",
+    "severity_tier": "ADVERSE_NEWS",
+    "description": "Named in an income tax survey report covering undisclosed cash receipts routed through multiple current accounts. Matter reported as under assessment.",
+    "linked_actor_id": null,
+    "aliases": [
+      "Ratta Kritika"
+    ],
+    "date_of_birth": "1972",
+    "listing_date": "2023-03-10"
+  },
+  {
+    "entry_id": "AM-0077",
+    "entity_name": "Harsh Cherian",
+    "severity_tier": "ADVERSE_NEWS",
+    "description": "Subject of press reporting alleging diversion of trade advances to unrelated parties. The party has publicly denied the allegation.",
+    "linked_actor_id": null,
+    "aliases": [
+      "Cherian Harsh"
+    ],
+    "date_of_birth": "1964-10-14",
+    "listing_date": "2024-01-02"
+  },
+  {
+    "entry_id": "AM-0078",
+    "entity_name": "Barkha Shere",
     "severity_tier": "ADVERSE_NEWS",
     "description": "Reported by a state police economic offences wing as under inquiry for a deposit collection scheme. Proceedings reported as at an early stage.",
     "linked_actor_id": null,
     "aliases": [
-      "Wable Chakrika"
+      "Shere Barkha"
     ],
-    "date_of_birth": "1973-12-07",
-    "listing_date": "2020-10-08"
+    "date_of_birth": "1987-10-21",
+    "listing_date": "2021-04-06"
   },
   {
-    "entry_id": "AM-0053",
-    "entity_name": "Girik Rao",
+    "entry_id": "AM-0079",
+    "entity_name": "Zilmil Sarin",
+    "severity_tier": "NAME_SIMILARITY_ONLY",
+    "description": "Name-only record with no supporting narrative, no issuing authority and no reference to any proceeding. Requires independent corroboration before any action.",
+    "linked_actor_id": null,
+    "aliases": [],
+    "date_of_birth": null,
+    "listing_date": "2019-04-14"
+  },
+  {
+    "entry_id": "AM-0080",
+    "entity_name": "Bahadurjit Chander",
     "severity_tier": "ADVERSE_NEWS",
     "description": "Reported as a person of interest in an ongoing inquiry into over-invoiced import consignments and associated outward remittances.",
     "linked_actor_id": null,
     "aliases": [
-      "Rao Girik"
+      "Chander Bahadurjit"
     ],
-    "date_of_birth": "1989-07-23",
-    "listing_date": "2023-01-09"
+    "date_of_birth": "1971",
+    "listing_date": "2019-11-27"
   },
   {
-    "entry_id": "AM-0054",
-    "entity_name": "Jalsa Dugal",
+    "entry_id": "AM-0081",
+    "entity_name": "Hardik Taneja",
     "severity_tier": "ADVERSE_NEWS",
-    "description": "Referenced in a regulatory enforcement order for accepting deposits without authorisation. Penalty proceedings reported as pending.",
+    "description": "Named in investigative reporting on a network of entities sharing common registered addresses and directors, used to layer cash receipts.",
     "linked_actor_id": null,
     "aliases": [
-      "Dugal Jalsa"
+      "Taneja Hardik"
     ],
-    "date_of_birth": "1987-06-17",
-    "listing_date": "2025-01-02"
+    "date_of_birth": "1980-01-27",
+    "listing_date": "2025-05-18"
   },
   {
-    "entry_id": "AM-0055",
-    "entity_name": "Udyati Borde",
+    "entry_id": "AM-0082",
+    "entity_name": "Ishani Nair",
+    "severity_tier": "ADVERSE_NEWS",
+    "description": "Named in an income tax survey report covering undisclosed cash receipts routed through multiple current accounts. Matter reported as under assessment.",
+    "linked_actor_id": null,
+    "aliases": [
+      "Nair Ishani"
+    ],
+    "date_of_birth": "1961-07-25",
+    "listing_date": "2022-11-13"
+  },
+  {
+    "entry_id": "AM-0083",
+    "entity_name": "Baljiwan Anne",
     "severity_tier": "NAME_SIMILARITY_ONLY",
     "description": "Low-confidence record sourced from a bulk name feed with no date of birth, identification number or jurisdiction attached. Retained to avoid silent suppression, not as evidence.",
     "linked_actor_id": null,
     "aliases": [],
     "date_of_birth": null,
-    "listing_date": "2021-10-21"
+    "listing_date": "2024-01-07"
   },
   {
-    "entry_id": "AM-0056",
-    "entity_name": "Imaran Sant",
-    "severity_tier": "CONFIRMED_SANCTIONS",
-    "description": "Designated under Section 51A of the Unlawful Activities (Prevention) Act following inclusion in the UN Security Council Consolidated List. Funds and financial assets held by or on behalf of this party are subject to freezing.",
-    "linked_actor_id": null,
-    "aliases": [
-      "Sant Imaran"
-    ],
-    "date_of_birth": "1972-12-17",
-    "listing_date": "2023-12-27"
-  },
-  {
-    "entry_id": "AM-0057",
-    "entity_name": "Gayathri Toor",
-    "severity_tier": "ADVERSE_NEWS",
-    "description": "Subject of press reporting alleging diversion of trade advances to unrelated parties. The party has publicly denied the allegation.",
-    "linked_actor_id": null,
-    "aliases": [
-      "Gayathri Tur"
-    ],
-    "date_of_birth": "1977",
-    "listing_date": "2019-10-13"
-  },
-  {
-    "entry_id": "AM-0058",
-    "entity_name": "Anvi Dua",
+    "entry_id": "AM-0084",
+    "entity_name": "Libni Cherian",
     "severity_tier": "NAME_SIMILARITY_ONLY",
     "description": "Entry retained for screening completeness only. The record originates from an unverified aggregated watchlist feed and carries no corroborating detail beyond a name. Not to be treated as adverse information on its own.",
     "linked_actor_id": null,
     "aliases": [],
     "date_of_birth": null,
-    "listing_date": "2025-08-01"
+    "listing_date": "2020-11-24"
   },
   {
-    "entry_id": "AM-0059",
-    "entity_name": "Isha Biswas",
+    "entry_id": "AM-0085",
+    "entity_name": "Nikita Sastry",
     "severity_tier": "ADVERSE_NEWS",
     "description": "Reported by a state police economic offences wing as under inquiry for a deposit collection scheme. Proceedings reported as at an early stage.",
     "linked_actor_id": null,
     "aliases": [
-      "Biswas Isha"
+      "Sastry Nikita"
     ],
-    "date_of_birth": "1983-10-28",
-    "listing_date": "2025-12-10"
+    "date_of_birth": "1957-01-14",
+    "listing_date": "2021-03-18"
   },
   {
-    "entry_id": "AM-0060",
-    "entity_name": "Triveni Ravi",
+    "entry_id": "AM-0086",
+    "entity_name": "Nihal Sarkar",
     "severity_tier": "NAME_SIMILARITY_ONLY",
-    "description": "Entry retained for screening completeness only. The record originates from an unverified aggregated watchlist feed and carries no corroborating detail beyond a name. Not to be treated as adverse information on its own.",
+    "description": "Low-confidence record sourced from a bulk name feed with no date of birth, identification number or jurisdiction attached. Retained to avoid silent suppression, not as evidence.",
+    "linked_actor_id": null,
+    "aliases": [],
+    "date_of_birth": null,
+    "listing_date": "2024-09-20"
+  },
+  {
+    "entry_id": "AM-0087",
+    "entity_name": "Ubika Sachar",
+    "severity_tier": "CONFIRMED_SANCTIONS",
+    "description": "Named in a designation order for acting on behalf of, or at the direction of, an already-listed entity. Asset freezing obligations apply to accounts held directly or through associates.",
+    "linked_actor_id": null,
+    "aliases": [
+      "Sachar Ubika"
+    ],
+    "date_of_birth": "1972-05-09",
+    "listing_date": "2023-05-29"
+  },
+  {
+    "entry_id": "AM-0088",
+    "entity_name": "Hemani Nair",
+    "severity_tier": "ADVERSE_NEWS",
+    "description": "Reported in national financial press as being under investigation by the Directorate of Enforcement in connection with alleged irregular fund movement through shell entities. No charges have been framed at the time of reporting.",
+    "linked_actor_id": null,
+    "aliases": [
+      "Nair Hemani"
+    ],
+    "date_of_birth": "1962-08-24",
+    "listing_date": "2024-12-17"
+  },
+  {
+    "entry_id": "AM-0089",
+    "entity_name": "Samesh Sarin",
+    "severity_tier": "ADVERSE_NEWS",
+    "description": "Reported in national financial press as being under investigation by the Directorate of Enforcement in connection with alleged irregular fund movement through shell entities. No charges have been framed at the time of reporting.",
+    "linked_actor_id": null,
+    "aliases": [
+      "Sames Sarin",
+      "Sarin Samesh"
+    ],
+    "date_of_birth": "1964",
+    "listing_date": "2025-10-09"
+  },
+  {
+    "entry_id": "AM-0090",
+    "entity_name": "Gaurang Brar",
+    "severity_tier": "ADVERSE_NEWS",
+    "description": "Reported in national financial press as being under investigation by the Directorate of Enforcement in connection with alleged irregular fund movement through shell entities. No charges have been framed at the time of reporting.",
+    "linked_actor_id": null,
+    "aliases": [
+      "Brar Gaurang"
+    ],
+    "date_of_birth": "1967-11-19",
+    "listing_date": "2018-07-23"
+  },
+  {
+    "entry_id": "AM-0091",
+    "entity_name": "Gagan Handa",
+    "severity_tier": "ADVERSE_NEWS",
+    "description": "Reported by a state police economic offences wing as under inquiry for a deposit collection scheme. Proceedings reported as at an early stage.",
+    "linked_actor_id": null,
+    "aliases": [
+      "Handa Gagan"
+    ],
+    "date_of_birth": "1965-02-01",
+    "listing_date": "2023-05-09"
+  },
+  {
+    "entry_id": "AM-0092",
+    "entity_name": "Hamsini Pandey",
+    "severity_tier": "CONFIRMED_SANCTIONS",
+    "description": "Listed pursuant to a Ministry of Home Affairs notification giving effect to a UNSC 1267 Committee designation. Reporting entities are required to freeze assets and report any attempted transaction without delay.",
+    "linked_actor_id": null,
+    "aliases": [
+      "Pandey Hamsini"
+    ],
+    "date_of_birth": "1970-10-11",
+    "listing_date": "2018-12-29"
+  },
+  {
+    "entry_id": "AM-0093",
+    "entity_name": "Dakshesh Tank",
+    "severity_tier": "NAME_SIMILARITY_ONLY",
+    "description": "Low-confidence record sourced from a bulk name feed with no date of birth, identification number or jurisdiction attached. Retained to avoid silent suppression, not as evidence.",
     "linked_actor_id": null,
     "aliases": [],
     "date_of_birth": null,
     "listing_date": "2018-09-10"
   },
   {
-    "entry_id": "AM-0061",
-    "entity_name": "Leena Mitra",
-    "severity_tier": "ADVERSE_NEWS",
-    "description": "Reported in national financial press as being under investigation by the Directorate of Enforcement in connection with alleged irregular fund movement through shell entities. No charges have been framed at the time of reporting.",
-    "linked_actor_id": null,
-    "aliases": [
-      "Mitra Leena"
-    ],
-    "date_of_birth": "1973",
-    "listing_date": "2022-10-08"
-  },
-  {
-    "entry_id": "AM-0062",
-    "entity_name": "Samar Contractor",
-    "severity_tier": "NAME_SIMILARITY_ONLY",
-    "description": "Name-only record with no supporting narrative, no issuing authority and no reference to any proceeding. Requires independent corroboration before any action.",
-    "linked_actor_id": null,
-    "aliases": [],
-    "date_of_birth": null,
-    "listing_date": "2020-04-15"
-  },
-  {
-    "entry_id": "AM-0063",
-    "entity_name": "Jasmit Wagle",
-    "severity_tier": "CONFIRMED_SANCTIONS",
-    "description": "Designated under Section 51A of the Unlawful Activities (Prevention) Act following inclusion in the UN Security Council Consolidated List. Funds and financial assets held by or on behalf of this party are subject to freezing.",
-    "linked_actor_id": null,
-    "aliases": [
-      "Wagle Jasmit"
-    ],
-    "date_of_birth": "1973",
-    "listing_date": "2025-08-29"
-  },
-  {
-    "entry_id": "AM-0064",
-    "entity_name": "Ranveer Bhatti",
-    "severity_tier": "ADVERSE_NEWS",
-    "description": "Reported in national financial press as being under investigation by the Directorate of Enforcement in connection with alleged irregular fund movement through shell entities. No charges have been framed at the time of reporting.",
-    "linked_actor_id": null,
-    "aliases": [
-      "Bhatti Ranveer"
-    ],
-    "date_of_birth": "1957-08-03",
-    "listing_date": "2025-12-21"
-  },
-  {
-    "entry_id": "AM-0065",
-    "entity_name": "Aarav Goyal",
-    "severity_tier": "NAME_SIMILARITY_ONLY",
-    "description": "Low-confidence record sourced from a bulk name feed with no date of birth, identification number or jurisdiction attached. Retained to avoid silent suppression, not as evidence.",
-    "linked_actor_id": null,
-    "aliases": [],
-    "date_of_birth": null,
-    "listing_date": "2023-12-15"
-  },
-  {
-    "entry_id": "AM-0066",
-    "entity_name": "Netra Bajaj",
-    "severity_tier": "NAME_SIMILARITY_ONLY",
-    "description": "Low-confidence record sourced from a bulk name feed with no date of birth, identification number or jurisdiction attached. Retained to avoid silent suppression, not as evidence.",
-    "linked_actor_id": null,
-    "aliases": [],
-    "date_of_birth": null,
-    "listing_date": "2023-08-19"
-  },
-  {
-    "entry_id": "AM-0067",
-    "entity_name": "Rudra Keer",
-    "severity_tier": "NAME_SIMILARITY_ONLY",
-    "description": "Low-confidence record sourced from a bulk name feed with no date of birth, identification number or jurisdiction attached. Retained to avoid silent suppression, not as evidence.",
-    "linked_actor_id": null,
-    "aliases": [],
-    "date_of_birth": null,
-    "listing_date": "2024-05-12"
-  },
-  {
-    "entry_id": "AM-0068",
-    "entity_name": "Ridhi Gokhale",
-    "severity_tier": "ADVERSE_NEWS",
-    "description": "Reported as a person of interest in an ongoing inquiry into over-invoiced import consignments and associated outward remittances.",
-    "linked_actor_id": null,
-    "aliases": [
-      "Gokhale Ridhi"
-    ],
-    "date_of_birth": "1978-05-15",
-    "listing_date": "2021-10-04"
-  },
-  {
-    "entry_id": "AM-0069",
-    "entity_name": "Lakshmi Mammen",
-    "severity_tier": "CONFIRMED_SANCTIONS",
-    "description": "Subject of a targeted financial sanction for involvement in the financing of proscribed activity. All dealings are prohibited and any match must be reported to the Financial Intelligence Unit.",
-    "linked_actor_id": null,
-    "aliases": [
-      "Mammen Lakshmi"
-    ],
-    "date_of_birth": "1988-03-16",
-    "listing_date": "2024-11-06"
-  },
-  {
-    "entry_id": "AM-0070",
-    "entity_name": "Krishna Dixit",
-    "severity_tier": "CONFIRMED_SANCTIONS",
-    "description": "Named in a designation order for acting on behalf of, or at the direction of, an already-listed entity. Asset freezing obligations apply to accounts held directly or through associates.",
-    "linked_actor_id": null,
-    "aliases": [
-      "Dixit Krishna"
-    ],
-    "date_of_birth": "1984-10-20",
-    "listing_date": "2018-09-04"
-  },
-  {
-    "entry_id": "AM-0071",
-    "entity_name": "Devika Raghavan",
-    "severity_tier": "ADVERSE_NEWS",
-    "description": "Reported by a state police economic offences wing as under inquiry for a deposit collection scheme. Proceedings reported as at an early stage.",
-    "linked_actor_id": null,
-    "aliases": [
-      "Raghavan Devika"
-    ],
-    "date_of_birth": "1971-10-21",
-    "listing_date": "2021-11-01"
-  },
-  {
-    "entry_id": "AM-0072",
-    "entity_name": "Lajita Baria",
-    "severity_tier": "ADVERSE_NEWS",
-    "description": "Subject of press reporting alleging diversion of trade advances to unrelated parties. The party has publicly denied the allegation.",
-    "linked_actor_id": null,
-    "aliases": [
-      "Baria Lajita"
-    ],
-    "date_of_birth": "1985-12-25",
-    "listing_date": "2025-09-27"
-  },
-  {
-    "entry_id": "AM-0073",
-    "entity_name": "Chatresh Issac",
-    "severity_tier": "NAME_SIMILARITY_ONLY",
-    "description": "Low-confidence record sourced from a bulk name feed with no date of birth, identification number or jurisdiction attached. Retained to avoid silent suppression, not as evidence.",
-    "linked_actor_id": null,
-    "aliases": [],
-    "date_of_birth": null,
-    "listing_date": "2019-08-15"
-  },
-  {
-    "entry_id": "AM-0074",
-    "entity_name": "Krishna Nagarajan",
-    "severity_tier": "ADVERSE_NEWS",
-    "description": "Reported by a state police economic offences wing as under inquiry for a deposit collection scheme. Proceedings reported as at an early stage.",
-    "linked_actor_id": null,
-    "aliases": [
-      "Nagarajan Krishna"
-    ],
-    "date_of_birth": "1991",
-    "listing_date": "2025-10-11"
-  },
-  {
-    "entry_id": "AM-0075",
-    "entity_name": "Yashvi Murty",
-    "severity_tier": "CONFIRMED_SANCTIONS",
-    "description": "Designated under Section 51A of the Unlawful Activities (Prevention) Act following inclusion in the UN Security Council Consolidated List. Funds and financial assets held by or on behalf of this party are subject to freezing.",
-    "linked_actor_id": null,
-    "aliases": [
-      "Murty Yashvi",
-      "Yashwi Murty"
-    ],
-    "date_of_birth": "1985",
-    "listing_date": "2023-01-30"
-  },
-  {
-    "entry_id": "AM-0076",
-    "entity_name": "Nidra Kota",
-    "severity_tier": "ADVERSE_NEWS",
-    "description": "Subject of press reporting alleging diversion of trade advances to unrelated parties. The party has publicly denied the allegation.",
-    "linked_actor_id": null,
-    "aliases": [
-      "Kota Nidra"
-    ],
-    "date_of_birth": "1974-10-07",
-    "listing_date": "2023-09-24"
-  },
-  {
-    "entry_id": "AM-0077",
-    "entity_name": "Lopa Tandon",
-    "severity_tier": "NAME_SIMILARITY_ONLY",
-    "description": "Low-confidence record sourced from a bulk name feed with no date of birth, identification number or jurisdiction attached. Retained to avoid silent suppression, not as evidence.",
-    "linked_actor_id": null,
-    "aliases": [],
-    "date_of_birth": null,
-    "listing_date": "2020-01-30"
-  },
-  {
-    "entry_id": "AM-0078",
-    "entity_name": "Aarush Narasimhan",
-    "severity_tier": "CONFIRMED_SANCTIONS",
-    "description": "Named in a designation order for acting on behalf of, or at the direction of, an already-listed entity. Asset freezing obligations apply to accounts held directly or through associates.",
-    "linked_actor_id": null,
-    "aliases": [
-      "Aarus Narasimhan"
-    ],
-    "date_of_birth": "1995-10-24",
-    "listing_date": "2018-10-24"
-  },
-  {
-    "entry_id": "AM-0079",
-    "entity_name": "Darsh Narula",
-    "severity_tier": "ADVERSE_NEWS",
-    "description": "Referenced in a regulatory enforcement order for accepting deposits without authorisation. Penalty proceedings reported as pending.",
-    "linked_actor_id": null,
-    "aliases": [
-      "Narula Darsh"
-    ],
-    "date_of_birth": "1971-10-24",
-    "listing_date": "2024-10-16"
-  },
-  {
-    "entry_id": "AM-0080",
-    "entity_name": "Rajeshri Arya",
-    "severity_tier": "NAME_SIMILARITY_ONLY",
-    "description": "Low-confidence record sourced from a bulk name feed with no date of birth, identification number or jurisdiction attached. Retained to avoid silent suppression, not as evidence.",
-    "linked_actor_id": null,
-    "aliases": [],
-    "date_of_birth": null,
-    "listing_date": "2019-07-01"
-  },
-  {
-    "entry_id": "AM-0081",
-    "entity_name": "Maanav Jhaveri",
-    "severity_tier": "ADVERSE_NEWS",
-    "description": "Referenced in a regulatory enforcement order for accepting deposits without authorisation. Penalty proceedings reported as pending.",
-    "linked_actor_id": null,
-    "aliases": [
-      "Maanaw Jhaveri"
-    ],
-    "date_of_birth": "1958",
-    "listing_date": "2024-03-09"
-  },
-  {
-    "entry_id": "AM-0082",
-    "entity_name": "Kashish Merchant",
-    "severity_tier": "ADVERSE_NEWS",
-    "description": "Reported as a person of interest in an ongoing inquiry into over-invoiced import consignments and associated outward remittances.",
-    "linked_actor_id": null,
-    "aliases": [
-      "Merchant Kashish"
-    ],
-    "date_of_birth": "1970-03-21",
-    "listing_date": "2025-03-28"
-  },
-  {
-    "entry_id": "AM-0083",
-    "entity_name": "Aarav Badami",
-    "severity_tier": "ADVERSE_NEWS",
-    "description": "Reported as a person of interest in an ongoing inquiry into over-invoiced import consignments and associated outward remittances.",
-    "linked_actor_id": null,
-    "aliases": [
-      "Badami Aarav",
-      "arav Badami"
-    ],
-    "date_of_birth": "1984",
-    "listing_date": "2019-09-14"
-  },
-  {
-    "entry_id": "AM-0084",
-    "entity_name": "Gaurang Karpe",
-    "severity_tier": "ADVERSE_NEWS",
-    "description": "Reported as a person of interest in an ongoing inquiry into over-invoiced import consignments and associated outward remittances.",
-    "linked_actor_id": null,
-    "aliases": [
-      "Karpe Gaurang"
-    ],
-    "date_of_birth": "1962",
-    "listing_date": "2025-09-19"
-  },
-  {
-    "entry_id": "AM-0085",
-    "entity_name": "Manan Kala",
-    "severity_tier": "NAME_SIMILARITY_ONLY",
-    "description": "Name-only record with no supporting narrative, no issuing authority and no reference to any proceeding. Requires independent corroboration before any action.",
-    "linked_actor_id": null,
-    "aliases": [],
-    "date_of_birth": null,
-    "listing_date": "2022-11-08"
-  },
-  {
-    "entry_id": "AM-0086",
-    "entity_name": "Harita Dugal",
-    "severity_tier": "CONFIRMED_SANCTIONS",
-    "description": "Designated under Section 51A of the Unlawful Activities (Prevention) Act following inclusion in the UN Security Council Consolidated List. Funds and financial assets held by or on behalf of this party are subject to freezing.",
-    "linked_actor_id": null,
-    "aliases": [
-      "Dugal Harita"
-    ],
-    "date_of_birth": "1968-09-04",
-    "listing_date": "2023-01-02"
-  },
-  {
-    "entry_id": "AM-0087",
-    "entity_name": "Aadhya Ramakrishnan",
-    "severity_tier": "CONFIRMED_SANCTIONS",
-    "description": "Listed pursuant to a Ministry of Home Affairs notification giving effect to a UNSC 1267 Committee designation. Reporting entities are required to freeze assets and report any attempted transaction without delay.",
-    "linked_actor_id": null,
-    "aliases": [
-      "Ramakrishnan Aadhya",
-      "adhya Ramakrishnan"
-    ],
-    "date_of_birth": "1976-03-08",
-    "listing_date": "2020-01-17"
-  },
-  {
-    "entry_id": "AM-0088",
-    "entity_name": "Falguni Kaul",
-    "severity_tier": "ADVERSE_NEWS",
-    "description": "Referenced in a regulatory enforcement order for accepting deposits without authorisation. Penalty proceedings reported as pending.",
-    "linked_actor_id": null,
-    "aliases": [
-      "Kaul Falguni"
-    ],
-    "date_of_birth": "1971",
-    "listing_date": "2021-05-09"
-  },
-  {
-    "entry_id": "AM-0089",
-    "entity_name": "Chakrika Narula",
-    "severity_tier": "ADVERSE_NEWS",
-    "description": "Referenced in a regulatory enforcement order for accepting deposits without authorisation. Penalty proceedings reported as pending.",
-    "linked_actor_id": null,
-    "aliases": [
-      "Narula Chakrika"
-    ],
-    "date_of_birth": "1957-11-09",
-    "listing_date": "2025-03-11"
-  },
-  {
-    "entry_id": "AM-0090",
-    "entity_name": "Fiyaz Swaminathan",
-    "severity_tier": "ADVERSE_NEWS",
-    "description": "Reported in national financial press as being under investigation by the Directorate of Enforcement in connection with alleged irregular fund movement through shell entities. No charges have been framed at the time of reporting.",
-    "linked_actor_id": null,
-    "aliases": [
-      "Swaminathan Fiyaz"
-    ],
-    "date_of_birth": "1990-11-12",
-    "listing_date": "2019-06-14"
-  },
-  {
-    "entry_id": "AM-0091",
-    "entity_name": "Anika Khatri",
-    "severity_tier": "CONFIRMED_SANCTIONS",
-    "description": "Subject of a targeted financial sanction for involvement in the financing of proscribed activity. All dealings are prohibited and any match must be reported to the Financial Intelligence Unit.",
-    "linked_actor_id": null,
-    "aliases": [
-      "Khatri Anika"
-    ],
-    "date_of_birth": "1965-03-13",
-    "listing_date": "2022-06-08"
-  },
-  {
-    "entry_id": "AM-0092",
-    "entity_name": "Vasana Sandal",
-    "severity_tier": "ADVERSE_NEWS",
-    "description": "Named in an income tax survey report covering undisclosed cash receipts routed through multiple current accounts. Matter reported as under assessment.",
-    "linked_actor_id": null,
-    "aliases": [
-      "Sandal Vasana"
-    ],
-    "date_of_birth": "1959-05-28",
-    "listing_date": "2024-08-26"
-  },
-  {
-    "entry_id": "AM-0093",
-    "entity_name": "Pranit Chakraborty",
-    "severity_tier": "ADVERSE_NEWS",
-    "description": "Referenced in a regulatory enforcement order for accepting deposits without authorisation. Penalty proceedings reported as pending.",
-    "linked_actor_id": null,
-    "aliases": [
-      "Chakraborty Pranit"
-    ],
-    "date_of_birth": "1957-09-12",
-    "listing_date": "2020-04-20"
-  },
-  {
     "entry_id": "AM-0094",
-    "entity_name": "Rachana Dugal",
+    "entity_name": "Ekavir Soni",
     "severity_tier": "ADVERSE_NEWS",
-    "description": "Reported as a person of interest in an ongoing inquiry into over-invoiced import consignments and associated outward remittances.",
+    "description": "Named in investigative reporting on a network of entities sharing common registered addresses and directors, used to layer cash receipts.",
     "linked_actor_id": null,
     "aliases": [
-      "Dugal Rachana"
+      "Ekawir Soni"
     ],
-    "date_of_birth": "1987",
-    "listing_date": "2025-06-25"
+    "date_of_birth": "1964",
+    "listing_date": "2022-12-28"
   },
   {
     "entry_id": "AM-0095",
-    "entity_name": "Devansh Sandal",
-    "severity_tier": "CONFIRMED_SANCTIONS",
-    "description": "Designated under Section 51A of the Unlawful Activities (Prevention) Act following inclusion in the UN Security Council Consolidated List. Funds and financial assets held by or on behalf of this party are subject to freezing.",
+    "entity_name": "Yashoda Chadha",
+    "severity_tier": "NAME_SIMILARITY_ONLY",
+    "description": "Name-only record with no supporting narrative, no issuing authority and no reference to any proceeding. Requires independent corroboration before any action.",
     "linked_actor_id": null,
-    "aliases": [
-      "Sandal Devansh"
-    ],
-    "date_of_birth": "1967",
-    "listing_date": "2025-07-08"
+    "aliases": [],
+    "date_of_birth": null,
+    "listing_date": "2025-12-06"
   },
   {
     "entry_id": "AM-0096",
-    "entity_name": "Ekanta Biswas",
-    "severity_tier": "ADVERSE_NEWS",
-    "description": "Reported in national financial press as being under investigation by the Directorate of Enforcement in connection with alleged irregular fund movement through shell entities. No charges have been framed at the time of reporting.",
+    "entity_name": "Keya Dhingra",
+    "severity_tier": "CONFIRMED_SANCTIONS",
+    "description": "Designated under Section 51A of the Unlawful Activities (Prevention) Act following inclusion in the UN Security Council Consolidated List. Funds and financial assets held by or on behalf of this party are subject to freezing.",
     "linked_actor_id": null,
     "aliases": [
-      "Biswas Ekanta"
+      "Keia Dhingra"
     ],
-    "date_of_birth": "1960-09-18",
-    "listing_date": "2022-01-16"
+    "date_of_birth": "1972",
+    "listing_date": "2021-10-25"
   },
   {
     "entry_id": "AM-0097",
-    "entity_name": "Kalpit Jha",
-    "severity_tier": "NAME_SIMILARITY_ONLY",
-    "description": "Name-only record with no supporting narrative, no issuing authority and no reference to any proceeding. Requires independent corroboration before any action.",
+    "entity_name": "Zayan Kunda",
+    "severity_tier": "ADVERSE_NEWS",
+    "description": "Named in investigative reporting on a network of entities sharing common registered addresses and directors, used to layer cash receipts.",
     "linked_actor_id": null,
-    "aliases": [],
-    "date_of_birth": null,
-    "listing_date": "2019-11-07"
+    "aliases": [
+      "Kunda Zayan",
+      "Zaian Kunda"
+    ],
+    "date_of_birth": "1962",
+    "listing_date": "2019-08-11"
   },
   {
     "entry_id": "AM-0098",
-    "entity_name": "Jhalak Suresh",
+    "entity_name": "Shravya Babu",
     "severity_tier": "ADVERSE_NEWS",
-    "description": "Named in investigative reporting on a network of entities sharing common registered addresses and directors, used to layer cash receipts.",
+    "description": "Reported by a state police economic offences wing as under inquiry for a deposit collection scheme. Proceedings reported as at an early stage.",
     "linked_actor_id": null,
     "aliases": [
-      "Suresh Jhalak"
+      "Babu Shravya"
     ],
-    "date_of_birth": "1958-10-03",
-    "listing_date": "2020-09-27"
+    "date_of_birth": "1977",
+    "listing_date": "2022-03-24"
   },
   {
     "entry_id": "AM-0099",
-    "entity_name": "Qushi Shere",
+    "entity_name": "Yoshita Bajwa",
     "severity_tier": "NAME_SIMILARITY_ONLY",
-    "description": "Entry retained for screening completeness only. The record originates from an unverified aggregated watchlist feed and carries no corroborating detail beyond a name. Not to be treated as adverse information on its own.",
+    "description": "Low-confidence record sourced from a bulk name feed with no date of birth, identification number or jurisdiction attached. Retained to avoid silent suppression, not as evidence.",
     "linked_actor_id": null,
     "aliases": [],
     "date_of_birth": null,
-    "listing_date": "2026-06-23"
+    "listing_date": "2018-10-02"
   },
   {
     "entry_id": "AM-0100",
-    "entity_name": "Omya Murty",
-    "severity_tier": "NAME_SIMILARITY_ONLY",
-    "description": "Name-only record with no supporting narrative, no issuing authority and no reference to any proceeding. Requires independent corroboration before any action.",
+    "entity_name": "Pushti Tak",
+    "severity_tier": "ADVERSE_NEWS",
+    "description": "Referenced in a regulatory enforcement order for accepting deposits without authorisation. Penalty proceedings reported as pending.",
     "linked_actor_id": null,
-    "aliases": [],
-    "date_of_birth": null,
-    "listing_date": "2026-04-03"
+    "aliases": [
+      "Tak Pushti"
+    ],
+    "date_of_birth": "1978-01-28",
+    "listing_date": "2018-11-12"
   },
   {
     "entry_id": "AM-0101",
-    "entity_name": "Inaya Jhaveri",
-    "severity_tier": "ADVERSE_NEWS",
-    "description": "Referenced in a regulatory enforcement order for accepting deposits without authorisation. Penalty proceedings reported as pending.",
+    "entity_name": "Zehaan Maharaj",
+    "severity_tier": "NAME_SIMILARITY_ONLY",
+    "description": "Name-only record with no supporting narrative, no issuing authority and no reference to any proceeding. Requires independent corroboration before any action.",
     "linked_actor_id": null,
-    "aliases": [
-      "Jhaveri Inaya"
-    ],
-    "date_of_birth": "1955-08-16",
-    "listing_date": "2019-11-21"
+    "aliases": [],
+    "date_of_birth": null,
+    "listing_date": "2023-11-23"
   },
   {
     "entry_id": "AM-0102",
-    "entity_name": "Ikshita Agarwal",
-    "severity_tier": "NAME_SIMILARITY_ONLY",
-    "description": "Name-only record with no supporting narrative, no issuing authority and no reference to any proceeding. Requires independent corroboration before any action.",
+    "entity_name": "Zansi Butala",
+    "severity_tier": "CONFIRMED_SANCTIONS",
+    "description": "Listed pursuant to a Ministry of Home Affairs notification giving effect to a UNSC 1267 Committee designation. Reporting entities are required to freeze assets and report any attempted transaction without delay.",
     "linked_actor_id": null,
-    "aliases": [],
-    "date_of_birth": null,
-    "listing_date": "2024-07-25"
+    "aliases": [
+      "Butala Zansi"
+    ],
+    "date_of_birth": "1969",
+    "listing_date": "2026-04-12"
   },
   {
     "entry_id": "AM-0103",
-    "entity_name": "Urmi Bava",
+    "entity_name": "Nitesh Khalsa",
     "severity_tier": "NAME_SIMILARITY_ONLY",
-    "description": "Low-confidence record sourced from a bulk name feed with no date of birth, identification number or jurisdiction attached. Retained to avoid silent suppression, not as evidence.",
+    "description": "Entry retained for screening completeness only. The record originates from an unverified aggregated watchlist feed and carries no corroborating detail beyond a name. Not to be treated as adverse information on its own.",
     "linked_actor_id": null,
     "aliases": [],
     "date_of_birth": null,
-    "listing_date": "2019-03-30"
+    "listing_date": "2018-10-21"
   },
   {
     "entry_id": "AM-0104",
-    "entity_name": "Gayathri Chahal",
+    "entity_name": "Aadi Kumar",
     "severity_tier": "NAME_SIMILARITY_ONLY",
-    "description": "Entry retained for screening completeness only. The record originates from an unverified aggregated watchlist feed and carries no corroborating detail beyond a name. Not to be treated as adverse information on its own.",
+    "description": "Low-confidence record sourced from a bulk name feed with no date of birth, identification number or jurisdiction attached. Retained to avoid silent suppression, not as evidence.",
     "linked_actor_id": null,
     "aliases": [],
     "date_of_birth": null,
-    "listing_date": "2021-04-03"
+    "listing_date": "2026-07-10"
   },
   {
     "entry_id": "AM-0105",
-    "entity_name": "Barkha Chanda",
+    "entity_name": "Janaki Chandra",
     "severity_tier": "ADVERSE_NEWS",
-    "description": "Subject of press reporting alleging diversion of trade advances to unrelated parties. The party has publicly denied the allegation.",
+    "description": "Reported as a person of interest in an ongoing inquiry into over-invoiced import consignments and associated outward remittances.",
     "linked_actor_id": null,
     "aliases": [
-      "Chanda Barkha"
+      "Chandra Janaki"
     ],
-    "date_of_birth": "1993-12-04",
-    "listing_date": "2025-04-16"
+    "date_of_birth": "1972",
+    "listing_date": "2018-10-31"
   },
   {
     "entry_id": "AM-0106",
-    "entity_name": "Warinder Bains",
-    "severity_tier": "CONFIRMED_SANCTIONS",
-    "description": "Named in a designation order for acting on behalf of, or at the direction of, an already-listed entity. Asset freezing obligations apply to accounts held directly or through associates.",
+    "entity_name": "Azaan Mandal",
+    "severity_tier": "NAME_SIMILARITY_ONLY",
+    "description": "Name-only record with no supporting narrative, no issuing authority and no reference to any proceeding. Requires independent corroboration before any action.",
     "linked_actor_id": null,
-    "aliases": [
-      "Bains Warinder"
-    ],
-    "date_of_birth": "1994-10-21",
-    "listing_date": "2024-08-22"
+    "aliases": [],
+    "date_of_birth": null,
+    "listing_date": "2020-05-01"
   },
   {
     "entry_id": "AM-0107",
-    "entity_name": "Aarnav Khanna",
+    "entity_name": "Azaan Rastogi",
     "severity_tier": "ADVERSE_NEWS",
-    "description": "Reported as a person of interest in an ongoing inquiry into over-invoiced import consignments and associated outward remittances.",
+    "description": "Reported by a state police economic offences wing as under inquiry for a deposit collection scheme. Proceedings reported as at an early stage.",
     "linked_actor_id": null,
     "aliases": [
-      "Khanna Aarnav"
+      "Azan Rastogi"
     ],
-    "date_of_birth": "1989-12-08",
-    "listing_date": "2024-07-04"
+    "date_of_birth": "1966-06-27",
+    "listing_date": "2019-07-28"
   },
   {
     "entry_id": "AM-0108",
-    "entity_name": "Vaishnavi Krishnan",
-    "severity_tier": "NAME_SIMILARITY_ONLY",
-    "description": "Entry retained for screening completeness only. The record originates from an unverified aggregated watchlist feed and carries no corroborating detail beyond a name. Not to be treated as adverse information on its own.",
-    "linked_actor_id": null,
-    "aliases": [],
-    "date_of_birth": null,
-    "listing_date": "2018-11-16"
-  },
-  {
-    "entry_id": "AM-0109",
-    "entity_name": "Madhavi Thaman",
-    "severity_tier": "NAME_SIMILARITY_ONLY",
-    "description": "Entry retained for screening completeness only. The record originates from an unverified aggregated watchlist feed and carries no corroborating detail beyond a name. Not to be treated as adverse information on its own.",
-    "linked_actor_id": null,
-    "aliases": [],
-    "date_of_birth": null,
-    "listing_date": "2024-07-11"
-  },
-  {
-    "entry_id": "AM-0110",
-    "entity_name": "Om Chokshi",
-    "severity_tier": "ADVERSE_NEWS",
-    "description": "Reported as a person of interest in an ongoing inquiry into over-invoiced import consignments and associated outward remittances.",
-    "linked_actor_id": null,
-    "aliases": [
-      "Chokshi Om"
-    ],
-    "date_of_birth": "1984-01-10",
-    "listing_date": "2020-04-11"
-  },
-  {
-    "entry_id": "AM-0111",
-    "entity_name": "Qadim Kalita",
+    "entity_name": "Krisha Dalal",
     "severity_tier": "NAME_SIMILARITY_ONLY",
     "description": "Name-only record with no supporting narrative, no issuing authority and no reference to any proceeding. Requires independent corroboration before any action.",
     "linked_actor_id": null,
     "aliases": [],
     "date_of_birth": null,
-    "listing_date": "2018-11-14"
+    "listing_date": "2021-11-11"
+  },
+  {
+    "entry_id": "AM-0109",
+    "entity_name": "Udant Dass",
+    "severity_tier": "ADVERSE_NEWS",
+    "description": "Subject of press reporting alleging diversion of trade advances to unrelated parties. The party has publicly denied the allegation.",
+    "linked_actor_id": null,
+    "aliases": [
+      "Dass Udant"
+    ],
+    "date_of_birth": "1977-02-17",
+    "listing_date": "2026-08-12"
+  },
+  {
+    "entry_id": "AM-0110",
+    "entity_name": "Siddharth Dora",
+    "severity_tier": "NAME_SIMILARITY_ONLY",
+    "description": "Entry retained for screening completeness only. The record originates from an unverified aggregated watchlist feed and carries no corroborating detail beyond a name. Not to be treated as adverse information on its own.",
+    "linked_actor_id": null,
+    "aliases": [],
+    "date_of_birth": null,
+    "listing_date": "2024-09-12"
+  },
+  {
+    "entry_id": "AM-0111",
+    "entity_name": "Ucchal Thakkar",
+    "severity_tier": "NAME_SIMILARITY_ONLY",
+    "description": "Low-confidence record sourced from a bulk name feed with no date of birth, identification number or jurisdiction attached. Retained to avoid silent suppression, not as evidence.",
+    "linked_actor_id": null,
+    "aliases": [],
+    "date_of_birth": null,
+    "listing_date": "2024-07-10"
   },
   {
     "entry_id": "AM-0112",
-    "entity_name": "Ishita Mane",
+    "entity_name": "Ayushman Kata",
+    "severity_tier": "NAME_SIMILARITY_ONLY",
+    "description": "Entry retained for screening completeness only. The record originates from an unverified aggregated watchlist feed and carries no corroborating detail beyond a name. Not to be treated as adverse information on its own.",
+    "linked_actor_id": null,
+    "aliases": [],
+    "date_of_birth": null,
+    "listing_date": "2022-02-20"
+  },
+  {
+    "entry_id": "AM-0113",
+    "entity_name": "Pooja Peri",
+    "severity_tier": "ADVERSE_NEWS",
+    "description": "Reported by a state police economic offences wing as under inquiry for a deposit collection scheme. Proceedings reported as at an early stage.",
+    "linked_actor_id": null,
+    "aliases": [
+      "Puja Peri",
+      "Peri Pooja"
+    ],
+    "date_of_birth": "1994",
+    "listing_date": "2019-07-16"
+  },
+  {
+    "entry_id": "AM-0114",
+    "entity_name": "Xiti Rout",
     "severity_tier": "CONFIRMED_SANCTIONS",
     "description": "Listed pursuant to a Ministry of Home Affairs notification giving effect to a UNSC 1267 Committee designation. Reporting entities are required to freeze assets and report any attempted transaction without delay.",
     "linked_actor_id": null,
     "aliases": [
-      "Isita Mane"
+      "Rout Xiti"
     ],
-    "date_of_birth": "1964-02-11",
-    "listing_date": "2021-12-03"
+    "date_of_birth": "1974-08-02",
+    "listing_date": "2020-09-24"
   },
   {
-    "entry_id": "AM-0113",
-    "entity_name": "Zayyan Vala",
+    "entry_id": "AM-0115",
+    "entity_name": "Zayan Ahluwalia",
+    "severity_tier": "NAME_SIMILARITY_ONLY",
+    "description": "Name-only record with no supporting narrative, no issuing authority and no reference to any proceeding. Requires independent corroboration before any action.",
+    "linked_actor_id": null,
+    "aliases": [],
+    "date_of_birth": null,
+    "listing_date": "2018-12-09"
+  },
+  {
+    "entry_id": "AM-0116",
+    "entity_name": "Gaurika Sagar",
+    "severity_tier": "CONFIRMED_SANCTIONS",
+    "description": "Subject of a targeted financial sanction for involvement in the financing of proscribed activity. All dealings are prohibited and any match must be reported to the Financial Intelligence Unit.",
+    "linked_actor_id": null,
+    "aliases": [
+      "Sagar Gaurika"
+    ],
+    "date_of_birth": "1979-05-17",
+    "listing_date": "2024-02-14"
+  },
+  {
+    "entry_id": "AM-0117",
+    "entity_name": "Falan Dalal",
+    "severity_tier": "NAME_SIMILARITY_ONLY",
+    "description": "Name-only record with no supporting narrative, no issuing authority and no reference to any proceeding. Requires independent corroboration before any action.",
+    "linked_actor_id": null,
+    "aliases": [],
+    "date_of_birth": null,
+    "listing_date": "2025-11-26"
+  },
+  {
+    "entry_id": "AM-0118",
+    "entity_name": "Jagrati Divan",
+    "severity_tier": "CONFIRMED_SANCTIONS",
+    "description": "Subject of a targeted financial sanction for involvement in the financing of proscribed activity. All dealings are prohibited and any match must be reported to the Financial Intelligence Unit.",
+    "linked_actor_id": null,
+    "aliases": [
+      "Jagrati Diwan",
+      "Divan Jagrati"
+    ],
+    "date_of_birth": "1970-12-09",
+    "listing_date": "2020-09-16"
+  },
+  {
+    "entry_id": "AM-0119",
+    "entity_name": "Kiaan Tailor",
+    "severity_tier": "ADVERSE_NEWS",
+    "description": "Named in investigative reporting on a network of entities sharing common registered addresses and directors, used to layer cash receipts.",
+    "linked_actor_id": null,
+    "aliases": [
+      "Kian Tailor"
+    ],
+    "date_of_birth": "1988-08-21",
+    "listing_date": "2020-08-15"
+  },
+  {
+    "entry_id": "AM-0120",
+    "entity_name": "Gaurang Sood",
+    "severity_tier": "NAME_SIMILARITY_ONLY",
+    "description": "Low-confidence record sourced from a bulk name feed with no date of birth, identification number or jurisdiction attached. Retained to avoid silent suppression, not as evidence.",
+    "linked_actor_id": null,
+    "aliases": [],
+    "date_of_birth": null,
+    "listing_date": "2023-07-25"
+  },
+  {
+    "entry_id": "AM-0121",
+    "entity_name": "Brianna Wright",
+    "severity_tier": "NAME_SIMILARITY_ONLY",
+    "description": "Name-only record with no supporting narrative, no issuing authority and no reference to any proceeding. Requires independent corroboration before any action.",
+    "linked_actor_id": null,
+    "aliases": [],
+    "date_of_birth": null,
+    "listing_date": "2022-03-12"
+  },
+  {
+    "entry_id": "AM-0122",
+    "entity_name": "Virginia Jenkins",
+    "severity_tier": "ADVERSE_NEWS",
+    "description": "Named in investigative reporting on a network of entities sharing common registered addresses and directors, used to layer cash receipts.",
+    "linked_actor_id": null,
+    "aliases": [
+      "wirginia Jenkins"
+    ],
+    "date_of_birth": "1979",
+    "listing_date": "2026-01-24"
+  },
+  {
+    "entry_id": "AM-0123",
+    "entity_name": "Brian Li",
+    "severity_tier": "NAME_SIMILARITY_ONLY",
+    "description": "Name-only record with no supporting narrative, no issuing authority and no reference to any proceeding. Requires independent corroboration before any action.",
+    "linked_actor_id": null,
+    "aliases": [],
+    "date_of_birth": null,
+    "listing_date": "2019-10-07"
+  },
+  {
+    "entry_id": "AM-0124",
+    "entity_name": "Wanda Knight",
+    "severity_tier": "NAME_SIMILARITY_ONLY",
+    "description": "Name-only record with no supporting narrative, no issuing authority and no reference to any proceeding. Requires independent corroboration before any action.",
+    "linked_actor_id": null,
+    "aliases": [],
+    "date_of_birth": null,
+    "listing_date": "2025-06-28"
+  },
+  {
+    "entry_id": "AM-0125",
+    "entity_name": "Jon Miller",
+    "severity_tier": "NAME_SIMILARITY_ONLY",
+    "description": "Name-only record with no supporting narrative, no issuing authority and no reference to any proceeding. Requires independent corroboration before any action.",
+    "linked_actor_id": null,
+    "aliases": [],
+    "date_of_birth": null,
+    "listing_date": "2024-10-09"
+  },
+  {
+    "entry_id": "AM-0126",
+    "entity_name": "Crystal Cameron",
+    "severity_tier": "CONFIRMED_SANCTIONS",
+    "description": "Designated under Section 51A of the Unlawful Activities (Prevention) Act following inclusion in the UN Security Council Consolidated List. Funds and financial assets held by or on behalf of this party are subject to freezing.",
+    "linked_actor_id": null,
+    "aliases": [
+      "Cameron Crystal"
+    ],
+    "date_of_birth": "1993-04-14",
+    "listing_date": "2021-06-04"
+  },
+  {
+    "entry_id": "AM-0127",
+    "entity_name": "Ricky Benitez",
+    "severity_tier": "CONFIRMED_SANCTIONS",
+    "description": "Designated under Section 51A of the Unlawful Activities (Prevention) Act following inclusion in the UN Security Council Consolidated List. Funds and financial assets held by or on behalf of this party are subject to freezing.",
+    "linked_actor_id": null,
+    "aliases": [
+      "Ricki Benitez"
+    ],
+    "date_of_birth": "1959-05-03",
+    "listing_date": "2022-05-23"
+  },
+  {
+    "entry_id": "AM-0128",
+    "entity_name": "Mindy Hardy",
+    "severity_tier": "ADVERSE_NEWS",
+    "description": "Reported in national financial press as being under investigation by the Directorate of Enforcement in connection with alleged irregular fund movement through shell entities. No charges have been framed at the time of reporting.",
+    "linked_actor_id": null,
+    "aliases": [
+      "Hardy Mindy"
+    ],
+    "date_of_birth": "1983-07-22",
+    "listing_date": "2023-07-10"
+  },
+  {
+    "entry_id": "AM-0129",
+    "entity_name": "Kenneth Prince",
+    "severity_tier": "ADVERSE_NEWS",
+    "description": "Reported by a state police economic offences wing as under inquiry for a deposit collection scheme. Proceedings reported as at an early stage.",
+    "linked_actor_id": null,
+    "aliases": [
+      "Prince Kenneth"
+    ],
+    "date_of_birth": "1986-09-07",
+    "listing_date": "2018-09-15"
+  },
+  {
+    "entry_id": "AM-0130",
+    "entity_name": "Anthony Fuentes",
+    "severity_tier": "NAME_SIMILARITY_ONLY",
+    "description": "Low-confidence record sourced from a bulk name feed with no date of birth, identification number or jurisdiction attached. Retained to avoid silent suppression, not as evidence.",
+    "linked_actor_id": null,
+    "aliases": [],
+    "date_of_birth": null,
+    "listing_date": "2020-05-14"
+  },
+  {
+    "entry_id": "AM-0131",
+    "entity_name": "Brian Rodriguez",
+    "severity_tier": "CONFIRMED_SANCTIONS",
+    "description": "Listed pursuant to a Ministry of Home Affairs notification giving effect to a UNSC 1267 Committee designation. Reporting entities are required to freeze assets and report any attempted transaction without delay.",
+    "linked_actor_id": null,
+    "aliases": [
+      "Rodriguez Brian"
+    ],
+    "date_of_birth": "1983-02-01",
+    "listing_date": "2020-04-06"
+  },
+  {
+    "entry_id": "AM-0132",
+    "entity_name": "Rebekah Calderon",
     "severity_tier": "CONFIRMED_SANCTIONS",
     "description": "Named in a designation order for acting on behalf of, or at the direction of, an already-listed entity. Asset freezing obligations apply to accounts held directly or through associates.",
     "linked_actor_id": null,
     "aliases": [
-      "Vala Zayyan",
-      "Zaiyan Vala"
+      "Calderon Rebekah"
     ],
-    "date_of_birth": "1962-10-05",
-    "listing_date": "2024-07-21"
-  },
-  {
-    "entry_id": "AM-0114",
-    "entity_name": "Mahika Vala",
-    "severity_tier": "ADVERSE_NEWS",
-    "description": "Named in an income tax survey report covering undisclosed cash receipts routed through multiple current accounts. Matter reported as under assessment.",
-    "linked_actor_id": null,
-    "aliases": [
-      "Vala Mahika"
-    ],
-    "date_of_birth": "1978-02-20",
-    "listing_date": "2020-01-31"
-  },
-  {
-    "entry_id": "AM-0115",
-    "entity_name": "Chanchal Subramaniam",
-    "severity_tier": "NAME_SIMILARITY_ONLY",
-    "description": "Name-only record with no supporting narrative, no issuing authority and no reference to any proceeding. Requires independent corroboration before any action.",
-    "linked_actor_id": null,
-    "aliases": [],
-    "date_of_birth": null,
-    "listing_date": "2019-08-18"
-  },
-  {
-    "entry_id": "AM-0116",
-    "entity_name": "Zashil Baral",
-    "severity_tier": "ADVERSE_NEWS",
-    "description": "Named in investigative reporting on a network of entities sharing common registered addresses and directors, used to layer cash receipts.",
-    "linked_actor_id": null,
-    "aliases": [
-      "Baral Zashil"
-    ],
-    "date_of_birth": "1955-04-07",
-    "listing_date": "2021-05-05"
-  },
-  {
-    "entry_id": "AM-0117",
-    "entity_name": "Chakradhar Banerjee",
-    "severity_tier": "NAME_SIMILARITY_ONLY",
-    "description": "Name-only record with no supporting narrative, no issuing authority and no reference to any proceeding. Requires independent corroboration before any action.",
-    "linked_actor_id": null,
-    "aliases": [],
-    "date_of_birth": null,
-    "listing_date": "2021-09-23"
-  },
-  {
-    "entry_id": "AM-0118",
-    "entity_name": "Rachita Gupta",
-    "severity_tier": "NAME_SIMILARITY_ONLY",
-    "description": "Entry retained for screening completeness only. The record originates from an unverified aggregated watchlist feed and carries no corroborating detail beyond a name. Not to be treated as adverse information on its own.",
-    "linked_actor_id": null,
-    "aliases": [],
-    "date_of_birth": null,
-    "listing_date": "2025-10-12"
-  },
-  {
-    "entry_id": "AM-0119",
-    "entity_name": "Diya Naik",
-    "severity_tier": "ADVERSE_NEWS",
-    "description": "Subject of press reporting alleging diversion of trade advances to unrelated parties. The party has publicly denied the allegation.",
-    "linked_actor_id": null,
-    "aliases": [
-      "Naik Diya"
-    ],
-    "date_of_birth": "1972-05-23",
-    "listing_date": "2025-07-27"
-  },
-  {
-    "entry_id": "AM-0120",
-    "entity_name": "Nidra Goda",
-    "severity_tier": "NAME_SIMILARITY_ONLY",
-    "description": "Low-confidence record sourced from a bulk name feed with no date of birth, identification number or jurisdiction attached. Retained to avoid silent suppression, not as evidence.",
-    "linked_actor_id": null,
-    "aliases": [],
-    "date_of_birth": null,
-    "listing_date": "2022-02-22"
-  },
-  {
-    "entry_id": "AM-0121",
-    "entity_name": "Jeffrey Chavez",
-    "severity_tier": "ADVERSE_NEWS",
-    "description": "Reported by a state police economic offences wing as under inquiry for a deposit collection scheme. Proceedings reported as at an early stage.",
-    "linked_actor_id": null,
-    "aliases": [
-      "Chavez Jeffrey",
-      "Jeffrey Chawez"
-    ],
-    "date_of_birth": "1972-06-06",
-    "listing_date": "2023-03-24"
-  },
-  {
-    "entry_id": "AM-0122",
-    "entity_name": "Jose Long",
-    "severity_tier": "NAME_SIMILARITY_ONLY",
-    "description": "Entry retained for screening completeness only. The record originates from an unverified aggregated watchlist feed and carries no corroborating detail beyond a name. Not to be treated as adverse information on its own.",
-    "linked_actor_id": null,
-    "aliases": [],
-    "date_of_birth": null,
-    "listing_date": "2023-09-29"
-  },
-  {
-    "entry_id": "AM-0123",
-    "entity_name": "Jason Johnson",
-    "severity_tier": "NAME_SIMILARITY_ONLY",
-    "description": "Low-confidence record sourced from a bulk name feed with no date of birth, identification number or jurisdiction attached. Retained to avoid silent suppression, not as evidence.",
-    "linked_actor_id": null,
-    "aliases": [],
-    "date_of_birth": null,
-    "listing_date": "2026-06-18"
-  },
-  {
-    "entry_id": "AM-0124",
-    "entity_name": "Dennis Sheppard",
-    "severity_tier": "NAME_SIMILARITY_ONLY",
-    "description": "Low-confidence record sourced from a bulk name feed with no date of birth, identification number or jurisdiction attached. Retained to avoid silent suppression, not as evidence.",
-    "linked_actor_id": null,
-    "aliases": [],
-    "date_of_birth": null,
-    "listing_date": "2026-04-01"
-  },
-  {
-    "entry_id": "AM-0125",
-    "entity_name": "Mr. Thomas Roach",
-    "severity_tier": "ADVERSE_NEWS",
-    "description": "Subject of press reporting alleging diversion of trade advances to unrelated parties. The party has publicly denied the allegation.",
-    "linked_actor_id": null,
-    "aliases": [
-      "Roach Thomas Mr."
-    ],
-    "date_of_birth": "1977-03-26",
-    "listing_date": "2020-03-06"
-  },
-  {
-    "entry_id": "AM-0126",
-    "entity_name": "Crystal Mills",
-    "severity_tier": "NAME_SIMILARITY_ONLY",
-    "description": "Low-confidence record sourced from a bulk name feed with no date of birth, identification number or jurisdiction attached. Retained to avoid silent suppression, not as evidence.",
-    "linked_actor_id": null,
-    "aliases": [],
-    "date_of_birth": null,
-    "listing_date": "2024-08-24"
-  },
-  {
-    "entry_id": "AM-0127",
-    "entity_name": "Tyler Johnson",
-    "severity_tier": "ADVERSE_NEWS",
-    "description": "Referenced in a regulatory enforcement order for accepting deposits without authorisation. Penalty proceedings reported as pending.",
-    "linked_actor_id": null,
-    "aliases": [
-      "Johnson Tyler"
-    ],
-    "date_of_birth": "1972-08-02",
-    "listing_date": "2018-10-19"
-  },
-  {
-    "entry_id": "AM-0128",
-    "entity_name": "Michael Burke",
-    "severity_tier": "ADVERSE_NEWS",
-    "description": "Reported by a state police economic offences wing as under inquiry for a deposit collection scheme. Proceedings reported as at an early stage.",
-    "linked_actor_id": null,
-    "aliases": [
-      "Burke Michael"
-    ],
-    "date_of_birth": "1989-04-28",
-    "listing_date": "2025-03-24"
-  },
-  {
-    "entry_id": "AM-0129",
-    "entity_name": "Pamela Allen",
-    "severity_tier": "NAME_SIMILARITY_ONLY",
-    "description": "Entry retained for screening completeness only. The record originates from an unverified aggregated watchlist feed and carries no corroborating detail beyond a name. Not to be treated as adverse information on its own.",
-    "linked_actor_id": null,
-    "aliases": [],
-    "date_of_birth": null,
-    "listing_date": "2020-04-29"
-  },
-  {
-    "entry_id": "AM-0130",
-    "entity_name": "Suzanne Johnson",
-    "severity_tier": "ADVERSE_NEWS",
-    "description": "Referenced in a regulatory enforcement order for accepting deposits without authorisation. Penalty proceedings reported as pending.",
-    "linked_actor_id": null,
-    "aliases": [
-      "Johnson Suzanne"
-    ],
-    "date_of_birth": "1987-04-27",
-    "listing_date": "2019-05-02"
-  },
-  {
-    "entry_id": "AM-0131",
-    "entity_name": "Jack Reyes",
-    "severity_tier": "CONFIRMED_SANCTIONS",
-    "description": "Designated under Section 51A of the Unlawful Activities (Prevention) Act following inclusion in the UN Security Council Consolidated List. Funds and financial assets held by or on behalf of this party are subject to freezing.",
-    "linked_actor_id": null,
-    "aliases": [
-      "Reyes Jack"
-    ],
-    "date_of_birth": "1989-02-28",
-    "listing_date": "2025-06-27"
-  },
-  {
-    "entry_id": "AM-0132",
-    "entity_name": "Dawn Banks",
-    "severity_tier": "ADVERSE_NEWS",
-    "description": "Referenced in a regulatory enforcement order for accepting deposits without authorisation. Penalty proceedings reported as pending.",
-    "linked_actor_id": null,
-    "aliases": [
-      "Banks Dawn"
-    ],
-    "date_of_birth": "1987",
-    "listing_date": "2025-02-08"
+    "date_of_birth": "1982",
+    "listing_date": "2018-07-14"
   },
   {
     "entry_id": "AM-0133",
-    "entity_name": "Tammy Singleton",
-    "severity_tier": "ADVERSE_NEWS",
-    "description": "Referenced in a regulatory enforcement order for accepting deposits without authorisation. Penalty proceedings reported as pending.",
-    "linked_actor_id": null,
-    "aliases": [
-      "Singleton Tammy"
-    ],
-    "date_of_birth": "1962-05-20",
-    "listing_date": "2020-09-11"
-  },
-  {
-    "entry_id": "AM-0134",
-    "entity_name": "Patrick Mejia",
+    "entity_name": "Angel Hutchinson",
     "severity_tier": "ADVERSE_NEWS",
     "description": "Named in investigative reporting on a network of entities sharing common registered addresses and directors, used to layer cash receipts.",
     "linked_actor_id": null,
     "aliases": [
-      "Mejia Patrick"
+      "Hutchinson Angel"
     ],
-    "date_of_birth": "1983-09-24",
-    "listing_date": "2025-12-13"
+    "date_of_birth": "1959",
+    "listing_date": "2020-12-11"
+  },
+  {
+    "entry_id": "AM-0134",
+    "entity_name": "Michelle Carney",
+    "severity_tier": "NAME_SIMILARITY_ONLY",
+    "description": "Name-only record with no supporting narrative, no issuing authority and no reference to any proceeding. Requires independent corroboration before any action.",
+    "linked_actor_id": null,
+    "aliases": [],
+    "date_of_birth": null,
+    "listing_date": "2019-12-04"
   },
   {
     "entry_id": "AM-0135",
-    "entity_name": "Megan Mitchell",
-    "severity_tier": "ADVERSE_NEWS",
-    "description": "Reported in national financial press as being under investigation by the Directorate of Enforcement in connection with alleged irregular fund movement through shell entities. No charges have been framed at the time of reporting.",
-    "linked_actor_id": null,
-    "aliases": [
-      "Mitchell Megan"
-    ],
-    "date_of_birth": "1974-11-02",
-    "listing_date": "2018-07-15"
-  },
-  {
-    "entry_id": "AM-0136",
-    "entity_name": "Cynthia Peters",
-    "severity_tier": "ADVERSE_NEWS",
-    "description": "Reported by a state police economic offences wing as under inquiry for a deposit collection scheme. Proceedings reported as at an early stage.",
-    "linked_actor_id": null,
-    "aliases": [
-      "Peters Cynthia"
-    ],
-    "date_of_birth": "1976-09-15",
-    "listing_date": "2023-07-27"
-  },
-  {
-    "entry_id": "AM-0137",
-    "entity_name": "Joseph Williams",
-    "severity_tier": "ADVERSE_NEWS",
-    "description": "Named in an income tax survey report covering undisclosed cash receipts routed through multiple current accounts. Matter reported as under assessment.",
-    "linked_actor_id": null,
-    "aliases": [
-      "Williams Joseph"
-    ],
-    "date_of_birth": "1989-04-24",
-    "listing_date": "2024-04-20"
-  },
-  {
-    "entry_id": "AM-0138",
-    "entity_name": "Richard Green",
-    "severity_tier": "ADVERSE_NEWS",
-    "description": "Reported as a person of interest in an ongoing inquiry into over-invoiced import consignments and associated outward remittances.",
-    "linked_actor_id": null,
-    "aliases": [
-      "Green Richard"
-    ],
-    "date_of_birth": "1995-06-12",
-    "listing_date": "2026-03-14"
-  },
-  {
-    "entry_id": "AM-0139",
-    "entity_name": "Rebecca Obrien",
-    "severity_tier": "ADVERSE_NEWS",
-    "description": "Referenced in a regulatory enforcement order for accepting deposits without authorisation. Penalty proceedings reported as pending.",
-    "linked_actor_id": null,
-    "aliases": [
-      "Obrien Rebecca"
-    ],
-    "date_of_birth": "1984-11-11",
-    "listing_date": "2020-07-22"
-  },
-  {
-    "entry_id": "AM-0140",
-    "entity_name": "Christine Washington",
-    "severity_tier": "ADVERSE_NEWS",
-    "description": "Named in an income tax survey report covering undisclosed cash receipts routed through multiple current accounts. Matter reported as under assessment.",
-    "linked_actor_id": null,
-    "aliases": [
-      "Washington Christine"
-    ],
-    "date_of_birth": "1985-01-22",
-    "listing_date": "2024-08-06"
-  },
-  {
-    "entry_id": "AM-0141",
-    "entity_name": "Victoria Grant",
-    "severity_tier": "NAME_SIMILARITY_ONLY",
-    "description": "Low-confidence record sourced from a bulk name feed with no date of birth, identification number or jurisdiction attached. Retained to avoid silent suppression, not as evidence.",
-    "linked_actor_id": null,
-    "aliases": [],
-    "date_of_birth": null,
-    "listing_date": "2023-07-23"
-  },
-  {
-    "entry_id": "AM-0142",
-    "entity_name": "William Payne",
-    "severity_tier": "NAME_SIMILARITY_ONLY",
-    "description": "Low-confidence record sourced from a bulk name feed with no date of birth, identification number or jurisdiction attached. Retained to avoid silent suppression, not as evidence.",
-    "linked_actor_id": null,
-    "aliases": [],
-    "date_of_birth": null,
-    "listing_date": "2020-02-13"
-  },
-  {
-    "entry_id": "AM-0143",
-    "entity_name": "Angela Baker",
-    "severity_tier": "ADVERSE_NEWS",
-    "description": "Reported by a state police economic offences wing as under inquiry for a deposit collection scheme. Proceedings reported as at an early stage.",
-    "linked_actor_id": null,
-    "aliases": [
-      "Baker Angela"
-    ],
-    "date_of_birth": "1975-10-17",
-    "listing_date": "2024-01-14"
-  },
-  {
-    "entry_id": "AM-0144",
-    "entity_name": "Kimberly Patton",
-    "severity_tier": "NAME_SIMILARITY_ONLY",
-    "description": "Entry retained for screening completeness only. The record originates from an unverified aggregated watchlist feed and carries no corroborating detail beyond a name. Not to be treated as adverse information on its own.",
-    "linked_actor_id": null,
-    "aliases": [],
-    "date_of_birth": null,
-    "listing_date": "2026-05-07"
-  },
-  {
-    "entry_id": "AM-0145",
-    "entity_name": "Thomas Johnson",
-    "severity_tier": "NAME_SIMILARITY_ONLY",
-    "description": "Entry retained for screening completeness only. The record originates from an unverified aggregated watchlist feed and carries no corroborating detail beyond a name. Not to be treated as adverse information on its own.",
-    "linked_actor_id": null,
-    "aliases": [],
-    "date_of_birth": null,
-    "listing_date": "2023-04-26"
-  },
-  {
-    "entry_id": "AM-0146",
-    "entity_name": "Mathew Black",
-    "severity_tier": "ADVERSE_NEWS",
-    "description": "Named in an income tax survey report covering undisclosed cash receipts routed through multiple current accounts. Matter reported as under assessment.",
-    "linked_actor_id": null,
-    "aliases": [
-      "Black Mathew"
-    ],
-    "date_of_birth": "1984-12-15",
-    "listing_date": "2023-12-26"
-  },
-  {
-    "entry_id": "AM-0147",
-    "entity_name": "Kaitlyn Erickson",
-    "severity_tier": "ADVERSE_NEWS",
-    "description": "Referenced in a regulatory enforcement order for accepting deposits without authorisation. Penalty proceedings reported as pending.",
-    "linked_actor_id": null,
-    "aliases": [
-      "Erickson Kaitlyn"
-    ],
-    "date_of_birth": "1993-10-18",
-    "listing_date": "2024-07-20"
-  },
-  {
-    "entry_id": "AM-0148",
-    "entity_name": "Emily Johnson",
-    "severity_tier": "ADVERSE_NEWS",
-    "description": "Referenced in a regulatory enforcement order for accepting deposits without authorisation. Penalty proceedings reported as pending.",
-    "linked_actor_id": null,
-    "aliases": [
-      "Johnson Emily"
-    ],
-    "date_of_birth": "1963",
-    "listing_date": "2025-09-04"
-  },
-  {
-    "entry_id": "AM-0149",
-    "entity_name": "Gregory Chaney",
-    "severity_tier": "ADVERSE_NEWS",
-    "description": "Reported by a state police economic offences wing as under inquiry for a deposit collection scheme. Proceedings reported as at an early stage.",
-    "linked_actor_id": null,
-    "aliases": [
-      "Chaney Gregory"
-    ],
-    "date_of_birth": "1982-01-22",
-    "listing_date": "2026-03-21"
-  },
-  {
-    "entry_id": "AM-0150",
-    "entity_name": "Melissa Thompson",
-    "severity_tier": "NAME_SIMILARITY_ONLY",
-    "description": "Low-confidence record sourced from a bulk name feed with no date of birth, identification number or jurisdiction attached. Retained to avoid silent suppression, not as evidence.",
-    "linked_actor_id": null,
-    "aliases": [],
-    "date_of_birth": null,
-    "listing_date": "2025-07-14"
-  },
-  {
-    "entry_id": "AM-0151",
-    "entity_name": "Bethany Taylor",
-    "severity_tier": "ADVERSE_NEWS",
-    "description": "Subject of press reporting alleging diversion of trade advances to unrelated parties. The party has publicly denied the allegation.",
-    "linked_actor_id": null,
-    "aliases": [
-      "Taylor Bethany"
-    ],
-    "date_of_birth": "1979-06-21",
-    "listing_date": "2023-01-31"
-  },
-  {
-    "entry_id": "AM-0152",
-    "entity_name": "Hailey Long",
+    "entity_name": "Donald Berg",
     "severity_tier": "CONFIRMED_SANCTIONS",
     "description": "Designated under Section 51A of the Unlawful Activities (Prevention) Act following inclusion in the UN Security Council Consolidated List. Funds and financial assets held by or on behalf of this party are subject to freezing.",
     "linked_actor_id": null,
     "aliases": [
-      "Hailei Long"
+      "Berg Donald"
     ],
-    "date_of_birth": "1959-03-26",
-    "listing_date": "2021-10-14"
+    "date_of_birth": "1984-08-18",
+    "listing_date": "2025-01-05"
   },
   {
-    "entry_id": "AM-0153",
-    "entity_name": "Aaron Martinez",
+    "entry_id": "AM-0136",
+    "entity_name": "Anthony Horton",
     "severity_tier": "ADVERSE_NEWS",
-    "description": "Subject of press reporting alleging diversion of trade advances to unrelated parties. The party has publicly denied the allegation.",
+    "description": "Named in an income tax survey report covering undisclosed cash receipts routed through multiple current accounts. Matter reported as under assessment.",
     "linked_actor_id": null,
     "aliases": [
-      "Martinez Aaron"
+      "Horton Anthony"
     ],
-    "date_of_birth": "1985-04-06",
-    "listing_date": "2023-12-22"
+    "date_of_birth": "1989-11-19",
+    "listing_date": "2025-11-11"
   },
   {
-    "entry_id": "AM-0154",
-    "entity_name": "Alex Williams",
-    "severity_tier": "CONFIRMED_SANCTIONS",
-    "description": "Listed pursuant to a Ministry of Home Affairs notification giving effect to a UNSC 1267 Committee designation. Reporting entities are required to freeze assets and report any attempted transaction without delay.",
+    "entry_id": "AM-0137",
+    "entity_name": "Kimberly Shaw",
+    "severity_tier": "NAME_SIMILARITY_ONLY",
+    "description": "Name-only record with no supporting narrative, no issuing authority and no reference to any proceeding. Requires independent corroboration before any action.",
     "linked_actor_id": null,
-    "aliases": [
-      "Williams Alex"
-    ],
-    "date_of_birth": "1980-05-23",
-    "listing_date": "2025-05-26"
+    "aliases": [],
+    "date_of_birth": null,
+    "listing_date": "2022-01-05"
   },
   {
-    "entry_id": "AM-0155",
-    "entity_name": "Jorge Henry",
-    "severity_tier": "CONFIRMED_SANCTIONS",
-    "description": "Listed pursuant to a Ministry of Home Affairs notification giving effect to a UNSC 1267 Committee designation. Reporting entities are required to freeze assets and report any attempted transaction without delay.",
-    "linked_actor_id": null,
-    "aliases": [
-      "Henry Jorge"
-    ],
-    "date_of_birth": "1957-01-28",
-    "listing_date": "2025-02-04"
-  },
-  {
-    "entry_id": "AM-0156",
-    "entity_name": "Robin Rice",
+    "entry_id": "AM-0138",
+    "entity_name": "Dominique Chan",
     "severity_tier": "NAME_SIMILARITY_ONLY",
     "description": "Entry retained for screening completeness only. The record originates from an unverified aggregated watchlist feed and carries no corroborating detail beyond a name. Not to be treated as adverse information on its own.",
     "linked_actor_id": null,
     "aliases": [],
     "date_of_birth": null,
-    "listing_date": "2021-02-26"
+    "listing_date": "2019-04-13"
   },
   {
-    "entry_id": "AM-0157",
-    "entity_name": "Alexandra Jones",
+    "entry_id": "AM-0139",
+    "entity_name": "Bradley Kim",
     "severity_tier": "ADVERSE_NEWS",
     "description": "Named in investigative reporting on a network of entities sharing common registered addresses and directors, used to layer cash receipts.",
     "linked_actor_id": null,
     "aliases": [
-      "Jones Alexandra"
+      "Kim Bradley",
+      "Bradlei Kim"
     ],
-    "date_of_birth": "1984-11-17",
-    "listing_date": "2022-04-08"
+    "date_of_birth": "1964",
+    "listing_date": "2020-05-01"
   },
   {
-    "entry_id": "AM-0158",
-    "entity_name": "Tammy Morgan",
+    "entry_id": "AM-0140",
+    "entity_name": "Kayla Taylor",
     "severity_tier": "ADVERSE_NEWS",
-    "description": "Reported in national financial press as being under investigation by the Directorate of Enforcement in connection with alleged irregular fund movement through shell entities. No charges have been framed at the time of reporting.",
+    "description": "Named in an income tax survey report covering undisclosed cash receipts routed through multiple current accounts. Matter reported as under assessment.",
     "linked_actor_id": null,
     "aliases": [
-      "Tammi Morgan"
+      "Taylor Kayla"
     ],
-    "date_of_birth": "1987-08-01",
-    "listing_date": "2018-10-04"
+    "date_of_birth": "1975-09-07",
+    "listing_date": "2020-10-08"
   },
   {
-    "entry_id": "AM-0159",
-    "entity_name": "Sherry Young",
+    "entry_id": "AM-0141",
+    "entity_name": "Charles Moore",
     "severity_tier": "ADVERSE_NEWS",
-    "description": "Named in investigative reporting on a network of entities sharing common registered addresses and directors, used to layer cash receipts.",
+    "description": "Named in an income tax survey report covering undisclosed cash receipts routed through multiple current accounts. Matter reported as under assessment.",
     "linked_actor_id": null,
     "aliases": [
-      "Young Sherry"
+      "Moore Charles"
     ],
-    "date_of_birth": "1987-11-07",
-    "listing_date": "2023-01-21"
+    "date_of_birth": "1959-06-24",
+    "listing_date": "2020-09-10"
   },
   {
-    "entry_id": "AM-0160",
-    "entity_name": "Bryce Davis",
+    "entry_id": "AM-0142",
+    "entity_name": "Timothy Fox",
+    "severity_tier": "ADVERSE_NEWS",
+    "description": "Referenced in a regulatory enforcement order for accepting deposits without authorisation. Penalty proceedings reported as pending.",
+    "linked_actor_id": null,
+    "aliases": [
+      "Fox Timothy"
+    ],
+    "date_of_birth": "1985",
+    "listing_date": "2022-07-06"
+  },
+  {
+    "entry_id": "AM-0143",
+    "entity_name": "John Wallace",
+    "severity_tier": "ADVERSE_NEWS",
+    "description": "Named in an income tax survey report covering undisclosed cash receipts routed through multiple current accounts. Matter reported as under assessment.",
+    "linked_actor_id": null,
+    "aliases": [
+      "Wallace John"
+    ],
+    "date_of_birth": "1970-03-21",
+    "listing_date": "2020-02-20"
+  },
+  {
+    "entry_id": "AM-0144",
+    "entity_name": "Antonio Riley",
+    "severity_tier": "CONFIRMED_SANCTIONS",
+    "description": "Named in a designation order for acting on behalf of, or at the direction of, an already-listed entity. Asset freezing obligations apply to accounts held directly or through associates.",
+    "linked_actor_id": null,
+    "aliases": [
+      "Riley Antonio"
+    ],
+    "date_of_birth": "1995",
+    "listing_date": "2020-09-27"
+  },
+  {
+    "entry_id": "AM-0145",
+    "entity_name": "Dawn Mccormick DDS",
+    "severity_tier": "CONFIRMED_SANCTIONS",
+    "description": "Listed pursuant to a Ministry of Home Affairs notification giving effect to a UNSC 1267 Committee designation. Reporting entities are required to freeze assets and report any attempted transaction without delay.",
+    "linked_actor_id": null,
+    "aliases": [
+      "DDS Mccormick Dawn"
+    ],
+    "date_of_birth": "1994-04-03",
+    "listing_date": "2022-03-21"
+  },
+  {
+    "entry_id": "AM-0146",
+    "entity_name": "Michael Steele",
     "severity_tier": "ADVERSE_NEWS",
     "description": "Reported as a person of interest in an ongoing inquiry into over-invoiced import consignments and associated outward remittances.",
     "linked_actor_id": null,
     "aliases": [
-      "Davis Bryce"
+      "Steele Michael"
     ],
-    "date_of_birth": "1963",
-    "listing_date": "2026-08-03"
+    "date_of_birth": "1983-07-11",
+    "listing_date": "2024-05-14"
+  },
+  {
+    "entry_id": "AM-0147",
+    "entity_name": "Brenda Gould",
+    "severity_tier": "ADVERSE_NEWS",
+    "description": "Subject of press reporting alleging diversion of trade advances to unrelated parties. The party has publicly denied the allegation.",
+    "linked_actor_id": null,
+    "aliases": [
+      "Gould Brenda"
+    ],
+    "date_of_birth": "1960-11-27",
+    "listing_date": "2025-06-02"
+  },
+  {
+    "entry_id": "AM-0148",
+    "entity_name": "Kelly Mccarty",
+    "severity_tier": "CONFIRMED_SANCTIONS",
+    "description": "Listed pursuant to a Ministry of Home Affairs notification giving effect to a UNSC 1267 Committee designation. Reporting entities are required to freeze assets and report any attempted transaction without delay.",
+    "linked_actor_id": null,
+    "aliases": [
+      "Kelli Mccarty"
+    ],
+    "date_of_birth": "1955",
+    "listing_date": "2019-03-03"
+  },
+  {
+    "entry_id": "AM-0149",
+    "entity_name": "Mark Harris",
+    "severity_tier": "ADVERSE_NEWS",
+    "description": "Reported in national financial press as being under investigation by the Directorate of Enforcement in connection with alleged irregular fund movement through shell entities. No charges have been framed at the time of reporting.",
+    "linked_actor_id": null,
+    "aliases": [
+      "Harris Mark"
+    ],
+    "date_of_birth": "1970-07-24",
+    "listing_date": "2025-04-02"
+  },
+  {
+    "entry_id": "AM-0150",
+    "entity_name": "Mr. Keith Sharp",
+    "severity_tier": "ADVERSE_NEWS",
+    "description": "Subject of press reporting alleging diversion of trade advances to unrelated parties. The party has publicly denied the allegation.",
+    "linked_actor_id": null,
+    "aliases": [
+      "Mr. Keith sarp"
+    ],
+    "date_of_birth": "1989-01-07",
+    "listing_date": "2021-01-17"
+  },
+  {
+    "entry_id": "AM-0151",
+    "entity_name": "Taylor Wells",
+    "severity_tier": "ADVERSE_NEWS",
+    "description": "Reported in national financial press as being under investigation by the Directorate of Enforcement in connection with alleged irregular fund movement through shell entities. No charges have been framed at the time of reporting.",
+    "linked_actor_id": null,
+    "aliases": [
+      "Wells Taylor"
+    ],
+    "date_of_birth": "1990-03-25",
+    "listing_date": "2020-11-29"
+  },
+  {
+    "entry_id": "AM-0152",
+    "entity_name": "April Henderson",
+    "severity_tier": "ADVERSE_NEWS",
+    "description": "Named in investigative reporting on a network of entities sharing common registered addresses and directors, used to layer cash receipts.",
+    "linked_actor_id": null,
+    "aliases": [
+      "Henderson April"
+    ],
+    "date_of_birth": "1967-07-10",
+    "listing_date": "2022-08-15"
+  },
+  {
+    "entry_id": "AM-0153",
+    "entity_name": "Katrina Hill DDS",
+    "severity_tier": "ADVERSE_NEWS",
+    "description": "Referenced in a regulatory enforcement order for accepting deposits without authorisation. Penalty proceedings reported as pending.",
+    "linked_actor_id": null,
+    "aliases": [
+      "DDS Hill Katrina"
+    ],
+    "date_of_birth": "1987-10-14",
+    "listing_date": "2025-02-14"
+  },
+  {
+    "entry_id": "AM-0154",
+    "entity_name": "Jasmine Casey",
+    "severity_tier": "ADVERSE_NEWS",
+    "description": "Referenced in a regulatory enforcement order for accepting deposits without authorisation. Penalty proceedings reported as pending.",
+    "linked_actor_id": null,
+    "aliases": [
+      "Casey Jasmine"
+    ],
+    "date_of_birth": "1968-04-24",
+    "listing_date": "2021-07-23"
+  },
+  {
+    "entry_id": "AM-0155",
+    "entity_name": "Heather Parker",
+    "severity_tier": "ADVERSE_NEWS",
+    "description": "Referenced in a regulatory enforcement order for accepting deposits without authorisation. Penalty proceedings reported as pending.",
+    "linked_actor_id": null,
+    "aliases": [
+      "Parker Heather"
+    ],
+    "date_of_birth": "1984",
+    "listing_date": "2022-03-06"
+  },
+  {
+    "entry_id": "AM-0156",
+    "entity_name": "Stanley Oneill",
+    "severity_tier": "NAME_SIMILARITY_ONLY",
+    "description": "Low-confidence record sourced from a bulk name feed with no date of birth, identification number or jurisdiction attached. Retained to avoid silent suppression, not as evidence.",
+    "linked_actor_id": null,
+    "aliases": [],
+    "date_of_birth": null,
+    "listing_date": "2019-12-16"
+  },
+  {
+    "entry_id": "AM-0157",
+    "entity_name": "Rachel Pitts",
+    "severity_tier": "ADVERSE_NEWS",
+    "description": "Reported by a state police economic offences wing as under inquiry for a deposit collection scheme. Proceedings reported as at an early stage.",
+    "linked_actor_id": null,
+    "aliases": [
+      "Pitts Rachel"
+    ],
+    "date_of_birth": "1970-08-24",
+    "listing_date": "2023-07-10"
+  },
+  {
+    "entry_id": "AM-0158",
+    "entity_name": "Manuel Perez",
+    "severity_tier": "NAME_SIMILARITY_ONLY",
+    "description": "Low-confidence record sourced from a bulk name feed with no date of birth, identification number or jurisdiction attached. Retained to avoid silent suppression, not as evidence.",
+    "linked_actor_id": null,
+    "aliases": [],
+    "date_of_birth": null,
+    "listing_date": "2026-04-24"
+  },
+  {
+    "entry_id": "AM-0159",
+    "entity_name": "Michael Mcintosh",
+    "severity_tier": "ADVERSE_NEWS",
+    "description": "Subject of press reporting alleging diversion of trade advances to unrelated parties. The party has publicly denied the allegation.",
+    "linked_actor_id": null,
+    "aliases": [
+      "Michael Mcintos"
+    ],
+    "date_of_birth": "1991-09-14",
+    "listing_date": "2022-03-17"
+  },
+  {
+    "entry_id": "AM-0160",
+    "entity_name": "Chelsea Parrish",
+    "severity_tier": "NAME_SIMILARITY_ONLY",
+    "description": "Name-only record with no supporting narrative, no issuing authority and no reference to any proceeding. Requires independent corroboration before any action.",
+    "linked_actor_id": null,
+    "aliases": [],
+    "date_of_birth": null,
+    "listing_date": "2019-07-19"
   }
 ]

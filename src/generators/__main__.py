@@ -9,6 +9,15 @@ fixed once, and every generator downstream reads it rather than deciding indepen
 which is what keeps a structuring case in the transaction data and a structuring row in the
 ledger describing the same account.
 
+The adverse-media corpus is built straight after the transactions, because it is fixed
+against the founding population and every later block's customer and counterparty names are
+then cleared against it before anything else - KYC narratives, document images, the graph -
+uses them.
+
+Every random choice comes from an isolated stream keyed by what it is for (streams.py), so a
+population block can be appended at any phase without changing existing data.
+`--exclude-block` generates without a block, which is how that guarantee is checked.
+
 Output lands in data/, and the JSON is committed to the repository rather than regenerated
 per run. That is deliberate: a library version change in a different environment would
 otherwise shift the data underneath the ground-truth labels without anything appearing to
@@ -39,6 +48,7 @@ from src.generators import kyc_profiles as kyc_module
 from src.generators import rings as rings_module
 from src.generators import rulebook as rulebook_module
 from src.generators import transactions as transactions_module
+from src.generators.streams import Streams
 
 
 def _write_models(path, models) -> None:
@@ -58,53 +68,63 @@ def _done(started: float, detail: str) -> None:
     print(f"        {detail}  ({time.perf_counter() - started:.1f}s)", flush=True)
 
 
-def main(seed: int = cfg.SEED, skip_embeddings: bool = False) -> None:
+def main(
+    seed: int = cfg.SEED,
+    skip_embeddings: bool = False,
+    exclude_blocks: tuple[str, ...] = (),
+) -> None:
     """Generate the full dataset."""
+    # Every generator draws from its own Streams; the global seeds are only a guard against
+    # a library quietly using the module-level generators.
     random.seed(seed)
     np.random.seed(seed)
     Faker.seed(seed)
-    rng = random.Random(seed)
+    streams = Streams(seed)
+    blocks = tuple(name for name, _ in cfg.POPULATION_BLOCKS if name not in exclude_blocks)
 
     total = 9
-    print(f"Generating the AML Auditor synthetic dataset (seed={seed})\n")
+    print(f"Generating the AML Auditor synthetic dataset (seed={seed}, blocks={', '.join(blocks)})\n")
 
     started = _step(1, total, "customers and accounts")
-    customers, accounts, cohorts = customers_module.generate(rng)
-    _write_models(cfg.CUSTOMERS_FILE, customers)
-    _write_models(cfg.ACCOUNTS_FILE, accounts)
+    customers, accounts, cohorts = customers_module.generate(streams, blocks)
     _done(started, f"{len(customers)} customers, {len(accounts)} accounts")
 
     started = _step(2, total, "fraud rings")
-    fraud_rings = rings_module.generate(rng, customers, accounts, cohorts)
+    fraud_rings = rings_module.generate(streams, customers, accounts, cohorts)
     _done(started, f"{len(fraud_rings)} rings covering {sum(len(r.member_account_ids) for r in fraud_rings)} accounts")
 
     started = _step(3, total, "planting plan (drives every channel below)")
-    plan = ledger_module.build_planting_plan(rng, accounts, fraud_rings, cohorts)
+    plan = ledger_module.build_planting_plan(streams, accounts, fraud_rings, cohorts)
     escalate = sum(1 for a in accounts if plan.real_channels_for(a.account_id) >= 2)
     monitor = sum(1 for a in accounts if plan.real_channels_for(a.account_id) == 1)
     _done(started, f"{escalate} escalate-worthy, {monitor} monitor-worthy")
 
     started = _step(4, total, "transactions and counterparties")
     transactions, counterparties = transactions_module.generate(
-        rng, customers, accounts, fraud_rings, plan
+        streams, customers, accounts, fraud_rings, plan
     )
-    _write_models(cfg.TRANSACTIONS_FILE, transactions)
-    _write_models(cfg.COUNTERPARTIES_FILE, counterparties)
     _done(started, f"{len(transactions)} transactions, {len(counterparties)} counterparties")
 
-    started = _step(5, total, "KYC profiles")
-    profiles = kyc_module.generate(rng, customers, accounts, transactions, counterparties, plan)
+    started = _step(5, total, "adverse media corpus, and later-block name clearance")
+    entries = adverse_media_module.generate(streams, customers, accounts, plan, counterparties)
+    _write_models(cfg.ADVERSE_MEDIA_FILE, entries)
+    customers, counterparties, transactions, renamed = adverse_media_module.clear_later_block_names(
+        streams, entries, customers, counterparties, transactions
+    )
+    _write_models(cfg.CUSTOMERS_FILE, customers)
+    _write_models(cfg.ACCOUNTS_FILE, accounts)
+    _write_models(cfg.TRANSACTIONS_FILE, transactions)
+    _write_models(cfg.COUNTERPARTIES_FILE, counterparties)
+    _done(started, f"{len(entries)} entries; {renamed} later-block names redrawn clear of the corpus")
+
+    started = _step(6, total, "KYC profiles")
+    profiles = kyc_module.generate(streams, customers, accounts, transactions, counterparties, plan)
     _write_models(cfg.KYC_PROFILES_FILE, profiles)
     _done(started, f"{len(profiles)} narratives")
 
-    started = _step(6, total, "identity document images")
+    started = _step(7, total, "identity document images")
     manifest = documents_module.generate(customers, accounts, plan.forged_document, seed)
     _done(started, f"{len(manifest)} images rendered")
-
-    started = _step(7, total, "adverse media corpus")
-    entries = adverse_media_module.generate(rng, customers, accounts, plan, counterparties)
-    _write_models(cfg.ADVERSE_MEDIA_FILE, entries)
-    _done(started, f"{len(entries)} entries")
 
     started = _step(8, total, "entity graph")
     graph = graph_module.build(customers, accounts, transactions, counterparties, plan, fraud_rings)
@@ -140,5 +160,15 @@ if __name__ == "__main__":
         action="store_true",
         help="Skip the ChromaDB step, which downloads an embedding model on first run.",
     )
+    parser.add_argument(
+        "--exclude-block",
+        action="append",
+        default=[],
+        choices=[name for name, _ in cfg.POPULATION_BLOCKS if name not in cfg.CORPUS_SCREENED_BLOCKS],
+        help=(
+            "Generate without a population block. Only for checking that adding a block "
+            "leaves existing data unchanged - the committed dataset includes every block."
+        ),
+    )
     args = parser.parse_args()
-    main(seed=args.seed, skip_embeddings=args.skip_embeddings)
+    main(seed=args.seed, skip_embeddings=args.skip_embeddings, exclude_blocks=tuple(args.exclude_block))

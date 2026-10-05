@@ -90,13 +90,17 @@ class SeverityTier(str, Enum):
 
 
 class RingType(str, Enum):
+    """MULE is a money-mule network: accounts rented out and run from a handler's phone,
+    forwarding scam victims' money to a shared collector."""
+
     LOCAL = "LOCAL"
     INTERNATIONAL = "INTERNATIONAL"
     ROUND_TRIP = "ROUND_TRIP"
+    MULE = "MULE"
 
 
 class RulebookCategory(str, Enum):
-    """The six clause categories the rulebook spans."""
+    """The seven clause categories the rulebook spans."""
 
     STRUCTURING = "STRUCTURING"
     KYC_CDD = "KYC_CDD"
@@ -104,6 +108,7 @@ class RulebookCategory(str, Enum):
     NETWORK = "NETWORK"
     DOCUMENT_FORGERY = "DOCUMENT_FORGERY"
     CROSS_BORDER = "CROSS_BORDER"
+    MONEY_MULE = "MONEY_MULE"
 
 
 # --------------------------------------------------------------------------------------

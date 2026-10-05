@@ -188,6 +188,10 @@ class FraudRing(BaseModel):
             "ring's pair is [outbound entity, return entity]."
         ),
     )
+    collector_counterparty_id: str | None = Field(
+        default=None,
+        description="MULE rings only: the account every member sweeps victims' money into.",
+    )
 
 
 class EvidenceLedgerEntry(BaseModel):
@@ -205,11 +209,18 @@ class EvidenceLedgerEntry(BaseModel):
     adverse_media_hit: SeverityTier | None = None
     graph_ring_membership: str | None = None
     forged_document_planted: bool = False
+    pass_through_planted: bool = Field(
+        default=False,
+        description=(
+            "Money-mule pass-through: victims' money arriving and forwarded to a collector "
+            "within hours. Network mules, solo mules and complicit merchants."
+        ),
+    )
     decoy_types: list[str] = Field(
         default_factory=list,
         description=(
             "Deliberate false-positive bait: name_similarity, graph_coincidence, round_amount, "
-            "cross_border_legitimate."
+            "cross_border_legitimate, merchant_lookalike, life_event."
         ),
     )
 
@@ -230,5 +241,6 @@ class EvidenceLedgerEntry(BaseModel):
                 real_media,
                 self.graph_ring_membership is not None,
                 self.forged_document_planted,
+                self.pass_through_planted,
             ]
         )

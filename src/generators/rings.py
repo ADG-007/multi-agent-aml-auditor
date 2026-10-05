@@ -5,22 +5,28 @@ and Stage 5 has to rediscover the cluster from graph topology alone. That separa
 whole point: if the ring label reached the graph, Stage 5 would be reading the answer rather
 than finding it, and Phase 11's per-stage recall number would mean nothing.
 
-Eleven rings: six local, two international and three round-trip. A ring is a set of
-accounts sharing an identifier with no legitimate reason to share one - the same handset, the
-same broadband connection, sometimes the same registered address.
+Thirteen rings: six local, two international, three round-trip and two mule networks. A
+ring is a set of accounts sharing an identifier with no legitimate reason to share one - the
+same handset, the same broadband connection, sometimes the same registered address.
 
 A round-trip ring sends money abroad to one foreign company and receives it back from a
 second one registered at the same premises, so that the return looks like unrelated foreign
 income. Its members come from the cross-border block in customers.py.
+
+A mule network is four rented accounts operated from the handler's phone, each sweeping scam
+victims' money into one shared collector account. Its members come from the mule block.
+
+Each ring draws from a stream keyed by its own id, and each pool of candidate members is
+shuffled from a stream keyed by the pool - which only ever holds its own population block -
+so a new block never reshuffles who is in an existing ring (streams.py).
 """
 
 from __future__ import annotations
 
-import random
-
 from src.generators import config as cfg
 from src.generators.addresses import indian_address
 from src.generators.identifiers import device_id, ip_address
+from src.generators.streams import Streams, opaque_id
 from src.schemas import Account, Customer, FraudRing, ResidencyStatus, RingType
 
 #: Reserved counterparty IDs for the offshore cluster the international rings funnel into.
@@ -41,6 +47,18 @@ ROUND_TRIP_ENTITY_PAIRS: tuple[tuple[str, str], ...] = tuple(
     for i in range(cfg.NUM_ROUND_TRIP_RINGS)
 )
 
+#: Reserved counterparty IDs for the mule block's collectors: the accounts victims' money is
+#: swept into. One per mule network, then one per solo mule. A collector sits at another
+#: bank, so from this bank it is only ever a counterparty - the single-institution limit.
+#: Opaque, like every mule-block counterparty id: a readable "collector" id would hand the
+#: answer to any stage that looked at it.
+MULE_NETWORK_COLLECTOR_IDS: tuple[str, ...] = tuple(
+    opaque_id("CPM", "collector", "network", i) for i in range(cfg.NUM_MULE_RINGS)
+)
+SOLO_MULE_COLLECTOR_IDS: tuple[str, ...] = tuple(
+    opaque_id("CPM", "collector", "solo", i) for i in range(dict(cfg.MULE_BLOCK_COHORTS)["solo_mule"])
+)
+
 #: Addresses a ring re-registers several accounts against. Deliberately mundane commercial
 #: premises - a shared address is only suspicious because of who shares it, and a
 #: conspicuous address would hand Stage 5 the answer for the wrong reason.
@@ -57,7 +75,7 @@ RING_SHARED_ADDRESSES = (
 
 
 def generate(
-    rng: random.Random,
+    streams: Streams,
     customers: list[Customer],
     accounts: list[Account],
     cohorts: dict[str, str],
@@ -66,8 +84,9 @@ def generate(
 
     International rings are seeded preferentially from NRI accounts, because a cross-border
     funnel run entirely through resident accounts would be an odd shape for the cross-border
-    clause category to cite. Local rings draw from domestic accounts outside the cross-border
-    block, and round-trip rings from that block's round_trip cohort.
+    clause category to cite. Local rings draw from base domestic accounts, round-trip rings
+    from the cross-border block's round_trip cohort, and mule networks from the mule block's
+    network_mule cohort.
     """
     residency_by_customer = {c.customer_id: c.residency_status for c in customers}
     domestic_accounts = [
@@ -84,14 +103,15 @@ def generate(
 
     domestic_pool = list(domestic_accounts)
     nri_pool = list(nri_accounts)
-    rng.shuffle(domestic_pool)
-    rng.shuffle(nri_pool)
+    streams.rng("rings", "pool", "base_domestic").shuffle(domestic_pool)
+    streams.rng("rings", "pool", "base_nri").shuffle(nri_pool)
 
     rings: list[FraudRing] = []
 
     for index in range(cfg.NUM_LOCAL_RINGS + cfg.NUM_INTERNATIONAL_RINGS):
         is_international = index >= cfg.NUM_LOCAL_RINGS
         ring_id = f"RING-{index + 1:02d}"
+        rng = streams.rng("ring", ring_id)
 
         if is_international:
             # Two NRI accounts abroad plus two resident accounts feeding them - the shape a
@@ -130,12 +150,14 @@ def generate(
     # Round-trip rings. They share a handset like every other ring - the money moves through
     # foreign companies, but the accounts sending it are still run together.
     round_trip_pool = sorted(a for a, cohort in cohorts.items() if cohort == "round_trip")
-    rng.shuffle(round_trip_pool)
+    streams.rng("rings", "pool", "round_trip").shuffle(round_trip_pool)
     for pair_index, entity_pair in enumerate(ROUND_TRIP_ENTITY_PAIRS):
+        ring_id = f"RING-{cfg.NUM_LOCAL_RINGS + cfg.NUM_INTERNATIONAL_RINGS + pair_index + 1:02d}"
+        rng = streams.rng("ring", ring_id)
         members = sorted(round_trip_pool[pair_index * cfg.RING_SIZE : (pair_index + 1) * cfg.RING_SIZE])
         rings.append(
             FraudRing(
-                ring_id=f"RING-{len(rings) + 1:02d}",
+                ring_id=ring_id,
                 ring_type=RingType.ROUND_TRIP,
                 member_account_ids=members,
                 shared_device_id=device_id(rng),
@@ -144,11 +166,35 @@ def generate(
             )
         )
 
+    # Mule networks. The handler runs every rented account's mobile banking from their own
+    # phone, so the shared handset is the network's hard identifier, exactly as in the other
+    # rings. What sets a mule network apart is where its money goes: every member sweeps
+    # into the same collector. Skipped when the mule block is not being generated.
+    mule_pool = sorted(a for a, cohort in cohorts.items() if cohort == "network_mule")
+    streams.rng("rings", "pool", "network_mule").shuffle(mule_pool)
+    first_mule_ring = cfg.NUM_LOCAL_RINGS + cfg.NUM_INTERNATIONAL_RINGS + cfg.NUM_ROUND_TRIP_RINGS
+    for network_index, collector_id in enumerate(MULE_NETWORK_COLLECTOR_IDS):
+        members = sorted(mule_pool[network_index * cfg.RING_SIZE : (network_index + 1) * cfg.RING_SIZE])
+        if not members:
+            continue
+        ring_id = f"RING-{first_mule_ring + network_index + 1:02d}"
+        rng = streams.rng("ring", ring_id)
+        rings.append(
+            FraudRing(
+                ring_id=ring_id,
+                ring_type=RingType.MULE,
+                member_account_ids=members,
+                shared_device_id=device_id(rng),
+                shared_ip_address=ip_address(rng) if rng.random() < 0.55 else None,
+                collector_counterparty_id=collector_id,
+            )
+        )
+
     return rings
 
 
 def generate_coincidence_clusters(
-    rng: random.Random,
+    streams: Streams,
     accounts: list[Account],
     ring_member_ids: set[str],
 ) -> list[dict]:
@@ -160,10 +206,11 @@ def generate_coincidence_clusters(
     and separated only by the absence of any other planted channel.
     """
     available = [a.account_id for a in accounts if a.account_id not in ring_member_ids]
-    rng.shuffle(available)
+    streams.rng("coincidence", "pool").shuffle(available)
 
     clusters: list[dict] = []
     for index in range(cfg.NUM_GRAPH_COINCIDENCE_PAIRS):
+        rng = streams.rng("coincidence", index)
         pair = sorted([available.pop(), available.pop()])
         share_address = index % 2 == 0
         clusters.append(

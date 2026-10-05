@@ -13,8 +13,9 @@ citation meaningless, while inventing customers costs nothing.
 The clause text is paraphrase rather than transcription - the substance of each obligation
 in the register a bank's internal policy manual uses.
 
-Twenty clauses across six categories: three each, plus two more cross-border clauses added
-with the round-tripping typology. The categories deliberately mirror what the evidence stages
+Twenty-two clauses across seven categories: three each for the original six, two more
+cross-border clauses added with the round-tripping typology, and two money-mule clauses added
+with the mule block (Amendment 2). The categories deliberately mirror what the evidence stages
 actually detect, so policy_gap_identified stays rare in practice rather than firing on every
 case because the rulebook never covered the finding.
 
@@ -38,8 +39,8 @@ COLLECTION_NAME = "rulebook"
 def build_clauses() -> list[RulebookClause]:
     """The authored clause set.
 
-    Two clauses carry machine-readable metadata. XB-004 carries the cross-border wire
-    reporting threshold. STRUCT-001 carries two numbers rather than one: the reporting
+    Three clauses carry machine-readable metadata. XB-004 carries the cross-border wire
+    reporting threshold, MULE-002 the suspected-mule transaction floor. STRUCT-001 carries two numbers rather than one: the reporting
     ceiling and the lower edge of the structuring band. Stage 0's routing check and Stage 2's confidence formula both read from here, so a
     policy update injected at demo time moves both together and can never move only one.
     """
@@ -399,6 +400,55 @@ def build_clauses() -> list[RulebookClause]:
                 "considered if it cannot be."
             ),
         ),
+        # ----------------------------------------------------------------- MONEY MULES ---
+        RulebookClause(
+            clause_id="MULE-001",
+            title="Operation of bank accounts and money mules",
+            category=RulebookCategory.MONEY_MULE,
+            sources=[
+                "RBI Master Direction on Know Your Customer, 2016 (as amended) - Operation of "
+                "Bank Accounts and Money Mules",
+                "FATF Recommendation 20 (Reporting of suspicious transactions)",
+            ],
+            text=(
+                "Criminals launder the proceeds of fraud schemes such as phishing, investment "
+                "and impersonation scams through deposit accounts belonging to third parties "
+                "they recruit or pay, known as money mules. Instructions on the opening of "
+                "accounts and the monitoring of transactions must be strictly followed to "
+                "minimise the operation of such accounts. The bank must monitor transactions "
+                "diligently to identify accounts being operated as money mules and report them "
+                "to FIU-IND as suspicious. Where an account opened and operated at the bank is "
+                "established to be a money mule and no suspicious transaction report was filed, "
+                "the bank is deemed not to have complied with these requirements."
+            ),
+        ),
+        RulebookClause(
+            clause_id="MULE-002",
+            title="Pass-through of funds from unrelated remitters: suspected money-mule transactions",
+            category=RulebookCategory.MONEY_MULE,
+            sources=[
+                "RBI draft Standard Operating Procedure on Suspected Money Mule Accounts "
+                "(proposed Annex III to the KYC Directions)",
+                "FATF, Illicit Financial Flows from Cyber-Enabled Fraud (November 2023)",
+            ],
+            text=(
+                "Payments from many unrelated people that arrive in an account and are "
+                "forwarded onward within hours, usually to one beneficiary, leaving little "
+                "balance behind, are the characteristic pattern of a money-mule account. A "
+                "suspected money-mule transaction is one of one thousand rupees or more that "
+                "transaction monitoring flags as possible proceeds of mule activity or "
+                "cyber-enabled fraud. Further indicators are activity disproportionate to the "
+                "customer's declared profile, an account recently opened or long dormant that "
+                "suddenly becomes active, and linkage to an account already identified as a "
+                "mule, such as a common beneficiary or a common device. No single indicator is "
+                "conclusive: a legitimate business receiving many small payments is told apart "
+                "by where its money goes and how long it stays. On identification the bank "
+                "places a temporary debit hold, informs the account holder and seeks an "
+                "explanation, and either lifts the hold or reports the account to law "
+                "enforcement, filing a suspicious transaction report with FIU-IND."
+            ),
+            metadata={"txn_floor_inr": cfg.MULE_TXN_FLOOR_INR},
+        ),
     ]
 
 
@@ -431,7 +481,7 @@ def write_markdown(clauses: list[RulebookClause]) -> None:
             "\n".join(body), encoding="utf-8"
         )
 
-    index = ["# Policy Rulebook", "", f"{len(clauses)} clauses across six categories.", ""]
+    index = ["# Policy Rulebook", "", f"{len(clauses)} clauses across {len({c.category for c in clauses})} categories.", ""]
     for category in RulebookCategory:
         index.append(f"## {category.value}")
         index.append("")

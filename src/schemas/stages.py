@@ -40,9 +40,15 @@ class Stage1VisionOutput(BaseModel):
 
 
 class Stage2TransactionPatternOutput(BaseModel):
-    """Structuring and velocity analysis over the account's rolling history. Weight 0.25."""
+    """Structuring, pass-through and velocity analysis over the account's rolling history.
+
+    Weight 0.25. Planned design, confirmed at Phase 3's kickoff: structuring and pass-through
+    are separate sub-scores and confidence reports the stronger of the two, so adding the
+    pass-through measure leaves structuring untouched.
+    """
 
     structuring_indicators: list[str] = Field(default_factory=list)
+    pass_through_indicators: list[str] = Field(default_factory=list)
     velocity_summary: str
     confidence: float = Field(ge=0.0, le=1.0)
     reasoning_trail: list[ReasoningStep] = Field(default_factory=list)

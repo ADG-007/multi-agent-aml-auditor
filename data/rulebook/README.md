@@ -1,6 +1,6 @@
 # Policy Rulebook
 
-20 clauses across six categories.
+22 clauses across 7 categories.
 
 ## STRUCTURING
 
@@ -39,3 +39,8 @@
 - **XB-003** - Remittances involving higher-risk jurisdictions and concentrated counterparties
 - **XB-004** - Reporting of cross-border wire transfers above five lakh rupees
 - **XB-005** - Round-tripping of funds through overseas entities
+
+## MONEY_MULE
+
+- **MULE-001** - Operation of bank accounts and money mules
+- **MULE-002** - Pass-through of funds from unrelated remitters: suspected money-mule transactions

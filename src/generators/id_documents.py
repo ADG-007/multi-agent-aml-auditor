@@ -1,4 +1,4 @@
-"""Generator 5 of 9 - rendered identity document images.
+"""Generator 6 of 9 - rendered identity document images.
 
 Used exclusively by Stage 1, which OCRs these with Tesseract and cross-checks the extracted
 fields against the customer record. No vision model is involved anywhere in the pipeline.
@@ -32,6 +32,7 @@ from PIL import Image, ImageDraw, ImageFont
 from src.generators import config as cfg
 from src.generators.identifiers import pan_number
 from src.generators.names import INDIAN_MALE_FIRST_NAMES
+from src.generators.streams import Streams
 from src.schemas import Customer, IdDocumentType, ResidencyStatus
 
 # CR80 card geometry at 300 dpi - the real dimensions of an Aadhaar or PAN card.
@@ -429,13 +430,6 @@ def apply_tampering(
     return tampered, applied
 
 
-#: Offset from the global seed for this generator's own random stream. Rendering draws from
-#: a stream of its own, not the shared one, so it can be re-run by itself from the committed
-#: JSON and produce the same images - the images are not committed, only the data they are
-#: drawn from.
-DOCUMENTS_SEED_OFFSET = 5
-
-
 def generate(
     customers: list[Customer],
     accounts,
@@ -448,14 +442,20 @@ def generate(
     kind of document it is. It carries no forged flag and no rendered field values: the
     forged flag is ground truth and lives in the evidence ledger, and publishing the
     rendered values would let Stage 1 skip OCR entirely and compare two records instead.
+
+    Each customer's documents draw from a stream keyed by that customer, so rendering can be
+    re-run by itself from the committed JSON and produce the same images - the images are
+    not committed, only the data they are drawn from - and a new customer never changes an
+    existing customer's cards.
     """
-    rng = random.Random(seed + DOCUMENTS_SEED_OFFSET)
+    streams = Streams(seed)
     cfg.DOCUMENTS_DIR.mkdir(parents=True, exist_ok=True)
 
     account_by_customer = {a.customer_id: a.account_id for a in accounts}
     manifest: list[dict] = []
 
     for customer in customers:
+        rng = streams.rng("documents", customer.customer_id)
         account_id = account_by_customer[customer.customer_id]
         is_forged_case = account_id in forged_account_ids
         pan = pan_number(rng, customer.name.split()[-1])

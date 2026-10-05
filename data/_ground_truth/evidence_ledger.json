@@ -3,31 +3,36 @@
     "account_id": "ACC-0001",
     "customer_id": "CUST-0001",
     "structuring_planted": false,
-    "kyc_mismatch_planted": true,
+    "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
     "account_id": "ACC-0002",
     "customer_id": "CUST-0002",
     "structuring_planted": false,
-    "kyc_mismatch_planted": true,
+    "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
     "account_id": "ACC-0003",
     "customer_id": "CUST-0003",
     "structuring_planted": false,
-    "kyc_mismatch_planted": true,
+    "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
-    "decoy_types": []
+    "pass_through_planted": false,
+    "decoy_types": [
+      "round_amount"
+    ]
   },
   {
     "account_id": "ACC-0004",
@@ -35,8 +40,9 @@
     "structuring_planted": false,
     "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
-    "graph_ring_membership": "RING-01",
-    "forged_document_planted": false,
+    "graph_ring_membership": null,
+    "forged_document_planted": true,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -47,16 +53,18 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
     "account_id": "ACC-0006",
     "customer_id": "CUST-0006",
     "structuring_planted": false,
-    "kyc_mismatch_planted": true,
+    "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -67,18 +75,20 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": [
-      "round_amount"
+      "graph_coincidence"
     ]
   },
   {
     "account_id": "ACC-0008",
     "customer_id": "CUST-0008",
     "structuring_planted": false,
-    "kyc_mismatch_planted": false,
+    "kyc_mismatch_planted": true,
     "adverse_media_hit": null,
     "graph_ring_membership": null,
-    "forged_document_planted": false,
+    "forged_document_planted": true,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -88,7 +98,8 @@
     "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
     "graph_ring_membership": null,
-    "forged_document_planted": true,
+    "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -96,19 +107,23 @@
     "customer_id": "CUST-0010",
     "structuring_planted": false,
     "kyc_mismatch_planted": false,
-    "adverse_media_hit": null,
+    "adverse_media_hit": "NAME_SIMILARITY_ONLY",
     "graph_ring_membership": null,
     "forged_document_planted": false,
-    "decoy_types": []
+    "pass_through_planted": false,
+    "decoy_types": [
+      "name_similarity"
+    ]
   },
   {
     "account_id": "ACC-0011",
     "customer_id": "CUST-0011",
-    "structuring_planted": false,
+    "structuring_planted": true,
     "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -119,7 +134,10 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
-    "decoy_types": []
+    "pass_through_planted": false,
+    "decoy_types": [
+      "graph_coincidence"
+    ]
   },
   {
     "account_id": "ACC-0013",
@@ -127,8 +145,9 @@
     "structuring_planted": false,
     "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
-    "graph_ring_membership": null,
+    "graph_ring_membership": "RING-07",
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -139,6 +158,7 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -149,7 +169,10 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
-    "decoy_types": []
+    "pass_through_planted": false,
+    "decoy_types": [
+      "round_amount"
+    ]
   },
   {
     "account_id": "ACC-0016",
@@ -159,6 +182,7 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -169,9 +193,8 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
-    "decoy_types": [
-      "graph_coincidence"
-    ]
+    "pass_through_planted": false,
+    "decoy_types": []
   },
   {
     "account_id": "ACC-0018",
@@ -181,6 +204,7 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -191,6 +215,7 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -201,6 +226,7 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -210,7 +236,8 @@
     "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
     "graph_ring_membership": null,
-    "forged_document_planted": true,
+    "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -219,8 +246,9 @@
     "structuring_planted": false,
     "kyc_mismatch_planted": false,
     "adverse_media_hit": "ADVERSE_NEWS",
-    "graph_ring_membership": null,
+    "graph_ring_membership": "RING-01",
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -228,9 +256,10 @@
     "customer_id": "CUST-0023",
     "structuring_planted": false,
     "kyc_mismatch_planted": false,
-    "adverse_media_hit": "ADVERSE_NEWS",
-    "graph_ring_membership": "RING-07",
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -240,7 +269,8 @@
     "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
     "graph_ring_membership": null,
-    "forged_document_planted": false,
+    "forged_document_planted": true,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -248,11 +278,12 @@
     "customer_id": "CUST-0025",
     "structuring_planted": false,
     "kyc_mismatch_planted": false,
-    "adverse_media_hit": null,
+    "adverse_media_hit": "NAME_SIMILARITY_ONLY",
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": [
-      "round_amount"
+      "name_similarity"
     ]
   },
   {
@@ -263,6 +294,7 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -270,10 +302,13 @@
     "customer_id": "CUST-0027",
     "structuring_planted": false,
     "kyc_mismatch_planted": false,
-    "adverse_media_hit": null,
+    "adverse_media_hit": "NAME_SIMILARITY_ONLY",
     "graph_ring_membership": null,
     "forged_document_planted": false,
-    "decoy_types": []
+    "pass_through_planted": false,
+    "decoy_types": [
+      "name_similarity"
+    ]
   },
   {
     "account_id": "ACC-0028",
@@ -283,6 +318,7 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -293,6 +329,7 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -300,10 +337,13 @@
     "customer_id": "CUST-0030",
     "structuring_planted": false,
     "kyc_mismatch_planted": false,
-    "adverse_media_hit": "CONFIRMED_SANCTIONS",
-    "graph_ring_membership": "RING-01",
+    "adverse_media_hit": "NAME_SIMILARITY_ONLY",
+    "graph_ring_membership": null,
     "forged_document_planted": false,
-    "decoy_types": []
+    "pass_through_planted": false,
+    "decoy_types": [
+      "name_similarity"
+    ]
   },
   {
     "account_id": "ACC-0031",
@@ -313,9 +353,8 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
-    "decoy_types": [
-      "graph_coincidence"
-    ]
+    "pass_through_planted": false,
+    "decoy_types": []
   },
   {
     "account_id": "ACC-0032",
@@ -325,29 +364,34 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
-    "decoy_types": []
+    "pass_through_planted": false,
+    "decoy_types": [
+      "graph_coincidence"
+    ]
   },
   {
     "account_id": "ACC-0033",
     "customer_id": "CUST-0033",
     "structuring_planted": false,
     "kyc_mismatch_planted": false,
-    "adverse_media_hit": "ADVERSE_NEWS",
-    "graph_ring_membership": "RING-08",
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
     "forged_document_planted": false,
-    "decoy_types": []
+    "pass_through_planted": false,
+    "decoy_types": [
+      "round_amount"
+    ]
   },
   {
     "account_id": "ACC-0034",
     "customer_id": "CUST-0034",
     "structuring_planted": false,
     "kyc_mismatch_planted": false,
-    "adverse_media_hit": null,
+    "adverse_media_hit": "ADVERSE_NEWS",
     "graph_ring_membership": null,
     "forged_document_planted": false,
-    "decoy_types": [
-      "round_amount"
-    ]
+    "pass_through_planted": false,
+    "decoy_types": []
   },
   {
     "account_id": "ACC-0035",
@@ -355,30 +399,31 @@
     "structuring_planted": false,
     "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
-    "graph_ring_membership": "RING-08",
-    "forged_document_planted": true,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
     "account_id": "ACC-0036",
     "customer_id": "CUST-0036",
     "structuring_planted": false,
-    "kyc_mismatch_planted": false,
+    "kyc_mismatch_planted": true,
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
-    "decoy_types": [
-      "round_amount"
-    ]
+    "pass_through_planted": false,
+    "decoy_types": []
   },
   {
     "account_id": "ACC-0037",
     "customer_id": "CUST-0037",
-    "structuring_planted": false,
+    "structuring_planted": true,
     "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -386,12 +431,11 @@
     "customer_id": "CUST-0038",
     "structuring_planted": false,
     "kyc_mismatch_planted": false,
-    "adverse_media_hit": null,
-    "graph_ring_membership": null,
+    "adverse_media_hit": "ADVERSE_NEWS",
+    "graph_ring_membership": "RING-07",
     "forged_document_planted": false,
-    "decoy_types": [
-      "round_amount"
-    ]
+    "pass_through_planted": false,
+    "decoy_types": []
   },
   {
     "account_id": "ACC-0039",
@@ -401,27 +445,34 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
     "account_id": "ACC-0040",
     "customer_id": "CUST-0040",
     "structuring_planted": false,
-    "kyc_mismatch_planted": true,
+    "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
-    "decoy_types": []
+    "pass_through_planted": false,
+    "decoy_types": [
+      "round_amount"
+    ]
   },
   {
     "account_id": "ACC-0041",
     "customer_id": "CUST-0041",
-    "structuring_planted": true,
-    "kyc_mismatch_planted": true,
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
-    "decoy_types": []
+    "pass_through_planted": false,
+    "decoy_types": [
+      "round_amount"
+    ]
   },
   {
     "account_id": "ACC-0042",
@@ -431,6 +482,7 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -441,16 +493,18 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
     "account_id": "ACC-0044",
     "customer_id": "CUST-0044",
     "structuring_planted": true,
-    "kyc_mismatch_planted": false,
+    "kyc_mismatch_planted": true,
     "adverse_media_hit": null,
-    "graph_ring_membership": "RING-01",
+    "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -459,8 +513,9 @@
     "structuring_planted": false,
     "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
-    "graph_ring_membership": null,
+    "graph_ring_membership": "RING-01",
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -471,9 +526,8 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
-    "decoy_types": [
-      "graph_coincidence"
-    ]
+    "pass_through_planted": false,
+    "decoy_types": []
   },
   {
     "account_id": "ACC-0047",
@@ -483,6 +537,7 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -491,8 +546,9 @@
     "structuring_planted": false,
     "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
-    "graph_ring_membership": null,
+    "graph_ring_membership": "RING-04",
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -503,9 +559,8 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
-    "decoy_types": [
-      "round_amount"
-    ]
+    "pass_through_planted": false,
+    "decoy_types": []
   },
   {
     "account_id": "ACC-0050",
@@ -515,6 +570,7 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -522,19 +578,21 @@
     "customer_id": "CUST-0051",
     "structuring_planted": false,
     "kyc_mismatch_planted": false,
-    "adverse_media_hit": "ADVERSE_NEWS",
+    "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
     "account_id": "ACC-0052",
     "customer_id": "CUST-0052",
-    "structuring_planted": true,
+    "structuring_planted": false,
     "kyc_mismatch_planted": false,
-    "adverse_media_hit": "ADVERSE_NEWS",
+    "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -544,7 +602,8 @@
     "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
     "graph_ring_membership": null,
-    "forged_document_planted": false,
+    "forged_document_planted": true,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -552,21 +611,23 @@
     "customer_id": "CUST-0054",
     "structuring_planted": false,
     "kyc_mismatch_planted": false,
-    "adverse_media_hit": null,
+    "adverse_media_hit": "NAME_SIMILARITY_ONLY",
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": [
-      "graph_coincidence"
+      "name_similarity"
     ]
   },
   {
     "account_id": "ACC-0055",
     "customer_id": "CUST-0055",
     "structuring_planted": false,
-    "kyc_mismatch_planted": false,
+    "kyc_mismatch_planted": true,
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -577,21 +638,19 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
-    "decoy_types": [
-      "round_amount"
-    ]
+    "pass_through_planted": false,
+    "decoy_types": []
   },
   {
     "account_id": "ACC-0057",
     "customer_id": "CUST-0057",
     "structuring_planted": false,
     "kyc_mismatch_planted": false,
-    "adverse_media_hit": "NAME_SIMILARITY_ONLY",
+    "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
-    "decoy_types": [
-      "name_similarity"
-    ]
+    "pass_through_planted": false,
+    "decoy_types": []
   },
   {
     "account_id": "ACC-0058",
@@ -601,6 +660,7 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -609,18 +669,20 @@
     "structuring_planted": false,
     "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
-    "graph_ring_membership": null,
+    "graph_ring_membership": "RING-03",
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
     "account_id": "ACC-0060",
     "customer_id": "CUST-0060",
-    "structuring_planted": true,
+    "structuring_planted": false,
     "kyc_mismatch_planted": false,
-    "adverse_media_hit": null,
-    "graph_ring_membership": null,
+    "adverse_media_hit": "CONFIRMED_SANCTIONS",
+    "graph_ring_membership": "RING-02",
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -631,18 +693,18 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
-    "decoy_types": [
-      "round_amount"
-    ]
+    "pass_through_planted": false,
+    "decoy_types": []
   },
   {
     "account_id": "ACC-0062",
     "customer_id": "CUST-0062",
     "structuring_planted": false,
     "kyc_mismatch_planted": false,
-    "adverse_media_hit": null,
-    "graph_ring_membership": null,
+    "adverse_media_hit": "ADVERSE_NEWS",
+    "graph_ring_membership": "RING-08",
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -653,16 +715,18 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
     "account_id": "ACC-0064",
     "customer_id": "CUST-0064",
     "structuring_planted": false,
-    "kyc_mismatch_planted": false,
+    "kyc_mismatch_planted": true,
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -673,9 +737,8 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
-    "decoy_types": [
-      "round_amount"
-    ]
+    "pass_through_planted": false,
+    "decoy_types": []
   },
   {
     "account_id": "ACC-0066",
@@ -685,36 +748,40 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
     "account_id": "ACC-0067",
     "customer_id": "CUST-0067",
-    "structuring_planted": false,
+    "structuring_planted": true,
     "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
     "account_id": "ACC-0068",
     "customer_id": "CUST-0068",
-    "structuring_planted": false,
+    "structuring_planted": true,
     "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
     "account_id": "ACC-0069",
     "customer_id": "CUST-0069",
     "structuring_planted": false,
-    "kyc_mismatch_planted": true,
-    "adverse_media_hit": null,
-    "graph_ring_membership": null,
-    "forged_document_planted": true,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": "ADVERSE_NEWS",
+    "graph_ring_membership": "RING-04",
+    "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -725,16 +792,18 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
     "account_id": "ACC-0071",
     "customer_id": "CUST-0071",
-    "structuring_planted": false,
+    "structuring_planted": true,
     "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
-    "graph_ring_membership": null,
+    "graph_ring_membership": "RING-02",
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -742,9 +811,10 @@
     "customer_id": "CUST-0072",
     "structuring_planted": false,
     "kyc_mismatch_planted": false,
-    "adverse_media_hit": null,
+    "adverse_media_hit": "ADVERSE_NEWS",
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -752,9 +822,10 @@
     "customer_id": "CUST-0073",
     "structuring_planted": false,
     "kyc_mismatch_planted": false,
-    "adverse_media_hit": null,
-    "graph_ring_membership": null,
+    "adverse_media_hit": "ADVERSE_NEWS",
+    "graph_ring_membership": "RING-06",
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -762,9 +833,10 @@
     "customer_id": "CUST-0074",
     "structuring_planted": false,
     "kyc_mismatch_planted": false,
-    "adverse_media_hit": null,
+    "adverse_media_hit": "CONFIRMED_SANCTIONS",
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -775,17 +847,21 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
     "account_id": "ACC-0076",
     "customer_id": "CUST-0076",
-    "structuring_planted": true,
+    "structuring_planted": false,
     "kyc_mismatch_planted": false,
-    "adverse_media_hit": null,
+    "adverse_media_hit": "NAME_SIMILARITY_ONLY",
     "graph_ring_membership": null,
     "forged_document_planted": false,
-    "decoy_types": []
+    "pass_through_planted": false,
+    "decoy_types": [
+      "name_similarity"
+    ]
   },
   {
     "account_id": "ACC-0077",
@@ -795,7 +871,10 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
-    "decoy_types": []
+    "pass_through_planted": false,
+    "decoy_types": [
+      "round_amount"
+    ]
   },
   {
     "account_id": "ACC-0078",
@@ -803,18 +882,20 @@
     "structuring_planted": false,
     "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
-    "graph_ring_membership": "RING-04",
+    "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
     "account_id": "ACC-0079",
     "customer_id": "CUST-0079",
     "structuring_planted": false,
-    "kyc_mismatch_planted": true,
+    "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
     "graph_ring_membership": null,
-    "forged_document_planted": true,
+    "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -825,6 +906,7 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -835,6 +917,7 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -844,7 +927,8 @@
     "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
     "graph_ring_membership": null,
-    "forged_document_planted": false,
+    "forged_document_planted": true,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -855,9 +939,8 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
-    "decoy_types": [
-      "graph_coincidence"
-    ]
+    "pass_through_planted": false,
+    "decoy_types": []
   },
   {
     "account_id": "ACC-0084",
@@ -867,9 +950,8 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
-    "decoy_types": [
-      "graph_coincidence"
-    ]
+    "pass_through_planted": false,
+    "decoy_types": []
   },
   {
     "account_id": "ACC-0085",
@@ -879,6 +961,7 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -889,6 +972,7 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -896,21 +980,21 @@
     "customer_id": "CUST-0087",
     "structuring_planted": false,
     "kyc_mismatch_planted": false,
-    "adverse_media_hit": "NAME_SIMILARITY_ONLY",
+    "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
-    "decoy_types": [
-      "name_similarity"
-    ]
+    "pass_through_planted": false,
+    "decoy_types": []
   },
   {
     "account_id": "ACC-0088",
     "customer_id": "CUST-0088",
     "structuring_planted": false,
-    "kyc_mismatch_planted": false,
+    "kyc_mismatch_planted": true,
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -921,16 +1005,18 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
     "account_id": "ACC-0090",
     "customer_id": "CUST-0090",
-    "structuring_planted": true,
+    "structuring_planted": false,
     "kyc_mismatch_planted": false,
-    "adverse_media_hit": null,
+    "adverse_media_hit": "ADVERSE_NEWS",
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -941,16 +1027,18 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
     "account_id": "ACC-0092",
     "customer_id": "CUST-0092",
     "structuring_planted": false,
-    "kyc_mismatch_planted": true,
+    "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
-    "graph_ring_membership": null,
+    "graph_ring_membership": "RING-05",
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -958,9 +1046,10 @@
     "customer_id": "CUST-0093",
     "structuring_planted": false,
     "kyc_mismatch_planted": false,
-    "adverse_media_hit": "ADVERSE_NEWS",
-    "graph_ring_membership": "RING-05",
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -971,6 +1060,7 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -981,31 +1071,30 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
-    "decoy_types": [
-      "graph_coincidence"
-    ]
+    "pass_through_planted": false,
+    "decoy_types": []
   },
   {
     "account_id": "ACC-0096",
     "customer_id": "CUST-0096",
-    "structuring_planted": true,
+    "structuring_planted": false,
     "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
     "account_id": "ACC-0097",
     "customer_id": "CUST-0097",
     "structuring_planted": false,
-    "kyc_mismatch_planted": false,
-    "adverse_media_hit": "NAME_SIMILARITY_ONLY",
+    "kyc_mismatch_planted": true,
+    "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
-    "decoy_types": [
-      "name_similarity"
-    ]
+    "pass_through_planted": false,
+    "decoy_types": []
   },
   {
     "account_id": "ACC-0098",
@@ -1015,6 +1104,7 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -1022,9 +1112,10 @@
     "customer_id": "CUST-0099",
     "structuring_planted": false,
     "kyc_mismatch_planted": false,
-    "adverse_media_hit": null,
+    "adverse_media_hit": "ADVERSE_NEWS",
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -1032,33 +1123,32 @@
     "customer_id": "CUST-0100",
     "structuring_planted": false,
     "kyc_mismatch_planted": false,
-    "adverse_media_hit": "NAME_SIMILARITY_ONLY",
+    "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
-    "decoy_types": [
-      "name_similarity"
-    ]
+    "pass_through_planted": false,
+    "decoy_types": []
   },
   {
     "account_id": "ACC-0101",
     "customer_id": "CUST-0101",
     "structuring_planted": false,
     "kyc_mismatch_planted": false,
-    "adverse_media_hit": "NAME_SIMILARITY_ONLY",
+    "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
-    "decoy_types": [
-      "name_similarity"
-    ]
+    "pass_through_planted": false,
+    "decoy_types": []
   },
   {
     "account_id": "ACC-0102",
     "customer_id": "CUST-0102",
     "structuring_planted": false,
-    "kyc_mismatch_planted": true,
+    "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
-    "graph_ring_membership": "RING-01",
+    "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -1069,6 +1159,7 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -1076,9 +1167,10 @@
     "customer_id": "CUST-0104",
     "structuring_planted": false,
     "kyc_mismatch_planted": false,
-    "adverse_media_hit": "ADVERSE_NEWS",
-    "graph_ring_membership": "RING-03",
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -1086,10 +1178,13 @@
     "customer_id": "CUST-0105",
     "structuring_planted": false,
     "kyc_mismatch_planted": false,
-    "adverse_media_hit": null,
+    "adverse_media_hit": "NAME_SIMILARITY_ONLY",
     "graph_ring_membership": null,
     "forged_document_planted": false,
-    "decoy_types": []
+    "pass_through_planted": false,
+    "decoy_types": [
+      "name_similarity"
+    ]
   },
   {
     "account_id": "ACC-0106",
@@ -1099,6 +1194,7 @@
     "adverse_media_hit": "NAME_SIMILARITY_ONLY",
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": [
       "name_similarity"
     ]
@@ -1111,19 +1207,19 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
     "account_id": "ACC-0108",
     "customer_id": "CUST-0108",
-    "structuring_planted": false,
+    "structuring_planted": true,
     "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
-    "decoy_types": [
-      "round_amount"
-    ]
+    "pass_through_planted": false,
+    "decoy_types": []
   },
   {
     "account_id": "ACC-0109",
@@ -1131,8 +1227,9 @@
     "structuring_planted": false,
     "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
-    "graph_ring_membership": null,
+    "graph_ring_membership": "RING-08",
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -1143,6 +1240,7 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -1150,10 +1248,13 @@
     "customer_id": "CUST-0111",
     "structuring_planted": false,
     "kyc_mismatch_planted": false,
-    "adverse_media_hit": "ADVERSE_NEWS",
+    "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
-    "decoy_types": []
+    "pass_through_planted": false,
+    "decoy_types": [
+      "round_amount"
+    ]
   },
   {
     "account_id": "ACC-0112",
@@ -1162,7 +1263,8 @@
     "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
     "graph_ring_membership": null,
-    "forged_document_planted": false,
+    "forged_document_planted": true,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -1170,9 +1272,10 @@
     "customer_id": "CUST-0113",
     "structuring_planted": false,
     "kyc_mismatch_planted": false,
-    "adverse_media_hit": null,
-    "graph_ring_membership": null,
+    "adverse_media_hit": "ADVERSE_NEWS",
+    "graph_ring_membership": "RING-05",
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -1183,6 +1286,7 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -1193,6 +1297,7 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -1200,9 +1305,10 @@
     "customer_id": "CUST-0116",
     "structuring_planted": false,
     "kyc_mismatch_planted": false,
-    "adverse_media_hit": "CONFIRMED_SANCTIONS",
+    "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -1211,30 +1317,31 @@
     "structuring_planted": false,
     "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
-    "graph_ring_membership": null,
+    "graph_ring_membership": "RING-02",
     "forged_document_planted": false,
-    "decoy_types": [
-      "graph_coincidence"
-    ]
+    "pass_through_planted": false,
+    "decoy_types": []
   },
   {
     "account_id": "ACC-0118",
     "customer_id": "CUST-0118",
     "structuring_planted": false,
     "kyc_mismatch_planted": false,
-    "adverse_media_hit": "CONFIRMED_SANCTIONS",
-    "graph_ring_membership": "RING-02",
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
     "account_id": "ACC-0119",
     "customer_id": "CUST-0119",
-    "structuring_planted": true,
+    "structuring_planted": false,
     "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -1245,6 +1352,7 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -1253,8 +1361,9 @@
     "structuring_planted": false,
     "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
-    "graph_ring_membership": null,
-    "forged_document_planted": false,
+    "graph_ring_membership": "RING-01",
+    "forged_document_planted": true,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -1262,19 +1371,21 @@
     "customer_id": "CUST-0122",
     "structuring_planted": false,
     "kyc_mismatch_planted": false,
-    "adverse_media_hit": null,
+    "adverse_media_hit": "ADVERSE_NEWS",
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
     "account_id": "ACC-0123",
     "customer_id": "CUST-0123",
-    "structuring_planted": true,
+    "structuring_planted": false,
     "kyc_mismatch_planted": false,
-    "adverse_media_hit": null,
-    "graph_ring_membership": "RING-02",
+    "adverse_media_hit": "CONFIRMED_SANCTIONS",
+    "graph_ring_membership": "RING-03",
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -1285,26 +1396,29 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
     "account_id": "ACC-0125",
     "customer_id": "CUST-0125",
-    "structuring_planted": false,
+    "structuring_planted": true,
     "kyc_mismatch_planted": false,
-    "adverse_media_hit": "CONFIRMED_SANCTIONS",
-    "graph_ring_membership": "RING-04",
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
     "account_id": "ACC-0126",
     "customer_id": "CUST-0126",
-    "structuring_planted": false,
+    "structuring_planted": true,
     "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
-    "graph_ring_membership": null,
+    "graph_ring_membership": "RING-03",
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -1314,8 +1428,11 @@
     "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
     "graph_ring_membership": null,
-    "forged_document_planted": true,
-    "decoy_types": []
+    "forged_document_planted": false,
+    "pass_through_planted": false,
+    "decoy_types": [
+      "graph_coincidence"
+    ]
   },
   {
     "account_id": "ACC-0128",
@@ -1325,16 +1442,18 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
     "account_id": "ACC-0129",
     "customer_id": "CUST-0129",
-    "structuring_planted": true,
+    "structuring_planted": false,
     "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -1345,26 +1464,29 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
     "account_id": "ACC-0131",
     "customer_id": "CUST-0131",
-    "structuring_planted": true,
+    "structuring_planted": false,
     "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
     "account_id": "ACC-0132",
     "customer_id": "CUST-0132",
     "structuring_planted": false,
-    "kyc_mismatch_planted": false,
+    "kyc_mismatch_planted": true,
     "adverse_media_hit": null,
-    "graph_ring_membership": null,
+    "graph_ring_membership": "RING-04",
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -1375,6 +1497,7 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -1385,16 +1508,18 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
     "account_id": "ACC-0135",
     "customer_id": "CUST-0135",
     "structuring_planted": false,
-    "kyc_mismatch_planted": true,
+    "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -1405,6 +1530,7 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -1415,6 +1541,7 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -1422,31 +1549,32 @@
     "customer_id": "CUST-0138",
     "structuring_planted": false,
     "kyc_mismatch_planted": false,
-    "adverse_media_hit": "NAME_SIMILARITY_ONLY",
+    "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
-    "decoy_types": [
-      "name_similarity"
-    ]
+    "pass_through_planted": false,
+    "decoy_types": []
   },
   {
     "account_id": "ACC-0139",
     "customer_id": "CUST-0139",
     "structuring_planted": false,
     "kyc_mismatch_planted": false,
-    "adverse_media_hit": "ADVERSE_NEWS",
-    "graph_ring_membership": null,
-    "forged_document_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": "RING-03",
+    "forged_document_planted": true,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
     "account_id": "ACC-0140",
     "customer_id": "CUST-0140",
-    "structuring_planted": false,
+    "structuring_planted": true,
     "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -1454,12 +1582,11 @@
     "customer_id": "CUST-0141",
     "structuring_planted": false,
     "kyc_mismatch_planted": false,
-    "adverse_media_hit": "NAME_SIMILARITY_ONLY",
+    "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
-    "decoy_types": [
-      "name_similarity"
-    ]
+    "pass_through_planted": false,
+    "decoy_types": []
   },
   {
     "account_id": "ACC-0142",
@@ -1469,21 +1596,19 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
-    "decoy_types": [
-      "graph_coincidence"
-    ]
+    "pass_through_planted": false,
+    "decoy_types": []
   },
   {
     "account_id": "ACC-0143",
     "customer_id": "CUST-0143",
-    "structuring_planted": false,
+    "structuring_planted": true,
     "kyc_mismatch_planted": false,
-    "adverse_media_hit": null,
+    "adverse_media_hit": "ADVERSE_NEWS",
     "graph_ring_membership": null,
     "forged_document_planted": false,
-    "decoy_types": [
-      "graph_coincidence"
-    ]
+    "pass_through_planted": false,
+    "decoy_types": []
   },
   {
     "account_id": "ACC-0144",
@@ -1493,6 +1618,7 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -1503,6 +1629,7 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -1510,19 +1637,21 @@
     "customer_id": "CUST-0146",
     "structuring_planted": false,
     "kyc_mismatch_planted": false,
-    "adverse_media_hit": null,
+    "adverse_media_hit": "ADVERSE_NEWS",
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
     "account_id": "ACC-0147",
     "customer_id": "CUST-0147",
-    "structuring_planted": true,
+    "structuring_planted": false,
     "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -1533,6 +1662,7 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -1540,33 +1670,32 @@
     "customer_id": "CUST-0149",
     "structuring_planted": false,
     "kyc_mismatch_planted": false,
-    "adverse_media_hit": "NAME_SIMILARITY_ONLY",
+    "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
-    "decoy_types": [
-      "name_similarity"
-    ]
+    "pass_through_planted": false,
+    "decoy_types": []
   },
   {
     "account_id": "ACC-0150",
     "customer_id": "CUST-0150",
     "structuring_planted": false,
     "kyc_mismatch_planted": false,
-    "adverse_media_hit": "NAME_SIMILARITY_ONLY",
-    "graph_ring_membership": null,
+    "adverse_media_hit": null,
+    "graph_ring_membership": "RING-06",
     "forged_document_planted": false,
-    "decoy_types": [
-      "name_similarity"
-    ]
+    "pass_through_planted": false,
+    "decoy_types": []
   },
   {
     "account_id": "ACC-0151",
     "customer_id": "CUST-0151",
     "structuring_planted": false,
     "kyc_mismatch_planted": false,
-    "adverse_media_hit": "ADVERSE_NEWS",
+    "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -1577,6 +1706,7 @@
     "adverse_media_hit": "NAME_SIMILARITY_ONLY",
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": [
       "name_similarity"
     ]
@@ -1589,19 +1719,19 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
     "account_id": "ACC-0154",
     "customer_id": "CUST-0154",
-    "structuring_planted": false,
+    "structuring_planted": true,
     "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
-    "graph_ring_membership": null,
+    "graph_ring_membership": "RING-01",
     "forged_document_planted": false,
-    "decoy_types": [
-      "round_amount"
-    ]
+    "pass_through_planted": false,
+    "decoy_types": []
   },
   {
     "account_id": "ACC-0155",
@@ -1609,8 +1739,9 @@
     "structuring_planted": false,
     "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
-    "graph_ring_membership": "RING-03",
+    "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -1621,16 +1752,18 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
     "account_id": "ACC-0157",
     "customer_id": "CUST-0157",
     "structuring_planted": false,
-    "kyc_mismatch_planted": false,
-    "adverse_media_hit": "ADVERSE_NEWS",
-    "graph_ring_membership": null,
+    "kyc_mismatch_planted": true,
+    "adverse_media_hit": null,
+    "graph_ring_membership": "RING-05",
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -1639,28 +1772,33 @@
     "structuring_planted": false,
     "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
-    "graph_ring_membership": "RING-05",
-    "forged_document_planted": true,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
     "account_id": "ACC-0159",
     "customer_id": "CUST-0159",
     "structuring_planted": false,
-    "kyc_mismatch_planted": true,
-    "adverse_media_hit": null,
-    "graph_ring_membership": "RING-04",
-    "forged_document_planted": false,
-    "decoy_types": []
-  },
-  {
-    "account_id": "ACC-0160",
-    "customer_id": "CUST-0160",
-    "structuring_planted": true,
     "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
+    "decoy_types": [
+      "graph_coincidence"
+    ]
+  },
+  {
+    "account_id": "ACC-0160",
+    "customer_id": "CUST-0160",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -1668,12 +1806,11 @@
     "customer_id": "CUST-0161",
     "structuring_planted": false,
     "kyc_mismatch_planted": false,
-    "adverse_media_hit": null,
+    "adverse_media_hit": "ADVERSE_NEWS",
     "graph_ring_membership": null,
     "forged_document_planted": false,
-    "decoy_types": [
-      "graph_coincidence"
-    ]
+    "pass_through_planted": false,
+    "decoy_types": []
   },
   {
     "account_id": "ACC-0162",
@@ -1683,6 +1820,7 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -1693,6 +1831,7 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -1703,16 +1842,18 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
     "account_id": "ACC-0165",
     "customer_id": "CUST-0165",
-    "structuring_planted": false,
+    "structuring_planted": true,
     "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
-    "graph_ring_membership": null,
+    "graph_ring_membership": "RING-02",
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -1723,6 +1864,7 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -1733,26 +1875,31 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
-    "decoy_types": []
+    "pass_through_planted": false,
+    "decoy_types": [
+      "graph_coincidence"
+    ]
   },
   {
     "account_id": "ACC-0168",
     "customer_id": "CUST-0168",
-    "structuring_planted": false,
+    "structuring_planted": true,
     "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
-    "graph_ring_membership": "RING-02",
-    "forged_document_planted": true,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
     "account_id": "ACC-0169",
     "customer_id": "CUST-0169",
-    "structuring_planted": true,
+    "structuring_planted": false,
     "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
-    "graph_ring_membership": "RING-03",
+    "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -1763,6 +1910,7 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -1770,19 +1918,21 @@
     "customer_id": "CUST-0171",
     "structuring_planted": false,
     "kyc_mismatch_planted": false,
-    "adverse_media_hit": null,
+    "adverse_media_hit": "CONFIRMED_SANCTIONS",
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
     "account_id": "ACC-0172",
     "customer_id": "CUST-0172",
     "structuring_planted": true,
-    "kyc_mismatch_planted": true,
+    "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -1790,10 +1940,13 @@
     "customer_id": "CUST-0173",
     "structuring_planted": false,
     "kyc_mismatch_planted": false,
-    "adverse_media_hit": "ADVERSE_NEWS",
-    "graph_ring_membership": "RING-06",
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
     "forged_document_planted": false,
-    "decoy_types": []
+    "pass_through_planted": false,
+    "decoy_types": [
+      "round_amount"
+    ]
   },
   {
     "account_id": "ACC-0174",
@@ -1803,7 +1956,10 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
-    "decoy_types": []
+    "pass_through_planted": false,
+    "decoy_types": [
+      "graph_coincidence"
+    ]
   },
   {
     "account_id": "ACC-0175",
@@ -1813,26 +1969,29 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
     "account_id": "ACC-0176",
     "customer_id": "CUST-0176",
-    "structuring_planted": false,
+    "structuring_planted": true,
     "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
-    "graph_ring_membership": null,
+    "graph_ring_membership": "RING-06",
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
     "account_id": "ACC-0177",
     "customer_id": "CUST-0177",
-    "structuring_planted": true,
-    "kyc_mismatch_planted": false,
+    "structuring_planted": false,
+    "kyc_mismatch_planted": true,
     "adverse_media_hit": null,
-    "graph_ring_membership": "RING-05",
+    "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -1841,18 +2000,20 @@
     "structuring_planted": false,
     "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
-    "graph_ring_membership": "RING-02",
+    "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
     "account_id": "ACC-0179",
     "customer_id": "CUST-0179",
-    "structuring_planted": false,
+    "structuring_planted": true,
     "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -1863,6 +2024,7 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -1873,38 +2035,40 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
-    "decoy_types": [
-      "round_amount"
-    ]
+    "pass_through_planted": false,
+    "decoy_types": []
   },
   {
     "account_id": "ACC-0182",
     "customer_id": "CUST-0182",
     "structuring_planted": false,
-    "kyc_mismatch_planted": false,
+    "kyc_mismatch_planted": true,
     "adverse_media_hit": null,
-    "graph_ring_membership": null,
+    "graph_ring_membership": "RING-06",
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
     "account_id": "ACC-0183",
     "customer_id": "CUST-0183",
     "structuring_planted": false,
-    "kyc_mismatch_planted": false,
+    "kyc_mismatch_planted": true,
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
     "account_id": "ACC-0184",
     "customer_id": "CUST-0184",
-    "structuring_planted": true,
+    "structuring_planted": false,
     "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -1915,16 +2079,20 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
-    "decoy_types": []
+    "pass_through_planted": false,
+    "decoy_types": [
+      "graph_coincidence"
+    ]
   },
   {
     "account_id": "ACC-0186",
     "customer_id": "CUST-0186",
-    "structuring_planted": true,
+    "structuring_planted": false,
     "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
-    "graph_ring_membership": "RING-04",
+    "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -1932,21 +2100,21 @@
     "customer_id": "CUST-0187",
     "structuring_planted": false,
     "kyc_mismatch_planted": false,
-    "adverse_media_hit": "NAME_SIMILARITY_ONLY",
+    "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
-    "decoy_types": [
-      "name_similarity"
-    ]
+    "pass_through_planted": false,
+    "decoy_types": []
   },
   {
     "account_id": "ACC-0188",
     "customer_id": "CUST-0188",
     "structuring_planted": false,
-    "kyc_mismatch_planted": true,
+    "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -1956,7 +2124,8 @@
     "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
     "graph_ring_membership": null,
-    "forged_document_planted": true,
+    "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -1964,19 +2133,21 @@
     "customer_id": "CUST-0190",
     "structuring_planted": false,
     "kyc_mismatch_planted": false,
-    "adverse_media_hit": null,
+    "adverse_media_hit": "ADVERSE_NEWS",
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
     "account_id": "ACC-0191",
     "customer_id": "CUST-0191",
     "structuring_planted": false,
-    "kyc_mismatch_planted": true,
+    "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
-    "graph_ring_membership": "RING-03",
-    "forged_document_planted": false,
+    "graph_ring_membership": "RING-05",
+    "forged_document_planted": true,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -1987,16 +2158,18 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
     "account_id": "ACC-0193",
     "customer_id": "CUST-0193",
-    "structuring_planted": true,
+    "structuring_planted": false,
     "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -2007,6 +2180,7 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -2014,19 +2188,23 @@
     "customer_id": "CUST-0195",
     "structuring_planted": false,
     "kyc_mismatch_planted": false,
-    "adverse_media_hit": null,
+    "adverse_media_hit": "NAME_SIMILARITY_ONLY",
     "graph_ring_membership": null,
-    "forged_document_planted": true,
-    "decoy_types": []
+    "forged_document_planted": false,
+    "pass_through_planted": false,
+    "decoy_types": [
+      "name_similarity"
+    ]
   },
   {
     "account_id": "ACC-0196",
     "customer_id": "CUST-0196",
-    "structuring_planted": false,
+    "structuring_planted": true,
     "kyc_mismatch_planted": false,
-    "adverse_media_hit": "CONFIRMED_SANCTIONS",
+    "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -2037,6 +2215,7 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -2047,16 +2226,18 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
     "account_id": "ACC-0199",
     "customer_id": "CUST-0199",
-    "structuring_planted": true,
+    "structuring_planted": false,
     "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -2067,16 +2248,18 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
     "account_id": "ACC-0201",
     "customer_id": "CUST-0201",
     "structuring_planted": false,
-    "kyc_mismatch_planted": true,
+    "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -2084,10 +2267,13 @@
     "customer_id": "CUST-0202",
     "structuring_planted": false,
     "kyc_mismatch_planted": false,
-    "adverse_media_hit": "ADVERSE_NEWS",
+    "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
-    "decoy_types": []
+    "pass_through_planted": false,
+    "decoy_types": [
+      "graph_coincidence"
+    ]
   },
   {
     "account_id": "ACC-0203",
@@ -2097,16 +2283,20 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
-    "decoy_types": []
+    "pass_through_planted": false,
+    "decoy_types": [
+      "round_amount"
+    ]
   },
   {
     "account_id": "ACC-0204",
     "customer_id": "CUST-0204",
     "structuring_planted": false,
     "kyc_mismatch_planted": false,
-    "adverse_media_hit": "ADVERSE_NEWS",
+    "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -2114,29 +2304,34 @@
     "customer_id": "CUST-0205",
     "structuring_planted": false,
     "kyc_mismatch_planted": false,
-    "adverse_media_hit": null,
-    "graph_ring_membership": "RING-06",
+    "adverse_media_hit": "NAME_SIMILARITY_ONLY",
+    "graph_ring_membership": null,
     "forged_document_planted": false,
-    "decoy_types": []
+    "pass_through_planted": false,
+    "decoy_types": [
+      "name_similarity"
+    ]
   },
   {
     "account_id": "ACC-0206",
     "customer_id": "CUST-0206",
-    "structuring_planted": true,
+    "structuring_planted": false,
     "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
-    "graph_ring_membership": "RING-06",
+    "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
     "account_id": "ACC-0207",
     "customer_id": "CUST-0207",
-    "structuring_planted": true,
+    "structuring_planted": false,
     "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -2147,6 +2342,7 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -2155,8 +2351,9 @@
     "structuring_planted": false,
     "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
-    "graph_ring_membership": "RING-05",
+    "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -2167,16 +2364,18 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
     "account_id": "ACC-0211",
     "customer_id": "CUST-0211",
-    "structuring_planted": false,
+    "structuring_planted": true,
     "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
-    "graph_ring_membership": "RING-07",
+    "graph_ring_membership": "RING-04",
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -2187,6 +2386,7 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -2197,16 +2397,18 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
     "account_id": "ACC-0214",
     "customer_id": "CUST-0214",
-    "structuring_planted": false,
+    "structuring_planted": true,
     "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -2217,6 +2419,7 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -2224,12 +2427,11 @@
     "customer_id": "CUST-0216",
     "structuring_planted": false,
     "kyc_mismatch_planted": false,
-    "adverse_media_hit": "NAME_SIMILARITY_ONLY",
+    "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
-    "decoy_types": [
-      "name_similarity"
-    ]
+    "pass_through_planted": false,
+    "decoy_types": []
   },
   {
     "account_id": "ACC-0217",
@@ -2239,6 +2441,7 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -2249,28 +2452,29 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
     "account_id": "ACC-0219",
     "customer_id": "CUST-0219",
-    "structuring_planted": false,
-    "kyc_mismatch_planted": false,
-    "adverse_media_hit": null,
-    "graph_ring_membership": null,
-    "forged_document_planted": false,
-    "decoy_types": [
-      "round_amount"
-    ]
-  },
-  {
-    "account_id": "ACC-0220",
-    "customer_id": "CUST-0220",
     "structuring_planted": true,
     "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0220",
+    "customer_id": "CUST-0220",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -2281,6 +2485,7 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -2291,6 +2496,7 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -2298,21 +2504,25 @@
     "customer_id": "CUST-0223",
     "structuring_planted": false,
     "kyc_mismatch_planted": false,
-    "adverse_media_hit": "CONFIRMED_SANCTIONS",
+    "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
-    "decoy_types": []
+    "pass_through_planted": false,
+    "decoy_types": [
+      "round_amount"
+    ]
   },
   {
     "account_id": "ACC-0224",
     "customer_id": "CUST-0224",
     "structuring_planted": false,
     "kyc_mismatch_planted": false,
-    "adverse_media_hit": "NAME_SIMILARITY_ONLY",
+    "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": [
-      "name_similarity"
+      "round_amount"
     ]
   },
   {
@@ -2321,8 +2531,9 @@
     "structuring_planted": false,
     "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
-    "graph_ring_membership": "RING-06",
+    "graph_ring_membership": null,
     "forged_document_planted": true,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -2333,6 +2544,7 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -2343,6 +2555,7 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -2353,6 +2566,7 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -2362,27 +2576,30 @@
     "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
     "graph_ring_membership": null,
-    "forged_document_planted": false,
+    "forged_document_planted": true,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
     "account_id": "ACC-0230",
     "customer_id": "CUST-0230",
-    "structuring_planted": false,
+    "structuring_planted": true,
     "kyc_mismatch_planted": false,
-    "adverse_media_hit": "ADVERSE_NEWS",
-    "graph_ring_membership": null,
+    "adverse_media_hit": null,
+    "graph_ring_membership": "RING-08",
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
     "account_id": "ACC-0231",
     "customer_id": "CUST-0231",
-    "structuring_planted": true,
+    "structuring_planted": false,
     "kyc_mismatch_planted": false,
-    "adverse_media_hit": "ADVERSE_NEWS",
+    "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -2393,6 +2610,7 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -2400,10 +2618,13 @@
     "customer_id": "CUST-0233",
     "structuring_planted": false,
     "kyc_mismatch_planted": false,
-    "adverse_media_hit": null,
+    "adverse_media_hit": "NAME_SIMILARITY_ONLY",
     "graph_ring_membership": null,
     "forged_document_planted": false,
-    "decoy_types": []
+    "pass_through_planted": false,
+    "decoy_types": [
+      "name_similarity"
+    ]
   },
   {
     "account_id": "ACC-0234",
@@ -2413,6 +2634,7 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -2420,19 +2642,23 @@
     "customer_id": "CUST-0235",
     "structuring_planted": false,
     "kyc_mismatch_planted": false,
-    "adverse_media_hit": null,
+    "adverse_media_hit": "NAME_SIMILARITY_ONLY",
     "graph_ring_membership": null,
     "forged_document_planted": false,
-    "decoy_types": []
+    "pass_through_planted": false,
+    "decoy_types": [
+      "name_similarity"
+    ]
   },
   {
     "account_id": "ACC-0236",
     "customer_id": "CUST-0236",
-    "structuring_planted": true,
+    "structuring_planted": false,
     "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
-    "graph_ring_membership": "RING-07",
+    "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -2443,16 +2669,18 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
     "account_id": "ACC-0238",
     "customer_id": "CUST-0238",
     "structuring_planted": false,
-    "kyc_mismatch_planted": false,
+    "kyc_mismatch_planted": true,
     "adverse_media_hit": null,
-    "graph_ring_membership": null,
-    "forged_document_planted": true,
+    "graph_ring_membership": "RING-08",
+    "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -2463,6 +2691,7 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -2473,9 +2702,8 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
-    "decoy_types": [
-      "round_amount"
-    ]
+    "pass_through_planted": false,
+    "decoy_types": []
   },
   {
     "account_id": "ACC-0241",
@@ -2485,6 +2713,7 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -2495,7 +2724,10 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
-    "decoy_types": []
+    "pass_through_planted": false,
+    "decoy_types": [
+      "graph_coincidence"
+    ]
   },
   {
     "account_id": "ACC-0243",
@@ -2505,6 +2737,7 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -2515,6 +2748,7 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -2522,11 +2756,12 @@
     "customer_id": "CUST-0245",
     "structuring_planted": false,
     "kyc_mismatch_planted": false,
-    "adverse_media_hit": null,
+    "adverse_media_hit": "NAME_SIMILARITY_ONLY",
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": [
-      "graph_coincidence"
+      "name_similarity"
     ]
   },
   {
@@ -2537,6 +2772,7 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -2546,8 +2782,11 @@
     "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
     "graph_ring_membership": null,
-    "forged_document_planted": true,
-    "decoy_types": []
+    "forged_document_planted": false,
+    "pass_through_planted": false,
+    "decoy_types": [
+      "round_amount"
+    ]
   },
   {
     "account_id": "ACC-0248",
@@ -2557,6 +2796,7 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -2567,6 +2807,7 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -2576,17 +2817,21 @@
     "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
     "graph_ring_membership": null,
-    "forged_document_planted": true,
-    "decoy_types": []
+    "forged_document_planted": false,
+    "pass_through_planted": false,
+    "decoy_types": [
+      "graph_coincidence"
+    ]
   },
   {
     "account_id": "ACC-0251",
     "customer_id": "CUST-0251",
-    "structuring_planted": true,
+    "structuring_planted": false,
     "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -2596,17 +2841,19 @@
     "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
     "graph_ring_membership": null,
-    "forged_document_planted": false,
+    "forged_document_planted": true,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
     "account_id": "ACC-0253",
     "customer_id": "CUST-0253",
-    "structuring_planted": false,
+    "structuring_planted": true,
     "kyc_mismatch_planted": false,
-    "adverse_media_hit": null,
+    "adverse_media_hit": "ADVERSE_NEWS",
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -2617,7 +2864,10 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
-    "decoy_types": []
+    "pass_through_planted": false,
+    "decoy_types": [
+      "round_amount"
+    ]
   },
   {
     "account_id": "ACC-0255",
@@ -2627,16 +2877,18 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
     "account_id": "ACC-0256",
     "customer_id": "CUST-0256",
     "structuring_planted": false,
-    "kyc_mismatch_planted": false,
+    "kyc_mismatch_planted": true,
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -2647,6 +2899,7 @@
     "adverse_media_hit": "NAME_SIMILARITY_ONLY",
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": [
       "name_similarity"
     ]
@@ -2659,6 +2912,7 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -2669,26 +2923,29 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
     "account_id": "ACC-0260",
     "customer_id": "CUST-0260",
-    "structuring_planted": false,
-    "kyc_mismatch_planted": true,
+    "structuring_planted": true,
+    "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
-    "graph_ring_membership": "RING-07",
+    "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
     "account_id": "ACC-0261",
     "customer_id": "CUST-0261",
     "structuring_planted": false,
-    "kyc_mismatch_planted": true,
+    "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -2699,6 +2956,7 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -2709,6 +2967,7 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -2719,6 +2978,7 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -2727,38 +2987,42 @@
     "structuring_planted": false,
     "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
-    "graph_ring_membership": null,
-    "forged_document_planted": false,
+    "graph_ring_membership": "RING-07",
+    "forged_document_planted": true,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
     "account_id": "ACC-0266",
     "customer_id": "CUST-0266",
     "structuring_planted": false,
-    "kyc_mismatch_planted": false,
+    "kyc_mismatch_planted": true,
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
     "account_id": "ACC-0267",
     "customer_id": "CUST-0267",
-    "structuring_planted": false,
-    "kyc_mismatch_planted": true,
+    "structuring_planted": true,
+    "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
     "account_id": "ACC-0268",
     "customer_id": "CUST-0268",
     "structuring_planted": false,
-    "kyc_mismatch_planted": false,
+    "kyc_mismatch_planted": true,
     "adverse_media_hit": null,
     "graph_ring_membership": null,
-    "forged_document_planted": false,
+    "forged_document_planted": true,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -2769,6 +3033,7 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -2779,6 +3044,7 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -2789,16 +3055,18 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
     "account_id": "ACC-0272",
     "customer_id": "CUST-0272",
     "structuring_planted": false,
-    "kyc_mismatch_planted": false,
+    "kyc_mismatch_planted": true,
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -2807,8 +3075,9 @@
     "structuring_planted": true,
     "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
-    "graph_ring_membership": "RING-08",
+    "graph_ring_membership": "RING-07",
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -2819,6 +3088,7 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -2829,6 +3099,7 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -2839,16 +3110,20 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
-    "decoy_types": []
+    "pass_through_planted": false,
+    "decoy_types": [
+      "graph_coincidence"
+    ]
   },
   {
     "account_id": "ACC-0277",
     "customer_id": "CUST-0277",
     "structuring_planted": false,
-    "kyc_mismatch_planted": false,
+    "kyc_mismatch_planted": true,
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -2856,9 +3131,10 @@
     "customer_id": "CUST-0278",
     "structuring_planted": false,
     "kyc_mismatch_planted": false,
-    "adverse_media_hit": null,
+    "adverse_media_hit": "ADVERSE_NEWS",
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -2867,18 +3143,20 @@
     "structuring_planted": false,
     "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
-    "graph_ring_membership": "RING-08",
+    "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
     "account_id": "ACC-0280",
     "customer_id": "CUST-0280",
     "structuring_planted": false,
-    "kyc_mismatch_planted": false,
+    "kyc_mismatch_planted": true,
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -2889,6 +3167,7 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -2899,16 +3178,20 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
-    "decoy_types": []
+    "pass_through_planted": false,
+    "decoy_types": [
+      "round_amount"
+    ]
   },
   {
     "account_id": "ACC-0283",
     "customer_id": "CUST-0283",
     "structuring_planted": true,
-    "kyc_mismatch_planted": false,
+    "kyc_mismatch_planted": true,
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -2919,6 +3202,7 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -2929,6 +3213,7 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -2936,9 +3221,10 @@
     "customer_id": "CUST-0286",
     "structuring_planted": false,
     "kyc_mismatch_planted": false,
-    "adverse_media_hit": null,
+    "adverse_media_hit": "ADVERSE_NEWS",
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -2949,6 +3235,7 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -2959,6 +3246,7 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -2969,6 +3257,7 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -2979,18 +3268,18 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
-    "decoy_types": [
-      "round_amount"
-    ]
+    "pass_through_planted": false,
+    "decoy_types": []
   },
   {
     "account_id": "ACC-0291",
     "customer_id": "CUST-0291",
-    "structuring_planted": true,
+    "structuring_planted": false,
     "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -3001,16 +3290,18 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
     "account_id": "ACC-0293",
     "customer_id": "CUST-0293",
-    "structuring_planted": false,
+    "structuring_planted": true,
     "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -3021,36 +3312,42 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
     "account_id": "ACC-0295",
     "customer_id": "CUST-0295",
-    "structuring_planted": false,
-    "kyc_mismatch_planted": false,
-    "adverse_media_hit": null,
-    "graph_ring_membership": null,
-    "forged_document_planted": false,
-    "decoy_types": []
-  },
-  {
-    "account_id": "ACC-0296",
-    "customer_id": "CUST-0296",
     "structuring_planted": true,
     "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
-    "account_id": "ACC-0297",
-    "customer_id": "CUST-0297",
+    "account_id": "ACC-0296",
+    "customer_id": "CUST-0296",
     "structuring_planted": false,
     "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
+    "decoy_types": [
+      "round_amount"
+    ]
+  },
+  {
+    "account_id": "ACC-0297",
+    "customer_id": "CUST-0297",
+    "structuring_planted": true,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -3061,16 +3358,18 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
     "account_id": "ACC-0299",
     "customer_id": "CUST-0299",
     "structuring_planted": false,
-    "kyc_mismatch_planted": true,
+    "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -3081,36 +3380,44 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
     "account_id": "ACC-0301",
     "customer_id": "CUST-0301",
     "structuring_planted": false,
-    "kyc_mismatch_planted": true,
+    "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
-    "graph_ring_membership": "RING-11",
+    "graph_ring_membership": null,
     "forged_document_planted": false,
-    "decoy_types": []
+    "pass_through_planted": false,
+    "decoy_types": [
+      "cross_border_legitimate"
+    ]
   },
   {
     "account_id": "ACC-0302",
     "customer_id": "CUST-0302",
     "structuring_planted": false,
-    "kyc_mismatch_planted": true,
+    "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
-    "graph_ring_membership": "RING-10",
+    "graph_ring_membership": null,
     "forged_document_planted": false,
-    "decoy_types": []
+    "pass_through_planted": false,
+    "decoy_types": [
+      "cross_border_legitimate"
+    ]
   },
   {
     "account_id": "ACC-0303",
     "customer_id": "CUST-0303",
     "structuring_planted": false,
-    "kyc_mismatch_planted": false,
+    "kyc_mismatch_planted": true,
     "adverse_media_hit": null,
     "graph_ring_membership": "RING-09",
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -3121,6 +3428,7 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": [
       "cross_border_legitimate"
     ]
@@ -3129,35 +3437,36 @@
     "account_id": "ACC-0305",
     "customer_id": "CUST-0305",
     "structuring_planted": false,
-    "kyc_mismatch_planted": false,
+    "kyc_mismatch_planted": true,
     "adverse_media_hit": null,
-    "graph_ring_membership": null,
+    "graph_ring_membership": "RING-09",
     "forged_document_planted": false,
-    "decoy_types": [
-      "cross_border_legitimate"
-    ]
+    "pass_through_planted": false,
+    "decoy_types": []
   },
   {
     "account_id": "ACC-0306",
     "customer_id": "CUST-0306",
     "structuring_planted": false,
-    "kyc_mismatch_planted": true,
+    "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
-    "decoy_types": []
+    "pass_through_planted": false,
+    "decoy_types": [
+      "cross_border_legitimate"
+    ]
   },
   {
     "account_id": "ACC-0307",
     "customer_id": "CUST-0307",
     "structuring_planted": false,
-    "kyc_mismatch_planted": false,
+    "kyc_mismatch_planted": true,
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
-    "decoy_types": [
-      "cross_border_legitimate"
-    ]
+    "pass_through_planted": false,
+    "decoy_types": []
   },
   {
     "account_id": "ACC-0308",
@@ -3167,6 +3476,7 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": [
       "cross_border_legitimate"
     ]
@@ -3177,8 +3487,9 @@
     "structuring_planted": false,
     "kyc_mismatch_planted": true,
     "adverse_media_hit": null,
-    "graph_ring_membership": "RING-09",
+    "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -3189,6 +3500,7 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": [
       "cross_border_legitimate"
     ]
@@ -3201,6 +3513,7 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": [
       "cross_border_legitimate"
     ]
@@ -3209,23 +3522,25 @@
     "account_id": "ACC-0312",
     "customer_id": "CUST-0312",
     "structuring_planted": false,
-    "kyc_mismatch_planted": true,
+    "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
-    "graph_ring_membership": "RING-11",
+    "graph_ring_membership": null,
     "forged_document_planted": false,
-    "decoy_types": []
+    "pass_through_planted": false,
+    "decoy_types": [
+      "cross_border_legitimate"
+    ]
   },
   {
     "account_id": "ACC-0313",
     "customer_id": "CUST-0313",
     "structuring_planted": false,
-    "kyc_mismatch_planted": false,
+    "kyc_mismatch_planted": true,
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
-    "decoy_types": [
-      "cross_border_legitimate"
-    ]
+    "pass_through_planted": false,
+    "decoy_types": []
   },
   {
     "account_id": "ACC-0314",
@@ -3235,6 +3550,7 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": [
       "cross_border_legitimate"
     ]
@@ -3247,19 +3563,19 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
     "account_id": "ACC-0316",
     "customer_id": "CUST-0316",
     "structuring_planted": false,
-    "kyc_mismatch_planted": false,
+    "kyc_mismatch_planted": true,
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
-    "decoy_types": [
-      "cross_border_legitimate"
-    ]
+    "pass_through_planted": false,
+    "decoy_types": []
   },
   {
     "account_id": "ACC-0317",
@@ -3269,6 +3585,7 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": [
       "cross_border_legitimate"
     ]
@@ -3277,13 +3594,12 @@
     "account_id": "ACC-0318",
     "customer_id": "CUST-0318",
     "structuring_planted": false,
-    "kyc_mismatch_planted": false,
+    "kyc_mismatch_planted": true,
     "adverse_media_hit": null,
-    "graph_ring_membership": null,
+    "graph_ring_membership": "RING-11",
     "forged_document_planted": false,
-    "decoy_types": [
-      "cross_border_legitimate"
-    ]
+    "pass_through_planted": false,
+    "decoy_types": []
   },
   {
     "account_id": "ACC-0319",
@@ -3293,6 +3609,7 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": [
       "cross_border_legitimate"
     ]
@@ -3301,23 +3618,25 @@
     "account_id": "ACC-0320",
     "customer_id": "CUST-0320",
     "structuring_planted": false,
-    "kyc_mismatch_planted": true,
+    "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
-    "decoy_types": []
+    "pass_through_planted": false,
+    "decoy_types": [
+      "cross_border_legitimate"
+    ]
   },
   {
     "account_id": "ACC-0321",
     "customer_id": "CUST-0321",
     "structuring_planted": false,
-    "kyc_mismatch_planted": false,
+    "kyc_mismatch_planted": true,
     "adverse_media_hit": null,
-    "graph_ring_membership": null,
+    "graph_ring_membership": "RING-11",
     "forged_document_planted": false,
-    "decoy_types": [
-      "cross_border_legitimate"
-    ]
+    "pass_through_planted": false,
+    "decoy_types": []
   },
   {
     "account_id": "ACC-0322",
@@ -3325,11 +3644,10 @@
     "structuring_planted": false,
     "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
-    "graph_ring_membership": null,
+    "graph_ring_membership": "RING-10",
     "forged_document_planted": false,
-    "decoy_types": [
-      "cross_border_legitimate"
-    ]
+    "pass_through_planted": false,
+    "decoy_types": []
   },
   {
     "account_id": "ACC-0323",
@@ -3339,6 +3657,7 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": [
       "cross_border_legitimate"
     ]
@@ -3347,13 +3666,12 @@
     "account_id": "ACC-0324",
     "customer_id": "CUST-0324",
     "structuring_planted": false,
-    "kyc_mismatch_planted": false,
+    "kyc_mismatch_planted": true,
     "adverse_media_hit": null,
-    "graph_ring_membership": null,
+    "graph_ring_membership": "RING-10",
     "forged_document_planted": false,
-    "decoy_types": [
-      "cross_border_legitimate"
-    ]
+    "pass_through_planted": false,
+    "decoy_types": []
   },
   {
     "account_id": "ACC-0325",
@@ -3363,6 +3681,7 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": [
       "cross_border_legitimate"
     ]
@@ -3373,9 +3692,12 @@
     "structuring_planted": false,
     "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
-    "graph_ring_membership": "RING-10",
+    "graph_ring_membership": null,
     "forged_document_planted": false,
-    "decoy_types": []
+    "pass_through_planted": false,
+    "decoy_types": [
+      "cross_border_legitimate"
+    ]
   },
   {
     "account_id": "ACC-0327",
@@ -3383,19 +3705,23 @@
     "structuring_planted": false,
     "kyc_mismatch_planted": true,
     "adverse_media_hit": null,
-    "graph_ring_membership": null,
+    "graph_ring_membership": "RING-09",
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
     "account_id": "ACC-0328",
     "customer_id": "CUST-0328",
     "structuring_planted": false,
-    "kyc_mismatch_planted": true,
+    "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
-    "decoy_types": []
+    "pass_through_planted": false,
+    "decoy_types": [
+      "cross_border_legitimate"
+    ]
   },
   {
     "account_id": "ACC-0329",
@@ -3405,6 +3731,7 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": [
       "cross_border_legitimate"
     ]
@@ -3413,25 +3740,23 @@
     "account_id": "ACC-0330",
     "customer_id": "CUST-0330",
     "structuring_planted": false,
-    "kyc_mismatch_planted": false,
+    "kyc_mismatch_planted": true,
     "adverse_media_hit": null,
-    "graph_ring_membership": null,
+    "graph_ring_membership": "RING-10",
     "forged_document_planted": false,
-    "decoy_types": [
-      "cross_border_legitimate"
-    ]
+    "pass_through_planted": false,
+    "decoy_types": []
   },
   {
     "account_id": "ACC-0331",
     "customer_id": "CUST-0331",
     "structuring_planted": false,
-    "kyc_mismatch_planted": false,
+    "kyc_mismatch_planted": true,
     "adverse_media_hit": null,
-    "graph_ring_membership": null,
+    "graph_ring_membership": "RING-10",
     "forged_document_planted": false,
-    "decoy_types": [
-      "cross_border_legitimate"
-    ]
+    "pass_through_planted": false,
+    "decoy_types": []
   },
   {
     "account_id": "ACC-0332",
@@ -3439,21 +3764,23 @@
     "structuring_planted": false,
     "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
-    "graph_ring_membership": null,
+    "graph_ring_membership": "RING-09",
     "forged_document_planted": false,
-    "decoy_types": [
-      "cross_border_legitimate"
-    ]
+    "pass_through_planted": false,
+    "decoy_types": []
   },
   {
     "account_id": "ACC-0333",
     "customer_id": "CUST-0333",
     "structuring_planted": false,
-    "kyc_mismatch_planted": true,
+    "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
-    "graph_ring_membership": "RING-09",
+    "graph_ring_membership": null,
     "forged_document_planted": false,
-    "decoy_types": []
+    "pass_through_planted": false,
+    "decoy_types": [
+      "cross_border_legitimate"
+    ]
   },
   {
     "account_id": "ACC-0334",
@@ -3461,21 +3788,23 @@
     "structuring_planted": false,
     "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
-    "graph_ring_membership": null,
+    "graph_ring_membership": "RING-11",
     "forged_document_planted": false,
-    "decoy_types": [
-      "cross_border_legitimate"
-    ]
+    "pass_through_planted": false,
+    "decoy_types": []
   },
   {
     "account_id": "ACC-0335",
     "customer_id": "CUST-0335",
     "structuring_planted": false,
-    "kyc_mismatch_planted": true,
+    "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
-    "graph_ring_membership": "RING-09",
+    "graph_ring_membership": null,
     "forged_document_planted": false,
-    "decoy_types": []
+    "pass_through_planted": false,
+    "decoy_types": [
+      "cross_border_legitimate"
+    ]
   },
   {
     "account_id": "ACC-0336",
@@ -3485,6 +3814,7 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": [
       "cross_border_legitimate"
     ]
@@ -3495,8 +3825,9 @@
     "structuring_planted": false,
     "kyc_mismatch_planted": true,
     "adverse_media_hit": null,
-    "graph_ring_membership": "RING-10",
+    "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
@@ -3507,17 +3838,21 @@
     "adverse_media_hit": null,
     "graph_ring_membership": "RING-11",
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
     "account_id": "ACC-0339",
     "customer_id": "CUST-0339",
     "structuring_planted": false,
-    "kyc_mismatch_planted": true,
+    "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
-    "decoy_types": []
+    "pass_through_planted": false,
+    "decoy_types": [
+      "cross_border_legitimate"
+    ]
   },
   {
     "account_id": "ACC-0340",
@@ -3527,27 +3862,34 @@
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": []
   },
   {
     "account_id": "ACC-0341",
     "customer_id": "CUST-0341",
     "structuring_planted": false,
-    "kyc_mismatch_planted": true,
+    "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
-    "decoy_types": []
+    "pass_through_planted": false,
+    "decoy_types": [
+      "cross_border_legitimate"
+    ]
   },
   {
     "account_id": "ACC-0342",
     "customer_id": "CUST-0342",
     "structuring_planted": false,
-    "kyc_mismatch_planted": true,
+    "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
-    "graph_ring_membership": "RING-10",
+    "graph_ring_membership": null,
     "forged_document_planted": false,
-    "decoy_types": []
+    "pass_through_planted": false,
+    "decoy_types": [
+      "cross_border_legitimate"
+    ]
   },
   {
     "account_id": "ACC-0343",
@@ -3555,20 +3897,336 @@
     "structuring_planted": false,
     "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
-    "graph_ring_membership": "RING-11",
+    "graph_ring_membership": null,
     "forged_document_planted": false,
-    "decoy_types": []
+    "pass_through_planted": false,
+    "decoy_types": [
+      "cross_border_legitimate"
+    ]
   },
   {
     "account_id": "ACC-0344",
     "customer_id": "CUST-0344",
     "structuring_planted": false,
+    "kyc_mismatch_planted": true,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "pass_through_planted": false,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0345",
+    "customer_id": "CUST-0345",
+    "structuring_planted": false,
     "kyc_mismatch_planted": false,
     "adverse_media_hit": null,
     "graph_ring_membership": null,
     "forged_document_planted": false,
+    "pass_through_planted": false,
     "decoy_types": [
-      "cross_border_legitimate"
+      "life_event"
+    ]
+  },
+  {
+    "account_id": "ACC-0346",
+    "customer_id": "CUST-0346",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "pass_through_planted": false,
+    "decoy_types": [
+      "merchant_lookalike"
+    ]
+  },
+  {
+    "account_id": "ACC-0347",
+    "customer_id": "CUST-0347",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": "RING-12",
+    "forged_document_planted": false,
+    "pass_through_planted": true,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0348",
+    "customer_id": "CUST-0348",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "pass_through_planted": true,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0349",
+    "customer_id": "CUST-0349",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": "RING-13",
+    "forged_document_planted": false,
+    "pass_through_planted": true,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0350",
+    "customer_id": "CUST-0350",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "pass_through_planted": false,
+    "decoy_types": [
+      "merchant_lookalike"
+    ]
+  },
+  {
+    "account_id": "ACC-0351",
+    "customer_id": "CUST-0351",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "pass_through_planted": false,
+    "decoy_types": [
+      "merchant_lookalike"
+    ]
+  },
+  {
+    "account_id": "ACC-0352",
+    "customer_id": "CUST-0352",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "pass_through_planted": true,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0353",
+    "customer_id": "CUST-0353",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "pass_through_planted": false,
+    "decoy_types": [
+      "merchant_lookalike"
+    ]
+  },
+  {
+    "account_id": "ACC-0354",
+    "customer_id": "CUST-0354",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": "RING-13",
+    "forged_document_planted": false,
+    "pass_through_planted": true,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0355",
+    "customer_id": "CUST-0355",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "pass_through_planted": false,
+    "decoy_types": [
+      "merchant_lookalike"
+    ]
+  },
+  {
+    "account_id": "ACC-0356",
+    "customer_id": "CUST-0356",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": "RING-13",
+    "forged_document_planted": false,
+    "pass_through_planted": true,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0357",
+    "customer_id": "CUST-0357",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "pass_through_planted": true,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0358",
+    "customer_id": "CUST-0358",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "pass_through_planted": false,
+    "decoy_types": [
+      "merchant_lookalike"
+    ]
+  },
+  {
+    "account_id": "ACC-0359",
+    "customer_id": "CUST-0359",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "pass_through_planted": false,
+    "decoy_types": [
+      "life_event"
+    ]
+  },
+  {
+    "account_id": "ACC-0360",
+    "customer_id": "CUST-0360",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": "RING-13",
+    "forged_document_planted": false,
+    "pass_through_planted": true,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0361",
+    "customer_id": "CUST-0361",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "pass_through_planted": false,
+    "decoy_types": [
+      "life_event"
+    ]
+  },
+  {
+    "account_id": "ACC-0362",
+    "customer_id": "CUST-0362",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "pass_through_planted": false,
+    "decoy_types": [
+      "life_event"
+    ]
+  },
+  {
+    "account_id": "ACC-0363",
+    "customer_id": "CUST-0363",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "pass_through_planted": true,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0364",
+    "customer_id": "CUST-0364",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "pass_through_planted": false,
+    "decoy_types": [
+      "life_event"
+    ]
+  },
+  {
+    "account_id": "ACC-0365",
+    "customer_id": "CUST-0365",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "pass_through_planted": false,
+    "decoy_types": [
+      "merchant_lookalike"
+    ]
+  },
+  {
+    "account_id": "ACC-0366",
+    "customer_id": "CUST-0366",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": "RING-12",
+    "forged_document_planted": false,
+    "pass_through_planted": true,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0367",
+    "customer_id": "CUST-0367",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": "RING-12",
+    "forged_document_planted": false,
+    "pass_through_planted": true,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0368",
+    "customer_id": "CUST-0368",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": "RING-12",
+    "forged_document_planted": false,
+    "pass_through_planted": true,
+    "decoy_types": []
+  },
+  {
+    "account_id": "ACC-0369",
+    "customer_id": "CUST-0369",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "pass_through_planted": false,
+    "decoy_types": [
+      "life_event"
+    ]
+  },
+  {
+    "account_id": "ACC-0370",
+    "customer_id": "CUST-0370",
+    "structuring_planted": false,
+    "kyc_mismatch_planted": false,
+    "adverse_media_hit": null,
+    "graph_ring_membership": null,
+    "forged_document_planted": false,
+    "pass_through_planted": false,
+    "decoy_types": [
+      "merchant_lookalike"
     ]
   }
 ]

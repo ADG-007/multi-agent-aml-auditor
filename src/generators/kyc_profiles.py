@@ -1,4 +1,4 @@
-"""Generator 4 of 9 - free-text KYC narratives.
+"""Generator 5 of 9 - free-text KYC narratives.
 
 The primary input to Stage 3, and a routing input to Stage 0.
 
@@ -11,6 +11,8 @@ dict.
 Narratives are built after transactions exist, so a clean profile can state a figure that
 genuinely matches the account's behaviour, and a planted mismatch can contradict it by a
 specific, checkable margin rather than vaguely.
+
+Each narrative draws from a stream keyed by its customer's id (streams.py).
 """
 
 from __future__ import annotations
@@ -19,6 +21,7 @@ import random
 from collections import defaultdict
 
 from src.generators import config as cfg
+from src.generators.streams import Streams
 from src.schemas import (
     Account,
     AccountType,
@@ -81,6 +84,9 @@ def _observed(transactions: list[Transaction]) -> dict:
         "cash_in": cash_in,
         "largest": largest,
         "swift_count": foreign_wires,
+        "upi_in": sum(
+            1 for t in transactions if t.type == TransactionType.UPI and t.direction.value == "CREDIT"
+        ),
         # Extrapolated from 90 days to a year, which is the basis on which a stated annual
         # income can be compared to observed activity at all.
         "annualised": total * (365 / 90),
@@ -231,11 +237,43 @@ def _source_of_funds(customer: Customer) -> str:
         return "family support and a scholarship stipend"
     if "homemaker" in occupation:
         return "spouse's salary income"
+    if "delivery" in occupation:
+        return "payouts from app-based delivery work"
     if any(word in occupation for word in ("proprietor", "trader", "contractor", "agent")):
         return "business receipts"
     if "overseas" in occupation or "gulf" in occupation:
         return "overseas salary income"
     return "salary income"
+
+
+def _merchant_narrative(
+    rng: random.Random,
+    customer: Customer,
+    account: Account,
+    observed: dict,
+) -> str:
+    """A small merchant who takes customer payments on a personal UPI ID.
+
+    Declared up front, as a branch officer would record it - that declaration, and the
+    supplier payments it describes, are what separate the business from a mule account
+    whose inflows look much the same.
+    """
+    fuel = "fuel" in customer.occupation.lower()
+    business = "a retail fuel outlet" if fuel else "a roadside mobile phone and electronics shop"
+    premises = "outlet" if fuel else "shop"
+    stock = "fuel and lubricant stock" if fuel else "handsets and accessories"
+    receipts_per_month = max(50, observed["upi_in"] // 3)
+    return (
+        f"{rng.choice(OPENERS)} {customer.name}, aged {_age(customer)}, runs {business} and "
+        f"declares an annual income of {_lakh(customer.stated_income)}. Customer resides at "
+        f"the address on record in India. The {_account_label(account)} account is linked to "
+        f"the personal UPI ID displayed at the {premises} for walk-in customer payments, and "
+        f"is used to pay suppliers for {stock} by NEFT or RTGS every few days. Expected "
+        f"activity is a large number of small UPI receipts from customers, around "
+        f"{receipts_per_month} a month, with periodic lump-sum supplier payments and cash "
+        f"withdrawals for wages. Source of funds is stated as business receipts. No adverse "
+        f"information was noted at the time of verification."
+    )
 
 
 def _mismatch_narrative(
@@ -323,7 +361,7 @@ def _mismatch_narrative(
 
 
 def generate(
-    rng: random.Random,
+    streams: Streams,
     customers: list[Customer],
     accounts: list[Account],
     transactions: list[Transaction],
@@ -340,10 +378,13 @@ def generate(
 
     profiles: list[KYCProfile] = []
     for customer in customers:
+        rng = streams.rng("kyc", customer.customer_id)
         account = account_by_customer[customer.customer_id]
         observed = _observed(by_account.get(account.account_id, []))
 
-        if account.account_id in plan.kyc_mismatch:
+        if plan.cohort(account.account_id) in ("merchant_lookalike", "complicit_merchant"):
+            narrative = _merchant_narrative(rng, customer, account, observed)
+        elif account.account_id in plan.kyc_mismatch:
             narrative = _mismatch_narrative(
                 rng,
                 customer,
