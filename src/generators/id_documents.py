@@ -212,10 +212,11 @@ def render_aadhaar(customer: Customer, rng: random.Random) -> Image.Image:
         fill=(20, 22, 26),
     )
     draw.text(
-        (CARD_WIDTH // 2 - 190, CARD_HEIGHT - 66),
-        "Aadhaar - Aam Aadmi ka Adhikar",
+        (CARD_WIDTH // 2, CARD_HEIGHT - 66),
+        "AADHAAR",
         font=load_font("sans", 24),
         fill=(255, 255, 255),
+        anchor="ma",
     )
     return image
 
