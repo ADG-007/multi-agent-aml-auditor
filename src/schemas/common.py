@@ -100,7 +100,7 @@ class RingType(str, Enum):
 
 
 class RulebookCategory(str, Enum):
-    """The seven clause categories the rulebook spans."""
+    """The eight clause categories the rulebook spans."""
 
     STRUCTURING = "STRUCTURING"
     KYC_CDD = "KYC_CDD"
@@ -109,6 +109,9 @@ class RulebookCategory(str, Enum):
     DOCUMENT_FORGERY = "DOCUMENT_FORGERY"
     CROSS_BORDER = "CROSS_BORDER"
     MONEY_MULE = "MONEY_MULE"
+    #: The suspicious-transaction obligation on every payment rail, and the non-cash domestic
+    #: rails that carry no amount-based report (Amendment 3).
+    SUSPICIOUS_TRANSACTION = "SUSPICIOUS_TRANSACTION"
 
 
 # --------------------------------------------------------------------------------------

@@ -16,6 +16,7 @@ from pydantic import BaseModel, Field, computed_field
 
 from src.schemas.common import (
     AccountType,
+    Disposition,
     Gender,
     IdDocumentType,
     ResidencyStatus,
@@ -244,3 +245,19 @@ class EvidenceLedgerEntry(BaseModel):
                 self.pass_through_planted,
             ]
         )
+
+    @property
+    def expected_disposition(self) -> Disposition:
+        """The answer-key label Phase 11 grades against. The one home of the labelling rule.
+
+        Two or more real channels -> SUSPICIOUS-ESCALATE, one -> MONITOR, none -> CLEAR. One
+        exception (Amendment 3, A4): a confirmed sanctions hit escalates on its own, because
+        the sanctions veto must escalate it and the law requires a report on it.
+        """
+        if self.real_channel_count >= 2 or (
+            self.adverse_media_hit == SeverityTier.CONFIRMED_SANCTIONS
+        ):
+            return Disposition.SUSPICIOUS_ESCALATE
+        if self.real_channel_count == 1:
+            return Disposition.MONITOR
+        return Disposition.CLEAR

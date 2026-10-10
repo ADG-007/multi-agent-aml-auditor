@@ -18,9 +18,7 @@ def test_exact_name_and_word_order():
 
 
 def test_alias_matches_and_is_reported():
-    index = NameIndex(
-        [media_entry(entity_name="Vikram Sethi", aliases=["Vicky Sethi"])]
-    )
+    index = NameIndex([media_entry(entity_name="Vikram Sethi", aliases=["Vicky Sethi"])])
     match = index.best_match("Vicky Sethi", cutoff=85)
     assert match.matched_text == "Vicky Sethi"
     assert match.via_alias

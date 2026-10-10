@@ -1,14 +1,17 @@
-"""Phase 2 dry run: review every account end to end with stubbed stages.
+"""Dry run: review every account end to end with the stages built so far.
 
     python -m src.orchestration.dry_run                  # all 370 accounts
     python -m src.orchestration.dry_run --account ACC-0001   # one case, printed in full
 
 Runs Phase 11's periodic-review mode (phase_2_execution.md): accounts in order of their
 earliest alerting transaction (ties by account id, accounts nothing alerted on last), each
-through Stage 0 -> stubs -> scoring -> report. Every report is written as one JSON line to
+through Stage 0 -> the evidence stages (real where built, stubs otherwise) -> scoring ->
+report. Every report is written as one JSON line to
 outputs/phase2_dry_run.jsonl.
 
-With neutral stubs (every stage RAN at 0.0) every verdict is CLEAR - that is correct. The dry
+Stage 2 runs for real since Phase 3; the other evidence stages are neutral stubs (RAN at 0.0).
+Those zeros stay in the weighted average (the dilution question, MASTER_PLAN Section 8 item
+12), so every verdict is still CLEAR - that is expected until more stages are real. The dry
 run proves routing and plumbing on the real bank; scoring correctness is proven by the tests.
 No model is called.
 """
@@ -68,7 +71,7 @@ def summarise(reports: list[InvestigationReport], seconds: float) -> str:
     alerted = sum(1 for r in reports if r.triggering_transaction_id)
 
     lines = [
-        f"Phase 2 dry run - {len(reports)} periodic-review cases in {seconds:.1f}s, 0 model calls",
+        f"Dry run - {len(reports)} periodic-review cases in {seconds:.1f}s, 0 model calls",
         f"  accounts with an alerting transaction: {alerted}; "
         f"review-only: {len(reports) - alerted}",
         "",
@@ -78,7 +81,7 @@ def summarise(reports: list[InvestigationReport], seconds: float) -> str:
         lines.append(f"  {rule:<22} {n:>8}   {hits_per_rule[rule]:>4}")
     lines += ["", "  Route mix"]
     lines += [f"  {n:>5}  {route}" for route, n in routes.most_common()]
-    lines += ["", "  Dispositions (neutral stubs, so CLEAR is expected)"]
+    lines += ["", "  Dispositions (other stages still stubs at 0.0, so CLEAR is expected)"]
     lines += [f"  {n:>5}  {d}" for d, n in dispositions.most_common()]
     return "\n".join(lines)
 

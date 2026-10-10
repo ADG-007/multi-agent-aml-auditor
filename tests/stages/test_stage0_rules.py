@@ -38,7 +38,8 @@ def rulebook():
         (899_999.99, CASH, False),
         (900_000, CASH, True),  # band floor is inclusive
         (950_000, CASH, True),
-        (1_000_000, CASH, True),  # at the threshold
+        (1_000_000, CASH, True),  # exactly at the threshold: top of the band, not a CTR
+        (1_000_000.01, CASH, True),  # more than the threshold: a CTR
         (1_500_000, TransactionType.CASH_WITHDRAWAL, True),
         (950_000, TransactionType.NEFT, False),  # cash only
         (1_500_000, TransactionType.SWIFT, False),
@@ -50,6 +51,14 @@ def test_cash_threshold(rulebook, amount, type, fires):
     if hit:
         assert hit.fired.clause_id == "STRUCT-001"
         assert hit.fired.transaction_id is not None
+
+
+def test_cash_threshold_reports_only_more_than_the_threshold(rulebook):
+    # PMLA Rule 3(1)(A) says "more than" ten lakh, so exactly ten lakh is band, not CTR.
+    at = rules.cash_threshold(txn(amount=1_000_000, type=CASH), rulebook)
+    above = rules.cash_threshold(txn(amount=1_000_001, type=CASH), rulebook)
+    assert "structuring band" in at.reason
+    assert "above the" in above.reason and "structuring band" not in above.reason
 
 
 def test_cash_threshold_follows_the_rulebook():
@@ -72,8 +81,9 @@ def test_cash_threshold_follows_the_rulebook():
 @pytest.mark.parametrize(
     "amount, type, direction, fires",
     [
-        (500_000, TransactionType.SWIFT, CREDIT, True),
-        (500_000, TransactionType.SWIFT, DEBIT, True),
+        (500_001, TransactionType.SWIFT, CREDIT, True),
+        (500_001, TransactionType.SWIFT, DEBIT, True),
+        (500_000, TransactionType.SWIFT, CREDIT, False),  # exactly at: law says "more than"
         (499_999, TransactionType.SWIFT, CREDIT, False),
         (900_000, TransactionType.RTGS, CREDIT, False),  # domestic rail
     ],
@@ -177,8 +187,12 @@ def _burst(amounts=(5_000, 5_000, 5_000), forwarded=12_000, gap_hours=2):
             )
         )
     rows.append(
-        txn(amount=forwarded, direction=DEBIT, timestamp="2026-08-01T20:00:00",
-            counterparty_id="CP-COLLECTOR")
+        txn(
+            amount=forwarded,
+            direction=DEBIT,
+            timestamp="2026-08-01T20:00:00",
+            counterparty_id="CP-COLLECTOR",
+        )
     )
     return rows
 

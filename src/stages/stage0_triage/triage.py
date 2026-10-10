@@ -16,6 +16,7 @@ always routed, so even a case with no fired rule gets its thin CLEAR report.
 from __future__ import annotations
 
 from dataclasses import dataclass
+from datetime import datetime
 
 from src.bank import BankData
 from src.matching import NameIndex
@@ -35,15 +36,26 @@ from src.stages.stage0_triage.rules import RULE_ROUTES, Hit
 
 @dataclass(frozen=True)
 class TriageContext:
-    """The read-only inputs Stage 0 needs, built once per run."""
+    """The read-only inputs Stage 0 needs, built once per run.
+
+    review_date is the bank's latest transaction time when the context was built: the as-of
+    time of every periodic review in the run (phase_3_execution.md D2). The case runner reads
+    it from here and passes it to the evidence stages.
+    """
 
     bank: BankData
     rulebook: RulebookLookup
     names: NameIndex
+    review_date: datetime | None = None
 
     @classmethod
     def build(cls, bank: BankData, rulebook: RulebookLookup) -> TriageContext:
-        return cls(bank=bank, rulebook=rulebook, names=NameIndex(bank.adverse_media))
+        return cls(
+            bank=bank,
+            rulebook=rulebook,
+            names=NameIndex(bank.adverse_media),
+            review_date=bank.review_date(),
+        )
 
 
 def triage(event: TriageEvent, ctx: TriageContext, state: RunState) -> Stage0TriageOutput:

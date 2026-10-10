@@ -1,7 +1,13 @@
 """A plain sequential case runner - TEMPORARY, replaced by the LangGraph pipeline in Phase 10.
 
-Stage 0 -> the routed stage stubs -> the scoring engine -> the Auditor stub -> the report,
+Stage 0 -> the routed evidence stages -> the scoring engine -> the Auditor stub -> the report,
 then the case is recorded in RunState (which is where an escalation feeds the known-bad list).
+
+An evidence stage runs for real when it is listed in REAL_STAGES (Phase 3 added Stage 2;
+Phases 4-7 add one line each), and as its stub otherwise. A StubPlan entry for a stage still
+forces that stage's stub outcome, so tests can pin any status or confidence
+(phase_3_execution.md D9). A real stage reads the 90 days ending at the as-of time: a live
+transaction's own timestamp, or the run's review date (TriageContext.review_date).
 
 What it deliberately does not do yet (Phase 10): the Vision pause/notice gate, concurrency,
 timeouts and retries. Vision runs as a stub here and its forgery confidence never touches the
@@ -10,6 +16,11 @@ score, exactly as it never will.
 
 from __future__ import annotations
 
+from collections.abc import Callable
+from datetime import datetime
+
+from pydantic import BaseModel
+
 from src.orchestration.run_state import RunState
 from src.schemas import (
     STAGE_WEIGHTS,
@@ -17,12 +28,14 @@ from src.schemas import (
     PipelineStatus,
     StageName,
     StageStatus,
+    Transaction,
     TriageEvent,
     TriageEventKind,
 )
 from src.scoring import StageResult, score_case
+from src.stages import stage2_transaction_pattern
 from src.stages.stage0_triage import TriageContext, first_alert, triage
-from src.stages.stubs import StubPlan, run_auditor_stub, run_rulebook_stub, run_stub
+from src.stages.stubs import StubOutcome, StubPlan, run_auditor_stub, run_rulebook_stub, run_stub
 
 
 EVIDENCE_STAGES = (
@@ -32,6 +45,14 @@ EVIDENCE_STAGES = (
     StageName.ADVERSE_MEDIA,
     StageName.GRAPH,
 )
+
+#: Evidence stages that run for real: (account id, context, as-of time, the live event's
+#: transaction or None) -> the stage's output.
+REAL_STAGES: dict[
+    StageName, Callable[[str, TriageContext, datetime | None, Transaction | None], BaseModel]
+] = {
+    StageName.TRANSACTION_PATTERN: stage2_transaction_pattern.run,
+}
 
 FINDINGS_FIELD = {
     StageName.VISION: "vision_findings",
@@ -72,7 +93,7 @@ def run_case(
             if stage in STAGE_WEIGHTS:
                 weighted[stage] = StageResult(StageStatus.NOT_ROUTED)
             continue
-        outcome = run_stub(stage, plan)
+        outcome = _run_evidence_stage(stage, event, ctx, plan)
         stage_status[stage.value] = outcome.status
         findings[FINDINGS_FIELD[stage]] = outcome.output
         if stage in STAGE_WEIGHTS:
@@ -116,6 +137,21 @@ def run_case(
     )
     state.record_case(report, ctx.bank)
     return report
+
+
+def _run_evidence_stage(
+    stage: StageName, event: TriageEvent, ctx: TriageContext, plan: StubPlan
+) -> StubOutcome:
+    """The real stage when one exists and the plan does not force this stage; else the stub."""
+    real = REAL_STAGES.get(stage)
+    if real is None or stage in plan.outcomes:
+        return run_stub(stage, plan)
+    as_of = (
+        event.transaction.timestamp
+        if event.kind == TriageEventKind.TRANSACTION
+        else ctx.review_date
+    )
+    return StubOutcome(StageStatus.RAN, real(event.account_id, ctx, as_of, event.transaction))
 
 
 def _trigger_id(event, triage_out, ctx, account_id) -> str | None:

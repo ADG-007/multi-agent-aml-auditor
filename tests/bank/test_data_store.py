@@ -15,7 +15,7 @@ def real_bank() -> BankData:
 
 def test_loads_the_committed_dataset(real_bank):
     assert len(real_bank.account_ids()) == 370
-    assert sum(len(real_bank.transactions(a)) for a in real_bank.account_ids()) == 23_450
+    assert sum(len(real_bank.transactions(a)) for a in real_bank.account_ids()) == 23_448
     assert len(real_bank.adverse_media) == 160
 
 
@@ -52,3 +52,20 @@ def test_add_transaction_keeps_time_order_and_rejects_duplicates():
         b.add_transaction(txn(transaction_id="T-A"))
     with pytest.raises(KeyError):
         b.add_transaction(txn(account_id="ACC-UNKNOWN"))
+
+
+def test_review_date_is_the_latest_transaction_in_the_bank(real_bank):
+    assert real_bank.review_date().date().isoformat() == "2026-09-21"
+
+
+def test_a_later_posted_transaction_moves_the_review_date():
+    b = bank(transactions=[txn(timestamp="2026-08-01T10:00:00")])
+    assert b.review_date().isoformat() == "2026-08-01T10:00:00"
+    b.add_transaction(txn(timestamp="2026-08-03T09:30:00"))
+    assert b.review_date().isoformat() == "2026-08-03T09:30:00"
+    b.add_transaction(txn(timestamp="2026-07-01T09:30:00"))
+    assert b.review_date().isoformat() == "2026-08-03T09:30:00"
+
+
+def test_a_bank_without_transactions_has_no_review_date():
+    assert bank().review_date() is None

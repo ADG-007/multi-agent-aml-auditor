@@ -22653,6 +22653,15 @@
       <data key="d12">0.0</data>
       <data key="d13">905.64</data>
     </edge>
+    <edge source="ACC-0011" target="CPD-0101">
+      <data key="d7">TRANSACTED_WITH</data>
+      <data key="d8">1</data>
+      <data key="d9">989416.0</data>
+      <data key="d10">1</data>
+      <data key="d11">0</data>
+      <data key="d12">989416.0</data>
+      <data key="d13">0.0</data>
+    </edge>
     <edge source="ACC-0011" target="CPD-0162">
       <data key="d7">TRANSACTED_WITH</data>
       <data key="d8">1</data>
@@ -22751,15 +22760,6 @@
       <data key="d11">1</data>
       <data key="d12">0.0</data>
       <data key="d13">833.48</data>
-    </edge>
-    <edge source="ACC-0011" target="CPD-0101">
-      <data key="d7">TRANSACTED_WITH</data>
-      <data key="d8">1</data>
-      <data key="d9">931702.0</data>
-      <data key="d10">1</data>
-      <data key="d11">0</data>
-      <data key="d12">931702.0</data>
-      <data key="d13">0.0</data>
     </edge>
     <edge source="ACC-0011" target="CPD-0123">
       <data key="d7">TRANSACTED_WITH</data>
@@ -34653,14 +34653,14 @@
       <data key="d12">3712.85</data>
       <data key="d13">0.0</data>
     </edge>
-    <edge source="ACC-0037" target="CPD-0038">
+    <edge source="ACC-0037" target="CPD-0031">
       <data key="d7">TRANSACTED_WITH</data>
-      <data key="d8">2</data>
-      <data key="d9">905246.64</data>
+      <data key="d8">1</data>
+      <data key="d9">903671.0</data>
       <data key="d10">1</data>
-      <data key="d11">1</data>
-      <data key="d12">902600.0</data>
-      <data key="d13">2646.64</data>
+      <data key="d11">0</data>
+      <data key="d12">903671.0</data>
+      <data key="d13">0.0</data>
     </edge>
     <edge source="ACC-0037" target="CPD-0113">
       <data key="d7">TRANSACTED_WITH</data>
@@ -34761,14 +34761,23 @@
       <data key="d12">6314.46</data>
       <data key="d13">0.0</data>
     </edge>
-    <edge source="ACC-0037" target="CPD-0117">
+    <edge source="ACC-0037" target="CPD-0038">
       <data key="d7">TRANSACTED_WITH</data>
       <data key="d8">1</data>
-      <data key="d9">999306.0</data>
+      <data key="d9">2646.64</data>
+      <data key="d10">0</data>
+      <data key="d11">1</data>
+      <data key="d12">0.0</data>
+      <data key="d13">2646.64</data>
+    </edge>
+    <edge source="ACC-0037" target="CPD-0174">
+      <data key="d7">TRANSACTED_WITH</data>
+      <data key="d8">2</data>
+      <data key="d9">905592.59</data>
       <data key="d10">1</data>
-      <data key="d11">0</data>
-      <data key="d12">999306.0</data>
-      <data key="d13">0.0</data>
+      <data key="d11">1</data>
+      <data key="d12">904839.0</data>
+      <data key="d13">753.59</data>
     </edge>
     <edge source="ACC-0037" target="CPD-0163">
       <data key="d7">TRANSACTED_WITH</data>
@@ -34823,15 +34832,6 @@
       <data key="d11">0</data>
       <data key="d12">1221.11</data>
       <data key="d13">0.0</data>
-    </edge>
-    <edge source="ACC-0037" target="CPD-0174">
-      <data key="d7">TRANSACTED_WITH</data>
-      <data key="d8">1</data>
-      <data key="d9">753.59</data>
-      <data key="d10">0</data>
-      <data key="d11">1</data>
-      <data key="d12">0.0</data>
-      <data key="d13">753.59</data>
     </edge>
     <edge source="ACC-0037" target="CPD-0180">
       <data key="d7">TRANSACTED_WITH</data>
@@ -37986,6 +37986,15 @@
       <data key="d12">30161.48</data>
       <data key="d13">0.0</data>
     </edge>
+    <edge source="ACC-0044" target="CPD-0125">
+      <data key="d7">TRANSACTED_WITH</data>
+      <data key="d8">1</data>
+      <data key="d9">900756.0</data>
+      <data key="d10">1</data>
+      <data key="d11">0</data>
+      <data key="d12">900756.0</data>
+      <data key="d13">0.0</data>
+    </edge>
     <edge source="ACC-0044" target="CPD-0075">
       <data key="d7">TRANSACTED_WITH</data>
       <data key="d8">2</data>
@@ -37997,11 +38006,11 @@
     </edge>
     <edge source="ACC-0044" target="CPD-0082">
       <data key="d7">TRANSACTED_WITH</data>
-      <data key="d8">2</data>
-      <data key="d9">973776.0</data>
-      <data key="d10">1</data>
+      <data key="d8">1</data>
+      <data key="d9">50000.0</data>
+      <data key="d10">0</data>
       <data key="d11">1</data>
-      <data key="d12">923776.0</data>
+      <data key="d12">0.0</data>
       <data key="d13">50000.0</data>
     </edge>
     <edge source="ACC-0044" target="CPD-0127">
@@ -38031,15 +38040,6 @@
       <data key="d12">0.0</data>
       <data key="d13">97089.91</data>
     </edge>
-    <edge source="ACC-0044" target="CPD-0146">
-      <data key="d7">TRANSACTED_WITH</data>
-      <data key="d8">1</data>
-      <data key="d9">49623.49</data>
-      <data key="d10">0</data>
-      <data key="d11">1</data>
-      <data key="d12">0.0</data>
-      <data key="d13">49623.49</data>
-    </edge>
     <edge source="ACC-0044" target="CPD-0050">
       <data key="d7">TRANSACTED_WITH</data>
       <data key="d8">2</data>
@@ -38048,6 +38048,15 @@
       <data key="d11">1</data>
       <data key="d12">964701.0</data>
       <data key="d13">47923.41</data>
+    </edge>
+    <edge source="ACC-0044" target="CPD-0146">
+      <data key="d7">TRANSACTED_WITH</data>
+      <data key="d8">1</data>
+      <data key="d9">49623.49</data>
+      <data key="d10">0</data>
+      <data key="d11">1</data>
+      <data key="d12">0.0</data>
+      <data key="d13">49623.49</data>
     </edge>
     <edge source="ACC-0044" target="CPD-0017">
       <data key="d7">TRANSACTED_WITH</data>
@@ -49074,24 +49083,6 @@
       <data key="d12">2603.61</data>
       <data key="d13">6184.56</data>
     </edge>
-    <edge source="ACC-0067" target="CPD-0049">
-      <data key="d7">TRANSACTED_WITH</data>
-      <data key="d8">2</data>
-      <data key="d9">967517.06</data>
-      <data key="d10">2</data>
-      <data key="d11">0</data>
-      <data key="d12">967517.06</data>
-      <data key="d13">0.0</data>
-    </edge>
-    <edge source="ACC-0067" target="CPD-0139">
-      <data key="d7">TRANSACTED_WITH</data>
-      <data key="d8">1</data>
-      <data key="d9">956653.0</data>
-      <data key="d10">1</data>
-      <data key="d11">0</data>
-      <data key="d12">956653.0</data>
-      <data key="d13">0.0</data>
-    </edge>
     <edge source="ACC-0067" target="CPD-0089">
       <data key="d7">TRANSACTED_WITH</data>
       <data key="d8">1</data>
@@ -49118,6 +49109,24 @@
       <data key="d11">1</data>
       <data key="d12">0.0</data>
       <data key="d13">3218.86</data>
+    </edge>
+    <edge source="ACC-0067" target="CPD-0073">
+      <data key="d7">TRANSACTED_WITH</data>
+      <data key="d8">1</data>
+      <data key="d9">983905.0</data>
+      <data key="d10">1</data>
+      <data key="d11">0</data>
+      <data key="d12">983905.0</data>
+      <data key="d13">0.0</data>
+    </edge>
+    <edge source="ACC-0067" target="CPD-0076">
+      <data key="d7">TRANSACTED_WITH</data>
+      <data key="d8">1</data>
+      <data key="d9">933757.0</data>
+      <data key="d10">1</data>
+      <data key="d11">0</data>
+      <data key="d12">933757.0</data>
+      <data key="d13">0.0</data>
     </edge>
     <edge source="ACC-0067" target="CPD-0059">
       <data key="d7">TRANSACTED_WITH</data>
@@ -49164,6 +49173,15 @@
       <data key="d12">8241.88</data>
       <data key="d13">0.0</data>
     </edge>
+    <edge source="ACC-0067" target="CPD-0049">
+      <data key="d7">TRANSACTED_WITH</data>
+      <data key="d8">1</data>
+      <data key="d9">10631.06</data>
+      <data key="d10">1</data>
+      <data key="d11">0</data>
+      <data key="d12">10631.06</data>
+      <data key="d13">0.0</data>
+    </edge>
     <edge source="ACC-0067" target="CPD-0133">
       <data key="d7">TRANSACTED_WITH</data>
       <data key="d8">2</data>
@@ -49172,6 +49190,15 @@
       <data key="d11">1</data>
       <data key="d12">3240.52</data>
       <data key="d13">2557.19</data>
+    </edge>
+    <edge source="ACC-0067" target="CPD-0150">
+      <data key="d7">TRANSACTED_WITH</data>
+      <data key="d8">1</data>
+      <data key="d9">945720.0</data>
+      <data key="d10">1</data>
+      <data key="d11">0</data>
+      <data key="d12">945720.0</data>
+      <data key="d13">0.0</data>
     </edge>
     <edge source="ACC-0067" target="CPD-0065">
       <data key="d7">TRANSACTED_WITH</data>
@@ -49216,15 +49243,6 @@
       <data key="d10">1</data>
       <data key="d11">0</data>
       <data key="d12">5000.0</data>
-      <data key="d13">0.0</data>
-    </edge>
-    <edge source="ACC-0067" target="CPD-0150">
-      <data key="d7">TRANSACTED_WITH</data>
-      <data key="d8">1</data>
-      <data key="d9">998140.0</data>
-      <data key="d10">1</data>
-      <data key="d11">0</data>
-      <data key="d12">998140.0</data>
       <data key="d13">0.0</data>
     </edge>
     <edge source="ACC-0067" target="CPD-0164">
@@ -49666,15 +49684,6 @@
       <data key="d12">0.0</data>
       <data key="d13">7987.5</data>
     </edge>
-    <edge source="ACC-0068" target="CPD-0100">
-      <data key="d7">TRANSACTED_WITH</data>
-      <data key="d8">1</data>
-      <data key="d9">981309.0</data>
-      <data key="d10">1</data>
-      <data key="d11">0</data>
-      <data key="d12">981309.0</data>
-      <data key="d13">0.0</data>
-    </edge>
     <edge source="ACC-0068" target="CPD-0055">
       <data key="d7">TRANSACTED_WITH</data>
       <data key="d8">1</data>
@@ -49711,6 +49720,15 @@
       <data key="d12">0.0</data>
       <data key="d13">1000.5</data>
     </edge>
+    <edge source="ACC-0068" target="CPD-0129">
+      <data key="d7">TRANSACTED_WITH</data>
+      <data key="d8">2</data>
+      <data key="d9">936757.81</data>
+      <data key="d10">1</data>
+      <data key="d11">1</data>
+      <data key="d12">934589.0</data>
+      <data key="d13">2168.81</data>
+    </edge>
     <edge source="ACC-0068" target="CPD-0039">
       <data key="d7">TRANSACTED_WITH</data>
       <data key="d8">1</data>
@@ -49729,23 +49747,14 @@
       <data key="d12">0.0</data>
       <data key="d13">961.03</data>
     </edge>
-    <edge source="ACC-0068" target="CPD-0070">
+    <edge source="ACC-0068" target="CPD-0157">
       <data key="d7">TRANSACTED_WITH</data>
       <data key="d8">1</data>
-      <data key="d9">923676.0</data>
+      <data key="d9">950884.0</data>
       <data key="d10">1</data>
       <data key="d11">0</data>
-      <data key="d12">923676.0</data>
+      <data key="d12">950884.0</data>
       <data key="d13">0.0</data>
-    </edge>
-    <edge source="ACC-0068" target="CPD-0129">
-      <data key="d7">TRANSACTED_WITH</data>
-      <data key="d8">1</data>
-      <data key="d9">2168.81</data>
-      <data key="d10">0</data>
-      <data key="d11">1</data>
-      <data key="d12">0.0</data>
-      <data key="d13">2168.81</data>
     </edge>
     <edge source="ACC-0068" target="CPD-0059">
       <data key="d7">TRANSACTED_WITH</data>
@@ -49783,15 +49792,6 @@
       <data key="d12">1000.0</data>
       <data key="d13">500.0</data>
     </edge>
-    <edge source="ACC-0068" target="CPD-0064">
-      <data key="d7">TRANSACTED_WITH</data>
-      <data key="d8">1</data>
-      <data key="d9">2075.38</data>
-      <data key="d10">0</data>
-      <data key="d11">1</data>
-      <data key="d12">0.0</data>
-      <data key="d13">2075.38</data>
-    </edge>
     <edge source="ACC-0068" target="CPD-0027">
       <data key="d7">TRANSACTED_WITH</data>
       <data key="d8">1</data>
@@ -49800,6 +49800,15 @@
       <data key="d11">0</data>
       <data key="d12">922955.0</data>
       <data key="d13">0.0</data>
+    </edge>
+    <edge source="ACC-0068" target="CPD-0064">
+      <data key="d7">TRANSACTED_WITH</data>
+      <data key="d8">1</data>
+      <data key="d9">2075.38</data>
+      <data key="d10">0</data>
+      <data key="d11">1</data>
+      <data key="d12">0.0</data>
+      <data key="d13">2075.38</data>
     </edge>
     <edge source="ACC-0068" target="CPD-0013">
       <data key="d7">TRANSACTED_WITH</data>
@@ -67588,13 +67597,13 @@
       <data key="d12">0.0</data>
       <data key="d13">8790.28</data>
     </edge>
-    <edge source="ACC-0108" target="CPD-0098">
+    <edge source="ACC-0108" target="CPD-0042">
       <data key="d7">TRANSACTED_WITH</data>
       <data key="d8">1</data>
-      <data key="d9">922855.0</data>
+      <data key="d9">924185.0</data>
       <data key="d10">1</data>
       <data key="d11">0</data>
-      <data key="d12">922855.0</data>
+      <data key="d12">924185.0</data>
       <data key="d13">0.0</data>
     </edge>
     <edge source="ACC-0108" target="CPD-0105">
@@ -67608,11 +67617,11 @@
     </edge>
     <edge source="ACC-0108" target="CPD-0145">
       <data key="d7">TRANSACTED_WITH</data>
-      <data key="d8">2</data>
-      <data key="d9">906108.91</data>
-      <data key="d10">1</data>
+      <data key="d8">1</data>
+      <data key="d9">2394.91</data>
+      <data key="d10">0</data>
       <data key="d11">1</data>
-      <data key="d12">903714.0</data>
+      <data key="d12">0.0</data>
       <data key="d13">2394.91</data>
     </edge>
     <edge source="ACC-0108" target="CPD-0116">
@@ -67678,13 +67687,13 @@
       <data key="d12">937012.0</data>
       <data key="d13">0.0</data>
     </edge>
-    <edge source="ACC-0108" target="CPD-0038">
+    <edge source="ACC-0108" target="CPD-0177">
       <data key="d7">TRANSACTED_WITH</data>
       <data key="d8">1</data>
-      <data key="d9">987769.0</data>
+      <data key="d9">970085.0</data>
       <data key="d10">1</data>
       <data key="d11">0</data>
-      <data key="d12">987769.0</data>
+      <data key="d12">970085.0</data>
       <data key="d13">0.0</data>
     </edge>
     <edge source="ACC-0108" target="CPD-0068">
@@ -67704,6 +67713,15 @@
       <data key="d11">1</data>
       <data key="d12">0.0</data>
       <data key="d13">2470.83</data>
+    </edge>
+    <edge source="ACC-0108" target="CPD-0008">
+      <data key="d7">TRANSACTED_WITH</data>
+      <data key="d8">1</data>
+      <data key="d9">982074.0</data>
+      <data key="d10">1</data>
+      <data key="d11">0</data>
+      <data key="d12">982074.0</data>
+      <data key="d13">0.0</data>
     </edge>
     <edge source="ACC-0108" target="CPD-0119">
       <data key="d7">TRANSACTED_WITH</data>
@@ -75502,6 +75520,15 @@
       <data key="d12">6000.44</data>
       <data key="d13">0.0</data>
     </edge>
+    <edge source="ACC-0125" target="CPD-0066">
+      <data key="d7">TRANSACTED_WITH</data>
+      <data key="d8">1</data>
+      <data key="d9">997548.0</data>
+      <data key="d10">1</data>
+      <data key="d11">0</data>
+      <data key="d12">997548.0</data>
+      <data key="d13">0.0</data>
+    </edge>
     <edge source="ACC-0125" target="CPD-0108">
       <data key="d7">TRANSACTED_WITH</data>
       <data key="d8">1</data>
@@ -75529,6 +75556,15 @@
       <data key="d12">0.0</data>
       <data key="d13">10000.0</data>
     </edge>
+    <edge source="ACC-0125" target="CPD-0153">
+      <data key="d7">TRANSACTED_WITH</data>
+      <data key="d8">1</data>
+      <data key="d9">941152.0</data>
+      <data key="d10">1</data>
+      <data key="d11">0</data>
+      <data key="d12">941152.0</data>
+      <data key="d13">0.0</data>
+    </edge>
     <edge source="ACC-0125" target="CPD-0120">
       <data key="d7">TRANSACTED_WITH</data>
       <data key="d8">1</data>
@@ -75537,15 +75573,6 @@
       <data key="d11">1</data>
       <data key="d12">0.0</data>
       <data key="d13">2201.2</data>
-    </edge>
-    <edge source="ACC-0125" target="CPD-0059">
-      <data key="d7">TRANSACTED_WITH</data>
-      <data key="d8">2</data>
-      <data key="d9">959712.85</data>
-      <data key="d10">2</data>
-      <data key="d11">0</data>
-      <data key="d12">959712.85</data>
-      <data key="d13">0.0</data>
     </edge>
     <edge source="ACC-0125" target="CPD-0004">
       <data key="d7">TRANSACTED_WITH</data>
@@ -75574,15 +75601,6 @@
       <data key="d12">945267.0</data>
       <data key="d13">0.0</data>
     </edge>
-    <edge source="ACC-0125" target="CPD-0179">
-      <data key="d7">TRANSACTED_WITH</data>
-      <data key="d8">1</data>
-      <data key="d9">3786.6</data>
-      <data key="d10">0</data>
-      <data key="d11">1</data>
-      <data key="d12">0.0</data>
-      <data key="d13">3786.6</data>
-    </edge>
     <edge source="ACC-0125" target="CPD-0113">
       <data key="d7">TRANSACTED_WITH</data>
       <data key="d8">3</data>
@@ -75591,6 +75609,15 @@
       <data key="d11">2</data>
       <data key="d12">972757.0</data>
       <data key="d13">8712.66</data>
+    </edge>
+    <edge source="ACC-0125" target="CPD-0179">
+      <data key="d7">TRANSACTED_WITH</data>
+      <data key="d8">1</data>
+      <data key="d9">3786.6</data>
+      <data key="d10">0</data>
+      <data key="d11">1</data>
+      <data key="d12">0.0</data>
+      <data key="d13">3786.6</data>
     </edge>
     <edge source="ACC-0125" target="CPD-0130">
       <data key="d7">TRANSACTED_WITH</data>
@@ -75646,14 +75673,14 @@
       <data key="d12">17526.81</data>
       <data key="d13">0.0</data>
     </edge>
-    <edge source="ACC-0125" target="CPD-0027">
+    <edge source="ACC-0125" target="CPD-0129">
       <data key="d7">TRANSACTED_WITH</data>
-      <data key="d8">1</data>
-      <data key="d9">953755.0</data>
+      <data key="d8">2</data>
+      <data key="d9">986756.0</data>
       <data key="d10">1</data>
-      <data key="d11">0</data>
-      <data key="d12">953755.0</data>
-      <data key="d13">0.0</data>
+      <data key="d11">1</data>
+      <data key="d12">981756.0</data>
+      <data key="d13">5000.0</data>
     </edge>
     <edge source="ACC-0125" target="CPD-0025">
       <data key="d7">TRANSACTED_WITH</data>
@@ -75663,15 +75690,6 @@
       <data key="d11">0</data>
       <data key="d12">975510.0</data>
       <data key="d13">0.0</data>
-    </edge>
-    <edge source="ACC-0125" target="CPD-0129">
-      <data key="d7">TRANSACTED_WITH</data>
-      <data key="d8">2</data>
-      <data key="d9">986756.0</data>
-      <data key="d10">1</data>
-      <data key="d11">1</data>
-      <data key="d12">981756.0</data>
-      <data key="d13">5000.0</data>
     </edge>
     <edge source="ACC-0125" target="CPD-0096">
       <data key="d7">TRANSACTED_WITH</data>
@@ -75797,6 +75815,15 @@
       <data key="d10">1</data>
       <data key="d11">0</data>
       <data key="d12">9142.05</data>
+      <data key="d13">0.0</data>
+    </edge>
+    <edge source="ACC-0125" target="CPD-0059">
+      <data key="d7">TRANSACTED_WITH</data>
+      <data key="d8">1</data>
+      <data key="d9">6394.85</data>
+      <data key="d10">1</data>
+      <data key="d11">0</data>
+      <data key="d12">6394.85</data>
       <data key="d13">0.0</data>
     </edge>
     <edge source="ACC-0125" target="CPD-0151">
@@ -82602,11 +82629,11 @@
     </edge>
     <edge source="ACC-0140" target="CPD-0175">
       <data key="d7">TRANSACTED_WITH</data>
-      <data key="d8">2</data>
-      <data key="d9">995813.43</data>
-      <data key="d10">1</data>
+      <data key="d8">1</data>
+      <data key="d9">12796.43</data>
+      <data key="d10">0</data>
       <data key="d11">1</data>
-      <data key="d12">983017.0</data>
+      <data key="d12">0.0</data>
       <data key="d13">12796.43</data>
     </edge>
     <edge source="ACC-0140" target="CPD-0070">
@@ -82935,11 +82962,11 @@
     </edge>
     <edge source="ACC-0140" target="CPD-0047">
       <data key="d7">TRANSACTED_WITH</data>
-      <data key="d8">2</data>
-      <data key="d9">941200.46</data>
-      <data key="d10">1</data>
+      <data key="d8">1</data>
+      <data key="d9">12701.46</data>
+      <data key="d10">0</data>
       <data key="d11">1</data>
-      <data key="d12">928499.0</data>
+      <data key="d12">0.0</data>
       <data key="d13">12701.46</data>
     </edge>
     <edge source="ACC-0140" target="CPD-0123">
@@ -82951,14 +82978,14 @@
       <data key="d12">939860.0</data>
       <data key="d13">0.0</data>
     </edge>
-    <edge source="ACC-0140" target="CPD-0179">
+    <edge source="ACC-0140" target="CPD-0048">
       <data key="d7">TRANSACTED_WITH</data>
       <data key="d8">1</data>
-      <data key="d9">2694.77</data>
-      <data key="d10">0</data>
-      <data key="d11">1</data>
-      <data key="d12">0.0</data>
-      <data key="d13">2694.77</data>
+      <data key="d9">971392.0</data>
+      <data key="d10">1</data>
+      <data key="d11">0</data>
+      <data key="d12">971392.0</data>
+      <data key="d13">0.0</data>
     </edge>
     <edge source="ACC-0140" target="CPD-0038">
       <data key="d7">TRANSACTED_WITH</data>
@@ -82968,6 +82995,24 @@
       <data key="d11">0</data>
       <data key="d12">946906.0</data>
       <data key="d13">0.0</data>
+    </edge>
+    <edge source="ACC-0140" target="CPD-0163">
+      <data key="d7">TRANSACTED_WITH</data>
+      <data key="d8">1</data>
+      <data key="d9">929398.0</data>
+      <data key="d10">1</data>
+      <data key="d11">0</data>
+      <data key="d12">929398.0</data>
+      <data key="d13">0.0</data>
+    </edge>
+    <edge source="ACC-0140" target="CPD-0179">
+      <data key="d7">TRANSACTED_WITH</data>
+      <data key="d8">1</data>
+      <data key="d9">2694.77</data>
+      <data key="d10">0</data>
+      <data key="d11">1</data>
+      <data key="d12">0.0</data>
+      <data key="d13">2694.77</data>
     </edge>
     <edge source="ACC-0140" target="CPD-0028">
       <data key="d7">TRANSACTED_WITH</data>
@@ -84438,6 +84483,15 @@
       <data key="d12">0.0</data>
       <data key="d13">12848.11</data>
     </edge>
+    <edge source="ACC-0143" target="CPD-0045">
+      <data key="d7">TRANSACTED_WITH</data>
+      <data key="d8">1</data>
+      <data key="d9">935984.0</data>
+      <data key="d10">1</data>
+      <data key="d11">0</data>
+      <data key="d12">935984.0</data>
+      <data key="d13">0.0</data>
+    </edge>
     <edge source="ACC-0143" target="CPD-0101">
       <data key="d7">TRANSACTED_WITH</data>
       <data key="d8">1</data>
@@ -84456,15 +84510,6 @@
       <data key="d12">0.0</data>
       <data key="d13">4303.3</data>
     </edge>
-    <edge source="ACC-0143" target="CPD-0138">
-      <data key="d7">TRANSACTED_WITH</data>
-      <data key="d8">1</data>
-      <data key="d9">983265.0</data>
-      <data key="d10">1</data>
-      <data key="d11">0</data>
-      <data key="d12">983265.0</data>
-      <data key="d13">0.0</data>
-    </edge>
     <edge source="ACC-0143" target="CPD-0091">
       <data key="d7">TRANSACTED_WITH</data>
       <data key="d8">1</data>
@@ -84472,6 +84517,15 @@
       <data key="d10">1</data>
       <data key="d11">0</data>
       <data key="d12">934710.0</data>
+      <data key="d13">0.0</data>
+    </edge>
+    <edge source="ACC-0143" target="CPD-0138">
+      <data key="d7">TRANSACTED_WITH</data>
+      <data key="d8">1</data>
+      <data key="d9">983265.0</data>
+      <data key="d10">1</data>
+      <data key="d11">0</data>
+      <data key="d12">983265.0</data>
       <data key="d13">0.0</data>
     </edge>
     <edge source="ACC-0143" target="CPD-0054">
@@ -84564,15 +84618,6 @@
       <data key="d12">0.0</data>
       <data key="d13">3849.88</data>
     </edge>
-    <edge source="ACC-0143" target="CPD-0156">
-      <data key="d7">TRANSACTED_WITH</data>
-      <data key="d8">1</data>
-      <data key="d9">915902.0</data>
-      <data key="d10">1</data>
-      <data key="d11">0</data>
-      <data key="d12">915902.0</data>
-      <data key="d13">0.0</data>
-    </edge>
     <edge source="ACC-0143" target="CPD-0133">
       <data key="d7">TRANSACTED_WITH</data>
       <data key="d8">1</data>
@@ -84609,15 +84654,6 @@
       <data key="d12">0.0</data>
       <data key="d13">2456.18</data>
     </edge>
-    <edge source="ACC-0143" target="CPD-0045">
-      <data key="d7">TRANSACTED_WITH</data>
-      <data key="d8">1</data>
-      <data key="d9">921026.0</data>
-      <data key="d10">1</data>
-      <data key="d11">0</data>
-      <data key="d12">921026.0</data>
-      <data key="d13">0.0</data>
-    </edge>
     <edge source="ACC-0143" target="CPD-0127">
       <data key="d7">TRANSACTED_WITH</data>
       <data key="d8">1</data>
@@ -84644,6 +84680,15 @@
       <data key="d11">1</data>
       <data key="d12">0.0</data>
       <data key="d13">1000.0</data>
+    </edge>
+    <edge source="ACC-0143" target="CPD-0032">
+      <data key="d7">TRANSACTED_WITH</data>
+      <data key="d8">1</data>
+      <data key="d9">900244.0</data>
+      <data key="d10">1</data>
+      <data key="d11">0</data>
+      <data key="d12">900244.0</data>
+      <data key="d13">0.0</data>
     </edge>
     <edge source="ACC-0143" target="CPD-0071">
       <data key="d7">TRANSACTED_WITH</data>
@@ -98297,6 +98342,15 @@
       <data key="d12">54758.8</data>
       <data key="d13">0.0</data>
     </edge>
+    <edge source="ACC-0172" target="CPD-0017">
+      <data key="d7">TRANSACTED_WITH</data>
+      <data key="d8">1</data>
+      <data key="d9">986241.0</data>
+      <data key="d10">1</data>
+      <data key="d11">0</data>
+      <data key="d12">986241.0</data>
+      <data key="d13">0.0</data>
+    </edge>
     <edge source="ACC-0172" target="CPD-0132">
       <data key="d7">TRANSACTED_WITH</data>
       <data key="d8">1</data>
@@ -98341,15 +98395,6 @@
       <data key="d11">1</data>
       <data key="d12">0.0</data>
       <data key="d13">3551.68</data>
-    </edge>
-    <edge source="ACC-0172" target="CPD-0088">
-      <data key="d7">TRANSACTED_WITH</data>
-      <data key="d8">1</data>
-      <data key="d9">986579.0</data>
-      <data key="d10">1</data>
-      <data key="d11">0</data>
-      <data key="d12">986579.0</data>
-      <data key="d13">0.0</data>
     </edge>
     <edge source="ACC-0172" target="CPD-0094">
       <data key="d7">TRANSACTED_WITH</data>
@@ -98432,6 +98477,15 @@
       <data key="d12">962588.0</data>
       <data key="d13">0.0</data>
     </edge>
+    <edge source="ACC-0172" target="CPD-0098">
+      <data key="d7">TRANSACTED_WITH</data>
+      <data key="d8">2</data>
+      <data key="d9">923560.0</data>
+      <data key="d10">1</data>
+      <data key="d11">1</data>
+      <data key="d12">918560.0</data>
+      <data key="d13">5000.0</data>
+    </edge>
     <edge source="ACC-0172" target="CPD-0047">
       <data key="d7">TRANSACTED_WITH</data>
       <data key="d8">1</data>
@@ -98494,15 +98548,6 @@
       <data key="d11">1</data>
       <data key="d12">0.0</data>
       <data key="d13">8101.18</data>
-    </edge>
-    <edge source="ACC-0172" target="CPD-0017">
-      <data key="d7">TRANSACTED_WITH</data>
-      <data key="d8">1</data>
-      <data key="d9">926531.0</data>
-      <data key="d10">1</data>
-      <data key="d11">0</data>
-      <data key="d12">926531.0</data>
-      <data key="d13">0.0</data>
     </edge>
     <edge source="ACC-0172" target="CPD-0075">
       <data key="d7">TRANSACTED_WITH</data>
@@ -98620,15 +98665,6 @@
       <data key="d11">2</data>
       <data key="d12">0.0</data>
       <data key="d13">37507.38</data>
-    </edge>
-    <edge source="ACC-0172" target="CPD-0098">
-      <data key="d7">TRANSACTED_WITH</data>
-      <data key="d8">1</data>
-      <data key="d9">5000.0</data>
-      <data key="d10">0</data>
-      <data key="d11">1</data>
-      <data key="d12">0.0</data>
-      <data key="d13">5000.0</data>
     </edge>
     <edge source="ACC-0172" target="CPD-0048">
       <data key="d7">TRANSACTED_WITH</data>
@@ -100225,31 +100261,13 @@
       <data key="d12">0.0</data>
       <data key="d13">11878.25</data>
     </edge>
-    <edge source="ACC-0176" target="CPD-0097">
+    <edge source="ACC-0176" target="CPD-0078">
       <data key="d7">TRANSACTED_WITH</data>
       <data key="d8">1</data>
-      <data key="d9">955712.0</data>
+      <data key="d9">977328.0</data>
       <data key="d10">1</data>
       <data key="d11">0</data>
-      <data key="d12">955712.0</data>
-      <data key="d13">0.0</data>
-    </edge>
-    <edge source="ACC-0176" target="CPD-0031">
-      <data key="d7">TRANSACTED_WITH</data>
-      <data key="d8">1</data>
-      <data key="d9">960573.0</data>
-      <data key="d10">1</data>
-      <data key="d11">0</data>
-      <data key="d12">960573.0</data>
-      <data key="d13">0.0</data>
-    </edge>
-    <edge source="ACC-0176" target="CPD-0113">
-      <data key="d7">TRANSACTED_WITH</data>
-      <data key="d8">1</data>
-      <data key="d9">943978.0</data>
-      <data key="d10">1</data>
-      <data key="d11">0</data>
-      <data key="d12">943978.0</data>
+      <data key="d12">977328.0</data>
       <data key="d13">0.0</data>
     </edge>
     <edge source="ACC-0176" target="CPD-0060">
@@ -100261,13 +100279,13 @@
       <data key="d12">0.0</data>
       <data key="d13">5000.0</data>
     </edge>
-    <edge source="ACC-0176" target="CPD-0078">
+    <edge source="ACC-0176" target="CPD-0118">
       <data key="d7">TRANSACTED_WITH</data>
       <data key="d8">1</data>
-      <data key="d9">977328.0</data>
+      <data key="d9">938846.0</data>
       <data key="d10">1</data>
       <data key="d11">0</data>
-      <data key="d12">977328.0</data>
+      <data key="d12">938846.0</data>
       <data key="d13">0.0</data>
     </edge>
     <edge source="ACC-0176" target="CPD-0039">
@@ -100281,11 +100299,11 @@
     </edge>
     <edge source="ACC-0176" target="CPD-0086">
       <data key="d7">TRANSACTED_WITH</data>
-      <data key="d8">1</data>
-      <data key="d9">11090.74</data>
-      <data key="d10">1</data>
+      <data key="d8">2</data>
+      <data key="d9">956057.74</data>
+      <data key="d10">2</data>
       <data key="d11">0</data>
-      <data key="d12">11090.74</data>
+      <data key="d12">956057.74</data>
       <data key="d13">0.0</data>
     </edge>
     <edge source="ACC-0176" target="CPD-0054">
@@ -100313,6 +100331,15 @@
       <data key="d10">1</data>
       <data key="d11">0</data>
       <data key="d12">6637.02</data>
+      <data key="d13">0.0</data>
+    </edge>
+    <edge source="ACC-0176" target="CPD-0109">
+      <data key="d7">TRANSACTED_WITH</data>
+      <data key="d8">1</data>
+      <data key="d9">934913.0</data>
+      <data key="d10">1</data>
+      <data key="d11">0</data>
+      <data key="d12">934913.0</data>
       <data key="d13">0.0</data>
     </edge>
     <edge source="ACC-0176" target="CPD-0020">
@@ -101492,6 +101519,15 @@
       <data key="d12">6716.27</data>
       <data key="d13">0.0</data>
     </edge>
+    <edge source="ACC-0179" target="CPD-0106">
+      <data key="d7">TRANSACTED_WITH</data>
+      <data key="d8">1</data>
+      <data key="d9">994978.0</data>
+      <data key="d10">1</data>
+      <data key="d11">0</data>
+      <data key="d12">994978.0</data>
+      <data key="d13">0.0</data>
+    </edge>
     <edge source="ACC-0179" target="CPD-0151">
       <data key="d7">TRANSACTED_WITH</data>
       <data key="d8">2</data>
@@ -101518,15 +101554,6 @@
       <data key="d11">2</data>
       <data key="d12">0.0</data>
       <data key="d13">74861.88</data>
-    </edge>
-    <edge source="ACC-0179" target="CPD-0106">
-      <data key="d7">TRANSACTED_WITH</data>
-      <data key="d8">1</data>
-      <data key="d9">994978.0</data>
-      <data key="d10">1</data>
-      <data key="d11">0</data>
-      <data key="d12">994978.0</data>
-      <data key="d13">0.0</data>
     </edge>
     <edge source="ACC-0179" target="CPD-0027">
       <data key="d7">TRANSACTED_WITH</data>
@@ -116561,24 +116588,6 @@
       <data key="d7">USES_IP</data>
       <data key="d8">4</data>
     </edge>
-    <edge source="ACC-0211" target="CPD-0053">
-      <data key="d7">TRANSACTED_WITH</data>
-      <data key="d8">1</data>
-      <data key="d9">998420.0</data>
-      <data key="d10">1</data>
-      <data key="d11">0</data>
-      <data key="d12">998420.0</data>
-      <data key="d13">0.0</data>
-    </edge>
-    <edge source="ACC-0211" target="CPD-0158">
-      <data key="d7">TRANSACTED_WITH</data>
-      <data key="d8">1</data>
-      <data key="d9">924494.0</data>
-      <data key="d10">1</data>
-      <data key="d11">0</data>
-      <data key="d12">924494.0</data>
-      <data key="d13">0.0</data>
-    </edge>
     <edge source="ACC-0211" target="CPD-0128">
       <data key="d7">TRANSACTED_WITH</data>
       <data key="d8">1</data>
@@ -116586,6 +116595,15 @@
       <data key="d10">1</data>
       <data key="d11">0</data>
       <data key="d12">1000.0</data>
+      <data key="d13">0.0</data>
+    </edge>
+    <edge source="ACC-0211" target="CPD-0048">
+      <data key="d7">TRANSACTED_WITH</data>
+      <data key="d8">1</data>
+      <data key="d9">969112.0</data>
+      <data key="d10">1</data>
+      <data key="d11">0</data>
+      <data key="d12">969112.0</data>
       <data key="d13">0.0</data>
     </edge>
     <edge source="ACC-0211" target="CPD-0098">
@@ -116624,13 +116642,13 @@
       <data key="d12">6594.46</data>
       <data key="d13">0.0</data>
     </edge>
-    <edge source="ACC-0211" target="CPD-0104">
+    <edge source="ACC-0211" target="CPD-0147">
       <data key="d7">TRANSACTED_WITH</data>
       <data key="d8">1</data>
-      <data key="d9">929752.0</data>
+      <data key="d9">979526.0</data>
       <data key="d10">1</data>
       <data key="d11">0</data>
-      <data key="d12">929752.0</data>
+      <data key="d12">979526.0</data>
       <data key="d13">0.0</data>
     </edge>
     <edge source="ACC-0211" target="CPD-0059">
@@ -116660,14 +116678,14 @@
       <data key="d12">0.0</data>
       <data key="d13">3805.24</data>
     </edge>
-    <edge source="ACC-0211" target="CPD-0001">
+    <edge source="ACC-0211" target="CPD-0083">
       <data key="d7">TRANSACTED_WITH</data>
-      <data key="d8">1</data>
-      <data key="d9">965247.0</data>
+      <data key="d8">2</data>
+      <data key="d9">970864.73</data>
       <data key="d10">1</data>
-      <data key="d11">0</data>
-      <data key="d12">965247.0</data>
-      <data key="d13">0.0</data>
+      <data key="d11">1</data>
+      <data key="d12">968223.0</data>
+      <data key="d13">2641.73</data>
     </edge>
     <edge source="ACC-0211" target="CPD-0082">
       <data key="d7">TRANSACTED_WITH</data>
@@ -116696,15 +116714,6 @@
       <data key="d12">0.0</data>
       <data key="d13">3455.26</data>
     </edge>
-    <edge source="ACC-0211" target="CPD-0083">
-      <data key="d7">TRANSACTED_WITH</data>
-      <data key="d8">1</data>
-      <data key="d9">2641.73</data>
-      <data key="d10">0</data>
-      <data key="d11">1</data>
-      <data key="d12">0.0</data>
-      <data key="d13">2641.73</data>
-    </edge>
     <edge source="ACC-0211" target="CPD-0051">
       <data key="d7">TRANSACTED_WITH</data>
       <data key="d8">1</data>
@@ -116712,6 +116721,15 @@
       <data key="d10">1</data>
       <data key="d11">0</data>
       <data key="d12">5000.0</data>
+      <data key="d13">0.0</data>
+    </edge>
+    <edge source="ACC-0211" target="CPD-0112">
+      <data key="d7">TRANSACTED_WITH</data>
+      <data key="d8">1</data>
+      <data key="d9">995565.0</data>
+      <data key="d10">1</data>
+      <data key="d11">0</data>
+      <data key="d12">995565.0</data>
       <data key="d13">0.0</data>
     </edge>
     <edge source="ACC-0211" target="CPD-0134">
@@ -116732,6 +116750,15 @@
       <data key="d12">937434.0</data>
       <data key="d13">0.0</data>
     </edge>
+    <edge source="ACC-0211" target="CPD-0121">
+      <data key="d7">TRANSACTED_WITH</data>
+      <data key="d8">1</data>
+      <data key="d9">930156.0</data>
+      <data key="d10">1</data>
+      <data key="d11">0</data>
+      <data key="d12">930156.0</data>
+      <data key="d13">0.0</data>
+    </edge>
     <edge source="ACC-0211" target="CPD-0014">
       <data key="d7">TRANSACTED_WITH</data>
       <data key="d8">1</data>
@@ -116740,15 +116767,6 @@
       <data key="d11">1</data>
       <data key="d12">0.0</data>
       <data key="d13">1612.71</data>
-    </edge>
-    <edge source="ACC-0211" target="CPD-0150">
-      <data key="d7">TRANSACTED_WITH</data>
-      <data key="d8">1</data>
-      <data key="d9">944475.0</data>
-      <data key="d10">1</data>
-      <data key="d11">0</data>
-      <data key="d12">944475.0</data>
-      <data key="d13">0.0</data>
     </edge>
     <edge source="ACC-0211" target="CPD-0171">
       <data key="d7">TRANSACTED_WITH</data>
@@ -117805,15 +117823,6 @@
       <data key="d12">0.0</data>
       <data key="d13">2567.06</data>
     </edge>
-    <edge source="ACC-0214" target="CPD-0079">
-      <data key="d7">TRANSACTED_WITH</data>
-      <data key="d8">1</data>
-      <data key="d9">925873.0</data>
-      <data key="d10">1</data>
-      <data key="d11">0</data>
-      <data key="d12">925873.0</data>
-      <data key="d13">0.0</data>
-    </edge>
     <edge source="ACC-0214" target="CPD-0159">
       <data key="d7">TRANSACTED_WITH</data>
       <data key="d8">1</data>
@@ -117841,13 +117850,13 @@
       <data key="d12">7684.25</data>
       <data key="d13">0.0</data>
     </edge>
-    <edge source="ACC-0214" target="CPD-0073">
+    <edge source="ACC-0214" target="CPD-0107">
       <data key="d7">TRANSACTED_WITH</data>
       <data key="d8">1</data>
-      <data key="d9">976345.0</data>
+      <data key="d9">929244.0</data>
       <data key="d10">1</data>
       <data key="d11">0</data>
-      <data key="d12">976345.0</data>
+      <data key="d12">929244.0</data>
       <data key="d13">0.0</data>
     </edge>
     <edge source="ACC-0214" target="CPD-0088">
@@ -117886,6 +117895,15 @@
       <data key="d12">17288.61</data>
       <data key="d13">0.0</data>
     </edge>
+    <edge source="ACC-0214" target="CPD-0051">
+      <data key="d7">TRANSACTED_WITH</data>
+      <data key="d8">1</data>
+      <data key="d9">970665.0</data>
+      <data key="d10">1</data>
+      <data key="d11">0</data>
+      <data key="d12">970665.0</data>
+      <data key="d13">0.0</data>
+    </edge>
     <edge source="ACC-0214" target="CPD-0171">
       <data key="d7">TRANSACTED_WITH</data>
       <data key="d8">1</data>
@@ -117913,14 +117931,14 @@
       <data key="d12">949521.0</data>
       <data key="d13">3634.14</data>
     </edge>
-    <edge source="ACC-0214" target="CPD-0042">
+    <edge source="ACC-0214" target="CPD-0026">
       <data key="d7">TRANSACTED_WITH</data>
-      <data key="d8">1</data>
-      <data key="d9">994022.0</data>
+      <data key="d8">2</data>
+      <data key="d9">935164.13</data>
       <data key="d10">1</data>
-      <data key="d11">0</data>
-      <data key="d12">994022.0</data>
-      <data key="d13">0.0</data>
+      <data key="d11">1</data>
+      <data key="d12">931229.0</data>
+      <data key="d13">3935.13</data>
     </edge>
     <edge source="ACC-0214" target="CPD-0156">
       <data key="d7">TRANSACTED_WITH</data>
@@ -117940,6 +117958,15 @@
       <data key="d12">5333.52</data>
       <data key="d13">0.0</data>
     </edge>
+    <edge source="ACC-0214" target="CPD-0057">
+      <data key="d7">TRANSACTED_WITH</data>
+      <data key="d8">1</data>
+      <data key="d9">939287.0</data>
+      <data key="d10">1</data>
+      <data key="d11">0</data>
+      <data key="d12">939287.0</data>
+      <data key="d13">0.0</data>
+    </edge>
     <edge source="ACC-0214" target="CPD-0038">
       <data key="d7">TRANSACTED_WITH</data>
       <data key="d8">1</data>
@@ -117947,15 +117974,6 @@
       <data key="d10">1</data>
       <data key="d11">0</data>
       <data key="d12">9516.74</data>
-      <data key="d13">0.0</data>
-    </edge>
-    <edge source="ACC-0214" target="CPD-0146">
-      <data key="d7">TRANSACTED_WITH</data>
-      <data key="d8">1</data>
-      <data key="d9">904618.0</data>
-      <data key="d10">1</data>
-      <data key="d11">0</data>
-      <data key="d12">904618.0</data>
       <data key="d13">0.0</data>
     </edge>
     <edge source="ACC-0214" target="CPD-0119">
@@ -118020,15 +118038,6 @@
       <data key="d11">1</data>
       <data key="d12">0.0</data>
       <data key="d13">6920.63</data>
-    </edge>
-    <edge source="ACC-0214" target="CPD-0026">
-      <data key="d7">TRANSACTED_WITH</data>
-      <data key="d8">1</data>
-      <data key="d9">3935.13</data>
-      <data key="d10">0</data>
-      <data key="d11">1</data>
-      <data key="d12">0.0</data>
-      <data key="d13">3935.13</data>
     </edge>
     <edge source="ACC-0214" target="CPD-0118">
       <data key="d7">TRANSACTED_WITH</data>
@@ -124292,19 +124301,19 @@
     </edge>
     <edge source="ACC-0230" target="DEV-76C2CAE3A729">
       <data key="d7">USES_DEVICE</data>
-      <data key="d8">4</data>
+      <data key="d8">3</data>
     </edge>
     <edge source="ACC-0230" target="DEV-A9E5A080F88A">
       <data key="d7">USES_DEVICE</data>
-      <data key="d8">4</data>
+      <data key="d8">6</data>
     </edge>
     <edge source="ACC-0230" target="DEV-075EFC3FFEE8">
       <data key="d7">USES_DEVICE</data>
-      <data key="d8">7</data>
+      <data key="d8">5</data>
     </edge>
     <edge source="ACC-0230" target="117.189.193.28">
       <data key="d7">USES_IP</data>
-      <data key="d8">4</data>
+      <data key="d8">3</data>
     </edge>
     <edge source="ACC-0230" target="223.166.43.196">
       <data key="d7">USES_IP</data>
@@ -124313,6 +124322,24 @@
     <edge source="ACC-0230" target="103.151.113.23">
       <data key="d7">USES_IP</data>
       <data key="d8">3</data>
+    </edge>
+    <edge source="ACC-0230" target="CPF-0005">
+      <data key="d7">TRANSACTED_WITH</data>
+      <data key="d8">1</data>
+      <data key="d9">718904.0</data>
+      <data key="d10">0</data>
+      <data key="d11">1</data>
+      <data key="d12">0.0</data>
+      <data key="d13">718904.0</data>
+    </edge>
+    <edge source="ACC-0230" target="CPF-0003">
+      <data key="d7">TRANSACTED_WITH</data>
+      <data key="d8">2</data>
+      <data key="d9">508156.0</data>
+      <data key="d10">0</data>
+      <data key="d11">2</data>
+      <data key="d12">0.0</data>
+      <data key="d13">508156.0</data>
     </edge>
     <edge source="ACC-0230" target="CPD-0057">
       <data key="d7">TRANSACTED_WITH</data>
@@ -124368,6 +124395,15 @@
       <data key="d12">55755.06</data>
       <data key="d13">0.0</data>
     </edge>
+    <edge source="ACC-0230" target="CPF-0015">
+      <data key="d7">TRANSACTED_WITH</data>
+      <data key="d8">3</data>
+      <data key="d9">332381.08</data>
+      <data key="d10">3</data>
+      <data key="d11">0</data>
+      <data key="d12">332381.08</data>
+      <data key="d13">0.0</data>
+    </edge>
     <edge source="ACC-0230" target="CPD-0005">
       <data key="d7">TRANSACTED_WITH</data>
       <data key="d8">1</data>
@@ -124376,42 +124412,6 @@
       <data key="d11">0</data>
       <data key="d12">9713.1</data>
       <data key="d13">0.0</data>
-    </edge>
-    <edge source="ACC-0230" target="CPF-0001">
-      <data key="d7">TRANSACTED_WITH</data>
-      <data key="d8">1</data>
-      <data key="d9">825423.0</data>
-      <data key="d10">0</data>
-      <data key="d11">1</data>
-      <data key="d12">0.0</data>
-      <data key="d13">825423.0</data>
-    </edge>
-    <edge source="ACC-0230" target="CPD-0150">
-      <data key="d7">TRANSACTED_WITH</data>
-      <data key="d8">1</data>
-      <data key="d9">984701.0</data>
-      <data key="d10">1</data>
-      <data key="d11">0</data>
-      <data key="d12">984701.0</data>
-      <data key="d13">0.0</data>
-    </edge>
-    <edge source="ACC-0230" target="CPF-0015">
-      <data key="d7">TRANSACTED_WITH</data>
-      <data key="d8">3</data>
-      <data key="d9">311765.95999999996</data>
-      <data key="d10">3</data>
-      <data key="d11">0</data>
-      <data key="d12">311765.96</data>
-      <data key="d13">0.0</data>
-    </edge>
-    <edge source="ACC-0230" target="CPD-0076">
-      <data key="d7">TRANSACTED_WITH</data>
-      <data key="d8">2</data>
-      <data key="d9">943731.0</data>
-      <data key="d10">1</data>
-      <data key="d11">1</data>
-      <data key="d12">918731.0</data>
-      <data key="d13">25000.0</data>
     </edge>
     <edge source="ACC-0230" target="CPD-0139">
       <data key="d7">TRANSACTED_WITH</data>
@@ -124422,6 +124422,15 @@
       <data key="d12">0.0</data>
       <data key="d13">5000.0</data>
     </edge>
+    <edge source="ACC-0230" target="CPD-0153">
+      <data key="d7">TRANSACTED_WITH</data>
+      <data key="d8">1</data>
+      <data key="d9">919512.0</data>
+      <data key="d10">1</data>
+      <data key="d11">0</data>
+      <data key="d12">919512.0</data>
+      <data key="d13">0.0</data>
+    </edge>
     <edge source="ACC-0230" target="CPD-0095">
       <data key="d7">TRANSACTED_WITH</data>
       <data key="d8">2</data>
@@ -124431,40 +124440,22 @@
       <data key="d12">0.0</data>
       <data key="d13">10328.75</data>
     </edge>
-    <edge source="ACC-0230" target="CPF-0002">
-      <data key="d7">TRANSACTED_WITH</data>
-      <data key="d8">3</data>
-      <data key="d9">981528.0</data>
-      <data key="d10">0</data>
-      <data key="d11">3</data>
-      <data key="d12">0.0</data>
-      <data key="d13">981528.0</data>
-    </edge>
     <edge source="ACC-0230" target="CPD-0039">
       <data key="d7">TRANSACTED_WITH</data>
-      <data key="d8">2</data>
-      <data key="d9">956189.32</data>
-      <data key="d10">1</data>
+      <data key="d8">1</data>
+      <data key="d9">1213.32</data>
+      <data key="d10">0</data>
       <data key="d11">1</data>
-      <data key="d12">954976.0</data>
+      <data key="d12">0.0</data>
       <data key="d13">1213.32</data>
     </edge>
-    <edge source="ACC-0230" target="CPF-0005">
-      <data key="d7">TRANSACTED_WITH</data>
-      <data key="d8">4</data>
-      <data key="d9">2718951.0</data>
-      <data key="d10">0</data>
-      <data key="d11">4</data>
-      <data key="d12">0.0</data>
-      <data key="d13">2718951.0</data>
-    </edge>
-    <edge source="ACC-0230" target="CPD-0011">
+    <edge source="ACC-0230" target="CPD-0150">
       <data key="d7">TRANSACTED_WITH</data>
       <data key="d8">1</data>
-      <data key="d9">984631.0</data>
+      <data key="d9">910030.0</data>
       <data key="d10">1</data>
       <data key="d11">0</data>
-      <data key="d12">984631.0</data>
+      <data key="d12">910030.0</data>
       <data key="d13">0.0</data>
     </edge>
     <edge source="ACC-0230" target="CPD-0074">
@@ -124476,23 +124467,50 @@
       <data key="d12">7013.8</data>
       <data key="d13">0.0</data>
     </edge>
-    <edge source="ACC-0230" target="CPD-0104">
+    <edge source="ACC-0230" target="CPF-0002">
+      <data key="d7">TRANSACTED_WITH</data>
+      <data key="d8">3</data>
+      <data key="d9">1194533.0</data>
+      <data key="d10">0</data>
+      <data key="d11">3</data>
+      <data key="d12">0.0</data>
+      <data key="d13">1194533.0</data>
+    </edge>
+    <edge source="ACC-0230" target="CPD-0157">
       <data key="d7">TRANSACTED_WITH</data>
       <data key="d8">1</data>
-      <data key="d9">954859.0</data>
+      <data key="d9">917379.0</data>
       <data key="d10">1</data>
       <data key="d11">0</data>
-      <data key="d12">954859.0</data>
+      <data key="d12">917379.0</data>
       <data key="d13">0.0</data>
     </edge>
-    <edge source="ACC-0230" target="CPD-0101">
+    <edge source="ACC-0230" target="CPD-0083">
       <data key="d7">TRANSACTED_WITH</data>
       <data key="d8">1</data>
-      <data key="d9">955375.0</data>
+      <data key="d9">953244.0</data>
       <data key="d10">1</data>
       <data key="d11">0</data>
-      <data key="d12">955375.0</data>
+      <data key="d12">953244.0</data>
       <data key="d13">0.0</data>
+    </edge>
+    <edge source="ACC-0230" target="CPD-0037">
+      <data key="d7">TRANSACTED_WITH</data>
+      <data key="d8">1</data>
+      <data key="d9">933412.0</data>
+      <data key="d10">1</data>
+      <data key="d11">0</data>
+      <data key="d12">933412.0</data>
+      <data key="d13">0.0</data>
+    </edge>
+    <edge source="ACC-0230" target="CPD-0076">
+      <data key="d7">TRANSACTED_WITH</data>
+      <data key="d8">1</data>
+      <data key="d9">25000.0</data>
+      <data key="d10">0</data>
+      <data key="d11">1</data>
+      <data key="d12">0.0</data>
+      <data key="d13">25000.0</data>
     </edge>
     <edge source="ACC-0230" target="CPD-0036">
       <data key="d7">TRANSACTED_WITH</data>
@@ -124501,6 +124519,15 @@
       <data key="d10">1</data>
       <data key="d11">0</data>
       <data key="d12">998182.0</data>
+      <data key="d13">0.0</data>
+    </edge>
+    <edge source="ACC-0230" target="CPD-0162">
+      <data key="d7">TRANSACTED_WITH</data>
+      <data key="d8">1</data>
+      <data key="d9">903473.0</data>
+      <data key="d10">1</data>
+      <data key="d11">0</data>
+      <data key="d12">903473.0</data>
       <data key="d13">0.0</data>
     </edge>
     <edge source="ACC-0230" target="CPD-0017">
@@ -124539,15 +124566,6 @@
       <data key="d12">0.0</data>
       <data key="d13">3551.94</data>
     </edge>
-    <edge source="ACC-0230" target="CPF-0004">
-      <data key="d7">TRANSACTED_WITH</data>
-      <data key="d8">1</data>
-      <data key="d9">414643.0</data>
-      <data key="d10">0</data>
-      <data key="d11">1</data>
-      <data key="d12">0.0</data>
-      <data key="d13">414643.0</data>
-    </edge>
     <edge source="ACC-0230" target="CPD-0081">
       <data key="d7">TRANSACTED_WITH</data>
       <data key="d8">1</data>
@@ -124556,6 +124574,15 @@
       <data key="d11">1</data>
       <data key="d12">0.0</data>
       <data key="d13">7406.71</data>
+    </edge>
+    <edge source="ACC-0230" target="CPF-0004">
+      <data key="d7">TRANSACTED_WITH</data>
+      <data key="d8">2</data>
+      <data key="d9">1437504.0</data>
+      <data key="d10">0</data>
+      <data key="d11">2</data>
+      <data key="d12">0.0</data>
+      <data key="d13">1437504.0</data>
     </edge>
     <edge source="ACC-0230" target="CPD-0120">
       <data key="d7">TRANSACTED_WITH</data>
@@ -136099,24 +136126,6 @@
       <data key="d12">0.0</data>
       <data key="d13">1000.0</data>
     </edge>
-    <edge source="ACC-0253" target="CPD-0071">
-      <data key="d7">TRANSACTED_WITH</data>
-      <data key="d8">1</data>
-      <data key="d9">986977.0</data>
-      <data key="d10">1</data>
-      <data key="d11">0</data>
-      <data key="d12">986977.0</data>
-      <data key="d13">0.0</data>
-    </edge>
-    <edge source="ACC-0253" target="CPD-0013">
-      <data key="d7">TRANSACTED_WITH</data>
-      <data key="d8">1</data>
-      <data key="d9">971635.0</data>
-      <data key="d10">1</data>
-      <data key="d11">0</data>
-      <data key="d12">971635.0</data>
-      <data key="d13">0.0</data>
-    </edge>
     <edge source="ACC-0253" target="CPD-0064">
       <data key="d7">TRANSACTED_WITH</data>
       <data key="d8">1</data>
@@ -136125,6 +136134,15 @@
       <data key="d11">1</data>
       <data key="d12">0.0</data>
       <data key="d13">1000.0</data>
+    </edge>
+    <edge source="ACC-0253" target="CPD-0130">
+      <data key="d7">TRANSACTED_WITH</data>
+      <data key="d8">1</data>
+      <data key="d9">992965.0</data>
+      <data key="d10">1</data>
+      <data key="d11">0</data>
+      <data key="d12">992965.0</data>
+      <data key="d13">0.0</data>
     </edge>
     <edge source="ACC-0253" target="CPD-0049">
       <data key="d7">TRANSACTED_WITH</data>
@@ -136161,6 +136179,15 @@
       <data key="d11">1</data>
       <data key="d12">0.0</data>
       <data key="d13">2567.48</data>
+    </edge>
+    <edge source="ACC-0253" target="CPD-0140">
+      <data key="d7">TRANSACTED_WITH</data>
+      <data key="d8">1</data>
+      <data key="d9">970516.0</data>
+      <data key="d10">1</data>
+      <data key="d11">0</data>
+      <data key="d12">970516.0</data>
+      <data key="d13">0.0</data>
     </edge>
     <edge source="ACC-0253" target="CPD-0024">
       <data key="d7">TRANSACTED_WITH</data>
@@ -143342,15 +143369,6 @@
       <data key="d12">951943.0</data>
       <data key="d13">0.0</data>
     </edge>
-    <edge source="ACC-0267" target="CPD-0016">
-      <data key="d7">TRANSACTED_WITH</data>
-      <data key="d8">1</data>
-      <data key="d9">2361.63</data>
-      <data key="d10">1</data>
-      <data key="d11">0</data>
-      <data key="d12">2361.63</data>
-      <data key="d13">0.0</data>
-    </edge>
     <edge source="ACC-0267" target="CPD-0045">
       <data key="d7">TRANSACTED_WITH</data>
       <data key="d8">1</data>
@@ -143358,6 +143376,15 @@
       <data key="d10">1</data>
       <data key="d11">0</data>
       <data key="d12">998758.0</data>
+      <data key="d13">0.0</data>
+    </edge>
+    <edge source="ACC-0267" target="CPD-0016">
+      <data key="d7">TRANSACTED_WITH</data>
+      <data key="d8">1</data>
+      <data key="d9">2361.63</data>
+      <data key="d10">1</data>
+      <data key="d11">0</data>
+      <data key="d12">2361.63</data>
       <data key="d13">0.0</data>
     </edge>
     <edge source="ACC-0268" target="ADDR::building 81, street 882, zone 38, al sadd, doha, qatar">
@@ -145641,6 +145668,15 @@
       <data key="d12">3597.79</data>
       <data key="d13">0.0</data>
     </edge>
+    <edge source="ACC-0273" target="CPD-0064">
+      <data key="d7">TRANSACTED_WITH</data>
+      <data key="d8">1</data>
+      <data key="d9">994964.0</data>
+      <data key="d10">1</data>
+      <data key="d11">0</data>
+      <data key="d12">994964.0</data>
+      <data key="d13">0.0</data>
+    </edge>
     <edge source="ACC-0273" target="CPD-0043">
       <data key="d7">TRANSACTED_WITH</data>
       <data key="d8">1</data>
@@ -145657,15 +145693,6 @@
       <data key="d10">3</data>
       <data key="d11">0</data>
       <data key="d12">101383.14</data>
-      <data key="d13">0.0</data>
-    </edge>
-    <edge source="ACC-0273" target="CPD-0064">
-      <data key="d7">TRANSACTED_WITH</data>
-      <data key="d8">1</data>
-      <data key="d9">994964.0</data>
-      <data key="d10">1</data>
-      <data key="d11">0</data>
-      <data key="d12">994964.0</data>
       <data key="d13">0.0</data>
     </edge>
     <edge source="ACC-0273" target="CPD-0021">
@@ -150456,15 +150483,6 @@
       <data key="d12">136216.57</data>
       <data key="d13">0.0</data>
     </edge>
-    <edge source="ACC-0283" target="CPD-0096">
-      <data key="d7">TRANSACTED_WITH</data>
-      <data key="d8">1</data>
-      <data key="d9">974435.0</data>
-      <data key="d10">1</data>
-      <data key="d11">0</data>
-      <data key="d12">974435.0</data>
-      <data key="d13">0.0</data>
-    </edge>
     <edge source="ACC-0283" target="CPD-0087">
       <data key="d7">TRANSACTED_WITH</data>
       <data key="d8">1</data>
@@ -150474,14 +150492,14 @@
       <data key="d12">0.0</data>
       <data key="d13">10000.0</data>
     </edge>
-    <edge source="ACC-0283" target="CPD-0149">
+    <edge source="ACC-0283" target="CPD-0140">
       <data key="d7">TRANSACTED_WITH</data>
-      <data key="d8">2</data>
-      <data key="d9">993075.34</data>
+      <data key="d8">1</data>
+      <data key="d9">915675.0</data>
       <data key="d10">1</data>
-      <data key="d11">1</data>
-      <data key="d12">971292.0</data>
-      <data key="d13">21783.34</data>
+      <data key="d11">0</data>
+      <data key="d12">915675.0</data>
+      <data key="d13">0.0</data>
     </edge>
     <edge source="ACC-0283" target="CPD-0001">
       <data key="d7">TRANSACTED_WITH</data>
@@ -150490,6 +150508,15 @@
       <data key="d10">1</data>
       <data key="d11">0</data>
       <data key="d12">972338.0</data>
+      <data key="d13">0.0</data>
+    </edge>
+    <edge source="ACC-0283" target="CPD-0071">
+      <data key="d7">TRANSACTED_WITH</data>
+      <data key="d8">1</data>
+      <data key="d9">908016.0</data>
+      <data key="d10">1</data>
+      <data key="d11">0</data>
+      <data key="d12">908016.0</data>
       <data key="d13">0.0</data>
     </edge>
     <edge source="ACC-0283" target="CPD-0112">
@@ -150518,15 +150545,6 @@
       <data key="d11">1</data>
       <data key="d12">0.0</data>
       <data key="d13">40300.68</data>
-    </edge>
-    <edge source="ACC-0283" target="CPD-0036">
-      <data key="d7">TRANSACTED_WITH</data>
-      <data key="d8">1</data>
-      <data key="d9">924415.0</data>
-      <data key="d10">1</data>
-      <data key="d11">0</data>
-      <data key="d12">924415.0</data>
-      <data key="d13">0.0</data>
     </edge>
     <edge source="ACC-0283" target="CPD-0047">
       <data key="d7">TRANSACTED_WITH</data>
@@ -150564,15 +150582,6 @@
       <data key="d12">0.0</data>
       <data key="d13">28012.54</data>
     </edge>
-    <edge source="ACC-0283" target="CPD-0150">
-      <data key="d7">TRANSACTED_WITH</data>
-      <data key="d8">1</data>
-      <data key="d9">92821.68</data>
-      <data key="d10">1</data>
-      <data key="d11">0</data>
-      <data key="d12">92821.68</data>
-      <data key="d13">0.0</data>
-    </edge>
     <edge source="ACC-0283" target="CPD-0139">
       <data key="d7">TRANSACTED_WITH</data>
       <data key="d8">2</data>
@@ -150580,6 +150589,15 @@
       <data key="d10">2</data>
       <data key="d11">0</data>
       <data key="d12">1006028.0</data>
+      <data key="d13">0.0</data>
+    </edge>
+    <edge source="ACC-0283" target="CPD-0150">
+      <data key="d7">TRANSACTED_WITH</data>
+      <data key="d8">1</data>
+      <data key="d9">92821.68</data>
+      <data key="d10">1</data>
+      <data key="d11">0</data>
+      <data key="d12">92821.68</data>
       <data key="d13">0.0</data>
     </edge>
     <edge source="ACC-0283" target="CPD-0094">
@@ -150598,6 +150616,15 @@
       <data key="d10">1</data>
       <data key="d11">0</data>
       <data key="d12">99861.86</data>
+      <data key="d13">0.0</data>
+    </edge>
+    <edge source="ACC-0283" target="CPD-0024">
+      <data key="d7">TRANSACTED_WITH</data>
+      <data key="d8">1</data>
+      <data key="d9">963879.0</data>
+      <data key="d10">1</data>
+      <data key="d11">0</data>
+      <data key="d12">963879.0</data>
       <data key="d13">0.0</data>
     </edge>
     <edge source="ACC-0283" target="CPD-0109">
@@ -150635,6 +150662,15 @@
       <data key="d11">0</data>
       <data key="d12">38399.42</data>
       <data key="d13">0.0</data>
+    </edge>
+    <edge source="ACC-0283" target="CPD-0149">
+      <data key="d7">TRANSACTED_WITH</data>
+      <data key="d8">1</data>
+      <data key="d9">21783.34</data>
+      <data key="d10">0</data>
+      <data key="d11">1</data>
+      <data key="d12">0.0</data>
+      <data key="d13">21783.34</data>
     </edge>
     <edge source="ACC-0283" target="CPD-0123">
       <data key="d7">TRANSACTED_WITH</data>
@@ -154957,11 +154993,11 @@
     </edge>
     <edge source="ACC-0293" target="CPD-0027">
       <data key="d7">TRANSACTED_WITH</data>
-      <data key="d8">2</data>
-      <data key="d9">5002.81</data>
-      <data key="d10">0</data>
+      <data key="d8">3</data>
+      <data key="d9">926997.81</data>
+      <data key="d10">1</data>
       <data key="d11">2</data>
-      <data key="d12">0.0</data>
+      <data key="d12">921995.0</data>
       <data key="d13">5002.81</data>
     </edge>
     <edge source="ACC-0293" target="CPD-0119">
@@ -154991,15 +155027,6 @@
       <data key="d12">1810.42</data>
       <data key="d13">0.0</data>
     </edge>
-    <edge source="ACC-0293" target="CPD-0018">
-      <data key="d7">TRANSACTED_WITH</data>
-      <data key="d8">1</data>
-      <data key="d9">986276.0</data>
-      <data key="d10">1</data>
-      <data key="d11">0</data>
-      <data key="d12">986276.0</data>
-      <data key="d13">0.0</data>
-    </edge>
     <edge source="ACC-0293" target="CPD-0111">
       <data key="d7">TRANSACTED_WITH</data>
       <data key="d8">1</data>
@@ -155009,13 +155036,13 @@
       <data key="d12">989748.0</data>
       <data key="d13">0.0</data>
     </edge>
-    <edge source="ACC-0293" target="CPD-0022">
+    <edge source="ACC-0293" target="CPD-0122">
       <data key="d7">TRANSACTED_WITH</data>
       <data key="d8">1</data>
-      <data key="d9">912163.0</data>
+      <data key="d9">990339.0</data>
       <data key="d10">1</data>
       <data key="d11">0</data>
-      <data key="d12">912163.0</data>
+      <data key="d12">990339.0</data>
       <data key="d13">0.0</data>
     </edge>
     <edge source="ACC-0293" target="CPD-0152">
@@ -155153,6 +155180,15 @@
       <data key="d12">4680.68</data>
       <data key="d13">0.0</data>
     </edge>
+    <edge source="ACC-0293" target="CPD-0017">
+      <data key="d7">TRANSACTED_WITH</data>
+      <data key="d8">1</data>
+      <data key="d9">935618.0</data>
+      <data key="d10">1</data>
+      <data key="d11">0</data>
+      <data key="d12">935618.0</data>
+      <data key="d13">0.0</data>
+    </edge>
     <edge source="ACC-0293" target="CPD-0127">
       <data key="d7">TRANSACTED_WITH</data>
       <data key="d8">1</data>
@@ -155161,15 +155197,6 @@
       <data key="d11">1</data>
       <data key="d12">0.0</data>
       <data key="d13">6541.73</data>
-    </edge>
-    <edge source="ACC-0293" target="CPD-0016">
-      <data key="d7">TRANSACTED_WITH</data>
-      <data key="d8">1</data>
-      <data key="d9">962056.0</data>
-      <data key="d10">1</data>
-      <data key="d11">0</data>
-      <data key="d12">962056.0</data>
-      <data key="d13">0.0</data>
     </edge>
     <edge source="ACC-0293" target="CPD-0068">
       <data key="d7">TRANSACTED_WITH</data>
@@ -156818,15 +156845,6 @@
       <data key="d12">10202.4</data>
       <data key="d13">0.0</data>
     </edge>
-    <edge source="ACC-0297" target="CPD-0116">
-      <data key="d7">TRANSACTED_WITH</data>
-      <data key="d8">1</data>
-      <data key="d9">979531.0</data>
-      <data key="d10">1</data>
-      <data key="d11">0</data>
-      <data key="d12">979531.0</data>
-      <data key="d13">0.0</data>
-    </edge>
     <edge source="ACC-0297" target="CPD-0145">
       <data key="d7">TRANSACTED_WITH</data>
       <data key="d8">1</data>
@@ -156863,6 +156881,15 @@
       <data key="d12">27407.76</data>
       <data key="d13">0.0</data>
     </edge>
+    <edge source="ACC-0297" target="CPD-0088">
+      <data key="d7">TRANSACTED_WITH</data>
+      <data key="d8">1</data>
+      <data key="d9">973347.0</data>
+      <data key="d10">1</data>
+      <data key="d11">0</data>
+      <data key="d12">973347.0</data>
+      <data key="d13">0.0</data>
+    </edge>
     <edge source="ACC-0297" target="CPD-0154">
       <data key="d7">TRANSACTED_WITH</data>
       <data key="d8">1</data>
@@ -156890,15 +156917,6 @@
       <data key="d12">0.0</data>
       <data key="d13">27880.09</data>
     </edge>
-    <edge source="ACC-0297" target="CPD-0141">
-      <data key="d7">TRANSACTED_WITH</data>
-      <data key="d8">1</data>
-      <data key="d9">910434.0</data>
-      <data key="d10">1</data>
-      <data key="d11">0</data>
-      <data key="d12">910434.0</data>
-      <data key="d13">0.0</data>
-    </edge>
     <edge source="ACC-0297" target="CPD-0132">
       <data key="d7">TRANSACTED_WITH</data>
       <data key="d8">1</data>
@@ -156917,13 +156935,22 @@
       <data key="d12">0.0</data>
       <data key="d13">54388.21</data>
     </edge>
-    <edge source="ACC-0297" target="CPD-0144">
+    <edge source="ACC-0297" target="CPD-0093">
       <data key="d7">TRANSACTED_WITH</data>
       <data key="d8">1</data>
-      <data key="d9">926712.0</data>
+      <data key="d9">962182.0</data>
       <data key="d10">1</data>
       <data key="d11">0</data>
-      <data key="d12">926712.0</data>
+      <data key="d12">962182.0</data>
+      <data key="d13">0.0</data>
+    </edge>
+    <edge source="ACC-0297" target="CPF-0014">
+      <data key="d7">TRANSACTED_WITH</data>
+      <data key="d8">2</data>
+      <data key="d9">560925.85</data>
+      <data key="d10">2</data>
+      <data key="d11">0</data>
+      <data key="d12">560925.85</data>
       <data key="d13">0.0</data>
     </edge>
     <edge source="ACC-0297" target="CPD-0089">
@@ -156935,13 +156962,13 @@
       <data key="d12">0.0</data>
       <data key="d13">50000.0</data>
     </edge>
-    <edge source="ACC-0297" target="CPF-0014">
+    <edge source="ACC-0297" target="CPD-0111">
       <data key="d7">TRANSACTED_WITH</data>
-      <data key="d8">3</data>
-      <data key="d9">840148.19</data>
-      <data key="d10">3</data>
+      <data key="d8">1</data>
+      <data key="d9">942041.0</data>
+      <data key="d10">1</data>
       <data key="d11">0</data>
-      <data key="d12">840148.19</data>
+      <data key="d12">942041.0</data>
       <data key="d13">0.0</data>
     </edge>
     <edge source="ACC-0297" target="CPD-0138">

@@ -112,13 +112,12 @@ DIGITAL_RAILS = frozenset(
     }
 )
 
-#: Rails that can legitimately carry an amount in the structuring band. Cash deposits are
-#: the classic vehicle, which is why they dominate the planted pattern.
+#: Rails the planted structuring uses. Cash only (Amendment 3): structuring means splitting
+#: cash to stay under the CTR, and no other domestic rail carries an amount-based report
+#: (rulebook STR-002), so an in-band NEFT, RTGS or cheque payment avoids nothing. Kept as a
+#: weighted table so the draw sequence below stays the same shape.
 STRUCTURING_RAILS: tuple[tuple[TransactionType, float], ...] = (
-    (TransactionType.CASH_DEPOSIT, 0.70),
-    (TransactionType.NEFT, 0.15),
-    (TransactionType.RTGS, 0.10),
-    (TransactionType.CHEQUE, 0.05),
+    (TransactionType.CASH_DEPOSIT, 1.00),
 )
 
 #: Rails that only post during banking hours on weekdays. SWIFT is here because foreign
@@ -279,7 +278,7 @@ def _avoid_structuring_band(rng: random.Random, amount: float) -> float:
     The deliberate false positives come from the decoy types instead, where they are labelled
     and measurable.
     """
-    if cfg.STRUCTURING_BAND_LOW <= amount < cfg.STRUCTURING_BAND_HIGH:
+    if cfg.STRUCTURING_BAND_LOW <= amount <= cfg.STRUCTURING_BAND_HIGH:
         if rng.random() < 0.5:
             return float(rng.randint(400_000, cfg.STRUCTURING_BAND_LOW - 1))
         return float(rng.randint(cfg.STRUCTURING_BAND_HIGH + 1, 2_000_000))
@@ -287,7 +286,7 @@ def _avoid_structuring_band(rng: random.Random, amount: float) -> float:
 
 
 def _in_band(amount: float) -> bool:
-    return cfg.STRUCTURING_BAND_LOW <= amount < cfg.STRUCTURING_BAND_HIGH
+    return cfg.STRUCTURING_BAND_LOW <= amount <= cfg.STRUCTURING_BAND_HIGH
 
 
 def _timestamp_for(rng: random.Random, day: date, txn_type: TransactionType) -> datetime:

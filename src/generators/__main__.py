@@ -34,6 +34,7 @@ import argparse
 import json
 import random
 import time
+from collections import Counter
 
 import numpy as np
 from faker import Faker
@@ -95,9 +96,9 @@ def main(
 
     started = _step(3, total, "planting plan (drives every channel below)")
     plan = ledger_module.build_planting_plan(streams, accounts, fraud_rings, cohorts)
-    escalate = sum(1 for a in accounts if plan.real_channels_for(a.account_id) >= 2)
-    monitor = sum(1 for a in accounts if plan.real_channels_for(a.account_id) == 1)
-    _done(started, f"{escalate} escalate-worthy, {monitor} monitor-worthy")
+    multi = sum(1 for a in accounts if plan.real_channels_for(a.account_id) >= 2)
+    single = sum(1 for a in accounts if plan.real_channels_for(a.account_id) == 1)
+    _done(started, f"{multi} accounts with two or more channels, {single} with one")
 
     started = _step(4, total, "transactions and counterparties")
     transactions, counterparties = transactions_module.generate(
@@ -144,6 +145,11 @@ def main(
     # Written last so it records the plan exactly as every other generator consumed it.
     ledger = ledger_module.write(accounts, plan, fraud_rings)
     print(f"\nGround truth: {len(ledger)} ledger rows -> {cfg.EVIDENCE_LEDGER_FILE}")
+    labels = Counter(e.expected_disposition.value for e in ledger)
+    print(
+        f"Labels: {labels['SUSPICIOUS-ESCALATE']} escalate-worthy, "
+        f"{labels['MONITOR']} monitor-worthy, {labels['CLEAR']} clean"
+    )
     print("Done. Run `python -m src.generators.verify` to check the output.")
 
 

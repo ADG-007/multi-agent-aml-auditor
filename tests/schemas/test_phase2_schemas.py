@@ -30,9 +30,7 @@ def test_review_and_kyc_events_take_no_transaction():
     TriageEvent(kind=TriageEventKind.PERIODIC_REVIEW, account_id="ACC-T001")
     TriageEvent(kind=TriageEventKind.KYC_SUBMITTED, account_id="ACC-T001")
     with pytest.raises(ValidationError):
-        TriageEvent(
-            kind=TriageEventKind.PERIODIC_REVIEW, account_id="ACC-T001", transaction=txn()
-        )
+        TriageEvent(kind=TriageEventKind.PERIODIC_REVIEW, account_id="ACC-T001", transaction=txn())
 
 
 def test_event_rejects_another_accounts_transaction():

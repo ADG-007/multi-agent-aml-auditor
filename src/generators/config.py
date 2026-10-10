@@ -151,7 +151,9 @@ CTR_THRESHOLD_INR = 1_000_000
 #: same two numbers from one source.
 NEAR_THRESHOLD_PCT = 0.9
 
-#: Deposits deliberately parked just under the reporting ceiling.
+#: Deposits deliberately parked just under the reporting ceiling. The band is
+#: [LOW, HIGH], both edges inclusive: the law reports cash of more than the threshold, so
+#: an amount exactly at it is not reported and sits at the top of the band.
 STRUCTURING_BAND_LOW = int(CTR_THRESHOLD_INR * NEAR_THRESHOLD_PCT)
 STRUCTURING_BAND_HIGH = CTR_THRESHOLD_INR
 
@@ -199,15 +201,20 @@ RING_CORE_MEMBERS = 3
 # Planting density (drives Phase 11's ground-truth labels)
 # --------------------------------------------------------------------------------------
 
-#: Two or more real evidence channels -> SUSPICIOUS-ESCALATE-worthy (~10% of accounts).
-#: 30 from the base population, plus the 9 round-trip core members (ring + KYC mismatch),
-#: plus the 8 network mules (ring + pass-through).
-NUM_ESCALATE_WORTHY = 30 + NUM_ROUND_TRIP_RINGS * 3 + NUM_MULE_RINGS * 4
+#: These count planted channels, not labels. The label rule lives in one place,
+#: EvidenceLedgerEntry.expected_disposition: it adds one exception (Amendment 3, A4), a
+#: confirmed sanctions hit escalating on its own, so a few single-channel accounts are
+#: escalate-worthy.
 
-#: Exactly one real channel -> MONITOR-worthy (~20%). 60 from the base population, plus the
-#: 3 round-trip solo members (ring only), the unexplained-inward cohort (KYC mismatch only),
-#: and the 2 solo mules and 2 complicit merchants (pass-through only).
-NUM_MONITOR_WORTHY = 60 + NUM_ROUND_TRIP_RINGS + 8 + 2 + 2
+#: Two or more real evidence channels (~13% of accounts). 30 from the base population, plus
+#: the 9 round-trip core members (ring + KYC mismatch), plus the 8 network mules (ring +
+#: pass-through).
+NUM_MULTI_CHANNEL = 30 + NUM_ROUND_TRIP_RINGS * 3 + NUM_MULE_RINGS * 4
+
+#: Exactly one real channel (~20%). 60 from the base population, plus the 3 round-trip solo
+#: members (ring only), the unexplained-inward cohort (KYC mismatch only), and the 2 solo
+#: mules and 2 complicit merchants (pass-through only).
+NUM_SINGLE_CHANNEL = 60 + NUM_ROUND_TRIP_RINGS + 8 + 2 + 2
 
 # --------------------------------------------------------------------------------------
 # Deliberate false-positive decoys (all three types, per Phase 11)

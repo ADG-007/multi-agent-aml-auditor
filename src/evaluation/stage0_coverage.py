@@ -24,6 +24,7 @@ from src.bank import BankData
 from src.orchestration.run_state import RunState
 from src.rulebook import RulebookLookup
 from src.schemas import (
+    Disposition,
     EvidenceLedgerEntry,
     SeverityTier,
     StageName,
@@ -95,9 +96,9 @@ def measure(bank: BankData, ledger: list[EvidenceLedgerEntry]) -> Coverage:
     ]
     weighted_beyond_kyc = {S.TRANSACTION_PATTERN, S.ADVERSE_MEDIA, S.GRAPH}
     for label, test in (
-        ("escalate-worthy", lambda e: len(channels_of(e)) >= 2),
-        ("monitor-worthy", lambda e: len(channels_of(e)) == 1),
-        ("clean", lambda e: not channels_of(e)),
+        ("escalate-worthy", lambda e: e.expected_disposition == Disposition.SUSPICIOUS_ESCALATE),
+        ("monitor-worthy", lambda e: e.expected_disposition == Disposition.MONITOR),
+        ("clean", lambda e: e.expected_disposition == Disposition.CLEAR),
     ):
         group = [e for e in ledger if test(e)]
         beyond = sum(bool(routes[e.account_id] & weighted_beyond_kyc) for e in group)
@@ -105,7 +106,8 @@ def measure(bank: BankData, ledger: list[EvidenceLedgerEntry]) -> Coverage:
 
     # Ring members only Phase 11's re-screening can reach
     ring_gap = [
-        e for e in ledger
+        e
+        for e in ledger
         if channels_of(e) == ["ring membership"] and S.GRAPH not in routes[e.account_id]
     ]
     lines += [
@@ -158,9 +160,7 @@ def measure(bank: BankData, ledger: list[EvidenceLedgerEntry]) -> Coverage:
         failures.append(
             f"pass-through rule caught {mules_fired} of {len(mules)} mules (need >= 11)"
         )
-    missing_review = [
-        a for a, r in routes.items() if not {S.KYC, S.VISION} <= r
-    ]
+    missing_review = [a for a, r in routes.items() if not {S.KYC, S.VISION} <= r]
     if missing_review:
         failures.append(f"{len(missing_review)} accounts not routed to KYC and Vision")
 

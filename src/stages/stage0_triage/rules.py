@@ -75,17 +75,21 @@ def _hit(
 
 
 def cash_threshold(t: Transaction, rulebook: RulebookLookup) -> Hit | None:
-    """A cash transaction at or above the CTR threshold, or in the band just under it."""
+    """A cash transaction above the CTR threshold, or in the band up to and including it.
+
+    The law reports cash of more than the threshold, so an amount exactly at it is not a
+    CTR. It is the top of the structuring band instead, which keeps it flagged.
+    """
     if t.type not in config.CASH_TYPES:
         return None
     s = rulebook.structuring()
     if t.amount < s.band_floor_inr:
         return None
     where = (
-        f"at or above the {inr(s.threshold_inr)} cash-reporting threshold"
-        if t.amount >= s.threshold_inr
+        f"above the {inr(s.threshold_inr)} cash-reporting threshold"
+        if t.amount > s.threshold_inr
         else f"in the structuring band {inr(s.band_floor_inr)}-{inr(s.threshold_inr)}, "
-        "just under the cash-reporting threshold"
+        "at or just under the cash-reporting threshold"
     )
     return _hit(
         TriageRule.CASH_THRESHOLD,
@@ -98,15 +102,18 @@ def cash_threshold(t: Transaction, rulebook: RulebookLookup) -> Hit | None:
 
 
 def cross_border(t: Transaction, rulebook: RulebookLookup) -> Hit | None:
-    """A cross-border wire at or above the CBWTR threshold, inward or outward."""
+    """A cross-border wire above the CBWTR threshold, inward or outward.
+
+    The law reports wires of more than the threshold, so an amount exactly at it does not fire.
+    """
     threshold = rulebook.cross_border_threshold()
-    if not t.is_cross_border or t.amount < threshold:
+    if not t.is_cross_border or t.amount <= threshold:
         return None
     way = "inward" if t.direction == TransactionDirection.CREDIT else "outward"
     return _hit(
         TriageRule.CROSS_BORDER,
         detail=f"{way} {t.type.value} {inr(t.amount)}",
-        reason=f"{way.capitalize()} cross-border wire of {inr(t.amount)} on {_day(t)} is at or "
+        reason=f"{way.capitalize()} cross-border wire of {inr(t.amount)} on {_day(t)} is "
         f"above the {inr(threshold)} wire-reporting threshold ({CROSS_BORDER_CLAUSE_ID}).",
         transaction_id=t.transaction_id,
         clause_id=CROSS_BORDER_CLAUSE_ID,
@@ -170,9 +177,7 @@ def known_bad_address(customer: Customer, account_id: str, state: RunState) -> H
     )
 
 
-def name_match(
-    customer: Customer, history: Sequence[Transaction], names: NameIndex
-) -> list[Hit]:
+def name_match(customer: Customer, history: Sequence[Transaction], names: NameIndex) -> list[Hit]:
     """The holder or any counterparty in the history matches an entry's name or alias."""
     hits = []
     candidates = [("account holder", customer.name)]

@@ -13,9 +13,11 @@ citation meaningless, while inventing customers costs nothing.
 The clause text is paraphrase rather than transcription - the substance of each obligation
 in the register a bank's internal policy manual uses.
 
-Twenty-two clauses across seven categories: three each for the original six, two more
-cross-border clauses added with the round-tripping typology, and two money-mule clauses added
-with the mule block (Amendment 2). The categories deliberately mirror what the evidence stages
+Twenty-four clauses across eight categories: three each for the original six, two more
+cross-border clauses added with the round-tripping typology, two money-mule clauses added
+with the mule block (Amendment 2), and two suspicious-transaction clauses (Amendment 3) that
+give the non-cash rails their legal footing - structuring is a cash concept, because only
+cash (the CTR) and cross-border wires (the CBWTR) carry an amount-based report. The categories deliberately mirror what the evidence stages
 actually detect, so policy_gap_identified stays rare in practice rather than firing on every
 case because the rulebook never covered the finding.
 
@@ -366,7 +368,7 @@ def build_clauses() -> list[RulebookClause]:
             title="Reporting of cross-border wire transfers above five lakh rupees",
             category=RulebookCategory.CROSS_BORDER,
             sources=[
-                "Prevention of Money-laundering (Maintenance of Records) Rules, 2005 - Rule 3",
+                "Prevention of Money-laundering (Maintenance of Records) Rules, 2005 - Rule 3(1)(E)",
                 "FIU-IND Cross-Border Wire Transfer Report (CBWTR) guidance",
             ],
             text=(
@@ -448,6 +450,50 @@ def build_clauses() -> list[RulebookClause]:
                 "enforcement, filing a suspicious transaction report with FIU-IND."
             ),
             metadata={"txn_floor_inr": cfg.MULE_TXN_FLOOR_INR},
+        ),
+        # ----------------------------------------------------- SUSPICIOUS TRANSACTIONS ---
+        RulebookClause(
+            clause_id="STR-001",
+            title="Suspicious transactions on any payment channel",
+            category=RulebookCategory.SUSPICIOUS_TRANSACTION,
+            sources=[
+                "PMLA (Maintenance of Records) Rules, 2005 - Rule 2(1)(g) (definition of "
+                "suspicious transaction)",
+                "PMLA (Maintenance of Records) Rules, 2005 - Rule 3(1)(D)",
+                "FATF Recommendation 20 (Reporting of suspicious transactions)",
+            ],
+            text=(
+                "A suspicious transaction is any transaction, including an attempted one and "
+                "whether or not it is made in cash, that gives a person acting in good faith "
+                "reasonable grounds to suspect that it involves the proceeds of crime, that "
+                "appears to be made in circumstances of unusual or unjustified complexity, that "
+                "appears to have no economic rationale or bona fide purpose, or that may involve "
+                "the financing of terrorism. Every such transaction must be reported to FIU-IND "
+                "as a suspicious transaction report. The obligation has no amount threshold and "
+                "applies to every payment channel: electronic transfers, cheques, cards and "
+                "cross-border wires as much as cash."
+            ),
+        ),
+        RulebookClause(
+            clause_id="STR-002",
+            title="Domestic non-cash transfers: no threshold report, examined by pattern",
+            category=RulebookCategory.SUSPICIOUS_TRANSACTION,
+            sources=[
+                "PMLA (Maintenance of Records) Rules, 2005 - Rules 3(1)(A), 3(1)(D) and 3(1)(E)",
+                "RBI Master Direction on KYC - ongoing due diligence and transaction monitoring",
+                "FATF Recommendation 20",
+            ],
+            text=(
+                "Domestic electronic transfers (NEFT, RTGS, IMPS and UPI), cheques, card "
+                "payments and ATM withdrawals carry no amount-based reporting obligation: the "
+                "cash transaction report covers cash only and the cross-border wire report "
+                "covers cross-border wires only. Keeping such a transfer below a given amount "
+                "therefore avoids no report and is not structuring. These channels are examined "
+                "by pattern instead: funds that pass through the account rapidly, flows to or "
+                "from many unrelated counterparties, layering through a chain of accounts, and "
+                "activity inconsistent with the customer's declared profile. Where the activity "
+                "has no evident economic rationale, it is reported as a suspicious transaction."
+            ),
         ),
     ]
 

@@ -60,7 +60,11 @@ def test_cash_structuring_route():
     b = bank(transactions=[t])
     out = triage(_txn_event(t), _ctx(b), RunState())
     assert out.routed_stages == [
-        S.TRANSACTION_PATTERN, S.ADVERSE_MEDIA, S.GRAPH, S.RULEBOOK, S.AUDITOR
+        S.TRANSACTION_PATTERN,
+        S.ADVERSE_MEDIA,
+        S.GRAPH,
+        S.RULEBOOK,
+        S.AUDITOR,
     ]
 
 
@@ -89,8 +93,15 @@ def test_review_unions_every_rule_and_always_reviews_kyc():
     fired = [f.rule for f in out.fired_rules]
     assert TriageRule.CASH_THRESHOLD in fired and TriageRule.CROSS_BORDER in fired
     assert TriageRule.KYC_EVENT in fired
-    assert set(out.routed_stages) == {S.VISION, S.TRANSACTION_PATTERN, S.KYC, S.ADVERSE_MEDIA,
-                                      S.GRAPH, S.RULEBOOK, S.AUDITOR}
+    assert set(out.routed_stages) == {
+        S.VISION,
+        S.TRANSACTION_PATTERN,
+        S.KYC,
+        S.ADVERSE_MEDIA,
+        S.GRAPH,
+        S.RULEBOOK,
+        S.AUDITOR,
+    }
     assert first_alert(out, b, "ACC-T001").transaction_id == rows[0].transaction_id
 
 
@@ -109,8 +120,15 @@ def test_flagged_account_tripping_a_rule_reruns_every_stage():
     b.add_transaction(t)
     out = triage(_txn_event(t), _ctx(b), state)
     assert out.fired_rules[-1].rule == TriageRule.REINVESTIGATION
-    assert out.routed_stages == [S.VISION, S.TRANSACTION_PATTERN, S.KYC, S.ADVERSE_MEDIA,
-                                 S.GRAPH, S.RULEBOOK, S.AUDITOR]
+    assert out.routed_stages == [
+        S.VISION,
+        S.TRANSACTION_PATTERN,
+        S.KYC,
+        S.ADVERSE_MEDIA,
+        S.GRAPH,
+        S.RULEBOOK,
+        S.AUDITOR,
+    ]
 
 
 def test_flagged_account_with_a_quiet_transaction_trips_nothing():
@@ -132,8 +150,9 @@ def test_unposted_live_transaction_is_screened_with_its_history():
 
 def test_escalation_reroutes_a_ring_mate_through_the_known_bad_list():
     mate_account = account(account_id="ACC-T002", customer_id="CUST-T002")
-    mate_customer = customer(customer_id="CUST-T002", name="Ravi Nair",
-                             address="44 Hill View, Kochi 682001")
+    mate_customer = customer(
+        customer_id="CUST-T002", name="Ravi Nair", address="44 Hill View, Kochi 682001"
+    )
     b = bank(
         accounts=[account(), mate_account],
         customers=[customer(), mate_customer],
@@ -142,8 +161,7 @@ def test_escalation_reroutes_a_ring_mate_through_the_known_bad_list():
     ctx = _ctx(b)
     state = RunState()
 
-    shared = txn(account_id="ACC-T002", device_id="DEV-SHARED", amount=800,
-                 direction="DEBIT")
+    shared = txn(account_id="ACC-T002", device_id="DEV-SHARED", amount=800, direction="DEBIT")
     b.add_transaction(shared)
     assert triage(_txn_event(shared), ctx, state).fired_rules == []
 
@@ -157,8 +175,11 @@ def test_escalation_reroutes_a_ring_mate_through_the_known_bad_list():
 def test_every_route_ends_with_the_auditor(kind):
     t = txn()
     b = bank(transactions=[t])
-    event = TriageEvent(kind=kind, account_id="ACC-T001",
-                        transaction=t if kind == TriageEventKind.TRANSACTION else None)
+    event = TriageEvent(
+        kind=kind,
+        account_id="ACC-T001",
+        transaction=t if kind == TriageEventKind.TRANSACTION else None,
+    )
     assert triage(event, _ctx(b), RunState()).routed_stages[-1] == S.AUDITOR
 
 
@@ -177,3 +198,11 @@ def test_real_bank_review_counts():
     assert per_rule[TriageRule.CROSS_BORDER] == 30
     assert per_rule[TriageRule.PASS_THROUGH] == 28
     assert per_rule[TriageRule.NAME_MATCH] == 37
+
+
+def test_context_holds_the_review_date_from_when_it_was_built():
+    b = bank(transactions=[txn(timestamp="2026-08-01T10:00:00")])
+    ctx = _ctx(b)
+    assert ctx.review_date == b.review_date()
+    b.add_transaction(txn(timestamp="2026-08-09T10:00:00"))
+    assert ctx.review_date.isoformat() == "2026-08-01T10:00:00"

@@ -36,7 +36,11 @@ class StructuringThreshold:
 
     @property
     def band_floor_inr(self) -> float:
-        """Lower edge of the structuring band, [threshold x pct, threshold)."""
+        """Lower edge of the structuring band, [threshold x pct, threshold].
+
+        Both edges are inclusive. The law reports cash of more than the threshold, so an
+        amount exactly at it is not reported and belongs to the band.
+        """
         return self.threshold_inr * self.near_threshold_pct
 
 

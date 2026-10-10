@@ -126,8 +126,12 @@ def test_escalation_reroutes_a_ring_mate():
     assert escalated.disposition == Disposition.SUSPICIOUS_ESCALATE
     assert "DEV-SHARED" in state.known_bad_devices
 
-    mate = txn(account_id="ACC-T002", device_id="DEV-SHARED", amount=800,
-               direction=TransactionDirection.DEBIT)
+    mate = txn(
+        account_id="ACC-T002",
+        device_id="DEV-SHARED",
+        amount=800,
+        direction=TransactionDirection.DEBIT,
+    )
     b.add_transaction(mate)
     report = run_case(_event(mate), ctx, state)
     assert [f.rule for f in report.triage_findings.fired_rules] == [TriageRule.KNOWN_BAD_IDENTIFIER]
@@ -149,3 +153,42 @@ def test_review_case_records_the_earliest_alert_or_none():
     report = run_case(review, _ctx(quiet), RunState())
     assert report.triggering_transaction_id is None
     assert report.stage_status[S.KYC.value] == StageStatus.RAN
+
+
+# --------------------------------------------------------------------------------------
+# Real stages (Phase 3: Stage 2)
+# --------------------------------------------------------------------------------------
+
+
+def _deposits(days):
+    return [_structuring_txn(timestamp=f"2026-08-{d:02d}T10:00:00") for d in days]
+
+
+def test_a_routed_review_case_gets_the_real_stage2():
+    b = bank(transactions=_deposits(range(1, 7)))
+    review = TriageEvent(kind=TriageEventKind.PERIODIC_REVIEW, account_id="ACC-T001")
+    report = run_case(review, _ctx(b), RunState())
+    findings = report.transaction_pattern_findings
+    assert report.stage_status[S.TRANSACTION_PATTERN.value] == StageStatus.RAN
+    assert findings.velocity_summary != "STUB"
+    assert "stub" not in findings.reasoning_trail[0].step
+    assert findings.confidence == 0.8  # six in-band cash deposits: k = 6
+    assert findings.structuring_indicators
+
+
+def test_a_live_event_reads_the_frame_ending_at_its_own_time():
+    rows = _deposits(range(1, 7))
+    b = bank(transactions=rows)
+    report = run_case(_event(rows[2]), _ctx(b), RunState())
+    # The frame ends at the third deposit, so the later three are not seen: k = 3.
+    assert report.transaction_pattern_findings.confidence == 0.4
+
+
+def test_a_stub_plan_entry_still_forces_the_stub():
+    b = bank(transactions=_deposits(range(1, 7)))
+    review = TriageEvent(kind=TriageEventKind.PERIODIC_REVIEW, account_id="ACC-T001")
+    plan = StubPlan({S.TRANSACTION_PATTERN: StageResult(StageStatus.FAILED)})
+    report = run_case(review, _ctx(b), RunState(), plan)
+    assert report.stage_status[S.TRANSACTION_PATTERN.value] == StageStatus.FAILED
+    assert report.transaction_pattern_findings is None
+    assert S.TRANSACTION_PATTERN.value in report.degraded_stages

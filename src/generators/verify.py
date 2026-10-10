@@ -4,7 +4,8 @@
 
 Two jobs, and the distinction matters. The assertions check that the data on disk matches
 the exact quantities phase_1_execution.md decided - 370 customers (300 plus the cross-border
-and mule blocks), 13 rings, 160 adverse-media entries, 47 escalate-worthy accounts. They exist
+and mule blocks), 13 rings, 160 adverse-media entries, 47 accounts with two or more evidence
+channels (49 escalate-worthy labels, Amendment 3). They exist
 to catch a generator bug immediately, at the point it is cheap to find, rather than in Phase
 11 when the evaluation numbers look strange and the cause is six phases back. They are not Phase 2's boundary tests and do not pretend to
 be.
@@ -33,6 +34,7 @@ from src.schemas import (
     AdverseMediaEntry,
     Counterparty,
     Customer,
+    Disposition,
     EvidenceLedgerEntry,
     FraudRing,
     KYCProfile,
@@ -120,6 +122,10 @@ RETRIEVAL_PROBES: tuple[tuple[str, frozenset[str]], ...] = (
     (
         "payments from many unrelated people forwarded to one account within hours of arriving",
         frozenset({"MULE-002", "MULE-001"}),
+    ),
+    (
+        "large NEFT and RTGS transfers moved in and out with no business reason",
+        frozenset({"STR-002", "STR-001"}),
     ),
 )
 
@@ -455,14 +461,18 @@ def main() -> int:
     band = [
         t
         for t in transactions
-        if cfg.STRUCTURING_BAND_LOW <= t.amount < cfg.STRUCTURING_BAND_HIGH
+        if cfg.STRUCTURING_BAND_LOW <= t.amount <= cfg.STRUCTURING_BAND_HIGH
     ]
     check(len(band) > 0, "sub-threshold structuring band is populated")
     check(
         all(t.amount < cfg.CTR_THRESHOLD_INR for t in band),
-        "no planted structuring transaction crosses the CTR threshold",
+        "no planted structuring transaction reaches the CTR threshold",
     )
     check(all(t.direction.value == "CREDIT" for t in band), "structuring deposits are all credits")
+    check(
+        all(t.type.value == "CASH_DEPOSIT" for t in band),
+        "structuring deposits are all cash (Amendment 3: structuring is a cash-only signal)",
+    )
 
     # Every round-trip core member's loop has to actually close: a debit to the ring's
     # outbound company, then a credit from its return company - registered at the same
@@ -502,14 +512,36 @@ def main() -> int:
     # ==================================================================================
     print("\n=== Evidence ledger (ground truth) ===")
     check(len(ledger) == cfg.NUM_CUSTOMERS, "one ledger row per account")
-    escalate = [e for e in ledger if e.real_channel_count >= 2]
-    monitor = [e for e in ledger if e.real_channel_count == 1]
+    multi = [e for e in ledger if e.real_channel_count >= 2]
+    single = [e for e in ledger if e.real_channel_count == 1]
     clean = [e for e in ledger if e.real_channel_count == 0]
-    check(len(escalate) == cfg.NUM_ESCALATE_WORTHY, f"{cfg.NUM_ESCALATE_WORTHY} escalate-worthy accounts")
-    check(len(monitor) == cfg.NUM_MONITOR_WORTHY, f"{cfg.NUM_MONITOR_WORTHY} monitor-worthy accounts")
+    check(len(multi) == cfg.NUM_MULTI_CHANNEL, f"{cfg.NUM_MULTI_CHANNEL} accounts with two or more channels")
+    check(len(single) == cfg.NUM_SINGLE_CHANNEL, f"{cfg.NUM_SINGLE_CHANNEL} accounts with exactly one channel")
     check(
-        len(clean) == cfg.NUM_CUSTOMERS - cfg.NUM_ESCALATE_WORTHY - cfg.NUM_MONITOR_WORTHY,
-        f"{cfg.NUM_CUSTOMERS - cfg.NUM_ESCALATE_WORTHY - cfg.NUM_MONITOR_WORTHY} accounts with no real channel",
+        len(clean) == cfg.NUM_CUSTOMERS - cfg.NUM_MULTI_CHANNEL - cfg.NUM_SINGLE_CHANNEL,
+        f"{cfg.NUM_CUSTOMERS - cfg.NUM_MULTI_CHANNEL - cfg.NUM_SINGLE_CHANNEL} accounts with no real channel",
+    )
+    # Labels (Amendment 3, A4): channels decide, except that a confirmed sanctions hit
+    # escalates on its own.
+    sanctions_only = [
+        e for e in single if e.adverse_media_hit == SeverityTier.CONFIRMED_SANCTIONS
+    ]
+    labels = Counter(e.expected_disposition for e in ledger)
+    check(
+        labels[Disposition.SUSPICIOUS_ESCALATE] == len(multi) + len(sanctions_only)
+        and labels[Disposition.MONITOR] == len(single) - len(sanctions_only)
+        and labels[Disposition.CLEAR] == len(clean),
+        f"labels: {labels[Disposition.SUSPICIOUS_ESCALATE]} escalate-worthy "
+        f"({len(sanctions_only)} on a confirmed sanctions hit alone), "
+        f"{labels[Disposition.MONITOR]} monitor-worthy, {labels[Disposition.CLEAR]} clean",
+    )
+    check(
+        all(
+            e.expected_disposition == Disposition.SUSPICIOUS_ESCALATE
+            for e in ledger
+            if e.adverse_media_hit == SeverityTier.CONFIRMED_SANCTIONS
+        ),
+        "every confirmed-sanctions account is escalate-worthy",
     )
     check(
         sum(1 for e in ledger if e.graph_ring_membership) == cfg.NUM_RINGS * cfg.RING_SIZE,
@@ -804,9 +836,9 @@ def main() -> int:
 
     # ==================================================================================
     print("\n=== Rulebook ===")
-    check(len(clauses) == 22, f"{len(clauses)} clauses (22 expected)")
+    check(len(clauses) == 24, f"{len(clauses)} clauses (24 expected)")
     categories = Counter(c.category.value for c in clauses)
-    check(len(categories) == 7, "all seven categories covered")
+    check(len(categories) == 8, "all eight categories covered")
     mule002 = next((c for c in clauses if c.clause_id == "MULE-002"), None)
     check(
         mule002 is not None and mule002.metadata.get("txn_floor_inr") == cfg.MULE_TXN_FLOOR_INR,
@@ -1048,7 +1080,9 @@ def _summary(customers, accounts, transactions, counterparties, profiles, media,
     # An escalate-worthy structuring case, so the sample transaction below really is a
     # sub-threshold deposit.
     sample_account = next(
-        e for e in ledger if e.real_channel_count >= 2 and e.structuring_planted
+        e
+        for e in ledger
+        if e.expected_disposition == Disposition.SUSPICIOUS_ESCALATE and e.structuring_planted
     )
     customer = next(c for c in customers if c.customer_id == sample_account.customer_id)
     print(f"\n-- Customer ({customer.customer_id}, an escalate-worthy case) --")
@@ -1066,7 +1100,7 @@ def _summary(customers, accounts, transactions, counterparties, profiles, media,
             t
             for t in transactions
             if t.account_id == sample_account.account_id
-            and cfg.STRUCTURING_BAND_LOW <= t.amount < cfg.STRUCTURING_BAND_HIGH
+            and cfg.STRUCTURING_BAND_LOW <= t.amount <= cfg.STRUCTURING_BAND_HIGH
         ),
         next(t for t in transactions if t.account_id == sample_account.account_id),
     )

@@ -18,6 +18,7 @@ import bisect
 import json
 from collections import defaultdict
 from collections.abc import Iterable
+from datetime import datetime
 from pathlib import Path
 
 from src.schemas import (
@@ -100,6 +101,16 @@ class BankData:
         """The account's transactions, oldest first."""
         self.account(account_id)
         return tuple(self._transactions.get(account_id, ()))
+
+    def review_date(self) -> datetime | None:
+        """The bank's review date: its latest transaction timestamp, across every account.
+
+        A periodic review looks at every account as of this one moment (phase_3_execution.md
+        D2). It is read from the data itself, never from the generator's config, so a live
+        transaction posted later moves it. None only for a bank with no transactions at all.
+        """
+        latest = [rows[-1].timestamp for rows in self._transactions.values() if rows]
+        return max(latest, default=None)
 
     def kyc_profile_for(self, account_id: str) -> KYCProfile | None:
         return self._kyc_by_customer.get(self.account(account_id).customer_id)

@@ -42,3 +42,6 @@ data/documents/*.png
 # pushed. README.md is the one exception — it is the repo's front page.
 *.md
 !README.md
+
+# --- Per-phase docs (phase<N>.md explainers, phase_<N>_execution.md specs) — local only ---
+phases/

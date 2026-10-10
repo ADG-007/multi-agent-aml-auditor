@@ -1,0 +1,60 @@
+{
+  "shared": [
+    "ACC-0048",
+    "ACC-0069",
+    "ACC-0132",
+    "ACC-0211",
+    "ACC-0347",
+    "ACC-0366"
+  ],
+  "stage2": [
+    {
+      "account_id": "ACC-0037",
+      "slot": "structurer_k4"
+    },
+    {
+      "account_id": "ACC-0068",
+      "slot": "structurer_k6"
+    },
+    {
+      "account_id": "ACC-0125",
+      "slot": "structurer_k8"
+    },
+    {
+      "account_id": "ACC-0347",
+      "slot": "network_mule"
+    },
+    {
+      "account_id": "ACC-0352",
+      "slot": "solo_mule"
+    },
+    {
+      "account_id": "ACC-0363",
+      "slot": "solo_mule"
+    },
+    {
+      "account_id": "ACC-0348",
+      "slot": "complicit_merchant"
+    },
+    {
+      "account_id": "ACC-0346",
+      "slot": "merchant_lookalike"
+    },
+    {
+      "account_id": "ACC-0350",
+      "slot": "merchant_lookalike"
+    },
+    {
+      "account_id": "ACC-0345",
+      "slot": "life_event"
+    },
+    {
+      "account_id": "ACC-0003",
+      "slot": "round_amount"
+    },
+    {
+      "account_id": "ACC-0301",
+      "slot": "cross_border_legitimate"
+    }
+  ]
+}

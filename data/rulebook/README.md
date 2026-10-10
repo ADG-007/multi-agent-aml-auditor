@@ -1,6 +1,6 @@
 # Policy Rulebook
 
-22 clauses across 7 categories.
+24 clauses across 8 categories.
 
 ## STRUCTURING
 
@@ -44,3 +44,8 @@
 
 - **MULE-001** - Operation of bank accounts and money mules
 - **MULE-002** - Pass-through of funds from unrelated remitters: suspected money-mule transactions
+
+## SUSPICIOUS_TRANSACTION
+
+- **STR-001** - Suspicious transactions on any payment channel
+- **STR-002** - Domestic non-cash transfers: no threshold report, examined by pattern
