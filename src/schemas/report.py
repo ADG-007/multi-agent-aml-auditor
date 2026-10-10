@@ -25,11 +25,15 @@ class InvestigationReport(BaseModel):
 
     A case is triggered by a single transaction but Stages 2-5 evaluate the account's full
     rolling history. Re-investigating an account creates a new case_id rather than
-    overwriting the prior one.
+    overwriting the prior one. The exception is Phase 11's periodic review, which may have
+    no alerting transaction at all.
     """
 
     case_id: str = Field(description="CASE-{account_id}-{sequence}.")
-    triggering_transaction_id: str
+    triggering_transaction_id: str | None = Field(
+        default=None,
+        description="Earliest transaction that fired a rule; None for a review nothing alerted on.",
+    )
     target_account: str
 
     pipeline_status: PipelineStatus

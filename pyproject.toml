@@ -1,0 +1,35 @@
+# Tool configuration only. Dependencies stay in requirements.txt (pip, per phase_1_execution.md).
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 100
+target-version = "py314"
+# Lint covers the code Phase 2 writes or edits. Phase 1's generators and LLM layer are left
+# as they are (phase_2_execution.md D13) - linting them would mean editing data generators
+# outside this phase's scope.
+include = [
+    "src/bank/**/*.py",
+    "src/matching/**/*.py",
+    "src/rulebook/**/*.py",
+    "src/scoring/**/*.py",
+    "src/stages/**/*.py",
+    "src/orchestration/**/*.py",
+    "src/evaluation/**/*.py",
+    "src/schemas/common.py",
+    "src/schemas/stages.py",
+    "src/schemas/report.py",
+    "tests/**/*.py",
+]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP"]
+# The schemas use (str, Enum) throughout; StrEnum would change str() output for existing
+# enums, so new enums follow the same idiom.
+ignore = ["UP042"]
+
+[tool.ruff.lint.isort]
+lines-after-imports = 2

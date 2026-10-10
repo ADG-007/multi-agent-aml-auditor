@@ -9,16 +9,68 @@ confidence toward the middle.
 
 from __future__ import annotations
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, model_validator
 
-from src.schemas.common import ReasoningStep, SeverityTier
+from src.schemas.common import (
+    ReasoningStep,
+    SeverityTier,
+    StageName,
+    TriageEventKind,
+    TriageRule,
+)
+from src.schemas.domain import Transaction
+
+
+class TriageEvent(BaseModel):
+    """What Stage 0 evaluates: a new transaction, a KYC submission or a periodic review."""
+
+    kind: TriageEventKind
+    account_id: str
+    transaction: Transaction | None = Field(
+        default=None,
+        description="Present for TRANSACTION events only.",
+    )
+
+    @model_validator(mode="after")
+    def _transaction_matches_kind(self) -> TriageEvent:
+        if (self.kind == TriageEventKind.TRANSACTION) != (self.transaction is not None):
+            raise ValueError("a TRANSACTION event needs a transaction; other kinds take none")
+        if self.transaction is not None and self.transaction.account_id != self.account_id:
+            raise ValueError("the transaction belongs to a different account")
+        return self
+
+
+class FiredRule(BaseModel):
+    """One routing-table row that fired, in machine-readable form."""
+
+    rule: TriageRule
+    transaction_id: str | None = Field(
+        default=None,
+        description="The transaction that fired it; None for whole-account rules.",
+    )
+    clause_id: str | None = Field(
+        default=None,
+        description="The rulebook clause whose metadata the rule read, if any.",
+    )
+    detail: str
 
 
 class Stage0TriageOutput(BaseModel):
-    """Which stages this case needs. Stage 0 is itself the flagging step."""
+    """Which stages this case needs, and why. Stage 0 is itself the flagging step.
 
-    routed_stages: list[str] = Field(default_factory=list)
-    trigger_reason: str
+    trigger_reasons and fired_rules are parallel: one readable sentence and one structured
+    entry per fired rule, in the same order.
+    """
+
+    routed_stages: list[StageName] = Field(default_factory=list)
+    trigger_reasons: list[str] = Field(default_factory=list)
+    fired_rules: list[FiredRule] = Field(default_factory=list)
+
+    @model_validator(mode="after")
+    def _reasons_parallel_rules(self) -> Stage0TriageOutput:
+        if len(self.trigger_reasons) != len(self.fired_rules):
+            raise ValueError("trigger_reasons and fired_rules must have one entry per rule")
+        return self
 
 
 class Stage1VisionOutput(BaseModel):

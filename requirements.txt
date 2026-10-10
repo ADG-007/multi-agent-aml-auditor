@@ -18,5 +18,12 @@ pytesseract==0.3.13   # OCR wrapper; REQUIRES the Tesseract OS binary installed 
 # --- Retrieval (Stage 6 rulebook RAG) ---
 chromadb==1.5.9       # vector store for rulebook clause embeddings -> data/rulebook/
 
+# --- Name matching (Stage 0 pre-filter and Stage 4, shared via src/matching/) ---
+rapidfuzz==3.14.6     # token-sort-ratio fuzzy matching of names and aliases
+
+# --- Development: tests and lint (Phase 2) ---
+pytest==9.1.1         # boundary and unit tests under tests/
+ruff==0.17.0          # lint, run on Phase 2 code only (see pyproject.toml)
+
 # --- LLM abstraction (src/llm/, used by Stages 3, 6, 7 in later phases) ---
 langchain==1.4.2      # unified chat-model interface + with_structured_output()

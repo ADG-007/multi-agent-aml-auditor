@@ -155,6 +155,31 @@ class StageName(str, Enum):
     AUDITOR = "Auditor"
 
 
+class TriageEventKind(str, Enum):
+    """What Stage 0 is being asked to evaluate.
+
+    TRANSACTION is a single new transaction (live mode). KYC_SUBMITTED is a new or updated
+    KYC profile. PERIODIC_REVIEW is Phase 11's review of a whole account: every transaction
+    in its history is screened and the profile on file is reviewed.
+    """
+
+    TRANSACTION = "TRANSACTION"
+    KYC_SUBMITTED = "KYC_SUBMITTED"
+    PERIODIC_REVIEW = "PERIODIC_REVIEW"
+
+
+class TriageRule(str, Enum):
+    """The rows of Stage 0's routing table (MASTER_PLAN.md Phase 2), one value per row."""
+
+    CASH_THRESHOLD = "CASH_THRESHOLD"
+    CROSS_BORDER = "CROSS_BORDER"
+    KYC_EVENT = "KYC_EVENT"
+    KNOWN_BAD_IDENTIFIER = "KNOWN_BAD_IDENTIFIER"
+    NAME_MATCH = "NAME_MATCH"
+    PASS_THROUGH = "PASS_THROUGH"
+    REINVESTIGATION = "REINVESTIGATION"
+
+
 #: The four stages that feed the renormalized weighted average (MASTER_PLAN.md 2.2).
 #: Vision is excluded by invariant 2; Triage, Rulebook and Auditor never score.
 STAGE_WEIGHTS: dict[StageName, float] = {
@@ -166,6 +191,25 @@ STAGE_WEIGHTS: dict[StageName, float] = {
 
 #: Stages 4 and 5 may escalate a case on their own at or above this confidence.
 AUTO_VETO_THRESHOLD: float = 0.90
+
+#: A weighted score below this is CLEAR; from here up to ESCALATE_FROM it is MONITOR.
+CLEAR_BELOW: float = 0.35
+
+#: A weighted score at or above this escalates, if the corroboration gate also passes.
+ESCALATE_FROM: float = 0.60
+
+#: Corroboration gate, first branch: at least this many weighted stages, each at or above
+#: CORROBORATION_STAGE_MIN, agree.
+CORROBORATION_MIN_STAGES: int = 2
+CORROBORATION_STAGE_MIN: float = 0.40
+
+#: Corroboration gate, second branch: one weighted stage at or above this is strong enough
+#: to escalate on its own.
+SOLO_SIGNAL_MIN: float = 0.75
+
+#: Every confidence and score is rounded to this many decimals before any comparison, so
+#: floating-point error (0.3499999999999999 for two stages at 0.35) cannot flip a boundary.
+SCORE_DECIMALS: int = 4
 
 #: Forgery confidence at or above this pauses the pipeline for a human admin decision.
 FORGERY_PAUSE_THRESHOLD: float = 0.90
