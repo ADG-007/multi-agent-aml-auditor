@@ -56,9 +56,10 @@ def test_routed_stages_run_and_unrouted_stay_empty():
     assert report.transaction_pattern_findings.confidence == 0.5
     assert report.kyc_findings is None
     assert report.stage_status[S.KYC.value] == StageStatus.NOT_ROUTED
-    # (0.25*0.5 + 0.25*0.1 + 0.30*0.4) / 0.80 = 0.3375, just under the 0.35 line
+    # (0.25*0.5 + 0.25*0.1 + 0.30*0.4) / 0.80 = 0.3375, just under the 0.35 line, but the
+    # The signal floor lifts it: Transaction Pattern 0.5 and Graph 0.4 are >= 0.40.
     assert report.confidence == 0.3375
-    assert report.disposition == Disposition.CLEAR
+    assert report.disposition == Disposition.MONITOR
 
 
 def test_scoring_matches_the_engine_through_the_runner():
@@ -107,8 +108,10 @@ def test_reinvestigation_reruns_every_stage_as_a_new_case():
     report = run_case(_event(wire), ctx, state, _plan(tp=0.5))
     assert report.case_id == "CASE-ACC-T001-2"
     assert TriageRule.REINVESTIGATION in [f.rule for f in report.triage_findings.fired_rules]
-    for stage in (S.VISION, S.TRANSACTION_PATTERN, S.KYC, S.ADVERSE_MEDIA, S.GRAPH):
+    for stage in (S.TRANSACTION_PATTERN, S.KYC, S.ADVERSE_MEDIA, S.GRAPH):
         assert report.stage_status[stage.value] == StageStatus.RAN
+    # Vision is routed too; the test bank has no ID card image, so it fails and degrades.
+    assert report.stage_status[S.VISION.value] == StageStatus.FAILED
 
 
 def test_escalation_reroutes_a_ring_mate():
@@ -156,7 +159,7 @@ def test_review_case_records_the_earliest_alert_or_none():
 
 
 # --------------------------------------------------------------------------------------
-# Real stages (Phase 3: Stage 2)
+# Real stages (Stage 2)
 # --------------------------------------------------------------------------------------
 
 
