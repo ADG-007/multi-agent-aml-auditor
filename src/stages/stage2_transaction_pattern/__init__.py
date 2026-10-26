@@ -1,4 +1,4 @@
-"""Stage 2 - Transaction Pattern Analyst. Deterministic; never calls a model."""
+"""Stage 2: transaction patterns. Deterministic."""
 
 from src.stages.stage2_transaction_pattern.analyst import run
 

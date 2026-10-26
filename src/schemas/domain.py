@@ -1,11 +1,6 @@
-"""Domain models — the simulated bank's data.
+"""The simulated bank's records, as the generators write them and the stages read them.
 
-These are what the Phase 1 generators produce and what every later stage reads. They are
-deliberately not pipeline outputs: nothing here carries a confidence or a disposition.
-
-Field sets follow phase_1_execution.md's "format-plausible, not algorithmically exact"
-calibration: a real Aadhaar/PAN/passport's actual field set and number pattern, but no
-attempt to reproduce Aadhaar's Verhoeff checksum or ICAO 9303 MRZ construction.
+ID fields look real (format, pattern) but carry no real checksum.
 """
 
 from __future__ import annotations
@@ -56,11 +51,7 @@ class Account(BaseModel):
 
 
 class Transaction(BaseModel):
-    """A single posted transaction.
-
-    No balance_after and no narration: both were considered during Phase 1 planning and
-    rejected as real generation cost for cosmetic-only benefit.
-    """
+    """A single posted transaction."""
 
     transaction_id: str
     account_id: str
@@ -95,17 +86,12 @@ class Transaction(BaseModel):
     @computed_field
     @property
     def is_cross_border(self) -> bool:
-        """The national/international split. Derived from the rail rather than stored
-        independently, so the two can never disagree."""
+        """Derived from the rail (SWIFT), so the two can never disagree."""
         return self.type == TransactionType.SWIFT
 
 
 class Counterparty(BaseModel):
-    """The other side of a transaction, and a node in the Stage 5 graph.
-
-    is_foreign / country is what makes the cross-border clause category reachable without
-    adding a new pipeline stage — Stage 5 reads it off the graph node.
-    """
+    """The other side of a transaction, and a node in the Stage 5 graph."""
 
     counterparty_id: str
     name: str
@@ -121,23 +107,16 @@ class Counterparty(BaseModel):
 
 
 class KYCProfile(BaseModel):
-    """The free-text profile Stage 3 reasons over.
-
-    Deliberately unstructured: the whole point of Stage 3 is judging whether a human-written
-    account of someone's life is plausible against what their account actually does.
-    """
+    """The free-text profile Stage 3 judges against the account's money."""
 
     customer_id: str
     narrative: str
 
 
 class AdverseMediaEntry(BaseModel):
-    """One entry in the adverse-media / sanctions corpus.
+    """One blacklist entry, modelled on the UN consolidated list (UAPA 51A in India).
 
-    Modelled on the UN Security Council Consolidated List (1267/1989) as given effect in
-    India through UAPA Section 51A notifications. aliases and date_of_birth are functional,
-    not decorative — alias matching and DOB disambiguation are exactly what real sanctions
-    screening uses to separate a true hit from a name collision.
+    Aliases and DOB separate a true hit from a name collision.
     """
 
     entry_id: str
@@ -154,12 +133,7 @@ class AdverseMediaEntry(BaseModel):
 
 
 class RulebookClause(BaseModel):
-    """One policy clause, chunked 1:1 into ChromaDB.
-
-    metadata externalizes machine-readable numbers so Stage 0's routing check and Stage 2's
-    formula read the same values from one source — STRUCT-001 carries threshold_inr and
-    near_threshold_pct. Injecting a replacement clause at demo time must move both together.
-    """
+    """One policy clause, one ChromaDB chunk. `metadata` holds the numbers stages read."""
 
     clause_id: str
     title: str
@@ -170,11 +144,7 @@ class RulebookClause(BaseModel):
 
 
 class FraudRing(BaseModel):
-    """A deliberately planted cluster of accounts sharing identifiers with no legitimate reason.
-
-    Never handed to Stage 5 — the graph gets the shared identifiers, not the ring label. Stage 5
-    has to rediscover the cluster from topology alone.
-    """
+    """A planted ring (answer key). Stage 5 sees only the shared identifiers, never this."""
 
     ring_id: str
     ring_type: RingType
@@ -196,12 +166,7 @@ class FraudRing(BaseModel):
 
 
 class EvidenceLedgerEntry(BaseModel):
-    """Per-account record of what was planted, and at what severity.
-
-    Generation-time only. MASTER_PLAN.md Phase 1 is explicit that this is never visible to
-    any pipeline stage at inference time; it exists solely as the input to Phase 11's
-    label-derivation rule, which is written independently of the scoring formula.
-    """
+    """What was planted per account (answer key). Never read by the pipeline."""
 
     account_id: str
     customer_id: str
@@ -227,11 +192,7 @@ class EvidenceLedgerEntry(BaseModel):
 
     @property
     def real_channel_count(self) -> int:
-        """Channels that count as real evidence.
-
-        A NAME_SIMILARITY_ONLY adverse-media hit is explicitly not a real channel — it is
-        the decoy, and counting it would make the false-positive test meaningless.
-        """
+        """Channels that count as real evidence. A look-alike name hit is a decoy, not one."""
         real_media = self.adverse_media_hit is not None and (
             self.adverse_media_hit != SeverityTier.NAME_SIMILARITY_ONLY
         )
@@ -248,12 +209,7 @@ class EvidenceLedgerEntry(BaseModel):
 
     @property
     def expected_disposition(self) -> Disposition:
-        """The answer-key label Phase 11 grades against. The one home of the labelling rule.
-
-        Two or more real channels -> SUSPICIOUS-ESCALATE, one -> MONITOR, none -> CLEAR. One
-        exception (Amendment 3, A4): a confirmed sanctions hit escalates on its own, because
-        the sanctions veto must escalate it and the law requires a report on it.
-        """
+        """The answer-key label: 2+ real channels or a sanctions hit -> ESCALATE, 1 -> MONITOR."""
         if self.real_channel_count >= 2 or (
             self.adverse_media_hit == SeverityTier.CONFIRMED_SANCTIONS
         ):

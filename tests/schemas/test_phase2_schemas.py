@@ -1,4 +1,4 @@
-"""Phase 2 schema changes: TriageEvent, FiredRule, Stage0TriageOutput, optional trigger."""
+"""Triage schemas: TriageEvent, FiredRule, Stage0TriageOutput, optional trigger."""
 
 import pytest
 from pydantic import ValidationError

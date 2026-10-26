@@ -1,16 +1,8 @@
-"""Structuring sub-score: in-band cash in the busiest 30 days (phase_3_execution.md Q2-Q4, D3, D4).
+"""Structuring sub-score: in-band cash in the busiest 30 days.
 
-The law's cash report (the CTR, STRUCT-001) covers cash only, so only cash deposits and cash
-withdrawals are counted (Amendment 3, A1). A row is in band when its amount lies in
-[threshold x near_threshold_pct, threshold], both edges inclusive: the CTR reports cash of
-*more than* the threshold, so an amount exactly at it escapes the report and tops the band
-(A3). The band is read from the rulebook at run time, never written here.
-
-`k` is the largest number of in-band rows of one direction inside any sliding 30-day window
-of the frame. Deposits and withdrawals are counted apart, each in its own busiest window, as
-the RBI aggregates credits and debits apart (D3); the larger count is `k`. The legal figure -
-each calendar month's cash totals - goes to the trail only (A2), as does the count of in-band
-non-cash payments, which carry no amount report and so are not structuring.
+Only cash counts (the CTR is a cash report). In band = [threshold x pct, threshold], read from
+the rulebook. `k` = most in-band rows of one direction in any 30-day window (deposits and
+withdrawals apart). Monthly totals and in-band non-cash payments go to the trail only.
 """
 
 from __future__ import annotations
@@ -55,7 +47,7 @@ class BusiestWindow:
 
 @dataclass(frozen=True)
 class MonthCash:
-    """One calendar month's cash, all amounts, deposits and withdrawals apart (A2)."""
+    """One calendar month's cash, deposits and withdrawals apart."""
 
     month: date
     deposits: float
@@ -65,7 +57,7 @@ class MonthCash:
 @dataclass(frozen=True)
 class StructuringResult:
     band: StructuringThreshold
-    #: The busiest window of in-band rows, one per cash direction (D3).
+    #: The busiest window of in-band rows, one per cash direction.
     busiest: dict[TransactionType, BusiestWindow]
     k: int
     score: float
@@ -104,7 +96,7 @@ def score(
 
 
 def structuring_map(k: int) -> float:
-    """The decided map (D4), linear between its points, flat beyond the last."""
+    """STRUCTURING_MAP, linear between points, flat beyond the last."""
     points = config.STRUCTURING_MAP
     if k <= points[0][0]:
         return points[0][1]

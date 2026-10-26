@@ -1,4 +1,4 @@
-"""Scoring engine boundaries (MASTER_PLAN.md Phase 2 unit-test list, plus the kickoff's Q8)."""
+"""Judge boundaries and edge cases."""
 
 from itertools import combinations
 
@@ -88,13 +88,70 @@ def test_one_stage_just_under_040_fails_the_gate():
 
 
 def test_solo_branch_boundary():
-    capped = score_case(ran(kyc=0.74))
+    # Two stages ran, only one at >= 0.40: the solo branch alone decides the gate.
+    # (0.20*0.90 + 0.25*0.39) / 0.45 = 0.6167
+    passed = score_case(ran(kyc=0.90, tp=0.39))
+    assert passed.weighted_score == 0.6167
+    assert passed.disposition == D.SUSPICIOUS_ESCALATE
+    # Graph 0.74 is just under the solo bar and KYC just under 0.40: held at MONITOR.
+    capped = score_case(ran(g=0.74, kyc=0.3999))
     assert capped.disposition == D.MONITOR and capped.single_signal_capped
-    assert score_case(ran(kyc=0.75)).disposition == D.SUSPICIOUS_ESCALATE
 
 
-def test_one_stage_at_one_with_others_at_zero_passes_the_gate():
-    assert corroboration_passes({TP: 1.0, KYC: 0.0, AM: 0.0, G: 0.0})
+def test_solo_branch_needs_two_stages_that_found_something():
+    alone = score_case(ran(kyc=0.95))
+    assert alone.disposition == D.MONITOR and alone.single_signal_capped
+    assert not corroboration_passes({KYC: 0.95})
+    # A stage that ran at 0 found nothing: it is not a second stage.
+    assert not corroboration_passes({KYC: 0.95, TP: 0.0})
+    assert corroboration_passes({KYC: 0.95, TP: 0.1})
+
+
+# --- signal floor ---------------------------------------------------------------------
+
+
+def test_empty_stages_are_left_out_of_the_average():
+    # Structuring at 1.0 beside three stages that found nothing: the average is 1.0, not
+    # 0.25. One stage alone still cannot escalate (the gate), so it is held at MONITOR.
+    result = score_case(ran(tp=1.0, kyc=0.0, am=0.0, g=0.0))
+    assert result.weighted_score == 1.0
+    assert result.disposition == D.MONITOR and result.single_signal_capped
+    assert "left out: KYC, AdverseMedia, Graph" in result.reasoning_trail[1].finding
+
+
+def test_two_real_signals_beside_empty_stages_escalate():
+    # The mule ring shape: Stage 2 1.0, Stage 5 0.85, KYC and Stage 4 at 0.
+    result = score_case(ran(tp=1.0, kyc=0.0, am=0.0, g=0.85))
+    assert result.weighted_score == 0.9182
+    assert result.disposition == D.SUSPICIOUS_ESCALATE
+
+
+def test_only_empty_stages_is_clear():
+    result = score_case(ran(tp=0.0, kyc=0.0))
+    assert result.disposition == D.CLEAR and result.confidence == 0.0
+
+
+def test_signal_floor_lifts_a_diluted_signal_to_monitor():
+    # Stage 2 at 0.45 and a weak 0.15 look-alike: 0.3 on average, CLEAR without the floor.
+    result = score_case(ran(tp=0.45, am=0.15))
+    assert result.weighted_score == 0.3
+    assert result.disposition == D.MONITOR and result.signal_floored
+
+
+def test_signal_floor_boundary():
+    assert score_case(ran(tp=0.3999, am=0.1)).disposition == D.CLEAR
+    result = score_case(ran(tp=0.40, am=0.1))
+    assert result.disposition == D.MONITOR and result.signal_floored
+
+
+def test_signal_floor_never_lowers_an_escalation():
+    result = score_case(ran(tp=0.9, g=0.8))
+    assert result.disposition == D.SUSPICIOUS_ESCALATE and not result.signal_floored
+
+
+def test_one_stage_at_one_with_others_at_zero_fails_the_gate():
+    assert not corroboration_passes({TP: 1.0, KYC: 0.0, AM: 0.0, G: 0.0})
+    assert corroboration_passes({TP: 1.0, KYC: 0.2, AM: 0.0, G: 0.0})
 
 
 def test_adverse_news_alone_is_capped():
@@ -123,7 +180,7 @@ def test_not_routed_is_not_degraded():
     assert result.disposition == D.CLEAR and not result.evidence_incomplete
 
 
-# --- edge cases settled at kickoff (Q8) -----------------------------------------------
+# --- edge cases -----------------------------------------------------------------------
 
 
 def test_no_weighted_stage_is_clear_at_zero():

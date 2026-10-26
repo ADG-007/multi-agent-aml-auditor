@@ -1,16 +1,10 @@
 """Stage 0: decide which stages investigate an event, and record why.
 
-One entry point for every event kind (phase_2_execution.md D2):
+- TRANSACTION: rules on that transaction, pass-through up to it, whole-account rules.
+- KYC_SUBMITTED: the KYC rule plus whole-account rules.
+- PERIODIC_REVIEW: rules on every transaction, every pass-through burst, whole-account and KYC.
 
-- TRANSACTION (live): the per-transaction rules on that transaction, pass-through on the
-  history ending at it, and the whole-account rules.
-- KYC_SUBMITTED: the KYC row plus the whole-account rules.
-- PERIODIC_REVIEW (Phase 11): the per-transaction rules on every transaction in the history,
-  every pass-through burst, the whole-account rules, and the KYC row for the profile on file.
-
-The route is the union of every fired rule's stages. A flagged account that trips any rule is
-re-investigated by every stage. Rulebook joins whenever a weighted stage is routed; Auditor is
-always routed, so even a case with no fired rule gets its thin CLEAR report.
+Route = union of the fired rules' stages. Rulebook joins any weighted stage. Auditor always runs.
 """
 
 from __future__ import annotations
@@ -19,6 +13,7 @@ from dataclasses import dataclass
 from datetime import datetime
 
 from src.bank import BankData
+from src.llm.cache import LLMMode
 from src.matching import NameIndex
 from src.orchestration.run_state import RunState
 from src.rulebook import RulebookLookup
@@ -36,25 +31,32 @@ from src.stages.stage0_triage.rules import RULE_ROUTES, Hit
 
 @dataclass(frozen=True)
 class TriageContext:
-    """The read-only inputs Stage 0 needs, built once per run.
-
-    review_date is the bank's latest transaction time when the context was built: the as-of
-    time of every periodic review in the run (phase_3_execution.md D2). The case runner reads
-    it from here and passes it to the evidence stages.
-    """
+    """Read-only inputs for one run. review_date is the "now" of every periodic review."""
 
     bank: BankData
     rulebook: RulebookLookup
     names: NameIndex
     review_date: datetime | None = None
+    #: Model mode for Stage 3 (src/llm/cache.py). Off by default: no accidental model calls.
+    llm_mode: LLMMode = LLMMode.OFF
+    #: The same for Stage 7, the writer. The verdict never depends on it.
+    writer_mode: LLMMode = LLMMode.OFF
 
     @classmethod
-    def build(cls, bank: BankData, rulebook: RulebookLookup) -> TriageContext:
+    def build(
+        cls,
+        bank: BankData,
+        rulebook: RulebookLookup,
+        llm_mode: LLMMode = LLMMode.OFF,
+        writer_mode: LLMMode = LLMMode.OFF,
+    ) -> TriageContext:
         return cls(
             bank=bank,
             rulebook=rulebook,
             names=NameIndex(bank.adverse_media),
             review_date=bank.review_date(),
+            llm_mode=llm_mode,
+            writer_mode=writer_mode,
         )
 
 

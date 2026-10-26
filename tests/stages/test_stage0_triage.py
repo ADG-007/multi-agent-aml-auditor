@@ -68,11 +68,12 @@ def test_cash_structuring_route():
     ]
 
 
-def test_kyc_submission_routes_kyc_and_vision_plus_rulebook():
+def test_kyc_submission_routes_kyc_vision_and_graph_plus_rulebook():
+    # A KYC event also checks links (Stage 5), so a quiet ring member is still linked.
     b = bank()
     event = TriageEvent(kind=TriageEventKind.KYC_SUBMITTED, account_id="ACC-T001")
     out = triage(event, _ctx(b), RunState())
-    assert out.routed_stages == [S.VISION, S.KYC, S.RULEBOOK, S.AUDITOR]
+    assert out.routed_stages == [S.VISION, S.KYC, S.GRAPH, S.RULEBOOK, S.AUDITOR]
 
 
 def test_name_match_alone_routes_adverse_media():
@@ -184,7 +185,7 @@ def test_every_route_ends_with_the_auditor(kind):
 
 
 def test_real_bank_review_counts():
-    """The routing reach measured at Phase 2's kickoff, reproduced on the committed data."""
+    """The routing reach on the committed data."""
     b = BankData.load()
     ctx = _ctx(b)
     state = RunState()

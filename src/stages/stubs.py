@@ -1,9 +1,6 @@
-"""Placeholder Stages 1-7, so the pipeline runs end to end before any agent exists.
+"""Stand-in stage outputs for tests. A StubPlan sets each one's status and confidence.
 
-Each stub returns a schema-valid output for its stage with whatever status and confidence the
-StubPlan gives it (default: RAN at 0.0), and its reasoning trail names the phase that replaces
-it. Stubs never look at ground truth - a stub that "knew the answer" would make every
-downstream number meaningless (phase_2_execution.md D9).
+Stubs never read the answer key.
 """
 
 from __future__ import annotations
@@ -27,15 +24,15 @@ from src.schemas import (
 from src.scoring import StageResult
 
 
-#: The phase that replaces each stub with the real stage.
+#: The module of the real stage each stub stands in for.
 REPLACED_IN: dict[StageName, str] = {
-    StageName.VISION: "Phase 5",
-    StageName.TRANSACTION_PATTERN: "Phase 3",
-    StageName.KYC: "Phase 4",
-    StageName.ADVERSE_MEDIA: "Phase 6",
-    StageName.GRAPH: "Phase 7",
-    StageName.RULEBOOK: "Phase 8",
-    StageName.AUDITOR: "Phase 9",
+    StageName.VISION: "stage1_vision",
+    StageName.TRANSACTION_PATTERN: "stage2_transaction_pattern",
+    StageName.KYC: "stage3_kyc",
+    StageName.ADVERSE_MEDIA: "stage4_adverse_media",
+    StageName.GRAPH: "stage5_graph",
+    StageName.RULEBOOK: "stage6_rulebook",
+    StageName.AUDITOR: "stage7_auditor",
 }
 
 _DEFAULT = StageResult(StageStatus.RAN, 0.0)
@@ -43,8 +40,8 @@ _DEFAULT = StageResult(StageStatus.RAN, 0.0)
 
 @dataclass(frozen=True)
 class StubPlan:
-    """What each stub reports. Unlisted stages RAN at 0.0. For Vision the confidence is the
-    forgery confidence; Rulebook and Auditor have none, so only their status is used."""
+    """What each stub reports. Unlisted stages RAN at 0.0. Vision's value is its forgery
+    confidence. Rulebook and Auditor use only the status."""
 
     outcomes: dict[StageName, StageResult] = field(default_factory=dict)
 
@@ -53,7 +50,7 @@ class StubPlan:
 
 
 class AuditorStubOutput(BaseModel):
-    """The report text Stage 7 will write in Phase 9."""
+    """The stub writer's report text."""
 
     executive_summary: str
     investigation_narrative: str
@@ -116,7 +113,7 @@ def run_auditor_stub(disposition: Disposition, confidence: float, plan: StubPlan
             ),
             compliance_conclusion=f"STUB: {verdict}.",
             str_narrative=(
-                "STUB - STR draft written in Phase 9."
+                "STUB - STR draft."
                 if disposition == Disposition.SUSPICIOUS_ESCALATE
                 else None
             ),

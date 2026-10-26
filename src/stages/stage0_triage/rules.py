@@ -1,8 +1,7 @@
-"""Stage 0's routing table, one small function per row (MASTER_PLAN.md Phase 2).
+"""Stage 0's routing table, one small function per row.
 
-Each rule returns Hits: a machine-readable FiredRule plus the readable sentence that goes into
-trigger_reasons. Per-transaction rules carry the transaction id; whole-account rules carry
-None. No rule ever reads ground truth, and no rulebook-defined number is written here.
+Each rule returns Hits (a FiredRule plus a readable reason). No answer key, no hard-coded
+rulebook numbers.
 """
 
 from __future__ import annotations
@@ -32,13 +31,12 @@ from src.stages.stage0_triage import config
 
 S = StageName
 
-#: The routing table: which stages each rule sends the case to. Rulebook is added whenever a
-#: weighted stage is routed and Auditor always (triage.py), so they are not repeated here
-#: except where the table lists them explicitly.
+#: Stages each rule routes. triage.py adds Rulebook and Auditor.
 RULE_ROUTES: dict[TriageRule, frozenset[StageName]] = {
     TriageRule.CASH_THRESHOLD: frozenset({S.TRANSACTION_PATTERN, S.ADVERSE_MEDIA, S.GRAPH}),
     TriageRule.CROSS_BORDER: frozenset({S.TRANSACTION_PATTERN, S.KYC, S.GRAPH}),
-    TriageRule.KYC_EVENT: frozenset({S.KYC, S.VISION}),
+    # Links too, so a quiet ring member still meets its flagged ring-mates.
+    TriageRule.KYC_EVENT: frozenset({S.KYC, S.VISION, S.GRAPH}),
     TriageRule.KNOWN_BAD_IDENTIFIER: frozenset({S.GRAPH, S.ADVERSE_MEDIA}),
     TriageRule.NAME_MATCH: frozenset({S.ADVERSE_MEDIA}),
     TriageRule.PASS_THROUGH: frozenset({S.TRANSACTION_PATTERN, S.KYC, S.GRAPH}),
@@ -75,11 +73,7 @@ def _hit(
 
 
 def cash_threshold(t: Transaction, rulebook: RulebookLookup) -> Hit | None:
-    """A cash transaction above the CTR threshold, or in the band up to and including it.
-
-    The law reports cash of more than the threshold, so an amount exactly at it is not a
-    CTR. It is the top of the structuring band instead, which keeps it flagged.
-    """
+    """Cash above the CTR threshold, or in the band up to it (exactly at it is in the band)."""
     if t.type not in config.CASH_TYPES:
         return None
     s = rulebook.structuring()
@@ -102,10 +96,7 @@ def cash_threshold(t: Transaction, rulebook: RulebookLookup) -> Hit | None:
 
 
 def cross_border(t: Transaction, rulebook: RulebookLookup) -> Hit | None:
-    """A cross-border wire above the CBWTR threshold, inward or outward.
-
-    The law reports wires of more than the threshold, so an amount exactly at it does not fire.
-    """
+    """A cross-border wire above the CBWTR threshold (exactly at it does not fire)."""
     threshold = rulebook.cross_border_threshold()
     if not t.is_cross_border or t.amount <= threshold:
         return None
@@ -121,11 +112,7 @@ def cross_border(t: Transaction, rulebook: RulebookLookup) -> Hit | None:
 
 
 def known_bad_on_transaction(t: Transaction, account_id: str, state: RunState) -> list[Hit]:
-    """The transaction's device or IP was listed from another, escalated account.
-
-    An account's own listed identifiers never count against it: the list exists to reach
-    other, connected accounts.
-    """
+    """The device or IP was listed from another escalated account (never the account's own)."""
     hits = []
     for label, value, listed in (
         ("device", t.device_id, state.known_bad_devices),
@@ -209,11 +196,9 @@ def pass_through(
     rulebook: RulebookLookup,
     within: Transaction | None = None,
 ) -> list[Hit]:
-    """Bursts of first-time credits forwarded onward within hours.
+    """Bursts of first-time credits forwarded on within hours.
 
-    Review mode (`within` None): every non-overlapping qualifying burst in the history.
-    Live mode: fires once if `within` lies inside a qualifying burst's window, from its first
-    credit to PASS_THROUGH_WINDOW after its last, with the history ending at `within`.
+    Review (`within` None): every burst. Live: once, if `within` falls inside a burst's window.
     """
     floor = rulebook.mule_floor()
     window = config.PASS_THROUGH_WINDOW

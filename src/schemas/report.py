@@ -1,14 +1,10 @@
-"""InvestigationReport - the pipeline's single deliverable.
-
-Assembled by Stage 7 from the already-computed deterministic disposition and confidence
-(score-then-narrate order), plus every upstream stage's findings.
-"""
+"""InvestigationReport: the pipeline's one output. Scored first, then narrated."""
 
 from __future__ import annotations
 
 from pydantic import BaseModel, Field, computed_field
 
-from src.schemas.common import Disposition, PipelineStatus, StageStatus
+from src.schemas.common import Disposition, PipelineStatus, ReasoningStep, StageStatus
 from src.schemas.stages import (
     Stage0TriageOutput,
     Stage1VisionOutput,
@@ -21,13 +17,7 @@ from src.schemas.stages import (
 
 
 class InvestigationReport(BaseModel):
-    """One case, one verdict.
-
-    A case is triggered by a single transaction but Stages 2-5 evaluate the account's full
-    rolling history. Re-investigating an account creates a new case_id rather than
-    overwriting the prior one. The exception is Phase 11's periodic review, which may have
-    no alerting transaction at all.
-    """
+    """One case, one verdict. A re-investigation gets a new case_id."""
 
     case_id: str = Field(description="CASE-{account_id}-{sequence}.")
     triggering_transaction_id: str | None = Field(
@@ -42,7 +32,7 @@ class InvestigationReport(BaseModel):
     confidence: float = Field(
         ge=0.0,
         le=1.0,
-        description="Deterministically computed. Never LLM arithmetic (invariant 1).",
+        description="Deterministically computed. Never LLM arithmetic.",
     )
     disposition: Disposition
 
@@ -79,6 +69,10 @@ class InvestigationReport(BaseModel):
     adverse_media_findings: Stage4AdverseMediaOutput | None = None
     graph_findings: Stage5GraphOutput | None = None
     rulebook_findings: Stage6RulebookOutput | None = None
+    auditor_trail: list[ReasoningStep] = Field(
+        default_factory=list,
+        description="Stage 7's own trail: how the text was made and which citations were removed.",
+    )
 
     @computed_field
     @property

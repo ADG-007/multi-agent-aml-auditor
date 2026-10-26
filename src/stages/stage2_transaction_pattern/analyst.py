@@ -2,15 +2,9 @@
 
     run(account_id, ctx, as_of) -> Stage2TransactionPatternOutput
 
-The frame is the 90 days ending at `as_of`: the bank's review date for a periodic review, a
-live transaction's own time for a transaction event (D2). Two sub-scores are computed on it -
-cash structuring and any-rail pass-through - and confidence is the stronger of the two (Q6),
-so neither dilutes the other. Velocity, round-amount share, the calendar-month cash totals,
-in-band non-cash payments and stranger share are reported in the trail and never scored (Q3).
-
-Everything is a fixed template (D8): counts, dates, Indian-format amounts through Stage 0's
-`inr()`, and the clause ids the numbers come from - no free text and no transaction-id
-listings. Zero model calls. Exceptions are not caught here; failure handling is Phase 10's.
+Two sub-scores on the 90 days ending at `as_of`: cash structuring and pass-through. Confidence
+is the stronger one. Velocity, round amounts and monthly cash go to the trail only.
+Trail text is a fixed template. No model calls. Errors are left to the orchestrator.
 """
 
 from __future__ import annotations
@@ -33,8 +27,7 @@ from src.stages.stage2_transaction_pattern.pass_through import PassThroughResult
 from src.stages.stage2_transaction_pattern.structuring import StructuringResult
 
 
-#: Clauses the trail cites beside STRUCT-001 and MULE-002: the monthly cash aggregate
-#: (Rule 3(1)(B)), the turnover surge, and the non-cash rails' lack of an amount report.
+#: Other clauses the trail cites: monthly cash total, turnover surge, non-cash rails.
 MONTHLY_CASH_CLAUSE_ID = "STRUCT-002"
 TURNOVER_CLAUSE_ID = "STRUCT-003"
 NON_CASH_CLAUSE_ID = "STR-002"
@@ -51,14 +44,9 @@ def run(
     as_of: datetime | None,
     transaction: Transaction | None = None,
 ) -> Stage2TransactionPatternOutput:
-    """Analyse `account_id` over the 90 days ending at `as_of`.
+    """Analyse the 90 days ending at `as_of`, plus a live `transaction` even if not posted.
 
-    `transaction` is a live event's own transaction. It is counted whether or not it has been
-    posted to the bank yet, as Stage 0 counts it, so the deposit that triggered the case is
-    in the frame that ends at its time (D2).
-
-    `as_of` is None only when the bank holds no transactions at all (no review date exists);
-    the account then has nothing to analyse.
+    `as_of` is None only for an empty bank: nothing to analyse.
     """
     rows = _rows(ctx, account_id, transaction) if as_of is not None else ()
     end = as_of or datetime.max  # no rows either way; any end with room for the frame

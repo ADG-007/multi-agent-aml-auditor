@@ -1,4 +1,4 @@
-"""Stage 2 pass-through sub-score on small hand-built accounts (phase_3_execution.md step 4)."""
+"""Stage 2 pass-through sub-score on small hand-built accounts."""
 
 from datetime import datetime, timedelta
 

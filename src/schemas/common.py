@@ -1,10 +1,4 @@
-"""Shared enums, constants and the ReasoningStep primitive.
-
-Every inter-stage contract in the pipeline is built from these. Kept in one module so a
-value like the set of weighted stages or the disposition vocabulary has exactly one
-definition — MASTER_PLAN.md Section 3 invariant 6 ("zero hardcoding") is much easier to
-honour when the vocabulary itself is not duplicated across modules.
-"""
+"""Shared enums, judge constants and ReasoningStep. One definition each, used everywhere."""
 
 from __future__ import annotations
 
@@ -19,8 +13,7 @@ from pydantic import BaseModel, Field
 
 
 class Gender(str, Enum):
-    """Gender as printed on the identity documents. The Aadhaar card prints it in full, the
-    passport data page as a single letter under "Sex"."""
+    """Gender as printed on the ID (Aadhaar in full, passport as one letter)."""
 
     MALE = "MALE"
     FEMALE = "FEMALE"
@@ -42,8 +35,7 @@ class IdDocumentType(str, Enum):
 
 
 class AccountType(str, Enum):
-    """SAVINGS and CURRENT are resident accounts. An NRI may not hold a resident savings
-    account under FEMA, so every NRI holds an NRE (Non-Resident External) account instead."""
+    """SAVINGS and CURRENT are resident accounts. Every NRI holds an NRE account (FEMA)."""
 
     SAVINGS = "SAVINGS"
     CURRENT = "CURRENT"
@@ -51,12 +43,7 @@ class AccountType(str, Enum):
 
 
 class TransactionType(str, Enum):
-    """Real Indian payment-mode categories, replacing PaySim-style generic labels.
-
-    NEFT/RTGS/IMPS/UPI are the four interbank rails; CASH/CHEQUE/ATM/POS are branch and card
-    channels. SWIFT is the only cross-border rail: money entering or leaving India arrives as
-    a SWIFT wire, never over UPI, NEFT or a card.
-    """
+    """Indian payment modes. SWIFT is the only cross-border rail."""
 
     NEFT = "NEFT"
     RTGS = "RTGS"
@@ -78,11 +65,7 @@ class TransactionDirection(str, Enum):
 
 
 class SeverityTier(str, Enum):
-    """Adverse-media/sanctions corpus tiers.
-
-    NAME_SIMILARITY_ONLY is the deliberate false-positive decoy tier: it is a real corpus
-    entry that a name matcher will hit, but it is not evidence of anything.
-    """
+    """Blacklist tiers. NAME_SIMILARITY_ONLY is a decoy: a match, but no evidence."""
 
     CONFIRMED_SANCTIONS = "CONFIRMED_SANCTIONS"
     ADVERSE_NEWS = "ADVERSE_NEWS"
@@ -90,8 +73,7 @@ class SeverityTier(str, Enum):
 
 
 class RingType(str, Enum):
-    """MULE is a money-mule network: accounts rented out and run from a handler's phone,
-    forwarding scam victims' money to a shared collector."""
+    """MULE: rented accounts run from one phone, forwarding money to a shared collector."""
 
     LOCAL = "LOCAL"
     INTERNATIONAL = "INTERNATIONAL"
@@ -109,8 +91,7 @@ class RulebookCategory(str, Enum):
     DOCUMENT_FORGERY = "DOCUMENT_FORGERY"
     CROSS_BORDER = "CROSS_BORDER"
     MONEY_MULE = "MONEY_MULE"
-    #: The suspicious-transaction obligation on every payment rail, and the non-cash domestic
-    #: rails that carry no amount-based report (Amendment 3).
+    #: The STR duty on every rail, incl. non-cash rails with no amount-based report.
     SUSPICIOUS_TRANSACTION = "SUSPICIOUS_TRANSACTION"
 
 
@@ -120,11 +101,7 @@ class RulebookCategory(str, Enum):
 
 
 class StageStatus(str, Enum):
-    """Why a stage does or does not have findings.
-
-    NOT_ROUTED (Stage 0 chose not to run it) is deliberately distinct from FAILED/TIMED_OUT
-    (it should have run and did not) — only the latter two floor a case at MONITOR.
-    """
+    """Why a stage has findings or not. Only FAILED / TIMED_OUT floor a case at MONITOR."""
 
     RAN = "RAN"
     NOT_ROUTED = "NOT_ROUTED"
@@ -159,12 +136,7 @@ class StageName(str, Enum):
 
 
 class TriageEventKind(str, Enum):
-    """What Stage 0 is being asked to evaluate.
-
-    TRANSACTION is a single new transaction (live mode). KYC_SUBMITTED is a new or updated
-    KYC profile. PERIODIC_REVIEW is Phase 11's review of a whole account: every transaction
-    in its history is screened and the profile on file is reviewed.
-    """
+    """What Stage 0 evaluates: one new transaction, a new KYC profile, or a whole account."""
 
     TRANSACTION = "TRANSACTION"
     KYC_SUBMITTED = "KYC_SUBMITTED"
@@ -172,7 +144,7 @@ class TriageEventKind(str, Enum):
 
 
 class TriageRule(str, Enum):
-    """The rows of Stage 0's routing table (MASTER_PLAN.md Phase 2), one value per row."""
+    """The rows of Stage 0's routing table."""
 
     CASH_THRESHOLD = "CASH_THRESHOLD"
     CROSS_BORDER = "CROSS_BORDER"
@@ -183,8 +155,7 @@ class TriageRule(str, Enum):
     REINVESTIGATION = "REINVESTIGATION"
 
 
-#: The four stages that feed the renormalized weighted average (MASTER_PLAN.md 2.2).
-#: Vision is excluded by invariant 2; Triage, Rulebook and Auditor never score.
+#: The four scored stages. Vision, Triage, Rulebook and Auditor never score.
 STAGE_WEIGHTS: dict[StageName, float] = {
     StageName.TRANSACTION_PATTERN: 0.25,
     StageName.KYC: 0.20,
@@ -201,24 +172,26 @@ CLEAR_BELOW: float = 0.35
 #: A weighted score at or above this escalates, if the corroboration gate also passes.
 ESCALATE_FROM: float = 0.60
 
-#: Corroboration gate, first branch: at least this many weighted stages, each at or above
-#: CORROBORATION_STAGE_MIN, agree.
+#: Gate, branch 1: this many stages at or above CORROBORATION_STAGE_MIN.
 CORROBORATION_MIN_STAGES: int = 2
 CORROBORATION_STAGE_MIN: float = 0.40
 
-#: Corroboration gate, second branch: one weighted stage at or above this is strong enough
-#: to escalate on its own.
+#: Gate, branch 2: one stage this strong escalates alone...
 SOLO_SIGNAL_MIN: float = 0.75
 
-#: Every confidence and score is rounded to this many decimals before any comparison, so
-#: floating-point error (0.3499999999999999 for two stages at 0.35) cannot flip a boundary.
+#: ...but only when at least this many stages found something (> 0).
+SOLO_SIGNAL_MIN_RAN: int = 2
+
+#: Any stage at or above this lifts a CLEAR to MONITOR.
+SIGNAL_FLOOR_MIN: float = 0.40
+
+#: Round before comparing, so float error (0.34999…) cannot flip a boundary.
 SCORE_DECIMALS: int = 4
 
-#: Forgery confidence at or above this pauses the pipeline for a human admin decision.
+#: Forgery confidence at or above this pauses the case for an admin.
 FORGERY_PAUSE_THRESHOLD: float = 0.90
 
-#: Forgery confidence in [FORGERY_NOTICE_THRESHOLD, FORGERY_PAUSE_THRESHOLD) is a
-#: non-blocking notice on the report.
+#: From here up to the pause threshold: a notice on the report, no pause.
 FORGERY_NOTICE_THRESHOLD: float = 0.60
 
 
@@ -228,12 +201,7 @@ FORGERY_NOTICE_THRESHOLD: float = 0.60
 
 
 class ReasoningStep(BaseModel):
-    """One auditable step in a stage's reasoning.
-
-    MASTER_PLAN.md invariant 5: no agent output is complete without a trail of these.
-    Strings are kept short on purpose — Stage 7 concatenates every stage's trail into a
-    single prompt, and the models this project targets have a tight context budget.
-    """
+    """One auditable step. Every stage output carries a trail of these. Keep them short."""
 
     step: str = Field(description="What was examined, in a few words.")
     finding: str = Field(description="What was actually observed.")

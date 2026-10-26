@@ -1,19 +1,8 @@
-"""The risk scoring engine: deterministic Python, never model arithmetic (invariant 1).
+"""The judge: turns weighted stage results into a verdict. Pure Python, no model maths.
 
-Implements MASTER_PLAN.md Section 2.2 plus the edge cases settled at Phase 2's kickoff. The
-decision tree, in order:
-
-1. Round every confidence to SCORE_DECIMALS.
-2. Veto: AdverseMedia or Graph RAN at or above AUTO_VETO_THRESHOLD -> SUSPICIOUS-ESCALATE at
-   the vetoing stage's confidence (the higher one if both veto).
-3. No weighted stage RAN: MONITOR at 0.0 if any routed weighted stage failed, else CLEAR at 0.0.
-4. Renormalised weighted average over the stages that RAN, rounded. Below CLEAR_BELOW -> CLEAR,
-   below ESCALATE_FROM -> MONITOR, otherwise SUSPICIOUS-ESCALATE only if the corroboration
-   gate passes, else MONITOR with single_signal_capped.
-5. Degraded floor: any FAILED/TIMED_OUT weighted stage lifts a CLEAR to MONITOR and sets
-   evidence_incomplete. A floor, never a ceiling.
-
-Vision's forgery confidence is never an input (invariant 2); passing it is an error.
+Order: round -> veto (Stage 4 or 5 >= 0.90) -> weighted average of the stages that found
+something (> 0) -> CLEAR / MONITOR / gated ESCALATE -> failed-stage floor -> signal floor.
+Vision's forgery confidence is never an input.
 """
 
 from __future__ import annotations
@@ -31,7 +20,9 @@ from src.schemas import (
     CORROBORATION_STAGE_MIN,
     ESCALATE_FROM,
     SCORE_DECIMALS,
+    SIGNAL_FLOOR_MIN,
     SOLO_SIGNAL_MIN,
+    SOLO_SIGNAL_MIN_RAN,
     STAGE_WEIGHTS,
     Disposition,
     ReasoningStep,
@@ -70,6 +61,9 @@ class ScoreResult(BaseModel):
     degraded_stages: list[StageName] = Field(default_factory=list)
     evidence_incomplete: bool = False
     single_signal_capped: bool = False
+    signal_floored: bool = Field(
+        default=False, description="A CLEAR lifted to MONITOR by one stage at >= 0.40."
+    )
     reasoning_trail: list[ReasoningStep] = Field(default_factory=list)
 
 
@@ -122,8 +116,10 @@ def score_case(results: Mapping[StageName, StageResult]) -> ScoreResult:
         )
     )
 
-    # 3. Nothing ran
-    if not ran:
+    # 3. Nothing found (a stage at 0.0 is left out of the average)
+    found = {s: c for s, c in ran.items() if c > 0}
+    empty = [s.value for s, c in ran.items() if c == 0]
+    if not found:
         if degraded:
             trail.append(
                 _step(
@@ -139,21 +135,23 @@ def score_case(results: Mapping[StageName, StageResult]) -> ScoreResult:
                 evidence_incomplete=True,
                 reasoning_trail=trail + _degraded_note(degraded, floored=True),
             )
-        trail.append(
-            _step("Weighted average", "No weighted stage was routed", "Benign fast path: CLEAR.")
+        finding = (
+            f"{', '.join(empty)} ran and found nothing" if empty else "No weighted stage was routed"
         )
+        trail.append(_step("Weighted average", finding, "Nothing to average: CLEAR."))
         return ScoreResult(disposition=Disposition.CLEAR, confidence=0.0, reasoning_trail=trail)
 
     # 4. Weighted average, thresholds, corroboration gate
     score = _round(
-        sum(STAGE_WEIGHTS[s] * c for s, c in ran.items()) / sum(STAGE_WEIGHTS[s] for s in ran)
+        sum(STAGE_WEIGHTS[s] * c for s, c in found.items()) / sum(STAGE_WEIGHTS[s] for s in found)
     )
-    parts = " + ".join(f"{s.value} {c:g}x{STAGE_WEIGHTS[s]:g}" for s, c in ran.items())
+    parts = " + ".join(f"{s.value} {c:g}x{STAGE_WEIGHTS[s]:g}" for s, c in found.items())
+    left_out = f"; found nothing, left out: {', '.join(empty)}" if empty else ""
     trail.append(
         _step(
             "Weighted average",
-            f"({parts}) / {sum(STAGE_WEIGHTS[s] for s in ran):g} = {score:g}",
-            "Renormalised over the stages that ran.",
+            f"({parts}) / {sum(STAGE_WEIGHTS[s] for s in found):g} = {score:g}{left_out}",
+            "Renormalised over the stages that ran and found something.",
         )
     )
 
@@ -170,18 +168,31 @@ def score_case(results: Mapping[StageName, StageResult]) -> ScoreResult:
                 "MONITOR.",
             )
         )
-    elif corroboration_passes(ran):
+    elif corroboration_passes(found):
         disposition = Disposition.SUSPICIOUS_ESCALATE
-        trail.append(_gate_step(ran, score, passed=True))
+        trail.append(_gate_step(found, score, passed=True))
     else:
         disposition = Disposition.MONITOR
         capped = True
-        trail.append(_gate_step(ran, score, passed=False))
+        trail.append(_gate_step(found, score, passed=False))
 
     # 5. Degraded floor
     floored = bool(degraded) and disposition == Disposition.CLEAR
     if floored:
         disposition = Disposition.MONITOR
+
+    # 6. Signal floor
+    strong = [s for s, c in found.items() if c >= SIGNAL_FLOOR_MIN]
+    signal_floored = bool(strong) and disposition == Disposition.CLEAR
+    if signal_floored:
+        disposition = Disposition.MONITOR
+        trail.append(
+            _step(
+                "Signal floor",
+                f"{', '.join(s.value for s in strong)} at or above {SIGNAL_FLOOR_MIN:g}",
+                "A real signal is never averaged away: lifted from CLEAR to MONITOR.",
+            )
+        )
 
     return ScoreResult(
         disposition=disposition,
@@ -190,14 +201,17 @@ def score_case(results: Mapping[StageName, StageResult]) -> ScoreResult:
         degraded_stages=degraded,
         evidence_incomplete=bool(degraded),
         single_signal_capped=capped,
+        signal_floored=signal_floored,
         reasoning_trail=trail + _degraded_note(degraded, floored=floored),
     )
 
 
 def corroboration_passes(ran: Mapping[StageName, float]) -> bool:
-    """>= CORROBORATION_MIN_STAGES stages at >= CORROBORATION_STAGE_MIN, or one at >= SOLO."""
-    agreeing = sum(1 for c in ran.values() if c >= CORROBORATION_STAGE_MIN)
-    return agreeing >= CORROBORATION_MIN_STAGES or any(c >= SOLO_SIGNAL_MIN for c in ran.values())
+    """2 stages at >= 0.40, or 1 at >= 0.75 when 2+ stages found something. Zeros never count."""
+    found = [c for c in ran.values() if c > 0]
+    agreeing = sum(1 for c in found if c >= CORROBORATION_STAGE_MIN)
+    solo = len(found) >= SOLO_SIGNAL_MIN_RAN and any(c >= SOLO_SIGNAL_MIN for c in found)
+    return agreeing >= CORROBORATION_MIN_STAGES or solo
 
 
 def _gate_step(ran: Mapping[StageName, float], score: float, passed: bool) -> ReasoningStep:
@@ -205,7 +219,8 @@ def _gate_step(ran: Mapping[StageName, float], score: float, passed: bool) -> Re
     strong = [s.value for s, c in ran.items() if c >= SOLO_SIGNAL_MIN]
     finding = (
         f"{score:g} at or above {ESCALATE_FROM:g}; stages at >= {CORROBORATION_STAGE_MIN:g}: "
-        f"{agreeing or 'none'}; at >= {SOLO_SIGNAL_MIN:g}: {strong or 'none'}"
+        f"{agreeing or 'none'}; at >= {SOLO_SIGNAL_MIN:g}: {strong or 'none'}; "
+        f"{len(ran)} stage(s) found something (solo branch needs {SOLO_SIGNAL_MIN_RAN})"
     )
     impact = (
         "Corroboration gate passed: SUSPICIOUS-ESCALATE."

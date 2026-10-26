@@ -1,25 +1,14 @@
-"""Pass-through sub-score: strangers' money sent on within hours (phase_3_execution.md D5, D6).
+"""Pass-through sub-score: strangers' money sent on within hours (a mule's pattern).
 
-A rented mule account takes one payment each from many strangers - scam victims - and sweeps
-the money on within minutes to hours, usually to a payee it never paid before. A merchant
-taking payments on a personal UPI ID also has many one-off payers, but the money builds up for
-days and goes to the same suppliers; a life event has a few fast credits, once. So the score
-is led by how many strangers' credits are sent on fast, with novelty of the destination only
-a booster (D6). Every rail counts (Amendment 3, D4): mule money moves on UPI, IMPS and NEFT.
+A shop also has many one-off payers, but its money stays for days. So the score is led by how
+many stranger credits leave fast. Every rail counts.
 
-Per window:
+- Stranger credit: at or above the mule floor, from a payer seen once in the window.
+- Run: stranger credits plus the debits after them. It closes when debits reach
+  RUN_CLOSE_SHARE of its credits.
+- Score: gate(n) x share(n / matched) x (BASE + BOOST x novelty), n = credits held <= 12 h.
 
-- **Stranger credit:** a credit at or above MULE-002's floor (read from the rulebook) from a
-  counterparty that appears exactly once among the account's credits in the window.
-- **Run-close matching (D5):** walking the window in time order, stranger credits join the
-  open run, and debits at or above the floor made while a run is open are added to it. When
-  the run's debits reach RUN_CLOSE_SHARE of its credits the run closes; each of its credits
-  is matched, held until the closing debit. The next stranger credit opens a new run.
-- **Score:** gate(n) x share_map(n / matched) x (NOVELTY_BASE + NOVELTY_BOOST x novelty),
-  where n is the matched credits held at most FAST_HOLD_HOURS.
-
-Both the full 90-day frame and its last 30 days are scored and the higher wins, so a thin
-recent layer inside months of genuine trade is not averaged away.
+The 90-day frame and its last 30 days are both scored; the higher wins.
 """
 
 from __future__ import annotations
@@ -163,7 +152,7 @@ def stranger_credits(window: Sequence[Transaction], floor: float) -> set[str]:
 
 
 def close_runs(window: Sequence[Transaction], strangers: set[str], floor: float) -> list[Run]:
-    """Run-close matching (D5). A run still open at the window's end matches nothing."""
+    """Run-close matching. A run still open at the window's end matches nothing."""
     runs: list[Run] = []
     credits: list[Transaction] = []
     debits: list[Transaction] = []
@@ -195,11 +184,8 @@ def _share_map(share: float) -> float:
 
 
 def _destinations(fast_runs: Sequence[Run], frame: Sequence[Transaction]) -> tuple[float, float]:
-    """(novelty, top payee's share) of the money in the fast runs' debits.
-
-    Novelty is the fraction sent to payees the account did not pay, anywhere in the frame,
-    before the first fast run started. 0 for both when there is no fast run.
-    """
+    """(novelty, top payee's share) of the fast runs' debits. Novelty = share sent to payees
+    not paid before the first fast run. Both 0 with no fast run."""
     if not fast_runs:
         return 0.0, 0.0
     started = min(c.timestamp for c in fast_runs[0].credits)

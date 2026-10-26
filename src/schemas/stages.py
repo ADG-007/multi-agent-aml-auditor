@@ -1,10 +1,6 @@
-"""Per-stage output contracts.
+"""One output model per stage. Each carries a reasoning_trail.
 
-One model per stage, each produced by that stage and consumed by Stage 7's synthesis.
-Every model carries a reasoning_trail (invariant 5). Confidence is risk magnitude on
-0-1, not epistemic certainty: 0 means no adverse signal was found, 1 means certain of an
-adverse finding. A stage that is genuinely unsure says so in the trail, never by shading
-confidence toward the middle.
+Confidence is risk size on 0-1 (0 = nothing found), not certainty. Doubt goes in the trail.
 """
 
 from __future__ import annotations
@@ -56,11 +52,7 @@ class FiredRule(BaseModel):
 
 
 class Stage0TriageOutput(BaseModel):
-    """Which stages this case needs, and why. Stage 0 is itself the flagging step.
-
-    trigger_reasons and fired_rules are parallel: one readable sentence and one structured
-    entry per fired rule, in the same order.
-    """
+    """Which stages this case needs, and why. trigger_reasons and fired_rules run in parallel."""
 
     routed_stages: list[StageName] = Field(default_factory=list)
     trigger_reasons: list[str] = Field(default_factory=list)
@@ -74,12 +66,7 @@ class Stage0TriageOutput(BaseModel):
 
 
 class Stage1VisionOutput(BaseModel):
-    """Document integrity. Never enters the scoring formula (invariant 2).
-
-    forgery_confidence is a separate compliance gate: at or above 0.90 the pipeline pauses
-    for a human admin decision, rather than the system guessing about document authenticity
-    and folding that guess into a risk score.
-    """
+    """ID check. Never scored: at >= 0.90 the case pauses for an admin instead."""
 
     document_type: str
     extracted_fields: dict[str, str] = Field(
@@ -92,12 +79,7 @@ class Stage1VisionOutput(BaseModel):
 
 
 class Stage2TransactionPatternOutput(BaseModel):
-    """Structuring, pass-through and velocity analysis over the account's rolling history.
-
-    Weight 0.25. Planned design, confirmed at Phase 3's kickoff: structuring and pass-through
-    are separate sub-scores and confidence reports the stronger of the two, so adding the
-    pass-through measure leaves structuring untouched.
-    """
+    """Structuring, pass-through and velocity. Weight 0.25. Confidence = the stronger sub-score."""
 
     structuring_indicators: list[str] = Field(default_factory=list)
     pass_through_indicators: list[str] = Field(default_factory=list)
@@ -124,11 +106,9 @@ class Stage4AdverseMediaOutput(BaseModel):
 
 
 class Stage5GraphOutput(BaseModel):
-    """Shared-identifier topology analysis. Veto tier at >= 0.90. Weight 0.30.
+    """Shared-identifier links. Veto at >= 0.90. Weight 0.30.
 
-    connected_flagged_accounts is computed live from accounts already elevated in this run,
-    never read from a ground-truth field - which is why batch evaluation must fix its
-    processing order (Phase 11).
+    connected_flagged_accounts comes from this run's flagged accounts, so batch order is fixed.
     """
 
     shared_identifiers: list[str] = Field(default_factory=list)
@@ -138,11 +118,7 @@ class Stage5GraphOutput(BaseModel):
 
 
 class Stage6RulebookOutput(BaseModel):
-    """Post-hoc clause citation only - never routes, never scores.
-
-    retrieved_clause_ids is the authoritative set for citation validation: Stage 7 may cite
-    only from this list, and a deterministic check rejects anything else (invariant 4).
-    """
+    """Clause search only. Never routes, never scores. Stage 7 may cite only these ids."""
 
     retrieved_clause_ids: list[str] = Field(default_factory=list)
     policy_violations: list[str] = Field(default_factory=list)

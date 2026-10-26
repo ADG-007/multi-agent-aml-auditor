@@ -1,4 +1,4 @@
-"""The deterministic risk scoring engine (MASTER_PLAN.md Section 2.2)."""
+"""The deterministic judge."""
 
 from src.scoring.engine import ScoreResult, StageResult, corroboration_passes, score_case
 
