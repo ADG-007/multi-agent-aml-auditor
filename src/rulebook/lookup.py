@@ -1,12 +1,6 @@
-"""Deterministic lookup of the numbers the rulebook carries.
+"""Reads the thresholds the rulebook clauses carry, so no stage hard-codes them.
 
-Stage 0 and Stage 2 (and the Policy Injector in Phase 12) must move together when a clause
-changes, so no threshold that a clause defines is ever written into a stage's code: it is
-read from the clause metadata here, at run time. A missing clause or key is an error, never a
-silent fallback to a default.
-
-Stage 6's retrieval (ChromaDB) is separate and arrives in Phase 8; this is a plain lookup by
-clause id.
+A missing clause or key is an error, never a silent default.
 """
 
 from __future__ import annotations
@@ -36,11 +30,8 @@ class StructuringThreshold:
 
     @property
     def band_floor_inr(self) -> float:
-        """Lower edge of the structuring band, [threshold x pct, threshold].
-
-        Both edges are inclusive. The law reports cash of more than the threshold, so an
-        amount exactly at it is not reported and belongs to the band.
-        """
+        """Lower edge of the band [threshold x pct, threshold], both inclusive (the law
+        reports cash above the threshold, so an amount exactly at it is in the band)."""
         return self.threshold_inr * self.near_threshold_pct
 
 
