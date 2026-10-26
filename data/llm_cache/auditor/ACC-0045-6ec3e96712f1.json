@@ -1,0 +1,14 @@
+{
+  "key": "6ec3e96712f146691e56e3ca2a1878196f0bdeedffbe477786d7036ace4f4d1b",
+  "case_id": "CASE-ACC-0045-1",
+  "model": "gemini-3.5-flash",
+  "prompt_version": "auditor-v1",
+  "seconds": 37.6,
+  "made_at": "2026-10-26T21:32:32",
+  "draft": {
+    "executive_summary": "Account ACC-0045 was reviewed following automated risk triggers and is recommended for MONITOR. Graph analysis identified network connections to two flagged accounts, though document and adverse media checks revealed no direct concerns. As transaction pattern analysis failed to execute, evidence remains incomplete.",
+    "investigation_narrative": "Vision verification validated identity documents with 0 forgery confidence. KYC analysis yielded 0 confidence, showing 3 cash deposits totaling ₹7,596 and 3 cash withdrawals totaling ₹5,182 against declared income of ₹3,20,000, with a velocity ratio of 1.43. AdverseMedia screening returned 0 matches for Amaira Choudhry and 53 counterparties. Graph analysis scored 0.75 confidence based on shared device or IP links to 3 accounts, specifically flagged accounts ACC-0022 and ACC-0154. TransactionPattern analysis did not run, making the evaluation incomplete.",
+    "compliance_conclusion": "The account should remain under MONITOR disposition in accordance with NET-002 due to shared operating identifiers with flagged accounts. Further escalation is deferred as corroboration from transaction patterns is missing. No immediate filing is required.",
+    "str_narrative": null
+  }
+}

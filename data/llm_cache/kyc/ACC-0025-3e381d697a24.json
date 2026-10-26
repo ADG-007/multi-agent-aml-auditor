@@ -1,0 +1,27 @@
+{
+  "key": "3e381d697a24a79ab3b5e333ecb53a7e0ad36ceca8362e4f8f5b070a0cf6dbaa",
+  "account_id": "ACC-0025",
+  "model": "llama3.1:8b-instruct-q4_K_M",
+  "prompt_version": "kyc-v2",
+  "seconds": 20.9,
+  "machine": "TufAdhithya",
+  "made_at": "2026-10-26T19:13:33",
+  "judgement": {
+    "level": "LOW",
+    "mismatches": [
+      {
+        "fact_id": "F4",
+        "profile_claim": "Expected activity is in the range of Rs 98,750 per month across roughly 12 transactions",
+        "why": "Turnover is slightly higher than expected, but not significantly so"
+      },
+      {
+        "fact_id": "F11",
+        "profile_claim": "Expected activity is in the range of Rs 98,750 per month across roughly 12 transactions",
+        "why": "Velocity is slightly higher than expected, but not significantly so"
+      }
+    ],
+    "notes": [
+      "The customer's declared income is relatively low, but the account activity is within reasonable bounds."
+    ]
+  }
+}

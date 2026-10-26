@@ -1,0 +1,30 @@
+{
+  "key": "0f954a031070c591218ddc3d3aa40087d52682c6c7fe5af88836d31cb616cf59",
+  "account_id": "ACC-0366",
+  "model": "llama3.1:8b-instruct-q4_K_M",
+  "prompt_version": "kyc-v2",
+  "seconds": 37.2,
+  "machine": "TufAdhithya",
+  "made_at": "2026-10-26T19:25:30",
+  "judgement": {
+    "level": "MODERATE",
+    "mismatches": [
+      {
+        "fact_id": "F2",
+        "profile_claim": "Expected activity is in the range of Rs 46,250 per month",
+        "why": "Money in over 90 days: ₹2,53,360 from 17 credits; scaled to a year ₹10,27,517 = 2.8x the declared income."
+      },
+      {
+        "fact_id": "F4",
+        "profile_claim": "Expected activity is in the range of Rs 46,250 per month",
+        "why": "Turnover (in + out) scaled to a year = 5.3x the declared income."
+      },
+      {
+        "fact_id": "F12",
+        "profile_claim": "Source of funds is stated as payouts from app-based delivery work",
+        "why": "8 of 13 matched stranger credits of at least ₹1,000 were sent on within 12 hours (62%) in the 90 days to 21 Sep 2026; 100% of the money that closed those runs went to one payee, 100% to payees not paid before (MULE-002)"
+      }
+    ],
+    "notes": []
+  }
+}

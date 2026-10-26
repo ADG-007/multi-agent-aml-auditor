@@ -1,0 +1,34 @@
+{
+  "key": "fdf11d5780945aa4eb1c7c08f12f65dcffebbc850813b3c2fc1466b05f139eb2",
+  "account_id": "ACC-0345",
+  "model": "llama3.1:8b-instruct-q4_K_M",
+  "prompt_version": "kyc-v1",
+  "seconds": 35.8,
+  "machine": "TufAdhithya",
+  "made_at": "2026-10-22T14:02:26",
+  "judgement": {
+    "level": "MODERATE",
+    "mismatches": [
+      {
+        "fact_id": "F2",
+        "profile_claim": "expected activity is in the range of Rs 3.17 lakh per month",
+        "why": "Money in over 90 days is 1.3x the declared income, which is a moderate concern"
+      },
+      {
+        "fact_id": "F4",
+        "profile_claim": "expected activity is in the range of Rs 3.17 lakh per month",
+        "why": "Turnover (in + out) scaled to a year is 2.5x the declared income, which is a moderate concern"
+      },
+      {
+        "fact_id": "F12",
+        "profile_claim": "no business reason in the profile",
+        "why": "2 of 18 matched stranger credits of at least ₹1,000 were sent on within 12 hours, which is a moderate concern"
+      }
+    ],
+    "notes": [
+      "The customer's declared income is relatively low, but the account activity is higher than expected, which is a moderate concern.",
+      "The customer has a mix of digital and cash transactions, which is consistent with their profile.",
+      "The cross-border wires are zero, which is consistent with the customer's profile."
+    ]
+  }
+}

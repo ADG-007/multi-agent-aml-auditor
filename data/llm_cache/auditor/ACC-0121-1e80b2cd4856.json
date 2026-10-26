@@ -1,0 +1,14 @@
+{
+  "key": "1e80b2cd4856c0cc37645ae6ec7b6f1a6a415a3a74e6f8c0de4ee06d160f6c5b",
+  "case_id": "CASE-ACC-0121-1",
+  "model": "gemini-3.5-flash",
+  "prompt_version": "auditor-v1",
+  "seconds": 25.0,
+  "made_at": "2026-10-26T21:33:21",
+  "draft": {
+    "executive_summary": "This review evaluates account ACC-0121 following a graph detection link to flagged accounts. Document verification noted an Aadhaar date-of-birth discrepancy that was approved by admin, while KYC income metrics and adverse media screening raised no immediate concerns. Due to shared operating identifiers connecting the account to flagged entities, ongoing monitoring is recommended.",
+    "investigation_narrative": "In Vision analysis, document checks noted a date-of-birth mismatch on the Aadhaar card ('30/06/1993' printed versus '30/06/1996' system record), which admin approved. KYC review for the declared jewellery shop proprietor showed ₹32,70,000 annual income, with 90-day credits of ₹5,75,013 across 14 transactions (annualised ₹23,31,998; 0.7x income) and debits of ₹5,74,864 across 20 transactions (annualised ₹23,31,394; 0.7x income), alongside ₹68,968 in cash deposits and ₹1,60,554 in cash withdrawals. Adverse Media screening returned zero matches for holder Aashi Ramachandran and 32 counterparties. Graph analysis scored 0.75 confidence based on shared device or IP identifiers linking to flagged accounts ACC-0022 and ACC-0154. Because the TransactionPattern stage was not run, transaction behavior evidence remains incomplete, supporting a decision to hold the account under observation.",
+    "compliance_conclusion": "The account exhibits network risk under NET-002 due to shared operating identifiers with flagged accounts ACC-0022 and ACC-0154. Identity document discrepancies were reviewed and accepted under DOC-001, with no indications of money-mule pass-through under MULE-002. Continued account monitoring is recommended to reassess risk as additional transaction pattern data becomes available.",
+    "str_narrative": null
+  }
+}

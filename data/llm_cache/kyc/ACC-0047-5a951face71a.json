@@ -1,0 +1,28 @@
+{
+  "key": "5a951face71a1f4de39bad59297e3f7fd62b42bf06e2e2665dca0b121f722da8",
+  "account_id": "ACC-0047",
+  "model": "llama3.1:8b-instruct-q4_K_M",
+  "prompt_version": "kyc-v2",
+  "seconds": 21.8,
+  "machine": "TufAdhithya",
+  "made_at": "2026-10-26T19:15:25",
+  "judgement": {
+    "level": "LOW",
+    "mismatches": [
+      {
+        "fact_id": "F2",
+        "profile_claim": "Expected activity is in the range of Rs 1.14 lakh per month",
+        "why": "Money in is slightly higher than expected, but not by much"
+      },
+      {
+        "fact_id": "F6",
+        "profile_claim": "The savings account is maintained for routine salary credits and household expenses",
+        "why": "One cash deposit is a small oddity"
+      }
+    ],
+    "notes": [
+      "The customer's profile explains the activity, but there are a few small oddities.",
+      "The customer's income is mostly digital, with only one cash deposit and a few cash withdrawals."
+    ]
+  }
+}

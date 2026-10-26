@@ -1,0 +1,30 @@
+{
+  "key": "91f734cd1654eec1df5297081ad9dc7a85bf12bf9394ba2128dc3276d48e8280",
+  "account_id": "ACC-0049",
+  "model": "llama3.1:8b-instruct-q4_K_M",
+  "prompt_version": "kyc-v2",
+  "seconds": 20.1,
+  "machine": "TufAdhithya",
+  "made_at": "2026-10-26T19:15:45",
+  "judgement": {
+    "level": "LOW",
+    "mismatches": [
+      {
+        "fact_id": "F2",
+        "profile_claim": "Expected activity is in the range of Rs 2.10 lakh per month",
+        "why": "Money in is slightly less than expected, but still within 1.5x the declared income"
+      },
+      {
+        "fact_id": "F6",
+        "profile_claim": "mostly through digital channels",
+        "why": "2 small cash deposits"
+      },
+      {
+        "fact_id": "F12",
+        "profile_claim": "mostly through digital channels",
+        "why": "1 pass-through transaction within 12 hours"
+      }
+    ],
+    "notes": []
+  }
+}

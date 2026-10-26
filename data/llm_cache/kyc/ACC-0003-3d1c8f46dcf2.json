@@ -1,0 +1,39 @@
+{
+  "key": "3d1c8f46dcf2c8ce56d62110e3efadb5182fbe64cc79191ae62b5ec2da7652d8",
+  "account_id": "ACC-0003",
+  "model": "llama3.1:8b-instruct-q4_K_M",
+  "prompt_version": "kyc-v1",
+  "seconds": 47.2,
+  "machine": "TufAdhithya",
+  "made_at": "2026-10-22T13:39:59",
+  "judgement": {
+    "level": "MODERATE",
+    "mismatches": [
+      {
+        "fact_id": "F2",
+        "profile_claim": "Source of funds is stated as business receipts",
+        "why": "Money in over 90 days is 0.8x the declared income, which is a moderate concern"
+      },
+      {
+        "fact_id": "F4",
+        "profile_claim": "Source of funds is stated as business receipts",
+        "why": "Turnover (in + out) scaled to a year is 1.6x the declared income, which is a moderate concern"
+      },
+      {
+        "fact_id": "F12",
+        "profile_claim": "Source of funds is stated as business receipts",
+        "why": "Money from many unrelated payers sent on within hours, with no business reason in the profile, is a concern"
+      },
+      {
+        "fact_id": "F6",
+        "profile_claim": "No cash",
+        "why": "Cash deposits: 4, total ₹1,19,992, largest ₹50,000, which contradicts the profile claim"
+      }
+    ],
+    "notes": [
+      "The customer's income is relatively high, but the activity in the account is consistent with the declared occupation and source of funds.",
+      "The velocity of transactions is higher than expected, but not excessively so.",
+      "The pass-through activity is a concern, but it is not clear if it is related to the customer's business or not."
+    ]
+  }
+}

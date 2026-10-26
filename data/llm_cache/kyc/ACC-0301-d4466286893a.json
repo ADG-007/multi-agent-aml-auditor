@@ -1,0 +1,29 @@
+{
+  "key": "d4466286893a955b8825d1360981208f0ed6bb09c246f91beed73a97a7dbd844",
+  "account_id": "ACC-0301",
+  "model": "llama3.1:8b-instruct-q4_K_M",
+  "prompt_version": "kyc-v2",
+  "seconds": 25.5,
+  "machine": "TufAdhithya",
+  "made_at": "2026-10-26T19:22:58",
+  "judgement": {
+    "level": "MODERATE",
+    "mismatches": [
+      {
+        "fact_id": "F8",
+        "profile_claim": "Source of funds is stated as salary income.",
+        "why": "Large cross-border wire with no foreign link or purpose in the profile"
+      },
+      {
+        "fact_id": "F9",
+        "profile_claim": "Source of funds is stated as salary income.",
+        "why": "Money from many unrelated payers, most of it sent on within hours, with no business reason in the profile"
+      }
+    ],
+    "notes": [
+      "The customer's profile explains the activity, but there are some concerns.",
+      "The customer's income is mostly digital, but there are some cash deposits and withdrawals.",
+      "The customer's cross-border wire is a concern, as it is a large amount with no foreign link or purpose in the profile."
+    ]
+  }
+}

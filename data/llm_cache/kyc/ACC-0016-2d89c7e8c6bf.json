@@ -1,0 +1,34 @@
+{
+  "key": "2d89c7e8c6bf9c9d603649a4ac835e96dd5c8752e3f9c0c9f6dfcce62b967937",
+  "account_id": "ACC-0016",
+  "model": "llama3.1:8b-instruct-q4_K_M",
+  "prompt_version": "kyc-v1",
+  "seconds": 37.2,
+  "machine": "TufAdhithya",
+  "made_at": "2026-10-22T13:43:49",
+  "judgement": {
+    "level": "MODERATE",
+    "mismatches": [
+      {
+        "fact_id": "F2",
+        "profile_claim": "Expected activity is in the range of Rs 2.65 lakh per month",
+        "why": "Money in over 90 days is 1.1x the declared income, which is a moderate concern"
+      },
+      {
+        "fact_id": "F6",
+        "profile_claim": "CURRENT account opened for business receipts and supplier payments",
+        "why": "Cash deposits are a contradiction to the profile claim"
+      },
+      {
+        "fact_id": "F9",
+        "profile_claim": "CURRENT account opened for business receipts and supplier payments",
+        "why": "Money from 15 different payers through UPI credits is a concern"
+      }
+    ],
+    "notes": [
+      "The customer's income is close to the expected activity, but the velocity and turnover are higher than expected.",
+      "The customer has made some cash deposits and withdrawals, which could be explained by business needs, but it's a contradiction to the profile claim.",
+      "The customer has received money from 15 different payers through UPI credits, which could be a concern if not explained by a business reason."
+    ]
+  }
+}

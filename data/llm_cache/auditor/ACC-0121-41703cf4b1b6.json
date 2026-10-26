@@ -1,0 +1,14 @@
+{
+  "key": "41703cf4b1b60ed1c965458361c0ac14ab4c4fdcf3d58b223affb3d9430868b9",
+  "case_id": "CASE-ACC-0121-1",
+  "model": "gemini-3.5-flash",
+  "prompt_version": "auditor-v1",
+  "seconds": 13.4,
+  "made_at": "2026-10-26T21:35:59",
+  "draft": {
+    "executive_summary": "An investigation of account ACC-0121 recommended a disposition of BLOCKED_BY_ADMIN_REVIEW with a confidence score of 0.7500. The account was blocked during administrative review due to an identity document discrepancy on the Aadhaar card. Additionally, graph analysis revealed links to flagged accounts, though transaction pattern analysis was not completed.",
+    "investigation_narrative": "Vision analysis identified document irregularities with a 0.95 forgery confidence, noting an Aadhaar date of birth discrepancy between the printed document (30/06/1993) and system records (30/06/1996), prompting an administrative block. KYC analysis returned a confidence of 0; the customer declared ₹32,70,000 annual income as a jewellery shop proprietor, with 90-day credits of ₹5,75,013 across 14 transactions and debits of ₹5,74,864 across 20 transactions, representing an annualized turnover 1.4x declared income. Cash activity included ₹68,968 in deposits and ₹1,60,554 in withdrawals, with no cross-border or pass-through activity noted. Adverse Media screening scored 0 with no hits across the account holder or 32 counterparties. Graph analysis scored 0.75, identifying shared device/IP identifiers linking to three accounts, including flagged accounts ACC-0022 and ACC-0154. Note that TransactionPattern analysis was not run, leaving transaction evidence incomplete.",
+    "compliance_conclusion": "It is recommended to uphold the administrative review block on account ACC-0121 due to unresolved document discrepancies under DOC-002. Furthermore, network links to flagged accounts warrant ongoing monitoring under NET-002. Final determination remains pending review of incomplete transaction pattern data.",
+    "str_narrative": null
+  }
+}

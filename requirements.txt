@@ -27,3 +27,12 @@ ruff==0.17.0          # lint, run on Phase 2 code only (see pyproject.toml)
 
 # --- LLM abstraction (src/llm/, used by Stages 3, 6, 7 in later phases) ---
 langchain==1.4.2      # unified chat-model interface + with_structured_output()
+
+# --- This branch: wiring, model providers, demo ---
+langgraph==1.2.12             # the 8-stage state graph + the admin-pause interrupt
+langchain-core==1.6.9         # pulled up from 1.6.4 by the two provider packages below
+langchain-ollama==1.1.0       # Stage 3: local 8B (llama3.1:8b-instruct-q4_K_M) via Ollama
+langchain-google-genai==4.4.1 # Stage 7: free-tier Gemini
+python-dotenv==1.2.3          # reads GOOGLE_API_KEY from a local .env (never committed)
+streamlit==1.65.0             # the one demo page (src/demo/app.py)
+pandas==3.0.6                 # tables on the demo page

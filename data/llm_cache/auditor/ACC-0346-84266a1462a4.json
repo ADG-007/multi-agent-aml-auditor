@@ -1,0 +1,14 @@
+{
+  "key": "84266a1462a4820fb9ddcc41db407876f8f98bc5cc1226d43528e3cdd6ea0d47",
+  "case_id": "CASE-ACC-0346-1",
+  "model": "gemini-3.5-flash",
+  "prompt_version": "auditor-v1",
+  "seconds": 10.5,
+  "made_at": "2026-10-22T14:12:40",
+  "draft": {
+    "executive_summary": "We recommend clearing account ACC-0346 as the deterministic system verdict is CLEAR with a confidence score of 0.0000. Identity verification and network analysis returned zero flags, while transaction pattern checks showed minimal pass-through activity. While moderate income variance was noted during KYC review, overall findings do not warrant escalation.",
+    "investigation_narrative": "Identity documents verified via Vision matched OCR records for Aadhaar and PAN with 0 forgery confidence. TransactionPattern analysis found 6 of 60 matched stranger credits (10%) forwarded within 12 hours with a 1.8-hour median hold, alongside a peak velocity ratio of 1.12 with 75 transactions in 30 days. KYC evaluation showed the customer, a roadside electronics proprietor declaring ₹6,80,000 annual income, had 90-day inflows of ₹3,68,369 (2.2x income annualized) and outflows of ₹4,19,417 (2.5x income annualized), yielding a 4.7x turnover ratio. No cash or cross-border transactions were present. Graph analysis confirmed 0 linked accounts and no flagged connections. AdverseMedia screening failed to run, leaving media evidence incomplete, but overall risk indicators remain low.",
+    "compliance_conclusion": "It is recommended to clear account ACC-0346 in alignment with the deterministic disposition. Although AdverseMedia screening was incomplete, the lack of network risk, identity discrepancies, or structuring supports closing this review. No policy clauses are cited as none are specified.",
+    "str_narrative": null
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "key": "e8af9148edca603a7a1ae30680cfb630669dae51649a7afa036521e62361b73a",
+  "account_id": "ACC-0007",
+  "model": "llama3.1:8b-instruct-q4_K_M",
+  "prompt_version": "kyc-v2",
+  "seconds": 33.6,
+  "machine": "TufAdhithya",
+  "made_at": "2026-10-26T19:11:17",
+  "judgement": {
+    "level": "LOW",
+    "mismatches": [
+      {
+        "fact_id": "F4",
+        "profile_claim": "Expected activity is in the range of Rs 2.06 lakh per month across roughly 22 transactions",
+        "why": "Turnover is 1.9x the declared income, which is a moderate concern"
+      },
+      {
+        "fact_id": "F6",
+        "profile_claim": "Source of funds is stated as business receipts",
+        "why": "There are 4 cash deposits, which is a small oddity"
+      },
+      {
+        "fact_id": "F12",
+        "profile_claim": "None",
+        "why": "17% of matched stranger credits were sent on within 12 hours, which is a small oddity"
+      }
+    ],
+    "notes": [
+      "The customer's profile explains the activity as a real estate agent with business receipts and supplier payments.",
+      "The customer's income and turnover are within the expected range, and there are no large or repeated cross-border money transactions."
+    ]
+  }
+}

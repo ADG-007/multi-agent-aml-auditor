@@ -1,0 +1,29 @@
+{
+  "key": "9c8fb5cd4c4acff3a5f8c75d4a1602497baf2b09faf5b2d245bd1d935b6adc7a",
+  "account_id": "ACC-0366",
+  "model": "llama3.1:8b-instruct-q4_K_M",
+  "prompt_version": "kyc-v1",
+  "seconds": 32.3,
+  "machine": "TufAdhithya",
+  "made_at": "2026-10-22T14:06:01",
+  "judgement": {
+    "level": "MODERATE",
+    "mismatches": [
+      {
+        "fact_id": "F2",
+        "profile_claim": "school fees, insurance premiums and regular savings",
+        "why": "The customer's declared income is ₹3.70 lakh, but the money in the account over 90 days is ₹2,53,360, which is 2.8x the declared income. This is a moderate concern."
+      },
+      {
+        "fact_id": "F12",
+        "profile_claim": "payouts from app-based delivery work",
+        "why": "The customer's profile claims that the money in the account comes from app-based delivery work, but 8 of 13 matched stranger credits were sent on within 12 hours, which is a concern."
+      }
+    ],
+    "notes": [
+      "The customer's declared occupation and income are consistent with the expected activity in the account.",
+      "The customer's profile does not explain the large number of transactions in the account, but it does not directly contradict the profile either.",
+      "The customer's profile does not explain the large number of cross-border wires, but there are none in the facts."
+    ]
+  }
+}

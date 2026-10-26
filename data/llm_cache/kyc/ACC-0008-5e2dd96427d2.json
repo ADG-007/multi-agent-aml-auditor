@@ -1,0 +1,27 @@
+{
+  "key": "5e2dd96427d2cd659572a50a4997f0fdfe90c3558658fa1d57bf71d451857232",
+  "account_id": "ACC-0008",
+  "model": "llama3.1:8b-instruct-q4_K_M",
+  "prompt_version": "kyc-v2",
+  "seconds": 27.6,
+  "machine": "TufAdhithya",
+  "made_at": "2026-10-26T19:11:45",
+  "judgement": {
+    "level": "MODERATE",
+    "mismatches": [
+      {
+        "fact_id": "F2",
+        "profile_claim": "modest activity of around Rs 89,583 per month",
+        "why": "Money in over 90 days: ₹25,63,575 from 20 credits; scaled to a year ₹1,03,96,721 = 4.8x the declared income."
+      },
+      {
+        "fact_id": "F4",
+        "profile_claim": "modest activity",
+        "why": "Turnover (in + out) scaled to a year = 9.7x the declared income."
+      }
+    ],
+    "notes": [
+      "Customer stated that the account would see modest activity of around Rs 89,583 per month, consistent with a single regular income credit and routine household withdrawals."
+    ]
+  }
+}

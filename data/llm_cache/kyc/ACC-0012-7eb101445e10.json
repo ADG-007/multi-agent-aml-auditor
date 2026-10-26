@@ -1,0 +1,27 @@
+{
+  "key": "7eb101445e10307bcd0c405c0c70d429221065ee205494cf926d507eb6f58afc",
+  "account_id": "ACC-0012",
+  "model": "llama3.1:8b-instruct-q4_K_M",
+  "prompt_version": "kyc-v2",
+  "seconds": 24.0,
+  "machine": "TufAdhithya",
+  "made_at": "2026-10-26T19:12:29",
+  "judgement": {
+    "level": "MODERATE",
+    "mismatches": [
+      {
+        "fact_id": "F2",
+        "profile_claim": "Expected activity is in the range of Rs 3.21 lakh per month across roughly 26 transactions",
+        "why": "Money in over 90 days is 1.2x the declared income, which is a moderate concern"
+      },
+      {
+        "fact_id": "F4",
+        "profile_claim": "Expected activity is in the range of Rs 3.21 lakh per month across roughly 26 transactions",
+        "why": "Turnover is 2.3x the declared income, which is a moderate concern"
+      }
+    ],
+    "notes": [
+      "The customer is a transport contractor, which might explain the higher-than-expected turnover, but the profile does not explicitly mention it."
+    ]
+  }
+}

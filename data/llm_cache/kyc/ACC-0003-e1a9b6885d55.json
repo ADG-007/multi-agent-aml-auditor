@@ -1,0 +1,27 @@
+{
+  "key": "e1a9b6885d5509b9c4833ba6238988442690f0f69c7c23829d6890b2a4819ebd",
+  "account_id": "ACC-0003",
+  "model": "llama3.1:8b-instruct-q4_K_M",
+  "prompt_version": "kyc-v2",
+  "seconds": 36.9,
+  "machine": "TufAdhithya",
+  "made_at": "2026-10-26T19:10:40",
+  "judgement": {
+    "level": "LOW",
+    "mismatches": [
+      {
+        "fact_id": "F4",
+        "profile_claim": "Expected activity is in the range of Rs 2.89 lakh per month across roughly 19 transactions",
+        "why": "Turnover is slightly higher than expected, but not excessively so"
+      },
+      {
+        "fact_id": "F11",
+        "profile_claim": "Expected activity is in the range of Rs 2.89 lakh per month across roughly 19 transactions",
+        "why": "Velocity is slightly higher than expected, but not excessively so"
+      }
+    ],
+    "notes": [
+      "The customer's profile explains the activity as a transport contractor with expected digital transactions, which aligns with the facts."
+    ]
+  }
+}

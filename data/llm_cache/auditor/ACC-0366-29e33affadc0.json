@@ -1,0 +1,14 @@
+{
+  "key": "29e33affadc0ec209d64a9585c3d77f3d17976e1a39e2097fd86a0df43733298",
+  "case_id": "CASE-ACC-0366-1",
+  "model": "gemini-3.5-flash",
+  "prompt_version": "auditor-v1",
+  "seconds": 94.8,
+  "made_at": "2026-10-26T21:39:31",
+  "draft": {
+    "executive_summary": "The review of account ACC-0366 indicates high-risk money-mule activity driven by rapid pass-through behavior and device sharing with flagged accounts. The account exhibits pass-through patterns where 62% of stranger credits were moved within 12 hours, alongside graph links to three flagged accounts. We recommend escalating this case to SUSPICIOUS-ESCALATE for human analyst review.",
+    "investigation_narrative": "Vision verification confirmed full identity document alignment with 0 disagreeing fields on Aadhaar and PAN documents. TransactionPattern analysis revealed significant pass-through activity (confidence 1.0), where 8 of 13 matched stranger credits of at least ₹1,000 were transferred within 12 hours (62%) with a median hold time of 2.1 hours, and velocity reached 21 transactions in its busiest 30 days compared to a 9.7 average. KYC review noted annualised turnover at 5.3 times the declared income of ₹3,70,000 (annualised inflows of ₹10,27,517 across 17 credits totaling ₹2,53,360 over 90 days) alongside ₹5,000 in cash deposits and zero foreign transfers. AdverseMedia screening returned zero matches across the holder and 25 counterparties. Graph analysis identified strong network links (confidence 0.85) to three flagged accounts (ACC-0347, ACC-0367, ACC-0368) via shared device or IP operating identifiers.",
+    "compliance_conclusion": "The account demonstrates clear pass-through behaviors characteristic of money mules per MULE-002 and MULE-001. Shared device/IP links to flagged accounts ACC-0347, ACC-0367, and ACC-0368 violate NET-002. Consequently, suspicious transaction reporting under STR-001 is recommended.",
+    "str_narrative": "During the 90 days ending 21 September 2026, account ACC-0366 belonging to Pallavi Kari received ₹2,53,360 across 17 credits, with 8 of 13 stranger credits (>= ₹1,000) rapidly routed out within 12 hours (median hold time of 2.1 hours) to new payees. The account turnover of 5.3 times declared income and shared device/IP connectivity with flagged accounts (ACC-0347, ACC-0367, ACC-0368) indicate potential money laundering and mule activity."
+  }
+}

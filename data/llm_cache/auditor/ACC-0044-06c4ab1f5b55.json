@@ -1,0 +1,14 @@
+{
+  "key": "06c4ab1f5b55ba67df3c88e6581a798a617b50d602d4b89d2c53242c68c104b5",
+  "case_id": "CASE-ACC-0044-1",
+  "model": "gemini-3.5-flash",
+  "prompt_version": "auditor-v1",
+  "seconds": 24.4,
+  "made_at": "2026-10-26T21:29:22",
+  "draft": {
+    "executive_summary": "An investigation into account ACC-0044 for Amol Sule returned a recommended SUSPICIOUS-ESCALATE disposition with 0.6500 confidence. The review identified potential cash structuring and significant KYC profile mismatches relative to declared annual income. Adverse media and graph analysis revealed no further risk factors.",
+    "investigation_narrative": "Vision verified identity documents with zero forgery confidence and full field agreement across Aadhaar and PAN cards. TransactionPattern flagged cash structuring with confidence 0.65, identifying 5 cash deposits between ₹9,00,000 and ₹10,00,000 totaling ₹47,45,447 from 17 Jul to 13 Aug 2026. KYC review scored 0.65 confidence due to substantial profile mismatches: declared annual income of ₹8,30,000 was exceeded by 90-day credits of ₹56,78,073 (annualized 27.7x income) and 9 cash deposits totaling ₹48,42,604 despite declaring no cash usage. AdverseMedia screening returned zero matches across the account holder and 42 counterparties. Graph analysis identified zero links to flagged accounts or shared identifiers.",
+    "compliance_conclusion": "The pattern of repeated cash deposits just below threshold amounts indicates structuring under STRUCT-001 and STRUCT-002. Additionally, excessive cash turnover directly conflicts with the customer's declared profile under KYC-002. Escalation to the lead analyst for suspicious transaction reporting is recommended.",
+    "str_narrative": "Account ACC-0044 (Amol Sule) received 5 structured cash deposits between ₹9,00,000 and ₹10,00,000 totaling ₹47,45,447 from 17 Jul to 13 Aug 2026. Over 90 days, cash deposits totaled ₹48,42,604 and total inflows reached ₹56,78,073 against a declared annual income of ₹8,30,000, representing 27.7x declared earnings in violation of profile representations."
+  }
+}

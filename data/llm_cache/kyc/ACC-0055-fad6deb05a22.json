@@ -1,0 +1,39 @@
+{
+  "key": "fad6deb05a22db3352e9d797fdfa1094eb619c43667858bc2289d64eb2e1f7f7",
+  "account_id": "ACC-0055",
+  "model": "llama3.1:8b-instruct-q4_K_M",
+  "prompt_version": "kyc-v1",
+  "seconds": 43.9,
+  "machine": "TufAdhithya",
+  "made_at": "2026-10-22T13:50:23",
+  "judgement": {
+    "level": "HIGH",
+    "mismatches": [
+      {
+        "fact_id": "F2",
+        "profile_claim": "modest activity of around Rs 15,000 per month",
+        "why": "Money in over 90 days: ₹6,43,205 from 24 credits; scaled to a year ₹26,08,552 = 7.2x the declared income."
+      },
+      {
+        "fact_id": "F3",
+        "profile_claim": "modest activity of around Rs 15,000 per month",
+        "why": "Money out over 90 days: ₹6,44,141 in 26 debits; scaled to a year ₹26,12,351 = 7.3x the declared income."
+      },
+      {
+        "fact_id": "F4",
+        "profile_claim": "modest activity of around Rs 15,000 per month",
+        "why": "Turnover (in + out) scaled to a year = 14.5x the declared income."
+      },
+      {
+        "fact_id": "F5",
+        "profile_claim": "modest activity of around Rs 15,000 per month",
+        "why": "50 transactions in 90 days, about 17 a month."
+      }
+    ],
+    "notes": [
+      "Cash deposits and withdrawals are relatively small, but still a moderate concern given the overall activity.",
+      "No cross-border wires or pass-through transactions, which is consistent with the profile.",
+      "Velocity is high, but not necessarily a concern given the overall activity."
+    ]
+  }
+}

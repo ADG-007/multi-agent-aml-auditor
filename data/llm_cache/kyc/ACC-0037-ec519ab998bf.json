@@ -1,0 +1,28 @@
+{
+  "key": "ec519ab998bf5be06529aecbe335fd825fe996ef4a99c7d8d9002fdc66b1cf7d",
+  "account_id": "ACC-0037",
+  "model": "llama3.1:8b-instruct-q4_K_M",
+  "prompt_version": "kyc-v2",
+  "seconds": 35.8,
+  "machine": "TufAdhithya",
+  "made_at": "2026-10-26T19:14:27",
+  "judgement": {
+    "level": "MODERATE",
+    "mismatches": [
+      {
+        "fact_id": "F2",
+        "profile_claim": "Expected activity is in the range of Rs 1.57 lakh per month",
+        "why": "Money in over 90 days: ₹38,30,028 from 32 credits; scaled to a year ₹1,55,32,893 = 12.3x the declared income."
+      },
+      {
+        "fact_id": "F4",
+        "profile_claim": "Expected activity is in the range of Rs 1.57 lakh per month",
+        "why": "Turnover (in + out) scaled to a year = 12.7x the declared income."
+      }
+    ],
+    "notes": [
+      "The customer's declared income is ₹12.60 lakh a year, but the account shows ₹1,55,32,893 = 12.3x the declared income. This is a moderate concern.",
+      "The customer's declared income is ₹12.60 lakh a year, but the account shows a turnover of ₹1,55,32,893 = 12.7x the declared income. This is a moderate concern."
+    ]
+  }
+}

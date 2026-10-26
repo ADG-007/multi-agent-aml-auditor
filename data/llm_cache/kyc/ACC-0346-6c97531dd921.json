@@ -1,0 +1,39 @@
+{
+  "key": "6c97531dd92138519a1d30e1ec2b3077683b165ca2f499be278832a34fec0e91",
+  "account_id": "ACC-0346",
+  "model": "llama3.1:8b-instruct-q4_K_M",
+  "prompt_version": "kyc-v1",
+  "seconds": 40.7,
+  "machine": "TufAdhithya",
+  "made_at": "2026-10-22T14:03:07",
+  "judgement": {
+    "level": "MODERATE",
+    "mismatches": [
+      {
+        "fact_id": "F2",
+        "profile_claim": "Source of funds is stated as business receipts",
+        "why": "The customer's income is 2.2x the declared income, which is a moderate concern."
+      },
+      {
+        "fact_id": "F3",
+        "profile_claim": "Source of funds is stated as business receipts",
+        "why": "The customer's outflow is 2.5x the declared income, which is a moderate concern."
+      },
+      {
+        "fact_id": "F12",
+        "profile_claim": "Source of funds is stated as business receipts",
+        "why": "The customer has a high velocity of transactions, with 75 transactions in the busiest 30 days, which is a moderate concern."
+      },
+      {
+        "fact_id": "F12",
+        "profile_claim": "Source of funds is stated as business receipts",
+        "why": "The customer has a high pass-through rate, with 10% of stranger credits sent on within 12 hours, which is a moderate concern."
+      }
+    ],
+    "notes": [
+      "The customer's turnover is 4.7x the declared income, which is a high concern.",
+      "The customer has a large number of small UPI receipts from customers, which is explained by the profile.",
+      "The customer has no cash deposits or withdrawals, which is consistent with the profile."
+    ]
+  }
+}

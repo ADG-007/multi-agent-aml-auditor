@@ -1,0 +1,39 @@
+{
+  "key": "1fc3b43bd3fe5ecfb8ba5c91683693bf0499bba7551256d9ff9c081d963b364c",
+  "account_id": "ACC-0008",
+  "model": "llama3.1:8b-instruct-q4_K_M",
+  "prompt_version": "kyc-v1",
+  "seconds": 61.0,
+  "machine": "TufAdhithya",
+  "made_at": "2026-10-22T13:42:08",
+  "judgement": {
+    "level": "HIGH",
+    "mismatches": [
+      {
+        "fact_id": "F2",
+        "profile_claim": "modest activity of around Rs 89,583 per month",
+        "why": "Money in over 90 days: ₹25,63,575 from 20 credits; scaled to a year ₹1,03,96,721 = 4.8x the declared income."
+      },
+      {
+        "fact_id": "F3",
+        "profile_claim": "modest activity of around Rs 89,583 per month",
+        "why": "Money out over 90 days: ₹25,59,003 in 29 debits; scaled to a year ₹1,03,78,180 = 4.8x the declared income."
+      },
+      {
+        "fact_id": "F4",
+        "profile_claim": "modest activity of around Rs 89,583 per month",
+        "why": "Turnover (in + out) scaled to a year = 9.7x the declared income."
+      },
+      {
+        "fact_id": "F12",
+        "profile_claim": "no other income streams, business interests or third-party deposits",
+        "why": "1 of 15 matched stranger credits of at least ₹1,000 were sent on within 12 hours (7%) in the 90 days to 21 Sep 2026; median hold 3.0 h (MULE-002); 14% of the money that closed those runs went to one payee, 89% to payees not paid before (MULE-002)"
+      }
+    ],
+    "notes": [
+      "The customer's declared income is significantly lower than the actual turnover, which is 9.7 times the declared income.",
+      "The customer has made 49 transactions in 90 days, which is a relatively high frequency.",
+      "There are 2 cash deposits totalling ₹6,48,827, which is a significant amount, but not necessarily suspicious on its own."
+    ]
+  }
+}

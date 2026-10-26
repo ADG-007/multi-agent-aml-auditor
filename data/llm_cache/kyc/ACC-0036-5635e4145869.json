@@ -1,0 +1,25 @@
+{
+  "key": "5635e414586911e92391c8712ff55bcdd7a321b3719921e0c6989dd3cf5c5501",
+  "account_id": "ACC-0036",
+  "model": "llama3.1:8b-instruct-q4_K_M",
+  "prompt_version": "kyc-v2",
+  "seconds": 15.5,
+  "machine": "TufAdhithya",
+  "made_at": "2026-10-26T19:13:52",
+  "judgement": {
+    "level": "MODERATE",
+    "mismatches": [
+      {
+        "fact_id": "F2",
+        "profile_claim": "Customer explained that the account is used for personal purposes only",
+        "why": "Money in over 5.2x the declared income"
+      },
+      {
+        "fact_id": "F4",
+        "profile_claim": "Customer explained that the account is used for personal purposes only",
+        "why": "Turnover is 10.4x the declared income"
+      }
+    ],
+    "notes": []
+  }
+}

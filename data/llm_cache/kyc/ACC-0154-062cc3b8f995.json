@@ -1,0 +1,29 @@
+{
+  "key": "062cc3b8f9956587d7ec702b4ea226a6546e6378ec3ff890ef7f4107343e5df5",
+  "account_id": "ACC-0154",
+  "model": "llama3.1:8b-instruct-q4_K_M",
+  "prompt_version": "kyc-v2",
+  "seconds": 30.5,
+  "machine": "TufAdhithya",
+  "made_at": "2026-10-26T19:20:35",
+  "judgement": {
+    "level": "HIGH",
+    "mismatches": [
+      {
+        "fact_id": "F2",
+        "profile_claim": "Expected activity is in the range of Rs 47,500 per month across roughly 16 transactions",
+        "why": "Money in over 90 days: ₹57,34,114 from 25 credits; scaled to a year ₹2,32,55,019 = 61.2x the declared income."
+      },
+      {
+        "fact_id": "F4",
+        "profile_claim": "Expected activity is in the range of Rs 47,500 per month across roughly 16 transactions",
+        "why": "Turnover (in + out) scaled to a year = 61.9x the declared income."
+      }
+    ],
+    "notes": [
+      "50 transactions in 90 days, about 17 a month (F5) is consistent with expected activity.",
+      "Cash deposits and withdrawals are not excessive (F6, F7).",
+      "No cross-border wires (F8)."
+    ]
+  }
+}

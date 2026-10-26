@@ -1,0 +1,34 @@
+{
+  "key": "ceb4057b021dc6b16badc35773d0b72eca433f8134c2414d7560fa4a742b377a",
+  "account_id": "ACC-0007",
+  "model": "llama3.1:8b-instruct-q4_K_M",
+  "prompt_version": "kyc-v1",
+  "seconds": 36.1,
+  "machine": "TufAdhithya",
+  "made_at": "2026-10-22T13:41:07",
+  "judgement": {
+    "level": "MODERATE",
+    "mismatches": [
+      {
+        "fact_id": "F2",
+        "profile_claim": "Expected activity is in the range of Rs 2.06 lakh per month",
+        "why": "Money in over 90 days is 1.0x the declared income, which is a moderate concern"
+      },
+      {
+        "fact_id": "F6",
+        "profile_claim": "No cash",
+        "why": "There are 4 cash deposits totalling ₹38,541, which is a moderate concern"
+      },
+      {
+        "fact_id": "F12",
+        "profile_claim": "Supplier payments",
+        "why": "3 of 18 matched stranger credits were sent on within 12 hours, which is a moderate concern"
+      }
+    ],
+    "notes": [
+      "The customer's income is at the declared level, but the turnover is 1.9x the declared income, which is a moderate concern.",
+      "The customer has a relatively high transaction velocity, with 28 transactions in the busiest 30 days, which is a moderate concern.",
+      "The customer has a mix of digital and cash transactions, which is consistent with their profile."
+    ]
+  }
+}

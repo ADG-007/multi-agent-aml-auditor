@@ -1,0 +1,29 @@
+{
+  "key": "dcf3ea3e2831ac62dede2fb088f116ccae19940f63a085589f50968ad690e221",
+  "account_id": "ACC-0368",
+  "model": "llama3.1:8b-instruct-q4_K_M",
+  "prompt_version": "kyc-v2",
+  "seconds": 36.4,
+  "machine": "TufAdhithya",
+  "made_at": "2026-10-26T19:26:32",
+  "judgement": {
+    "level": "MODERATE",
+    "mismatches": [
+      {
+        "fact_id": "F2",
+        "profile_claim": "Expected activity is in the range of Rs 47,500 per month",
+        "why": "Money in over 90 days: ₹2,08,968 from 15 credits; scaled to a year ₹8,47,482 = 2.2x the declared income."
+      },
+      {
+        "fact_id": "F4",
+        "profile_claim": "Expected activity is in the range of Rs 47,500 per month across roughly 9 transactions",
+        "why": "Turnover (in + out) scaled to a year = 4.3x the declared income."
+      }
+    ],
+    "notes": [
+      "Customer has been known to the branch since account opening, which suggests a good understanding of the customer's needs and activities.",
+      "The customer's occupation as a homemaker and the source of funds being the spouse's salary income are consistent with the expected activity.",
+      "The customer's address on record in India and the savings account being maintained for school fees, insurance premiums, and regular savings are also consistent with the expected activity."
+    ]
+  }
+}

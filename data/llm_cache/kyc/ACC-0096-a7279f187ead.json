@@ -1,0 +1,28 @@
+{
+  "key": "a7279f187eadeee88a71ec52283953d6e01b1d50638bca10225b3687b388fc3e",
+  "account_id": "ACC-0096",
+  "model": "llama3.1:8b-instruct-q4_K_M",
+  "prompt_version": "kyc-v2",
+  "seconds": 17.7,
+  "machine": "TufAdhithya",
+  "made_at": "2026-10-26T19:17:48",
+  "judgement": {
+    "level": "LOW",
+    "mismatches": [
+      {
+        "fact_id": "F6",
+        "profile_claim": "mostly through digital channels",
+        "why": "a few cash deposits"
+      },
+      {
+        "fact_id": "F11",
+        "profile_claim": "routine salary credits and household expenses",
+        "why": "velocity of transactions is higher than expected"
+      }
+    ],
+    "notes": [
+      "The customer's profile explains the activity, but there are a few minor oddities.",
+      "The customer's income is relatively low, and the account activity is within the expected range."
+    ]
+  }
+}

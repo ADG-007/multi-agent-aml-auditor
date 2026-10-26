@@ -1,0 +1,29 @@
+{
+  "key": "63260e61d3c95a7d746aefca31c287660048efaf68509231fd4924581ecb1032",
+  "account_id": "ACC-0114",
+  "model": "llama3.1:8b-instruct-q4_K_M",
+  "prompt_version": "kyc-v1",
+  "seconds": 22.5,
+  "machine": "TufAdhithya",
+  "made_at": "2026-10-22T13:54:09",
+  "judgement": {
+    "level": "MODERATE",
+    "mismatches": [
+      {
+        "fact_id": "F2",
+        "profile_claim": "Declared income ₹13,80,000 a year",
+        "why": "Money in over 90 days is 0.5x the declared income"
+      },
+      {
+        "fact_id": "F6",
+        "profile_claim": "No cash deposits",
+        "why": "4 cash deposits totalling ₹28,148"
+      }
+    ],
+    "notes": [
+      "Large number of transactions (78 in 90 days) is consistent with the declared occupation and income level.",
+      "No cross-border wires or pass-through transactions, which reduces concern.",
+      "Cash deposits and withdrawals are relatively small and may be for legitimate purposes such as school fees or insurance premiums."
+    ]
+  }
+}

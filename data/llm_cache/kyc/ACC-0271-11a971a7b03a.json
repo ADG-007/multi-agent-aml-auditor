@@ -1,0 +1,32 @@
+{
+  "key": "11a971a7b03a1824f9fb23a8ef5032adbf978af147dbab8b1c7c5843af13eccc",
+  "account_id": "ACC-0271",
+  "model": "llama3.1:8b-instruct-q4_K_M",
+  "prompt_version": "kyc-v2",
+  "seconds": 27.9,
+  "machine": "TufAdhithya",
+  "made_at": "2026-10-26T19:22:02",
+  "judgement": {
+    "level": "LOW",
+    "mismatches": [
+      {
+        "fact_id": "F2",
+        "profile_claim": "Expected activity is in the range of Rs 1.94 lakh per month",
+        "why": "Money in is slightly higher than expected, but not excessively so"
+      },
+      {
+        "fact_id": "F6",
+        "profile_claim": "mostly through digital channels",
+        "why": "Two small cash deposits"
+      },
+      {
+        "fact_id": "F7",
+        "profile_claim": "mostly through digital channels",
+        "why": "Four small cash withdrawals"
+      }
+    ],
+    "notes": [
+      "The customer is an NRI with a declared income of ₹15.50 lakh, and the account is used for supporting parents and meeting household costs in India. The activity is mostly digital, but there are a few small cash deposits and withdrawals. The money in is slightly higher than expected, but not excessively so."
+    ]
+  }
+}

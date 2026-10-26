@@ -1,0 +1,39 @@
+{
+  "key": "cc256b0e0b08c6e31eb3669976381ceba2980019694a024167a495efc3082f07",
+  "account_id": "ACC-0246",
+  "model": "llama3.1:8b-instruct-q4_K_M",
+  "prompt_version": "kyc-v1",
+  "seconds": 40.3,
+  "machine": "TufAdhithya",
+  "made_at": "2026-10-22T13:59:00",
+  "judgement": {
+    "level": "MODERATE",
+    "mismatches": [
+      {
+        "fact_id": "F2",
+        "profile_claim": "overseas salary income",
+        "why": "Money in over 90 days is 1.1x the declared income, which is a moderate concern."
+      },
+      {
+        "fact_id": "F7",
+        "profile_claim": "no cash deposits",
+        "why": "Cash withdrawals of ₹87,873 is a direct contradiction to the profile claim."
+      },
+      {
+        "fact_id": "F9",
+        "profile_claim": "overseas salary income",
+        "why": "UPI credits from 15 different payers is a concern, as it suggests multiple unrelated payers."
+      },
+      {
+        "fact_id": "F12",
+        "profile_claim": "overseas salary income",
+        "why": "Pass-through of 1 of 8 matched stranger credits of at least ₹1,000 sent on within 12 hours is a concern."
+      }
+    ],
+    "notes": [
+      "The customer's income is slightly higher than declared, but this is not a severe concern given the profile.",
+      "The customer's NRE account is used for receiving overseas salary and managing Indian investments, which explains the activity.",
+      "The customer's velocity and turnover are higher than expected, but this is not a severe concern given the profile."
+    ]
+  }
+}

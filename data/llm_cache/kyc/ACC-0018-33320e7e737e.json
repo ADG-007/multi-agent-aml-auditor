@@ -1,0 +1,34 @@
+{
+  "key": "33320e7e737e6be93ae631cf63505fd322c379c491fdbdcb7bc5981f005d148c",
+  "account_id": "ACC-0018",
+  "model": "llama3.1:8b-instruct-q4_K_M",
+  "prompt_version": "kyc-v1",
+  "seconds": 36.9,
+  "machine": "TufAdhithya",
+  "made_at": "2026-10-22T13:45:02",
+  "judgement": {
+    "level": "MODERATE",
+    "mismatches": [
+      {
+        "fact_id": "F2",
+        "profile_claim": "Expected activity is in the range of Rs 3.27 lakh per month",
+        "why": "Money in over 90 days is 0.8x the declared income, which is a moderate concern"
+      },
+      {
+        "fact_id": "F4",
+        "profile_claim": "Expected activity is in the range of Rs 3.27 lakh per month",
+        "why": "Turnover (in + out) scaled to a year is 1.5x the declared income, which is a moderate concern"
+      },
+      {
+        "fact_id": "F12",
+        "profile_claim": "Source of funds is stated as business receipts",
+        "why": "1 of 28 matched stranger credits of at least ₹1,000 were sent on within 12 hours, which is a moderate concern"
+      }
+    ],
+    "notes": [
+      "Customer's declared income is relatively low, but the account activity is within expected limits.",
+      "There are no large or repeated cross-border money transactions.",
+      "The customer's occupation as a real estate agent and the account's purpose as collection of shop takings and vendor settlements explain the activity."
+    ]
+  }
+}

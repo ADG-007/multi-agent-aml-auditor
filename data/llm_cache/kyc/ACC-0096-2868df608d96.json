@@ -1,0 +1,34 @@
+{
+  "key": "2868df608d963e039c3398aa12fc6788cb3bfb2f3828205343cb6886bba162d9",
+  "account_id": "ACC-0096",
+  "model": "llama3.1:8b-instruct-q4_K_M",
+  "prompt_version": "kyc-v1",
+  "seconds": 32.1,
+  "machine": "TufAdhithya",
+  "made_at": "2026-10-22T13:52:46",
+  "judgement": {
+    "level": "MODERATE",
+    "mismatches": [
+      {
+        "fact_id": "F2",
+        "profile_claim": "routine salary credits and household expenses",
+        "why": "Money in over 90 days is 0.7x the declared income, which is a moderate concern"
+      },
+      {
+        "fact_id": "F4",
+        "profile_claim": "routine salary credits and household expenses",
+        "why": "Turnover (in + out) scaled to a year is 1.4x the declared income, which is a moderate concern"
+      },
+      {
+        "fact_id": "F12",
+        "profile_claim": "routine salary credits and household expenses",
+        "why": "Money from 1 of 5 matched stranger credits of at least ₹1,000 were sent on within 12 hours, which is a moderate concern"
+      }
+    ],
+    "notes": [
+      "The customer's income is relatively low, but the account activity is moderate, not extremely high.",
+      "The customer's occupation and income are consistent with the account activity.",
+      "There is no indication of any adverse information or suspicious activity."
+    ]
+  }
+}

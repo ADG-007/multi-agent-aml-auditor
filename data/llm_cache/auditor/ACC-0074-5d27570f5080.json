@@ -1,0 +1,14 @@
+{
+  "key": "5d27570f5080388c57fbc408244e6bcbedc2e2268d890bc44954baf72f559962",
+  "case_id": "CASE-ACC-0074-1",
+  "model": "gemini-3.5-flash",
+  "prompt_version": "auditor-v1",
+  "seconds": 15.3,
+  "made_at": "2026-10-26T21:32:51",
+  "draft": {
+    "executive_summary": "An investigation was conducted on account ACC-0074 belonging to Fiyaz Aggarwal following an AdverseMedia match. The subject matched entry AM-0009 on confirmed sanctions with 100% name similarity and matching date of birth, yielding a confidence score of 0.95. Consequently, the case is recommended for escalation to human lead analyst review and potential regulatory reporting.",
+    "investigation_narrative": "Vision verification confirmed agreement on Aadhaar and PAN details for holder Fiyaz Aggarwal with zero disagreeing fields. KYC analysis for account ACC-0074 showed declared annual income of ₹24,30,000 as a Software Engineer. Over 90 days, 17 credits totaled ₹4,32,625 (annualized ₹17,54,535) and 22 debits totaled ₹4,31,409 (annualized ₹17,49,604). Behavior showed minor mismatches including 5 cash deposits totaling ₹1,81,218 and 20 transactions in the busiest month. AdverseMedia screening identified a critical match on entry AM-0009 for confirmed sanctions with 100% name match and matching birth date (2001-01-06), yielding 0.95 confidence, alongside match AM-0031 for adverse news. Graph analysis found zero linked accounts across 35 screened counterparties. The TransactionPattern stage was not run, leaving evidence incomplete regarding automated transaction pattern analysis.",
+    "compliance_conclusion": "Due to a confirmed sanctions match under AM-0009, this account requires immediate escalation in accordance with SANC-002. Compliance action and mandatory reporting procedures must be initiated pursuant to SANC-003. The analyst recommends escalating the file to senior review.",
+    "str_narrative": "Suspicious Transaction Report Draft: Subject Fiyaz Aggarwal (Account ACC-0074) matched confirmed sanctions entry AM-0009 (DOB 2001-01-06). Over the analyzed 90-day period, the account recorded ₹4,32,625 in incoming funds across 17 credits and ₹4,31,409 in outgoing funds across 22 debits, including ₹1,81,218 in cash deposits. Activity is deemed suspicious due to the confirmed sanctions match against the primary account holder."
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "key": "5b6653a19083b101c1c2a46de24eae642dd08d7271e82e1c6f3a3bfb6d678891",
+  "account_id": "ACC-0010",
+  "model": "llama3.1:8b-instruct-q4_K_M",
+  "prompt_version": "kyc-v2",
+  "seconds": 20.1,
+  "machine": "TufAdhithya",
+  "made_at": "2026-10-26T19:12:05",
+  "judgement": {
+    "level": "LOW",
+    "mismatches": [
+      {
+        "fact_id": "F6",
+        "profile_claim": "mostly through digital channels",
+        "why": "a few cash deposits"
+      },
+      {
+        "fact_id": "F7",
+        "profile_claim": "mostly through digital channels",
+        "why": "a few cash withdrawals"
+      },
+      {
+        "fact_id": "F11",
+        "profile_claim": "expected activity is in the range of Rs 1.12 lakh per month across roughly 17 transactions",
+        "why": "velocity is 1.50, which is a bit high"
+      }
+    ],
+    "notes": []
+  }
+}

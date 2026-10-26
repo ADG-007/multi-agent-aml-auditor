@@ -1,12 +1,6 @@
-"""Typed LLM failures.
+"""Typed LLM failures. The orchestrator turns them into a FAILED stage, never a crash.
 
-Phase 10's orchestration layer catches these and maps them to stage_status = FAILED with a
-distinguishable reason, rather than letting an exception crash the pipeline (invariant 8:
-failures degrade, they do not crash).
-
-The reason code matters for Phase 11's reporting: a spike in content-policy refusals must
-never silently read as poor model reasoning, so refusals are counted separately from
-genuine reasoning errors and from rate-limit exhaustion.
+The reason keeps refusals apart from bad reasoning and rate limits.
 """
 
 from __future__ import annotations
@@ -24,11 +18,7 @@ class LLMFailureReason(str, Enum):
 
 
 class LLMStageFailure(Exception):
-    """A stage's LLM call could not produce a validated result.
-
-    Carries enough context for Phase 11 to report refusal rate per provider separately from
-    reasoning accuracy.
-    """
+    """A stage's LLM call gave no validated result. Carries the reason, provider and model."""
 
     def __init__(
         self,

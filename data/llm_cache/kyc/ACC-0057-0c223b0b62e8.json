@@ -1,0 +1,30 @@
+{
+  "key": "0c223b0b62e828d460c3f1836d4e09ccacae6d12fe3004e4ac4b67350775ad74",
+  "account_id": "ACC-0057",
+  "model": "llama3.1:8b-instruct-q4_K_M",
+  "prompt_version": "kyc-v2",
+  "seconds": 20.8,
+  "machine": "TufAdhithya",
+  "made_at": "2026-10-26T19:16:47",
+  "judgement": {
+    "level": "LOW",
+    "mismatches": [
+      {
+        "fact_id": "F1",
+        "profile_claim": "works as a textile trader",
+        "why": "The customer's occupation is consistent with the account activity."
+      },
+      {
+        "fact_id": "F6",
+        "profile_claim": "mostly through digital channels",
+        "why": "A few small cash deposits are normal."
+      },
+      {
+        "fact_id": "F11",
+        "profile_claim": "Expected activity is in the range of Rs 1.74 lakh per month across roughly 24 transactions",
+        "why": "The customer's activity is slightly above the expected range, but not excessively so."
+      }
+    ],
+    "notes": []
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "key": "73cc070414bee37d683c1113dbdb091d07561e2546e9b39bbc3ef5acbfbe416d",
+  "account_id": "ACC-0255",
+  "model": "llama3.1:8b-instruct-q4_K_M",
+  "prompt_version": "kyc-v1",
+  "seconds": 23.6,
+  "machine": "TufAdhithya",
+  "made_at": "2026-10-22T13:59:24",
+  "judgement": {
+    "level": "MODERATE",
+    "mismatches": [
+      {
+        "fact_id": "F2",
+        "profile_claim": "annual income of Rs 11.00 lakh",
+        "why": "Money in over 90 days is 0.8x the declared income, which is a moderate concern"
+      },
+      {
+        "fact_id": "F6",
+        "profile_claim": "no cash",
+        "why": "7 cash deposits totalling ₹28,072, which is a moderate concern"
+      }
+    ],
+    "notes": [
+      "Customer's declared occupation and income are consistent with the expected activity.",
+      "The customer's NRE account is maintained for funding a property purchase in India, which explains the cross-border wires.",
+      "The velocity of transactions is slightly higher than expected, but not excessively so."
+    ]
+  }
+}

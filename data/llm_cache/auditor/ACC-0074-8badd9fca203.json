@@ -1,0 +1,14 @@
+{
+  "key": "8badd9fca2032446e6790018d5b503a261c7e3e93a22d3c2440f38db01baf280",
+  "case_id": "CASE-ACC-0074-1",
+  "model": "gemini-3.5-flash",
+  "prompt_version": "auditor-v1",
+  "seconds": 10.2,
+  "made_at": "2026-10-22T14:13:47",
+  "draft": {
+    "executive_summary": "Account ACC-0074 held by Fiyaz Aggarwal is recommended for escalation due to a high-confidence sanctions match. Adverse media screening triggered a veto threshold with 0.9500 confidence matching confirmed sanctions entry AM-0009. Evidence is incomplete as the TransactionPattern analysis was not run.",
+    "investigation_narrative": "The investigation of account ACC-0074 for Fiyaz Aggarwal covered multiple stages. Vision document verification verified Aadhaar and PAN details with zero forgery confidence. KYC analysis revealed moderate profile mismatches: 90-day credits totaled ₹4,32,625 across 17 transactions and debits totaled ₹4,31,409 across 22 transactions relative to an annual declared income of ₹24,30,000, with cash deposits totaling ₹1,81,218 across 5 transactions. Graph analysis found no shared identifiers or linked accounts. Crucially, Adverse Media screening matched account holder Fiyaz Aggarwal to confirmed sanctions entity AM-0009 with a 100% name match and matching date of birth 2001-01-06 (confidence 0.95), alongside adverse news record AM-0031. Note that the TransactionPattern stage was not run, rendering the evidence incomplete regarding transaction pattern anomalies. Given the primary sanctions match, escalation is recommended.",
+    "compliance_conclusion": "The positive match against confirmed sanctions list entry AM-0009 requires resolution under SANC-002. Compliance must initiate mandatory reporting and review procedures in accordance with SANC-003 due to the sanctions designation. Therefore, a disposition of SUSPICIOUS-ESCALATE with 0.9500 confidence is recommended.",
+    "str_narrative": "Suspicious Transaction Report Draft: Account ACC-0074, held by Fiyaz Aggarwal, processed ₹4,32,625 in credits and ₹4,31,409 in debits over a 90-day period. Screening matched the holder's name and date of birth (2001-01-06) 100% to confirmed sanctions record AM-0009. The transaction activity is deemed suspicious due to the account holder's positive match on a sanctions list."
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "key": "7c7d5014483e33a5055a3082492b2b497e04eaaadab6d7ded1377689bdbeb2d8",
+  "account_id": "ACC-0279",
+  "model": "llama3.1:8b-instruct-q4_K_M",
+  "prompt_version": "kyc-v2",
+  "seconds": 26.6,
+  "machine": "TufAdhithya",
+  "made_at": "2026-10-26T19:22:29",
+  "judgement": {
+    "level": "LOW",
+    "mismatches": [
+      {
+        "fact_id": "F2",
+        "profile_claim": "Expected activity is in the range of Rs 5.39 lakh per month across roughly 18 transactions",
+        "why": "Money in is slightly higher than expected, but not by much"
+      },
+      {
+        "fact_id": "F6",
+        "profile_claim": "mostly through digital channels",
+        "why": "One small cash deposit"
+      },
+      {
+        "fact_id": "F7",
+        "profile_claim": "mostly through digital channels",
+        "why": "Five small cash withdrawals"
+      },
+      {
+        "fact_id": "F11",
+        "profile_claim": "mostly through digital channels",
+        "why": "Velocity is slightly higher than expected"
+      }
+    ],
+    "notes": [
+      "The customer's profile explains the activity, but there are a few small oddities."
+    ]
+  }
+}

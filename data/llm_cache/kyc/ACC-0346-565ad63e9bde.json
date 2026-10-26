@@ -1,0 +1,29 @@
+{
+  "key": "565ad63e9bdec323d250f9cd1c32aabc8c0c696d4af401f52d563f62c6dcc8fd",
+  "account_id": "ACC-0346",
+  "model": "llama3.1:8b-instruct-q4_K_M",
+  "prompt_version": "kyc-v2",
+  "seconds": 34.7,
+  "machine": "TufAdhithya",
+  "made_at": "2026-10-26T19:23:36",
+  "judgement": {
+    "level": "MODERATE",
+    "mismatches": [
+      {
+        "fact_id": "F2",
+        "profile_claim": "Source of funds is stated as business receipts",
+        "why": "Money in over 90 days is 2.2x the declared income, which is a moderate concern"
+      },
+      {
+        "fact_id": "F9",
+        "profile_claim": "Source of funds is stated as business receipts",
+        "why": "Money from 147 different payers, most of it sent on within hours, with no business reason in the profile, is a concern"
+      }
+    ],
+    "notes": [
+      "The customer's profile explains the activity, with a roadside mobile phone and electronics shop and expected activity of a large number of small UPI receipts from customers.",
+      "The customer's income is ₹6.80 lakh, and the money in and out over 90 days is 2.2x and 2.5x the declared income, respectively, which is a moderate concern.",
+      "The customer's profile does not explain the velocity of 1.12, which is a moderate concern."
+    ]
+  }
+}

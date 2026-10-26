@@ -19,6 +19,8 @@ include = [
     "src/stages/**/*.py",
     "src/orchestration/**/*.py",
     "src/evaluation/**/*.py",
+    "src/demo/**/*.py",
+    "src/llm/cache.py",
     "src/schemas/common.py",
     "src/schemas/stages.py",
     "src/schemas/report.py",

@@ -1,0 +1,27 @@
+{
+  "key": "26afd5977518e2623fe1f95dff3f28f6c4931b60f3ffb9bcaa45700839ada50a",
+  "account_id": "ACC-0350",
+  "model": "llama3.1:8b-instruct-q4_K_M",
+  "prompt_version": "kyc-v2",
+  "seconds": 25.4,
+  "machine": "TufAdhithya",
+  "made_at": "2026-10-26T19:24:22",
+  "judgement": {
+    "level": "LOW",
+    "mismatches": [
+      {
+        "fact_id": "F2",
+        "profile_claim": "Source of funds is stated as business receipts",
+        "why": "Money in is 1.8x the declared income, which is a moderate concern"
+      },
+      {
+        "fact_id": "F9",
+        "profile_claim": "Source of funds is stated as business receipts",
+        "why": "Money from 121 different payers, most of it sent on within hours, with no business reason in the profile, is a concern"
+      }
+    ],
+    "notes": [
+      "The customer's profile explains the activity, with a roadside mobile phone and electronics shop and expected activity of a large number of small UPI receipts from customers, around 50 a month, with periodic lump-sum supplier payments and cash withdrawals for wages."
+    ]
+  }
+}

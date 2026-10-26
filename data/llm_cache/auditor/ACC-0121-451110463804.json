@@ -1,0 +1,14 @@
+{
+  "key": "45111046380485ddd69d22d4d8b6bf571c4d31176f767638b32f29b13a3a72ff",
+  "case_id": "CASE-ACC-0121-1",
+  "model": "gemini-3.5-flash",
+  "prompt_version": "auditor-v1",
+  "seconds": 11.0,
+  "made_at": "2026-10-22T14:14:01",
+  "draft": {
+    "executive_summary": "This review recommends a MONITOR disposition for account ACC-0121 with a confidence score of 0.7500 based on network connections to flagged accounts. While administrative review approved the identity document DOB discrepancy, graph analytics identified device and IP linkages to high-risk entities. Because the corroboration gate requires multiple corroborating signals to escalate, holding the account under ongoing monitoring is advised.",
+    "investigation_narrative": "An administrative review approved the account despite an Aadhaar DOB mismatch (printed '30/06/1993' vs record '30/06/1996'). The Vision stage noted a 0.95 forgery confidence due to this single field disagreement. KYC analysis yielded a 0 score, noting 90-day credits of ₹5,75,013 across 14 transactions and debits of ₹5,74,864 across 20 transactions (scaled annual turnover 1.4x the declared ₹32,70,000 income), plus 2 unexpected cash deposits totaling ₹68,968 and 5 cash withdrawals totaling ₹1,60,554. AdverseMedia screening returned 0 matches across the account holder and 32 counterparties (confidence 0). Graph analysis scored 0.75 after detecting shared device/IP links to 3 accounts, including flagged accounts ACC-0022 and ACC-0154. TransactionPattern analysis was not run, leaving transaction behavior evidence incomplete.",
+    "compliance_conclusion": "The account should be maintained under MONITOR status in accordance with NET-002 due to shared operating identifiers with flagged accounts ACC-0022 and ACC-0154. Because a single borderline risk signal fails the corroboration gate and evidence from transaction patterns is incomplete, escalation is not required at this stage. Analyst review should re-evaluate the account if additional high-risk network links emerge.",
+    "str_narrative": null
+  }
+}

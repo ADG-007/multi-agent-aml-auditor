@@ -1,0 +1,39 @@
+{
+  "key": "4095bbe6e1a20888cfab85dccaca44692f84bbb6cf9a77c34edd94d93c14b372",
+  "account_id": "ACC-0352",
+  "model": "llama3.1:8b-instruct-q4_K_M",
+  "prompt_version": "kyc-v1",
+  "seconds": 55.7,
+  "machine": "TufAdhithya",
+  "made_at": "2026-10-22T14:05:29",
+  "judgement": {
+    "level": "MODERATE",
+    "mismatches": [
+      {
+        "fact_id": "F2",
+        "profile_claim": "annual income ₹3,20,000",
+        "why": "Money in over 90 days: ₹2,25,119 from 14 credits; scaled to a year ₹9,12,983 = 2.9x the declared income."
+      },
+      {
+        "fact_id": "F3",
+        "profile_claim": "annual income ₹3,20,000",
+        "why": "Money out over 90 days: ₹2,12,426 in 6 debits; scaled to a year ₹8,61,507 = 2.7x the declared income."
+      },
+      {
+        "fact_id": "F4",
+        "profile_claim": "annual income ₹3,20,000",
+        "why": "Turnover (in + out) scaled to a year = 5.5x the declared income."
+      },
+      {
+        "fact_id": "F12",
+        "profile_claim": "no business use",
+        "why": "5 of 8 matched stranger credits of at least ₹1,000 were sent on within 12 hours (62%) in the 90 days to 21 Sep 2026; median hold 2.0 h (MULE-002); 100% of the money that closed those runs went to one payee, 100% to payees not paid before (MULE-002)"
+      }
+    ],
+    "notes": [
+      "20 transactions in 90 days, about 7 a month (F5) is higher than expected, but not alarming.",
+      "Cash deposits: 2, total ₹7,866, largest ₹5,812 (F6) is a moderate concern, as it's a direct contradiction to the profile claim of 'no cash'.",
+      "The customer's activity is higher than expected, but the profile does not explain the activity, which is a moderate concern."
+    ]
+  }
+}

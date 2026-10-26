@@ -1,0 +1,27 @@
+{
+  "key": "4b94793e1a4bf3087eff68ff6b2a89712e733e477fe9acca4fbf3fd756668b30",
+  "account_id": "ACC-0231",
+  "model": "llama3.1:8b-instruct-q4_K_M",
+  "prompt_version": "kyc-v2",
+  "seconds": 28.3,
+  "machine": "TufAdhithya",
+  "made_at": "2026-10-26T19:21:28",
+  "judgement": {
+    "level": "MODERATE",
+    "mismatches": [
+      {
+        "fact_id": "F2",
+        "profile_claim": "Expected activity is in the range of Rs 4.44 lakh per month across roughly 16 transactions",
+        "why": "Money in over 90 days: ₹11,73,114 from 23 credits; scaled to a year ₹47,57,629 = 1.3x the declared income."
+      },
+      {
+        "fact_id": "F8",
+        "profile_claim": "Source of funds is stated as business receipts",
+        "why": "Cross-border wires: 2 inward totalling ₹4,13,306; countries United States; purpose codes P0014."
+      }
+    ],
+    "notes": [
+      "The customer is a Non-Resident Indian currently residing in the United States, and visits India periodically. The NRE account is maintained for supporting parents and meeting household costs in India."
+    ]
+  }
+}

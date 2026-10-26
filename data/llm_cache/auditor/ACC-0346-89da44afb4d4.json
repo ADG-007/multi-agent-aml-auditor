@@ -1,0 +1,14 @@
+{
+  "key": "89da44afb4d41a3c03845f02dadda77859fc5d46f4fe565ed93b7662e115de76",
+  "case_id": "CASE-ACC-0346-1",
+  "model": "gemini-3.5-flash",
+  "prompt_version": "auditor-v1",
+  "seconds": 181.5,
+  "made_at": "2026-10-26T21:28:56",
+  "draft": {
+    "executive_summary": "This investigation evaluated account ACC-0346 following an automated clear disposition with 0.0000 confidence. Document verification and graph analysis showed no identity discrepancies or links to known risky entities. Although mild activity mismatches were noted, overall transactional risk remained unflagged across active models.",
+    "investigation_narrative": "Identity verification through Vision confirmed full agreement across Aadhaar and PAN documents for name, date of birth, and ID numbers with zero forgery flags. KYC analysis noted declared annual income of ₹6,80,000 for a roadside mobile shop proprietor, alongside 90-day credits of ₹3,68,369 (2.2x declared income annualized) from 147 payers and debits of ₹4,19,417, generating an annualized turnover ratio of 4.7x. TransactionPattern evaluation detected minor pass-through behavior where 6 of 60 stranger credits (10%) were forwarded within 12 hours with a median hold of 1.8 hours, zero structuring, and a velocity ratio of 1.12. Graph screening uncovered no shared identifiers or linkages to flagged accounts. However, AdverseMedia failed to run, leaving public media screening incomplete. Despite this gap, all executed modules returned zero risk confidence scores, supporting the recommendation to clear.",
+    "compliance_conclusion": "It is recommended to adopt the CLEAR disposition with 0.0000 confidence for account ACC-0346. The observed transaction patterns do not warrant escalation despite incomplete adverse media evidence. No policy clause citations apply to this clearance recommendation.",
+    "str_narrative": null
+  }
+}

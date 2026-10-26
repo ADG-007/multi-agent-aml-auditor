@@ -1,0 +1,27 @@
+{
+  "key": "14ebf82b96fc7fa558c40f490addb2f89a910b5a8ba5cdb0a88e5ad3a832be98",
+  "account_id": "ACC-0367",
+  "model": "llama3.1:8b-instruct-q4_K_M",
+  "prompt_version": "kyc-v2",
+  "seconds": 25.9,
+  "machine": "TufAdhithya",
+  "made_at": "2026-10-26T19:25:55",
+  "judgement": {
+    "level": "MODERATE",
+    "mismatches": [
+      {
+        "fact_id": "F2",
+        "profile_claim": "Expected activity is in the range of Rs 40,000 per month",
+        "why": "Money in over 90 days: ₹2,01,413 from 13 credits; scaled to a year ₹8,16,841 = 2.6x the declared income."
+      },
+      {
+        "fact_id": "F4",
+        "profile_claim": "Expected activity is in the range of Rs 40,000 per month",
+        "why": "Turnover (in + out) scaled to a year = 4.9x the declared income."
+      }
+    ],
+    "notes": [
+      "The customer's profile does not explain the high turnover, which is 4.9x the declared income."
+    ]
+  }
+}

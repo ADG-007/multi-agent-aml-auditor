@@ -1,0 +1,14 @@
+{
+  "key": "1a6aa968c20b4077b77c8d15f8dc9fc53bf89b7bbd67d6cf9226cb7f5c594587",
+  "case_id": "CASE-ACC-0074-1",
+  "model": "gemini-3.5-flash",
+  "prompt_version": "auditor-v1",
+  "seconds": 25.0,
+  "made_at": "2026-10-22T13:44:48",
+  "draft": {
+    "executive_summary": "This review recommends escalating account ACC-0074 to suspicious status due to a critical sanctions match. Account holder Fiyaz Aggarwal matched confirmed sanctions entry AM-0009 with a 100% name match and matching date of birth. Although TransactionPattern analysis was not run leaving evidence incomplete, the adverse media veto score mandates immediate escalation.",
+    "investigation_narrative": "Identity verification via Vision passed with complete agreement across Aadhaar and PAN documents and zero forgery findings. KYC records show account holder Fiyaz Aggarwal declared an annual income of ₹24,30,000 as a Software Engineer. Over 90 days, credits reached ₹4,32,625 across 17 transactions and debits reached ₹4,31,409 across 22 transactions, including 5 cash deposits totaling ₹1,81,218 and 1 cash withdrawal of ₹11,809. The KYC model was off for this run. Graph analysis identified 0 linked accounts and no risk flags. Adverse Media screening generated a 0.95 confidence score by matching the holder to confirmed sanctions entry AM-0009 (100/100 name match, DOB 2001-01-06) and adverse news entry AM-0031. TransactionPattern analysis was not run, so transaction pattern evidence remains incomplete; however, the confirmed sanctions match overrides pattern evaluation.",
+    "compliance_conclusion": "The positive designation match against entry AM-0009 satisfies match confirmation criteria under SANC-002. In accordance with SANC-003, mandatory reporting obligations are engaged due to the confirmed sanctions match. It is recommended that the lead analyst proceed with escalating this account and filing an STR.",
+    "str_narrative": "Suspicious Transaction Report Draft: Subject Fiyaz Aggarwal, account holder of ACC-0074, matched confirmed sanctions listing AM-0009 with 100% name similarity and confirmed DOB 2001-01-06. Between recent evaluation periods, the account accumulated ₹4,32,625 in total credits and ₹4,31,409 in total debits, including ₹1,81,218 in cash deposits. Escalation is mandated due to the sanctions designation."
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "key": "81cd64a3433a74aa61babe0a6683fb99151e39d9c8be7005f8af8556bd30c471",
+  "account_id": "ACC-0125",
+  "model": "llama3.1:8b-instruct-q4_K_M",
+  "prompt_version": "kyc-v2",
+  "seconds": 29.3,
+  "machine": "TufAdhithya",
+  "made_at": "2026-10-26T19:19:46",
+  "judgement": {
+    "level": "MODERATE",
+    "mismatches": [
+      {
+        "fact_id": "F2",
+        "profile_claim": "Expected activity is in the range of Rs 2.90 lakh per month across roughly 17 transactions",
+        "why": "Money in over 90 days: ₹78,64,973 from 25 credits; scaled to a year ₹3,18,96,837 = 13.7x the declared income."
+      },
+      {
+        "fact_id": "F4",
+        "profile_claim": "Expected activity is in the range of Rs 2.90 lakh per month across roughly 17 transactions",
+        "why": "Turnover (in + out) scaled to a year = 14.1x the declared income."
+      }
+    ],
+    "notes": [
+      "Customer's declared occupation and income are consistent with the large turnover.",
+      "The customer's account is a CURRENT account, which is suitable for business use."
+    ]
+  }
+}

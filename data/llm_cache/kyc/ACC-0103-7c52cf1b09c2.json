@@ -1,0 +1,33 @@
+{
+  "key": "7c52cf1b09c29886c19cffe7cee375edfe44ee8450f8a385373a8af6c36b416c",
+  "account_id": "ACC-0103",
+  "model": "llama3.1:8b-instruct-q4_K_M",
+  "prompt_version": "kyc-v2",
+  "seconds": 29.5,
+  "machine": "TufAdhithya",
+  "made_at": "2026-10-26T19:18:18",
+  "judgement": {
+    "level": "LOW",
+    "mismatches": [
+      {
+        "fact_id": "F4",
+        "profile_claim": "Expected activity is in the range of Rs 80,000 per month across roughly 29 transactions",
+        "why": "Turnover is 1.7x the declared income, which is slightly above the expected range."
+      },
+      {
+        "fact_id": "F6",
+        "profile_claim": "Source of funds is stated as business receipts",
+        "why": "There are 6 cash deposits, which is a small oddity."
+      },
+      {
+        "fact_id": "F12",
+        "profile_claim": "None",
+        "why": "2 of 19 matched stranger credits were sent on within 12 hours, which is a small oddity."
+      }
+    ],
+    "notes": [
+      "The customer's income is mostly digital, with only a few cash deposits and withdrawals.",
+      "The customer's business receipts are mostly digital, with only a few cash deposits."
+    ]
+  }
+}

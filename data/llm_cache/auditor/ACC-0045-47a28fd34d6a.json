@@ -1,0 +1,14 @@
+{
+  "key": "47a28fd34d6ae55d746fc5e4766e424adc3236914f6e31201caa6a6c7af7fe07",
+  "case_id": "CASE-ACC-0045-1",
+  "model": "gemini-3.5-flash",
+  "prompt_version": "auditor-v1",
+  "seconds": 21.3,
+  "made_at": "2026-10-22T14:13:34",
+  "draft": {
+    "executive_summary": "I recommend a disposition of MONITOR for account ACC-0045 with a confidence score of 0.7500. Although identity and media screenings were clear, Graph analysis detected shared operating identifiers with flagged accounts. Because transaction pattern evidence was incomplete and only one stage triggered an alert, corroboration requirements were not met.",
+    "investigation_narrative": "The review covered Vision, KYC, AdverseMedia, and Graph stages, noting that TransactionPattern was not run, leaving evidence incomplete. Vision verification returned zero forgery risk with full agreement across Aadhaar and PAN documents. KYC analysis scored 0, identifying minor profile variance including 3 cash deposits totaling ₹7,596 despite a no-cash declaration, and ₹57,945 in credits with ₹58,015 in debits over 90 days, reflecting annual turnover 1.5x the declared ₹3,20,000 income. AdverseMedia returned 0 matches for holder Amaira Choudhry and 53 counterparties. Graph analysis produced a 0.75 confidence score due to shared device or IP identifiers linking ACC-0045 to 3 accounts, including hard-flagged accounts ACC-0022 and ACC-0154. Because a solo elevated signal requires additional corroboration, the case is recommended for ongoing monitoring.",
+    "compliance_conclusion": "Shared operating network connections with flagged entities warrant monitoring under NET-002. Account activity should be periodically reviewed to mitigate potential risks associated with MULE-001. Incomplete transaction pattern data further supports maintaining a MONITOR recommendation rather than escalation.",
+    "str_narrative": null
+  }
+}

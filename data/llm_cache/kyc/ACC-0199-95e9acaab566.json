@@ -1,0 +1,34 @@
+{
+  "key": "95e9acaab56635a77e2946ee745502c9d3d39037fbe24ecf02f8d4a940b45d06",
+  "account_id": "ACC-0199",
+  "model": "llama3.1:8b-instruct-q4_K_M",
+  "prompt_version": "kyc-v1",
+  "seconds": 37.6,
+  "machine": "TufAdhithya",
+  "made_at": "2026-10-22T13:57:52",
+  "judgement": {
+    "level": "MODERATE",
+    "mismatches": [
+      {
+        "fact_id": "F2",
+        "profile_claim": "Expected activity is in the range of Rs 4.15 lakh per month",
+        "why": "The customer's income is 1.2x the declared income, which is a moderate concern."
+      },
+      {
+        "fact_id": "F4",
+        "profile_claim": "Expected activity is in the range of Rs 4.15 lakh per month",
+        "why": "The turnover (in + out) scaled to a year is 2.4x the declared income, which is a moderate concern."
+      },
+      {
+        "fact_id": "F12",
+        "profile_claim": "CURRENT account opened 2017-07-23",
+        "why": "There is a pass-through of 1 of 26 matched stranger credits of at least ₹1,000 sent on within 12 hours, which is a moderate concern."
+      }
+    ],
+    "notes": [
+      "The customer's income is 1.2x the declared income, which is a moderate concern.",
+      "The customer has a high transaction velocity, with 35 transactions in the busiest 30 days, which is a moderate concern.",
+      "The customer has a high proportion of cash deposits and withdrawals, which is a moderate concern."
+    ]
+  }
+}

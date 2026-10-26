@@ -1,0 +1,39 @@
+{
+  "key": "eab30a520a27bbb7304039cdd76b0cfef3020872f6b698287b5d0d6a7bc7075d",
+  "account_id": "ACC-0347",
+  "model": "llama3.1:8b-instruct-q4_K_M",
+  "prompt_version": "kyc-v1",
+  "seconds": 53.0,
+  "machine": "TufAdhithya",
+  "made_at": "2026-10-22T14:04:00",
+  "judgement": {
+    "level": "MODERATE",
+    "mismatches": [
+      {
+        "fact_id": "F2",
+        "profile_claim": "annual income ₹3,00,000",
+        "why": "Money in over 90 days: ₹1,94,441 from 17 credits; scaled to a year ₹7,88,565 = 2.6x the declared income."
+      },
+      {
+        "fact_id": "F3",
+        "profile_claim": "annual income ₹3,00,000",
+        "why": "Money out over 90 days: ₹1,83,331 in 13 debits; scaled to a year ₹7,43,510 = 2.5x the declared income."
+      },
+      {
+        "fact_id": "F4",
+        "profile_claim": "annual income ₹3,00,000",
+        "why": "Turnover (in + out) scaled to a year = 5.1x the declared income."
+      },
+      {
+        "fact_id": "F12",
+        "profile_claim": "no business use",
+        "why": "9 of 13 matched stranger credits of at least ₹1,000 were sent on within 12 hours (69%) in the 90 days to 21 Sep 2026; median hold 2.8 h (MULE-002); 98% of the money that closed those runs went to one payee, 100% to payees not paid before (MULE-002)"
+      }
+    ],
+    "notes": [
+      "High transaction velocity, with 21 transactions in 30 days, compared to an average of 10 per 30 days (F11).",
+      "A large number of UPI credits from 12 different payers (F9).",
+      "Pass-through transactions with a high velocity, with 69% of credits sent on within 12 hours (F12)."
+    ]
+  }
+}

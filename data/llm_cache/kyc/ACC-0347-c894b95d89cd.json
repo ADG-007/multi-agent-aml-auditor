@@ -1,0 +1,25 @@
+{
+  "key": "c894b95d89cd77c7a3e7be5c90c4dbffeeaa48b79e11274a187557b8bab8a2d6",
+  "account_id": "ACC-0347",
+  "model": "llama3.1:8b-instruct-q4_K_M",
+  "prompt_version": "kyc-v2",
+  "seconds": 21.3,
+  "machine": "TufAdhithya",
+  "made_at": "2026-10-26T19:23:57",
+  "judgement": {
+    "level": "MODERATE",
+    "mismatches": [
+      {
+        "fact_id": "F2",
+        "profile_claim": "Expected activity is in the range of Rs 37,500 per month",
+        "why": "Money in over 90 days: ₹1,94,441 from 17 credits; scaled to a year ₹7,88,565 = 2.6x the declared income."
+      },
+      {
+        "fact_id": "F4",
+        "profile_claim": "Expected activity is in the range of Rs 37,500 per month",
+        "why": "Turnover (in + out) scaled to a year = 5.1x the declared income."
+      }
+    ],
+    "notes": []
+  }
+}

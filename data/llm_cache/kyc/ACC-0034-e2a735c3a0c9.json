@@ -1,0 +1,29 @@
+{
+  "key": "e2a735c3a0c96c13ebc72334221e9a0c83d8068a51fdfa183c07a8755a865a3c",
+  "account_id": "ACC-0034",
+  "model": "llama3.1:8b-instruct-q4_K_M",
+  "prompt_version": "kyc-v1",
+  "seconds": 28.7,
+  "machine": "TufAdhithya",
+  "made_at": "2026-10-22T13:46:35",
+  "judgement": {
+    "level": "MODERATE",
+    "mismatches": [
+      {
+        "fact_id": "F2",
+        "profile_claim": "routine salary credits and household expenses",
+        "why": "The customer's income is only 0.5x the declared income, which is a moderate concern."
+      },
+      {
+        "fact_id": "F7",
+        "profile_claim": "routine salary credits and household expenses",
+        "why": "The customer made 2 cash withdrawals, which contradicts the profile's claim of no cash use."
+      }
+    ],
+    "notes": [
+      "The customer's income is only 0.5x the declared income, which is a moderate concern.",
+      "The customer made 2 cash withdrawals, which contradicts the profile's claim of no cash use.",
+      "The customer has a relatively high transaction velocity, but this is not a major concern given the customer's age and occupation."
+    ]
+  }
+}

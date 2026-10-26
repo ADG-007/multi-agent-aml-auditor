@@ -1,0 +1,28 @@
+{
+  "key": "642fb9fd5f8018f4db16dbdf7d4cfd7b0ec3956daf53424789e8b8620aedf627",
+  "account_id": "ACC-0199",
+  "model": "llama3.1:8b-instruct-q4_K_M",
+  "prompt_version": "kyc-v2",
+  "seconds": 21.1,
+  "machine": "TufAdhithya",
+  "made_at": "2026-10-26T19:20:59",
+  "judgement": {
+    "level": "LOW",
+    "mismatches": [
+      {
+        "fact_id": "F2",
+        "profile_claim": "Expected activity is in the range of Rs 4.15 lakh per month across roughly 26 transactions",
+        "why": "Money in is slightly higher than expected, but not excessively so"
+      },
+      {
+        "fact_id": "F6",
+        "profile_claim": "Source of funds is stated as salary income",
+        "why": "A few cash deposits, but not excessively large"
+      }
+    ],
+    "notes": [
+      "The customer's profile explains the activity, with a few minor oddities.",
+      "The customer's income and activity are consistent with their declared occupation and income."
+    ]
+  }
+}

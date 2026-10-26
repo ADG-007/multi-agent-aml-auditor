@@ -1,0 +1,32 @@
+{
+  "key": "4033d22aab7720fe5459d65b65f15f05b72f9b26e1e137008fa608a98e698e68",
+  "account_id": "ACC-0022",
+  "model": "llama3.1:8b-instruct-q4_K_M",
+  "prompt_version": "kyc-v2",
+  "seconds": 20.9,
+  "machine": "TufAdhithya",
+  "made_at": "2026-10-26T19:13:12",
+  "judgement": {
+    "level": "LOW",
+    "mismatches": [
+      {
+        "fact_id": "F2",
+        "profile_claim": "expected activity is in the range of Rs 91,250 per month",
+        "why": "slightly above expected"
+      },
+      {
+        "fact_id": "F6",
+        "profile_claim": "mostly through digital channels",
+        "why": "5 cash deposits"
+      },
+      {
+        "fact_id": "F11",
+        "profile_claim": "expected activity is in the range of Rs 91,250 per month",
+        "why": "slightly above expected"
+      }
+    ],
+    "notes": [
+      "The customer's profile explains the activity, with a few small oddities."
+    ]
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "key": "f8a632b86eee878494c04cef75a4bab80fc55e9d9e4c6dba72ea376f20b9284d",
+  "account_id": "ACC-0052",
+  "model": "llama3.1:8b-instruct-q4_K_M",
+  "prompt_version": "kyc-v2",
+  "seconds": 14.1,
+  "machine": "TufAdhithya",
+  "made_at": "2026-10-26T19:15:59",
+  "judgement": {
+    "level": "LOW",
+    "mismatches": [
+      {
+        "fact_id": "F7",
+        "profile_claim": "No cash",
+        "why": "5 cash withdrawals, total ₹41,231"
+      }
+    ],
+    "notes": [
+      "Velocity is slightly higher than expected, but not a concern.",
+      "Pass-through velocity is slightly higher than expected, but not a concern.",
+      "Mostly digital activity, with a few cash withdrawals."
+    ]
+  }
+}

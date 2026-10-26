@@ -1,0 +1,34 @@
+{
+  "key": "9e274ea957799c49421929bf89d7273df188a06ce08a4b4ae7378091c2c289c0",
+  "account_id": "ACC-0350",
+  "model": "llama3.1:8b-instruct-q4_K_M",
+  "prompt_version": "kyc-v1",
+  "seconds": 33.3,
+  "machine": "TufAdhithya",
+  "made_at": "2026-10-22T14:04:33",
+  "judgement": {
+    "level": "MODERATE",
+    "mismatches": [
+      {
+        "fact_id": "F2",
+        "profile_claim": "Source of funds is stated as business receipts",
+        "why": "The customer's income is 1.8x the declared income, which is a moderate concern."
+      },
+      {
+        "fact_id": "F3",
+        "profile_claim": "Source of funds is stated as business receipts",
+        "why": "The customer's outflow is 2.3x the declared income, which is a moderate concern."
+      },
+      {
+        "fact_id": "F12",
+        "profile_claim": "Source of funds is stated as business receipts",
+        "why": "The customer has a high velocity of transactions, with 66 transactions in the busiest 30 days, which is a moderate concern."
+      }
+    ],
+    "notes": [
+      "The customer's turnover is 4.1x the declared income, which is a high concern.",
+      "The customer has a large number of small UPI receipts from 121 different payers, which is a moderate concern.",
+      "The customer has no cash deposits or withdrawals, which is a low concern."
+    ]
+  }
+}

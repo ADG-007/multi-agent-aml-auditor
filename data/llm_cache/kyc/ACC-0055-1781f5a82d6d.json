@@ -1,0 +1,30 @@
+{
+  "key": "1781f5a82d6d2babaf9c997fd23f1c6e8e968187f1e16748151c1bb219e40bba",
+  "account_id": "ACC-0055",
+  "model": "llama3.1:8b-instruct-q4_K_M",
+  "prompt_version": "kyc-v2",
+  "seconds": 26.9,
+  "machine": "TufAdhithya",
+  "made_at": "2026-10-26T19:16:26",
+  "judgement": {
+    "level": "MODERATE",
+    "mismatches": [
+      {
+        "fact_id": "F2",
+        "profile_claim": "modest activity of around Rs 15,000 per month",
+        "why": "Money in over 90 days: ₹6,43,205 from 24 credits; scaled to a year ₹26,08,552 = 7.2x the declared income."
+      },
+      {
+        "fact_id": "F4",
+        "profile_claim": "modest activity of around Rs 15,000 per month",
+        "why": "Turnover (in + out) scaled to a year = 14.5x the declared income."
+      },
+      {
+        "fact_id": "F9",
+        "profile_claim": "salary income only",
+        "why": "UPI credits: 11 totalling ₹4,13,318 from 10 different payers."
+      }
+    ],
+    "notes": []
+  }
+}

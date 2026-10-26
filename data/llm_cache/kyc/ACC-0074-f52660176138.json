@@ -1,0 +1,28 @@
+{
+  "key": "f526601761382d57dcaac5bd96ddc2e54670685c14f14a3e44b5fd8af5f66c83",
+  "account_id": "ACC-0074",
+  "model": "llama3.1:8b-instruct-q4_K_M",
+  "prompt_version": "kyc-v2",
+  "seconds": 18.5,
+  "machine": "TufAdhithya",
+  "made_at": "2026-10-26T19:17:27",
+  "judgement": {
+    "level": "LOW",
+    "mismatches": [
+      {
+        "fact_id": "F6",
+        "profile_claim": "mostly through digital channels",
+        "why": "a few cash deposits"
+      },
+      {
+        "fact_id": "F11",
+        "profile_claim": "roughly 13 transactions a month",
+        "why": "busiest 30 days had 20 transactions"
+      }
+    ],
+    "notes": [
+      "The customer's declared income is relatively low, but the account activity is within the expected range.",
+      "The customer's profile does not rule out cash deposits, so this is not a contradiction."
+    ]
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "key": "d28370a88527b209e1ec4aacbaa991af5c0fa6d27408c0e68b323aa886cf9b17",
+  "account_id": "ACC-0010",
+  "model": "llama3.1:8b-instruct-q4_K_M",
+  "prompt_version": "kyc-v1",
+  "seconds": 39.0,
+  "machine": "TufAdhithya",
+  "made_at": "2026-10-22T13:42:47",
+  "judgement": {
+    "level": "MODERATE",
+    "mismatches": [
+      {
+        "fact_id": "F2",
+        "profile_claim": "Declared income ₹9,00,000 a year",
+        "why": "Money in over 90 days is 0.8x the declared income, which is a moderate concern"
+      },
+      {
+        "fact_id": "F4",
+        "profile_claim": "Declared income ₹9,00,000 a year",
+        "why": "Turnover (in + out) scaled to a year is 1.6x the declared income, which is a moderate concern"
+      },
+      {
+        "fact_id": "F12",
+        "profile_claim": "Business receipts and supplier payments",
+        "why": "1 of 12 matched stranger credits of at least ₹1,000 were sent on within 12 hours, which is a moderate concern"
+      }
+    ],
+    "notes": [
+      "The customer's declared income is relatively low, but the account activity is higher than expected, which is a moderate concern.",
+      "The customer's occupation as a transport contractor suggests a higher level of business activity, but the account activity is not entirely consistent with this.",
+      "The customer's account has been open for over 7 years, which suggests a long-standing business relationship, but the recent activity is higher than expected."
+    ]
+  }
+}

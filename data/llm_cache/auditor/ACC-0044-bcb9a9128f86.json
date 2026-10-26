@@ -1,0 +1,14 @@
+{
+  "key": "bcb9a9128f86a048bfafeea93ad35417c40a832c24eac3ab26ca66aefc6c36c1",
+  "case_id": "CASE-ACC-0044-1",
+  "model": "gemini-3.5-flash",
+  "prompt_version": "auditor-v1",
+  "seconds": 19.2,
+  "made_at": "2026-10-22T14:13:00",
+  "draft": {
+    "executive_summary": "An investigation of account ACC-0044 held by Amol Sule was conducted due to potential cash structuring and significant KYC profile mismatches. Transaction analysis identified 5 sub-threshold cash deposits totaling ₹47,45,447 alongside annualised incoming flows exceeding 27 times declared income. A disposition of SUSPICIOUS-ESCALATE (confidence 0.6500) is recommended for senior analyst review.",
+    "investigation_narrative": "Vision verification confirmed valid Aadhaar and PAN documents with zero forgery risk. However, TransactionPattern analysis identified 5 cash deposits between ₹9,00,000 and ₹10,00,000 from 17 July to 13 August 2026 totaling ₹47,45,447, indicating cash structuring below reporting limits. KYC analysis highlighted major profile mismatches: 90-day credits of ₹56,78,073 represent 27.7 times the declared annual income of ₹8,30,000, and 9 cash deposits totaling ₹48,42,604 occurred despite zero declared cash activity. Additionally, 7 UPI credits were received from distinct counterparties. AdverseMedia screening of Amol Sule and 42 counterparties returned zero matches, and Graph analysis revealed no connections to flagged accounts.",
+    "compliance_conclusion": "The observed sub-threshold cash placement pattern indicates potential structuring under STRUCT-001 and STRUCT-002. Unexplained turnover and profile deviations further support escalation under KYC-002 and STR-002. Escalation to the lead analyst for suspicious transaction reporting is strongly recommended.",
+    "str_narrative": "Suspicious Transaction Report Draft: Account ACC-0044 held by Amol Sule executed 5 structured cash deposits totaling ₹47,45,447 between 17 July 2026 and 13 August 2026, each just under the threshold of ₹10,00,000. Additionally, overall 90-day incoming transfers reached ₹56,78,073 against a declared annual income of ₹8,30,000 with ₹48,42,604 deposited in cash, raising suspicion of illicit funds placement."
+  }
+}

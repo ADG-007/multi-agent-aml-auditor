@@ -1,0 +1,29 @@
+{
+  "key": "df12a47df4c97fabe5546710a19e13eb9ab79bafc065ce46d4a053648cdc740b",
+  "account_id": "ACC-0004",
+  "model": "llama3.1:8b-instruct-q4_K_M",
+  "prompt_version": "kyc-v1",
+  "seconds": 32.6,
+  "machine": "TufAdhithya",
+  "made_at": "2026-10-22T13:40:31",
+  "judgement": {
+    "level": "MODERATE",
+    "mismatches": [
+      {
+        "fact_id": "F2",
+        "profile_claim": "Expected activity is in the range of Rs 1.39 lakh per month",
+        "why": "Money in over 90 days is 0.7x the declared income, which is a moderate concern"
+      },
+      {
+        "fact_id": "F4",
+        "profile_claim": "Expected activity is in the range of Rs 1.39 lakh per month",
+        "why": "Turnover (in + out) scaled to a year is 1.3x the declared income, which is a moderate concern"
+      }
+    ],
+    "notes": [
+      "The customer's declared occupation and income are consistent with the expected activity in the current account.",
+      "The customer's current account has been open for a relatively short period of time (since 2022-12-01).",
+      "The customer's velocity is higher than expected, with 16 transactions in the busiest 30 days, which may indicate a higher level of activity than expected."
+    ]
+  }
+}

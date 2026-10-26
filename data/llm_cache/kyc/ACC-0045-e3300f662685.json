@@ -1,0 +1,30 @@
+{
+  "key": "e3300f662685588990146baf753d98991c8ca4227e4c127eb5ef45c61eb34c5d",
+  "account_id": "ACC-0045",
+  "model": "llama3.1:8b-instruct-q4_K_M",
+  "prompt_version": "kyc-v2",
+  "seconds": 16.4,
+  "machine": "TufAdhithya",
+  "made_at": "2026-10-26T19:15:03",
+  "judgement": {
+    "level": "LOW",
+    "mismatches": [
+      {
+        "fact_id": "F6",
+        "profile_claim": "mostly through digital channels",
+        "why": "a few cash deposits"
+      },
+      {
+        "fact_id": "F7",
+        "profile_claim": "mostly through digital channels",
+        "why": "a few cash withdrawals"
+      },
+      {
+        "fact_id": "F11",
+        "profile_claim": "routine salary credits and household expenses",
+        "why": "velocity ratio of 1.43"
+      }
+    ],
+    "notes": []
+  }
+}

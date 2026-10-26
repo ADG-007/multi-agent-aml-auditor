@@ -1,0 +1,25 @@
+{
+  "key": "74b7947154edca983f7ad8100728cdb9eef9e989238931ecfd7a209dbaf3c3ea",
+  "account_id": "ACC-0017",
+  "model": "llama3.1:8b-instruct-q4_K_M",
+  "prompt_version": "kyc-v2",
+  "seconds": 16.3,
+  "machine": "TufAdhithya",
+  "made_at": "2026-10-26T19:12:48",
+  "judgement": {
+    "level": "LOW",
+    "mismatches": [
+      {
+        "fact_id": "F2",
+        "profile_claim": "Expected activity is in the range of Rs 60,000 per month",
+        "why": "Money in over 90 days is slightly lower than expected, but still within the range of normal activity."
+      },
+      {
+        "fact_id": "F6",
+        "profile_claim": "mostly through digital channels",
+        "why": "A few cash deposits are within the normal range for a customer with declared income."
+      }
+    ],
+    "notes": []
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "key": "9786a31148252f9d6948cd017c5e0b60c6f032b79baaa72112f5a383d23da55f",
+  "account_id": "ACC-0075",
+  "model": "llama3.1:8b-instruct-q4_K_M",
+  "prompt_version": "kyc-v1",
+  "seconds": 31.3,
+  "machine": "TufAdhithya",
+  "made_at": "2026-10-22T13:52:14",
+  "judgement": {
+    "level": "MODERATE",
+    "mismatches": [
+      {
+        "fact_id": "F2",
+        "profile_claim": "Expected activity is in the range of Rs 56,250 per month",
+        "why": "Money in over 90 days is 1.0x the declared income, which is a moderate concern"
+      },
+      {
+        "fact_id": "F6",
+        "profile_claim": "No cash",
+        "why": "There are 3 cash deposits totalling ₹22,236, which is a moderate concern"
+      },
+      {
+        "fact_id": "F12",
+        "profile_claim": "No business use",
+        "why": "3 of 21 matched stranger credits were sent on within 12 hours, which is a moderate concern"
+      }
+    ],
+    "notes": [
+      "The customer's income is close to the expected activity, but slightly higher.",
+      "The customer has made some cash deposits, which could be for savings or other purposes.",
+      "The customer has sent money to strangers within a short time, which could be for business or personal reasons."
+    ]
+  }
+}

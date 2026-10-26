@@ -1,0 +1,14 @@
+{
+  "key": "63f4dba14745e38332477d3b0533195a2737a20841a8e23aa0dacc40441ec215",
+  "account_id": "ACC-0121",
+  "model": "llama3.1:8b-instruct-q4_K_M",
+  "prompt_version": "kyc-v2",
+  "seconds": 2.9,
+  "machine": "TufAdhithya",
+  "made_at": "2026-10-26T19:19:17",
+  "judgement": {
+    "level": "NONE",
+    "mismatches": [],
+    "notes": []
+  }
+}

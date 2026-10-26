@@ -1,0 +1,28 @@
+{
+  "key": "19e577995e9140a39c73eb2c93adc6b83de7b1c20c2ebf0a4b20b2b3988515ac",
+  "account_id": "ACC-0114",
+  "model": "llama3.1:8b-instruct-q4_K_M",
+  "prompt_version": "kyc-v2",
+  "seconds": 21.4,
+  "machine": "TufAdhithya",
+  "made_at": "2026-10-26T19:19:10",
+  "judgement": {
+    "level": "LOW",
+    "mismatches": [
+      {
+        "fact_id": "F1",
+        "profile_claim": "works as a freelance graphic designer",
+        "why": "The customer's occupation is declared as a freelancer, but the account activity shows a relatively low turnover compared to the declared income."
+      },
+      {
+        "fact_id": "F6",
+        "profile_claim": "no cash",
+        "why": "The customer's profile claims no cash, but there are 4 cash deposits totaling ₹28,148."
+      }
+    ],
+    "notes": [
+      "The customer's income is mostly digital, with only a few cash deposits and withdrawals.",
+      "The customer's occupation as a freelancer might explain the relatively low turnover."
+    ]
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "key": "cb5fc2da2c552e7038c2c1d7238840a4026b579ea4cd2e22f49da4b23f36518b",
+  "account_id": "ACC-0107",
+  "model": "llama3.1:8b-instruct-q4_K_M",
+  "prompt_version": "kyc-v2",
+  "seconds": 31.5,
+  "machine": "TufAdhithya",
+  "made_at": "2026-10-26T19:18:49",
+  "judgement": {
+    "level": "LOW",
+    "mismatches": [
+      {
+        "fact_id": "F4",
+        "profile_claim": "Expected activity is in the range of Rs 2.70 lakh per month across roughly 26 transactions, mostly through digital channels.",
+        "why": "Turnover is 1.8x the declared income, which is slightly above the expected range."
+      },
+      {
+        "fact_id": "F6",
+        "profile_claim": "Source of funds is stated as salary income.",
+        "why": "There are 7 cash deposits, which is a small oddity."
+      },
+      {
+        "fact_id": "F11",
+        "profile_claim": "Customer resides at the address on record in India.",
+        "why": "Velocity is slightly higher than expected, but not a significant concern."
+      }
+    ],
+    "notes": [
+      "The customer's occupation and income are consistent with the activity in the account.",
+      "The customer's profile does not rule out cash or business use, so the cash deposits are not a major concern."
+    ]
+  }
+}

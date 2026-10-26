@@ -1,0 +1,25 @@
+{
+  "key": "1a1a7fb696172a8eebf231a245c2fc2c28654aefc509704de8cefb40662b7f1a",
+  "account_id": "ACC-0044",
+  "model": "llama3.1:8b-instruct-q4_K_M",
+  "prompt_version": "kyc-v2",
+  "seconds": 19.6,
+  "machine": "TufAdhithya",
+  "made_at": "2026-10-26T19:14:47",
+  "judgement": {
+    "level": "HIGH",
+    "mismatches": [
+      {
+        "fact_id": "F2",
+        "profile_claim": "no business use whatsoever",
+        "why": "Money in over 90 days: ₹56,78,073 from 26 credits; scaled to a year ₹2,30,27,742 = 27.7x the declared income."
+      },
+      {
+        "fact_id": "F6",
+        "profile_claim": "no cash deposits would be made into the account at any point",
+        "why": "Cash deposits: 9, total ₹48,42,604, largest ₹9,88,329."
+      }
+    ],
+    "notes": []
+  }
+}
