@@ -1,4 +1,4 @@
-"""The answer-key label rule on EvidenceLedgerEntry (Amendment 3, A4)."""
+"""The answer-key label rule on EvidenceLedgerEntry."""
 
 import pytest
 

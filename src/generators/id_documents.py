@@ -1,23 +1,8 @@
-"""Generator 6 of 9 - rendered identity document images.
+"""ID card images for Stage 1's OCR: Aadhaar + PAN (domestic) or passport + PAN (NRI).
 
-Used exclusively by Stage 1, which OCRs these with Tesseract and cross-checks the extracted
-fields against the customer record. No vision model is involved anywhere in the pipeline.
-
-Two documents per customer, paired the way a real file is: a domestic customer submits
-Aadhaar plus PAN, an NRI submits passport plus PAN - two images per customer.
-
-Layouts follow the real documents' field sets and proportions - CR80 card geometry for
-Aadhaar and PAN, and a passport data page. The passport's machine-readable zone is left off:
-Tesseract cannot read it without a specialist OCR-B reader, Stage 1 reads the printed fields
-instead, and a zone nothing reads is decoration. Following phase_1_execution.md's
-calibration, the Aadhaar number carries no Verhoeff digit. Nothing downstream depends on it:
-forgery detection works from visual tampering and from field cross-checking, not from
-arithmetic on the number.
-
-The forged subset gets real visual tampering - a field re-rendered in the wrong typeface, a
-value overlaid slightly out of alignment, a patch of background painted over and rewritten -
-so that the image-forensic half of Stage 1's signal has something genuine to find. A
-text-only difference would let Stage 1 pass while doing none of the work it claims to.
+Real field sets and proportions. No passport MRZ, no Aadhaar checksum. Forged cards get
+visible tampering (patch and rewrite, typeface swap, misalignment) and a value that
+disagrees with the record.
 """
 
 from __future__ import annotations
@@ -59,13 +44,7 @@ _FONT_CACHE: dict[tuple[str, int], ImageFont.FreeTypeFont] = {}
 
 
 def load_font(style: str, size: int) -> ImageFont.FreeTypeFont:
-    """Resolve a font by style, falling back across platforms.
-
-    OCR accuracy depends directly on this: PIL's built-in bitmap font is tiny and renders
-    poorly, so a real TrueType face is worth searching for. If none is found the documents
-    still render, but Stage 1's extraction quality will suffer - which is why the
-    verification step reports which family was actually used.
-    """
+    """A TrueType font by style, across platforms (PIL's bitmap font hurts OCR)."""
     key = (style, size)
     if key in _FONT_CACHE:
         return _FONT_CACHE[key]
@@ -96,14 +75,7 @@ def resolved_font_family(style: str = "sans") -> str:
 
 
 def _photo_placeholder(image: Image.Image, box: tuple[int, int, int, int]) -> None:
-    """A neutral silhouette where a photograph would be.
-
-    Deliberately not a synthesised face: the document only needs the photo region to exist
-    so the layout is right and OCR is not confused by an empty rectangle.
-
-    Drawn on a tile the size of the frame and pasted in, so the shoulders are cut off at the
-    frame's edge the way a cropped photograph is, rather than spilling over the card below.
-    """
+    """A neutral silhouette in the photo frame (not a face), cropped at the frame's edge."""
     x0, y0, x1, y1 = box
     width, height = x1 - x0, y1 - y0
     tile = Image.new("RGB", (width, height), (226, 228, 232))
@@ -122,12 +94,7 @@ def _photo_placeholder(image: Image.Image, box: tuple[int, int, int, int]) -> No
 
 
 def _guilloche(draw: ImageDraw.ImageDraw, size: tuple[int, int], colour: tuple[int, int, int]) -> None:
-    """A faint repeating background pattern, standing in for a security print.
-
-    Its real job is to give the tampering something to disturb: painting a patch over this
-    pattern leaves a visible discontinuity, which is exactly the edge irregularity Stage 1's
-    image-forensic heuristic looks for.
-    """
+    """A faint security-print pattern, so a painted patch leaves a visible edge."""
     width, height = size
     for offset in range(-height, width, 26):
         draw.line((offset, 0, offset + height, height), fill=colour, width=1)
@@ -199,11 +166,7 @@ def render_aadhaar(customer: Customer, rng: random.Random) -> Image.Image:
     for row, line in enumerate(lines[:3]):
         draw.text((250, 408 + row * 22), line, font=address_font, fill=(40, 42, 46))
 
-    # The Aadhaar number sits in dark type on the light card body, immediately above the
-    # green band - which is where the real card prints it, and also the only way Tesseract
-    # reads it reliably. An earlier revision set it in white on the green footer; it looked
-    # right and OCR could not recover a single digit, which would have left Stage 1 unable to
-    # cross-check the one field that identifies the document.
+    # Dark type above the green band, as on the real card (white-on-green defeats OCR).
     number_font = load_font("sans_bold", 46)
     draw.text(
         (CARD_WIDTH // 2 - 200, CARD_HEIGHT - 148),
@@ -320,11 +283,7 @@ def render_passport(customer: Customer, rng: random.Random) -> Image.Image:
     return image
 
 
-#: Where each tamperable value actually sits on each layout: (x, y, width, height).
-#: Held as data rather than guessed at, because a patch drawn at the wrong offset leaves the
-#: original value legible and adds a second contradictory one beside it. That still produces
-#: a discrepancy Stage 1 would catch, but it is not a forgery - a forger who leaves the
-#: original date visible has not forged anything.
+#: Where each tamperable value sits per layout (x, y, w, h), so a patch covers the original.
 TAMPER_TARGETS: dict[str, dict[str, tuple[int, int, int, int]]] = {
     "AADHAAR": {
         "name": (248, 168, 480, 40),
@@ -348,23 +307,9 @@ def apply_tampering(
     document_type: str,
     rng: random.Random,
 ) -> tuple[Image.Image, list[str]]:
-    """Visibly alter a rendered document, the way a crude forgery actually looks.
+    """Tamper with a card like a crude forgery: patch and rewrite, typeface swap, misalignment.
 
-    Three techniques, two or three applied per document:
-
-      patch-and-rewrite  paint an opaque rectangle over a printed value and type a new one
-                         into it. The patch interrupts the background pattern, leaving the
-                         edge discontinuity an image-forensic check is meant to notice.
-      typeface swap      re-render one field in a different family and size from the rest of
-                         the card, which is the single most common giveaway on a real
-                         forgery.
-      misalignment       set a value a few pixels off the baseline its label sits on, so the
-                         field no longer lines up with its neighbours.
-
-    The rewritten values also disagree with the customer record, which is what gives Stage
-    1's OCR cross-check something to catch independently of the visual signal. Both halves
-    are present on purpose: either alone would let one half of the stage look effective
-    while doing nothing.
+    The rewritten value also disagrees with the record, so the OCR check has a real mismatch.
     """
     tampered = image.copy()
     draw = ImageDraw.Draw(tampered)
@@ -378,20 +323,12 @@ def apply_tampering(
         draw.rectangle((x, y, x + width, y + height), fill=background)
         return x, y, width, height
 
-    # The date-of-birth patch always applies, plus one or both of the other two. That
-    # guarantees every forged document carries both halves of Stage 1's signal: a field that
-    # disagrees with the customer record, and a visual artefact in the image. Leaving the
-    # patch optional would produce forgeries detectable only by image forensics, which is
-    # realistic but would make a weak forensic heuristic look like a false negative rather
-    # than like a weak heuristic. A visual-only variant is worth adding once Phase 5 has
-    # measured how well the forensic half actually performs.
+    # The DOB patch always applies, plus one or both others: a field mismatch and a visual mark.
     techniques = ["patch"] + rng.sample(["typeface", "misalign"], k=rng.choice((1, 2)))
 
     for technique in techniques:
         if technique == "patch":
-            # Paint out the printed date of birth and type a different one into the gap.
-            # The patch interrupts the background pattern, which is the edge discontinuity
-            # the image-forensic half of Stage 1 is meant to notice.
+            # Paint out the DOB and type a different one into the gap.
             x, y, _width, _height = blank("date_of_birth")
             year = customer.dob.year - rng.choice((3, 5, 7))
             # A 29 February birthday has no counterpart in a non-leap year; the 28th stands in.
@@ -437,17 +374,9 @@ def generate(
     forged_account_ids: set[str],
     seed: int = cfg.SEED,
 ) -> list[dict]:
-    """Render every document and write the manifest.
+    """Render every card and write the manifest (file, customer, type only: no forged flag).
 
-    The manifest deliberately records only which file belongs to which customer and what
-    kind of document it is. It carries no forged flag and no rendered field values: the
-    forged flag is ground truth and lives in the evidence ledger, and publishing the
-    rendered values would let Stage 1 skip OCR entirely and compare two records instead.
-
-    Each customer's documents draw from a stream keyed by that customer, so rendering can be
-    re-run by itself from the committed JSON and produce the same images - the images are
-    not committed, only the data they are drawn from - and a new customer never changes an
-    existing customer's cards.
+    Per-customer streams, so a re-render from the committed JSON gives the same images.
     """
     streams = Streams(seed)
     cfg.DOCUMENTS_DIR.mkdir(parents=True, exist_ok=True)
@@ -471,9 +400,7 @@ def generate(
         secondary_type = IdDocumentType.PAN
         secondary = render_pan(customer, pan, rng)
 
-        # Only the primary document is forged. A file where every document is tampered is
-        # not how a forgery presents - the point of submitting a forged OVD is that the rest
-        # of the file looks ordinary.
+        # Only the primary document is forged; the rest of the file looks ordinary.
         if is_forged_case:
             primary, _applied = apply_tampering(primary, customer, primary_type.value, rng)
 
@@ -497,12 +424,7 @@ def generate(
 
 
 def render_from_committed_data(seed: int = cfg.SEED) -> list[dict]:
-    """Re-render every image from the committed JSON, without re-running the other generators.
-
-    Which documents are forged comes from the evidence ledger. That is ground truth, and
-    reading it is correct here: this is the generator that planted the forgeries, not a
-    pipeline stage.
-    """
+    """Re-render every image from the committed JSON. Reads the ledger for the forged set."""
     from src.schemas import Account, EvidenceLedgerEntry
 
     def load(path, model):

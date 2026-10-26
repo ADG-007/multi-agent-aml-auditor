@@ -1,10 +1,4 @@
-"""Indian personal names.
-
-Faker's en_IN locale mixes about sixty Western first names (Wyatt, Liam, Theodore, ...) into
-its male list, which paired with an Indian surname produces names like "Wyatt Shroff" that no
-reader would accept as an Indian account holder. Every generator that needs an Indian name
-draws it through here, so the filter is applied in one place.
-"""
+"""Indian names: Faker en_IN with its Western first names (Wyatt, Liam ...) filtered out."""
 
 from __future__ import annotations
 

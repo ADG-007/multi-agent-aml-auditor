@@ -1,18 +1,7 @@
-"""Generator 5 of 9 - free-text KYC narratives.
+"""Free-text KYC profiles, written like a branch officer's record. Stage 3 reads them.
 
-The primary input to Stage 3, and a routing input to Stage 0.
-
-These are deliberately unstructured prose, written in the register a branch officer actually
-uses in an account-opening record. Stage 3's job is judging whether a human-written account
-of someone's life is plausible against what their account really does, and that judgement is
-only meaningful if the text reads like something a person wrote rather than a serialised
-dict.
-
-Narratives are built after transactions exist, so a clean profile can state a figure that
-genuinely matches the account's behaviour, and a planted mismatch can contradict it by a
-specific, checkable margin rather than vaguely.
-
-Each narrative draws from a stream keyed by its customer's id (streams.py).
+Built after transactions, so a clean profile states figures that fit and a planted mismatch
+contradicts them by a checkable margin. One stream per customer.
 """
 
 from __future__ import annotations
@@ -94,13 +83,7 @@ def _observed(transactions: list[Transaction]) -> dict:
 
 
 def _purpose_for(rng: random.Random, customer: Customer, account: Account) -> str:
-    """A stated purpose that fits the customer's occupation and account type.
-
-    A junior engineer whose savings account is described as collecting shop takings reads as
-    a mismatch in its own right. Since the mismatch channel is planted deliberately, a clean
-    profile has to be genuinely coherent, or Stage 3's false-positive rate is decided by this
-    function rather than by the model.
-    """
+    """An account purpose that fits the occupation and account type (clean means coherent)."""
     occupation = customer.occupation.lower()
     if customer.residency_status == ResidencyStatus.NRI:
         return rng.choice(NRI_PURPOSES)
@@ -132,11 +115,7 @@ def _foreign_line(
     is_round_trip_solo: bool,
     swift: list[tuple[Transaction, Counterparty]],
 ) -> str:
-    """The sentence a branch officer records about expected foreign activity.
-
-    A legitimate cross-border customer declares the activity up front - that declaration is
-    exactly what separates them from the typology they resemble, and what Stage 3 weighs.
-    """
+    """The declared foreign activity: what separates a legit cross-border customer."""
     if is_nri:
         return (
             " Overseas earnings are credited to the NRE account by inward remittance from "
@@ -252,12 +231,7 @@ def _merchant_narrative(
     account: Account,
     observed: dict,
 ) -> str:
-    """A small merchant who takes customer payments on a personal UPI ID.
-
-    Declared up front, as a branch officer would record it - that declaration, and the
-    supplier payments it describes, are what separate the business from a mule account
-    whose inflows look much the same.
-    """
+    """A small merchant taking payments on a personal UPI ID, declared up front."""
     fuel = "fuel" in customer.occupation.lower()
     business = "a retail fuel outlet" if fuel else "a roadside mobile phone and electronics shop"
     premises = "outlet" if fuel else "shop"
@@ -283,13 +257,8 @@ def _mismatch_narrative(
     observed: dict,
     cross_border: bool = False,
 ) -> str:
-    """A profile that contradicts the account's behaviour in a specific, checkable way.
-
-    Three shapes, all drawn from real KYC red flags rather than invented: an income that
-    cannot support the throughput, a stated purpose that excludes the activity actually
-    present, and an occupation that does not explain large cash handling. Each states a
-    concrete figure, so Stage 3 has something to disagree with rather than a vague vibe.
-    """
+    """A profile the money contradicts, with a concrete figure: income too low for the
+    throughput, a purpose that rules out the activity, or an occupation that explains no cash."""
     is_nri = customer.residency_status == ResidencyStatus.NRI
     opener = rng.choice(OPENERS)
     shape = "cross_border" if cross_border else rng.choice(("income", "purpose", "occupation"))
@@ -307,10 +276,7 @@ def _mismatch_narrative(
             f"them money."
         )
 
-    # The declared income is the one on the customer record. The contradiction lies in what
-    # the account actually moves - many times that income - never in the profile disagreeing
-    # with the record, which would let a plain number comparison flag every planted case
-    # without any judgement at all.
+    # Income matches the record; the money moved is what contradicts it.
     income = _lakh(customer.stated_income)
 
     if shape == "income":

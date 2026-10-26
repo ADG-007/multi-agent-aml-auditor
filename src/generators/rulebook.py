@@ -1,28 +1,8 @@
-"""Generator 8 of 9 - the policy rulebook, as markdown and as a ChromaDB collection.
+"""The rulebook: 24 clauses in 8 categories, as clauses.json, markdown and a ChromaDB index.
 
-Consumed by Stage 6 through retrieval, and by Stages 0 and 2 through a direct metadata
-lookup on STRUCT-001.
-
-Everything in the simulated bank is invented, but the rulebook's *content* is not: each
-clause paraphrases a real published source - the PMLA Maintenance of Records Rules, the RBI
-Master Direction on KYC, UAPA Section 51A, FEMA's Liberalised Remittance Scheme, and the
-FATF Recommendations. That single exception to the synthetic-data invariant is deliberate
-and recorded in MASTER_PLAN.md: a rulebook of invented rules would make every compliance
-citation meaningless, while inventing customers costs nothing.
-
-The clause text is paraphrase rather than transcription - the substance of each obligation
-in the register a bank's internal policy manual uses.
-
-Twenty-four clauses across eight categories: three each for the original six, two more
-cross-border clauses added with the round-tripping typology, two money-mule clauses added
-with the mule block (Amendment 2), and two suspicious-transaction clauses (Amendment 3) that
-give the non-cash rails their legal footing - structuring is a cash concept, because only
-cash (the CTR) and cross-border wires (the CBWTR) carry an amount-based report. The categories deliberately mirror what the evidence stages
-actually detect, so policy_gap_identified stays rare in practice rather than firing on every
-case because the rulebook never covered the finding.
-
-The rulebook is a fixed document: clauses are added when a scenario the data contains is not
-covered, never regenerated or reworded run to run.
+The one real part of the data: each clause paraphrases a real source (PMLA Rules, RBI KYC
+Master Direction, UAPA 51A, FEMA LRS, FATF). Stage 6 searches it. Stages 0 and 2 read
+thresholds from its metadata. The text is fixed, never reworded run to run.
 """
 
 from __future__ import annotations
@@ -39,13 +19,8 @@ COLLECTION_NAME = "rulebook"
 
 
 def build_clauses() -> list[RulebookClause]:
-    """The authored clause set.
-
-    Three clauses carry machine-readable metadata. XB-004 carries the cross-border wire
-    reporting threshold, MULE-002 the suspected-mule transaction floor. STRUCT-001 carries two numbers rather than one: the reporting
-    ceiling and the lower edge of the structuring band. Stage 0's routing check and Stage 2's confidence formula both read from here, so a
-    policy update injected at demo time moves both together and can never move only one.
-    """
+    """The clauses. Metadata: XB-004 wire threshold, MULE-002 mule floor, STRUCT-001 cash
+    threshold and band floor. Stages 0 and 2 both read them, so they always move together."""
     return [
         # ---------------------------------------------------------------- STRUCTURING ---
         RulebookClause(
@@ -499,12 +474,7 @@ def build_clauses() -> list[RulebookClause]:
 
 
 def write_markdown(clauses: list[RulebookClause]) -> None:
-    """Write one tagged markdown file per clause, plus a combined index.
-
-    A human-readable copy for browsing. The committed source of record is clauses.json
-    (the markdown files are gitignored with the rest of the project's markdown), and the
-    ChromaDB collection is rebuilt from that.
-    """
+    """One markdown file per clause plus an index, for reading (git-ignored)."""
     cfg.RULEBOOK_MARKDOWN_DIR.mkdir(parents=True, exist_ok=True)
 
     for clause in clauses:
@@ -539,12 +509,7 @@ def write_markdown(clauses: list[RulebookClause]) -> None:
 
 
 def write_json(clauses: list[RulebookClause]) -> None:
-    """Machine-readable clause set.
-
-    This is what Stages 0 and 2 read for the STRUCT-001 threshold lookup - parsing markdown
-    for a number that governs routing would be fragile in exactly the way a compliance
-    system cannot afford.
-    """
+    """clauses.json: the committed source of truth the stages read."""
     cfg.RULEBOOK_DIR.mkdir(parents=True, exist_ok=True)
     cfg.RULEBOOK_JSON_FILE.write_text(
         json.dumps([clause.model_dump(mode="json") for clause in clauses], indent=2),
@@ -553,16 +518,8 @@ def write_json(clauses: list[RulebookClause]) -> None:
 
 
 def embed(clauses: list[RulebookClause]) -> int:
-    """Embed one chunk per clause into a persistent ChromaDB collection.
-
-    One chunk per clause, matching the retrieval design in MASTER_PLAN.md Phase 8: clauses
-    are short and self-contained, so splitting them would return fragments that cannot be
-    cited as a whole clause.
-
-    Embeddings use ChromaDB's bundled local model rather than an API, which keeps the
-    pipeline runnable offline once the data is generated and adds no per-query cost. The
-    model file downloads once on first use and is cached thereafter.
-    """
+    """Embed one chunk per clause into ChromaDB, with its bundled local model (offline,
+    downloaded once)."""
     cfg.RULEBOOK_CHROMA_DIR.mkdir(parents=True, exist_ok=True)
     client = chromadb.PersistentClient(path=str(cfg.RULEBOOK_CHROMA_DIR))
 
@@ -571,10 +528,7 @@ def embed(clauses: list[RulebookClause]) -> int:
         client.delete_collection(COLLECTION_NAME)
     except Exception:
         pass
-    # Cosine space, not Chroma's default squared-L2. MASTER_PLAN.md Phase 8 specifies a
-    # cosine-distance cutoff for Stage 6 retrieval, and the distance metric is baked into the
-    # collection at creation time - so it has to be set here, in the data layer, rather than
-    # chosen later when the stage is written.
+    # Cosine space (Stage 6's cutoff is a cosine distance). Fixed at creation time.
     collection = client.create_collection(
         COLLECTION_NAME,
         metadata={"hnsw:space": "cosine"},
@@ -599,12 +553,7 @@ def embed(clauses: list[RulebookClause]) -> int:
 
 
 def rebuild_index() -> int:
-    """Rebuild only the ChromaDB index from the committed clauses.json.
-
-    The index is not committed - ChromaDB stamps internal ids and timestamps, so two builds
-    from identical clauses never produce identical bytes. clauses.json is the committed
-    source of truth; this rebuilds the searchable copy from it after a clone.
-    """
+    """Rebuild the ChromaDB index from clauses.json (the index is not committed: builds differ)."""
     raw = json.loads(cfg.RULEBOOK_JSON_FILE.read_text(encoding="utf-8"))
     return embed([RulebookClause.model_validate(item) for item in raw])
 

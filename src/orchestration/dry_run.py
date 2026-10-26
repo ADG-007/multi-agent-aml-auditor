@@ -3,17 +3,8 @@
     python -m src.orchestration.dry_run                  # all 370 accounts
     python -m src.orchestration.dry_run --account ACC-0001   # one case, printed in full
 
-Runs Phase 11's periodic-review mode (phase_2_execution.md): accounts in order of their
-earliest alerting transaction (ties by account id, accounts nothing alerted on last), each
-through Stage 0 -> the evidence stages (real where built, stubs otherwise) -> scoring ->
-report. Every report is written as one JSON line to
-outputs/phase2_dry_run.jsonl.
-
-Stage 2 runs for real since Phase 3; the other evidence stages are neutral stubs (RAN at 0.0).
-Those zeros stay in the weighted average (the dilution question, MASTER_PLAN Section 8 item
-12), so every verdict is still CLEAR - that is expected until more stages are real. The dry
-run proves routing and plumbing on the real bank; scoring correctness is proven by the tests.
-No model is called.
+One periodic review per account, in alert order, no re-screening rounds. Models off.
+Reports go to outputs/phase2_dry_run.jsonl.
 """
 
 from __future__ import annotations
@@ -38,11 +29,7 @@ DEFAULT_OUTPUT = Path("outputs") / "phase2_dry_run.jsonl"
 
 
 def review_order(ctx: TriageContext) -> list[str]:
-    """Accounts by earliest alerting transaction, then account id; no-alert accounts last.
-
-    Computed on a fresh RunState, so the order depends only on the bank's own data, never on
-    how earlier cases in this run turned out.
-    """
+    """Earliest alert first, then id, quiet accounts last. Depends only on the bank."""
     probe = RunState()
     keyed: list[tuple[int, datetime | None, str]] = []
     for account_id in ctx.bank.account_ids():

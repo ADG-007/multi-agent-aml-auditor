@@ -1,24 +1,8 @@
-"""Generator 7 of 9 - the entity graph.
+"""The entity graph (data/graph.graphml): accounts, devices, IPs, addresses, counterparties.
 
-Used exclusively by Stage 5, plus Stage 0's static known-bad identifier lookup, which is
-derived from this graph rather than traversing it (Stage 0 never runs graph algorithms).
-
-Five node types - accounts, devices, IPs, addresses and counterparties - with edges
-recording which account used which identifier and how often. The ring label never appears
-anywhere in this file. What a ring leaves behind is a set of accounts attached to the same
-device or address node, and Stage 5 has to find that shape itself.
-
-Counterparty nodes carry country and is_foreign. That is what makes the cross-border clause
-category reachable without adding a pipeline stage: Stage 5 reads the attribute off the
-node, and Stage 6 cites the relevant clause afterwards.
-
-Two additions make round-tripping visible. Each account-counterparty edge records money in
-and money out separately, so "sent to A" and "received from B" are distinguishable on the
-graph. And a foreign company's registered address is an address node, so two companies
-registered at the same premises share a neighbour - the loop account -> A -> address <- B ->
-account is then a path Stage 5 can find. Legitimate companies sharing a business-centre
-address produce the same shape, which is deliberate: the shared address is a lead, and the
-out-and-back money pattern is what separates a real loop from a coincidence.
+Edges record who used what, and how often. No ring label is stored: a ring is only accounts
+sharing a node. Account-counterparty edges keep money in and out apart, and a foreign
+company's registered address is a node, so round trips show as paths.
 """
 
 from __future__ import annotations
@@ -40,11 +24,7 @@ from src.schemas import (
 
 
 def _address_key(address: str) -> str:
-    """A stable node id for an address.
-
-    Normalised so that two accounts registered at the same premises land on one node -
-    whitespace and case differences must not split a genuinely shared address in two.
-    """
+    """A stable node id for an address (normalised, so case and spaces do not split it)."""
     normalised = " ".join(address.split()).lower()
     return f"ADDR::{normalised}"
 
@@ -84,10 +64,7 @@ def build(
         graph.add_edge(account.account_id, address_node, relation="RESIDES_AT", weight=1)
 
     # -----------------------------------------------------------------------------------
-    # Shared addresses that come from a planted ring or a legitimate cluster are registered
-    # explicitly. A ring re-registers accounts against one address without the customer
-    # records changing, so the edge has to be added here rather than inferred from
-    # customer.address.
+    # Shared ring / cluster addresses are added here (customer records do not change).
     # -----------------------------------------------------------------------------------
     shared_address_sources: list[tuple[list[str], str | None]] = [
         (ring.member_account_ids, ring.shared_address) for ring in fraud_rings
@@ -105,9 +82,7 @@ def build(
             graph.add_edge(account_id, address_node, relation="RESIDES_AT", weight=1)
 
     # -----------------------------------------------------------------------------------
-    # Device, IP and counterparty edges, weighted by how often each was used. Weight is what
-    # separates a customer's own handset from one they touched once, and Stage 5's
-    # shared-edge count is only meaningful if that difference survives into the graph.
+    # Device, IP and counterparty edges, weighted by use count (own phone vs touched once).
     # -----------------------------------------------------------------------------------
     device_use: dict[tuple[str, str], int] = defaultdict(int)
     ip_use: dict[tuple[str, str], int] = defaultdict(int)
@@ -170,33 +145,14 @@ def build(
 
 
 def write(graph: nx.Graph) -> None:
-    """Persist the graph as GraphML.
-
-    GraphML is chosen over a pickle because it is plain text, diffable in git and openable
-    in Gephi or yEd - which matters for a project whose central claim is auditability.
-    """
+    """Save as GraphML: plain text, diffable, opens in Gephi or yEd."""
     cfg.DATA_DIR.mkdir(parents=True, exist_ok=True)
     nx.write_graphml(graph, cfg.GRAPH_FILE)
 
 
 def known_bad_identifiers(graph: nx.Graph, plan) -> dict[str, list[str]]:
-    """Candidate contents for Stage 0's static known-bad lookup. NOT WRITTEN IN PHASE 1.
-
-    Stage 0 is explicitly forbidden from running graph algorithms - it is a cheap routing
-    check, not an analyst - so it needs a flat lookup rather than the graph itself.
-
-    This implementation derives that lookup from ring membership, which is a ground-truth
-    field, and that is exactly the problem: it would hand Stage 0 a perfect oracle for which
-    accounts to route, and Phase 11's recall would measure the planting plan rather than the
-    pipeline. Stage 0 only routes and never scores, so the leak is narrower than it first
-    looks, but it is still a leak.
-
-    Phase 2 owns Stage 0's routing table and therefore owns this decision. The honest
-    alternatives are to seed the lookup from a small hand-picked subset that does not cover
-    every ring, or to populate it from accounts already elevated in prior runs the way a
-    real bank's list accumulates. Left here, unused and uncalled, so the question is visible
-    when Phase 2 reaches it rather than being quietly answered now.
-    """
+    """Unused. It derives a known-bad list from ring membership (answer key), which would leak
+    the answers to Stage 0. The run's list is built from escalations instead (RunState)."""
     devices: set[str] = set()
     ips: set[str] = set()
     addresses: set[str] = set()

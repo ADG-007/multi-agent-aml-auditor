@@ -1,0 +1,316 @@
+{
+  "seed": 42,
+  "show_cases": {
+    "A": "ACC-0044",
+    "B": "ACC-0045",
+    "C": "ACC-0346",
+    "D": "ACC-0121",
+    "STAR": "ACC-0074"
+  },
+  "accounts": [
+    {
+      "account_id": "ACC-0003",
+      "kind": "trap",
+      "group": "Round amounts",
+      "expected": "CLEAR"
+    },
+    {
+      "account_id": "ACC-0004",
+      "kind": "bad",
+      "group": "Fake ID",
+      "expected": "MONITOR"
+    },
+    {
+      "account_id": "ACC-0007",
+      "kind": "trap",
+      "group": "Shared device by chance",
+      "expected": "CLEAR"
+    },
+    {
+      "account_id": "ACC-0008",
+      "kind": "bad",
+      "group": "Fake ID + KYC lie",
+      "expected": "MONITOR",
+      "ledger": "SUSPICIOUS-ESCALATE",
+      "why": "The ID check is never scored (invariant 2): after the admin approves, it adds nothing. Left: the KYC lie alone, and one stage never escalates alone."
+    },
+    {
+      "account_id": "ACC-0010",
+      "kind": "trap",
+      "group": "Name like a listed name",
+      "expected": "CLEAR"
+    },
+    {
+      "account_id": "ACC-0012",
+      "kind": "trap",
+      "group": "Shared device by chance",
+      "expected": "CLEAR"
+    },
+    {
+      "account_id": "ACC-0016",
+      "kind": "clean",
+      "group": "Clean",
+      "expected": "CLEAR"
+    },
+    {
+      "account_id": "ACC-0017",
+      "kind": "clean",
+      "group": "Clean",
+      "expected": "CLEAR"
+    },
+    {
+      "account_id": "ACC-0018",
+      "kind": "clean",
+      "group": "Clean",
+      "expected": "CLEAR"
+    },
+    {
+      "account_id": "ACC-0022",
+      "kind": "bad",
+      "group": "RING-01 news + ring",
+      "expected": "SUSPICIOUS-ESCALATE"
+    },
+    {
+      "account_id": "ACC-0025",
+      "kind": "trap",
+      "group": "Name like a listed name",
+      "expected": "CLEAR"
+    },
+    {
+      "account_id": "ACC-0034",
+      "kind": "bad",
+      "group": "Bad news",
+      "expected": "MONITOR"
+    },
+    {
+      "account_id": "ACC-0036",
+      "kind": "bad",
+      "group": "KYC lie",
+      "expected": "MONITOR"
+    },
+    {
+      "account_id": "ACC-0037",
+      "kind": "bad",
+      "group": "Structurer",
+      "expected": "MONITOR"
+    },
+    {
+      "account_id": "ACC-0044",
+      "kind": "bad",
+      "group": "Structurer + KYC lie",
+      "expected": "SUSPICIOUS-ESCALATE"
+    },
+    {
+      "account_id": "ACC-0045",
+      "kind": "bad",
+      "group": "RING-01 ring only",
+      "expected": "MONITOR"
+    },
+    {
+      "account_id": "ACC-0047",
+      "kind": "clean",
+      "group": "Clean",
+      "expected": "CLEAR"
+    },
+    {
+      "account_id": "ACC-0049",
+      "kind": "clean",
+      "group": "Clean",
+      "expected": "CLEAR"
+    },
+    {
+      "account_id": "ACC-0052",
+      "kind": "clean",
+      "group": "Clean",
+      "expected": "CLEAR"
+    },
+    {
+      "account_id": "ACC-0055",
+      "kind": "bad",
+      "group": "KYC lie",
+      "expected": "MONITOR"
+    },
+    {
+      "account_id": "ACC-0057",
+      "kind": "clean",
+      "group": "Clean",
+      "expected": "CLEAR"
+    },
+    {
+      "account_id": "ACC-0068",
+      "kind": "bad",
+      "group": "Structurer",
+      "expected": "MONITOR"
+    },
+    {
+      "account_id": "ACC-0074",
+      "kind": "bad",
+      "group": "Sanctions",
+      "expected": "SUSPICIOUS-ESCALATE"
+    },
+    {
+      "account_id": "ACC-0075",
+      "kind": "clean",
+      "group": "Clean",
+      "expected": "CLEAR"
+    },
+    {
+      "account_id": "ACC-0096",
+      "kind": "clean",
+      "group": "Clean",
+      "expected": "CLEAR"
+    },
+    {
+      "account_id": "ACC-0103",
+      "kind": "clean",
+      "group": "Clean",
+      "expected": "CLEAR"
+    },
+    {
+      "account_id": "ACC-0107",
+      "kind": "clean",
+      "group": "Clean",
+      "expected": "CLEAR"
+    },
+    {
+      "account_id": "ACC-0114",
+      "kind": "clean",
+      "group": "Clean",
+      "expected": "CLEAR"
+    },
+    {
+      "account_id": "ACC-0118",
+      "kind": "clean",
+      "group": "Clean",
+      "expected": "CLEAR"
+    },
+    {
+      "account_id": "ACC-0121",
+      "kind": "bad",
+      "group": "RING-01 ring + fake ID",
+      "expected": "MONITOR",
+      "ledger": "SUSPICIOUS-ESCALATE",
+      "why": "The ID check is never scored (invariant 2): after the admin approves, it adds nothing. Left: the ring link alone, as for ACC-0045."
+    },
+    {
+      "account_id": "ACC-0125",
+      "kind": "bad",
+      "group": "Structurer",
+      "expected": "MONITOR"
+    },
+    {
+      "account_id": "ACC-0133",
+      "kind": "clean",
+      "group": "Clean",
+      "expected": "CLEAR"
+    },
+    {
+      "account_id": "ACC-0154",
+      "kind": "bad",
+      "group": "RING-01 ring + structuring",
+      "expected": "SUSPICIOUS-ESCALATE"
+    },
+    {
+      "account_id": "ACC-0171",
+      "kind": "bad",
+      "group": "Sanctions",
+      "expected": "SUSPICIOUS-ESCALATE"
+    },
+    {
+      "account_id": "ACC-0199",
+      "kind": "clean",
+      "group": "Clean",
+      "expected": "CLEAR"
+    },
+    {
+      "account_id": "ACC-0231",
+      "kind": "clean",
+      "group": "Clean",
+      "expected": "CLEAR"
+    },
+    {
+      "account_id": "ACC-0246",
+      "kind": "clean",
+      "group": "Clean",
+      "expected": "CLEAR"
+    },
+    {
+      "account_id": "ACC-0255",
+      "kind": "clean",
+      "group": "Clean",
+      "expected": "CLEAR"
+    },
+    {
+      "account_id": "ACC-0271",
+      "kind": "clean",
+      "group": "Clean",
+      "expected": "CLEAR"
+    },
+    {
+      "account_id": "ACC-0279",
+      "kind": "clean",
+      "group": "Clean",
+      "expected": "CLEAR"
+    },
+    {
+      "account_id": "ACC-0292",
+      "kind": "clean",
+      "group": "Clean",
+      "expected": "CLEAR"
+    },
+    {
+      "account_id": "ACC-0301",
+      "kind": "trap",
+      "group": "Legit cross-border",
+      "expected": "CLEAR"
+    },
+    {
+      "account_id": "ACC-0345",
+      "kind": "trap",
+      "group": "Life event",
+      "expected": "CLEAR"
+    },
+    {
+      "account_id": "ACC-0346",
+      "kind": "trap",
+      "group": "Merchant lookalike",
+      "expected": "CLEAR"
+    },
+    {
+      "account_id": "ACC-0347",
+      "kind": "bad",
+      "group": "Mule ring RING-12",
+      "expected": "SUSPICIOUS-ESCALATE"
+    },
+    {
+      "account_id": "ACC-0350",
+      "kind": "trap",
+      "group": "Merchant lookalike",
+      "expected": "CLEAR"
+    },
+    {
+      "account_id": "ACC-0352",
+      "kind": "bad",
+      "group": "Solo mule",
+      "expected": "MONITOR"
+    },
+    {
+      "account_id": "ACC-0366",
+      "kind": "bad",
+      "group": "Mule ring RING-12",
+      "expected": "SUSPICIOUS-ESCALATE"
+    },
+    {
+      "account_id": "ACC-0367",
+      "kind": "bad",
+      "group": "Mule ring RING-12",
+      "expected": "SUSPICIOUS-ESCALATE"
+    },
+    {
+      "account_id": "ACC-0368",
+      "kind": "bad",
+      "group": "Mule ring RING-12",
+      "expected": "SUSPICIOUS-ESCALATE"
+    }
+  ]
+}

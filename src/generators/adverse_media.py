@@ -1,27 +1,8 @@
-"""Generator 4 of 9 - the adverse-media and sanctions corpus.
+"""The blacklist: 160 entries modelled on the UN consolidated list (name, aliases, DOB).
 
-The primary input to Stage 4, and a cheap pre-filter input to Stage 0.
-
-Modelled on the UN Security Council Consolidated List as India gives it effect through UAPA
-Section 51A notifications: each entry carries the entity name, a set of aliases, a date of
-birth where the subject is an individual, a listing date and a short narrative summary. The
-alias list is functional rather than decorative - alias matching is precisely what real
-sanctions screening uses to stop a subject slipping through under a variant spelling, and
-Stage 4's fuzzy matcher is meant to exercise it.
-
-Three tiers, and the distinction between them carries the entire false-positive test:
-  CONFIRMED_SANCTIONS  a designated party; a legal certainty
-  ADVERSE_NEWS         credible reporting of wrongdoing; real but not adjudicated
-  NAME_SIMILARITY_ONLY a name collision and nothing more; the decoy
-
-Phase 6 screens at a similarity of 85 for the first two tiers and a stricter 92 for the
-third, so the decoys here are built to sit just inside that stricter band - close enough to
-register as a hit, far enough to be discriminable.
-
-The corpus is a fixed external list. Its background names are screened against the founding
-population (config.CORPUS_SCREENED_BLOCKS) and every entry draws from a stream of its own, so
-it never changes when a block is added; a later block instead keeps its own customer and
-counterparty names clear of the corpus (clear_later_block_names).
+Tiers: CONFIRMED_SANCTIONS, ADVERSE_NEWS, NAME_SIMILARITY_ONLY (the decoy, built to land
+just inside Stage 4's stricter 92 cutoff). The list is fixed. Later population blocks keep
+their names clear of it (clear_later_block_names).
 """
 
 from __future__ import annotations
@@ -95,13 +76,7 @@ TRANSLITERATION_SWAPS = (
 
 
 def _similar(left: str, right: str) -> float:
-    """Cheap similarity proxy used at generation time only.
-
-    Stage 4 uses rapidfuzz token-sort-ratio; that package is a Phase 6 dependency and is not
-    needed here. difflib is close enough to keep a randomly generated background name from
-    accidentally colliding with a real customer, which would silently create an unplanted
-    adverse-media hit and corrupt the ground-truth labels.
-    """
+    """Cheap similarity (difflib), enough to keep a background name from hitting a customer."""
     return SequenceMatcher(None, left.lower(), right.lower()).ratio() * 100
 
 
@@ -124,12 +99,7 @@ def _aliases(rng: random.Random, name: str, count: int) -> list[str]:
 
 
 def _near_collision(rng: random.Random, name: str) -> str:
-    """A name close enough to trip a strict fuzzy matcher but not the same name.
-
-    A doubled letter or a single-character substitution inside a name of this length lands
-    in the low-to-mid nineties on a token-sort ratio, which is exactly the band Stage 4's
-    NAME_SIMILARITY_ONLY cutoff is meant to sit inside.
-    """
+    """A near-copy of a name (one letter doubled or swapped): scores in the low 90s."""
     parts = name.split()
     target_index = rng.randrange(len(parts))
     word = parts[target_index]
@@ -169,16 +139,10 @@ def generate(
     plan,
     counterparties: list[Counterparty],
 ) -> list[AdverseMediaEntry]:
-    """Build the 160-entry corpus.
-
-    Linked entries come first so that every planted adverse-media account is guaranteed a
-    matching record; decoys and background noise fill the rest.
-    """
+    """Build the 160 entries: linked ones first, then decoys and background names."""
     customer_by_account = {a.account_id: a.customer_id for a in accounts}
     customers_by_id = {c.customer_id: c for c in customers}
-    # Stage 4 screens counterparties as well as account holders, so a background name must
-    # stay clear of both - a counterparty colliding with a corpus entry would hand every
-    # account that pays it a hit nobody planted.
+    # Background names stay clear of customers and counterparties (Stage 4 screens both).
     screened_names = [c.name for c in customers if _founding(c.customer_id)] + [
         c.name for c in counterparties if _founding(c.counterparty_id)
     ]
@@ -194,9 +158,7 @@ def generate(
     today = cfg.REFERENCE_DATE
 
     # ---------------------------------------------------------------------------------
-    # Linked entries: one per planted actor, plus extra records for a subset of them.
-    # Real subjects rarely appear exactly once in a corpus, and a second entry under an
-    # alias is what makes Stage 4's alias handling worth having.
+    # Linked entries: one per planted actor, some with a second entry under an alias.
     # ---------------------------------------------------------------------------------
     real_hits = {
         account_id: tier
@@ -251,8 +213,7 @@ def generate(
         )
 
     # ---------------------------------------------------------------------------------
-    # Decoys: a near-collision with a clean customer's name, and nothing else. No linked
-    # actor, no supporting detail. These are what the false-positive rate is measured on.
+    # Decoys: a near-copy of a clean customer's name, nothing else.
     # ---------------------------------------------------------------------------------
     for account_id in sorted(plan.name_similarity_decoys):
         rng = streams.rng("adverse_media", "decoy", account_id)
@@ -271,9 +232,7 @@ def generate(
         )
 
     # ---------------------------------------------------------------------------------
-    # Background corpus. Names are checked against every customer and counterparty before
-    # being accepted: an accidental collision here would create an adverse-media hit nobody
-    # planted, and the ground-truth labels would silently stop matching the data.
+    # Background entries, each checked clear of every customer and counterparty.
     # ---------------------------------------------------------------------------------
     indian_so_far = len(entries)  # every entry above uses an Indian customer name
     indian_background = cfg.NUM_INDIAN_ENTITY_ENTRIES - indian_so_far
@@ -343,14 +302,9 @@ def clear_later_block_names(
     counterparties: list[Counterparty],
     transactions: list[Transaction],
 ) -> tuple[list[Customer], list[Counterparty], list[Transaction], int]:
-    """Rename any later-block customer or counterparty whose name sits near a corpus entry.
+    """Rename later-block names that sit near an entry, so no hit appears unplanted.
 
-    The corpus is fixed, so a block added after it has to stay out of its way: a mule-block
-    payer who happened to share a sanctioned person's name would hand that account a hit
-    nobody planted. A colliding name keeps its surname (so relatives still share one) and
-    redraws the first word from the entity's own stream until it is clear. Transactions carry
-    the counterparty's name too, so they are updated to match.
-
+    The surname stays, the first name is redrawn. Transactions are updated to match.
     Returns the updated lists and how many names changed.
     """
     corpus = [n.lower() for m in entries for n in [m.entity_name, *m.aliases]]

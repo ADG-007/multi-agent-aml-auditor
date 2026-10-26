@@ -1,34 +1,10 @@
-"""Generator 3 of 9 - 90 days of transaction history, and the counterparty pool.
+"""90 days of transactions and the counterparty pool.
 
-The primary input to Stage 2, and a reference input to Stages 0, 5 and 7.
-
-Amounts are constrained per payment rail rather than drawn from one global range, because
-the rails really are constrained in India: RTGS has a two-lakh floor, UPI a one-lakh per
-transaction ceiling, IMPS a five-lakh ceiling, ATM withdrawals a daily cap in the tens of
-thousands. Honouring those bounds costs nothing and means a reader cannot find a ninety-rupee
-RTGS or a fifteen-lakh UPI payment anywhere in the data.
-
-Every transaction carries a direction - CREDIT for money in, DEBIT for money out. Money that
-crosses the border moves only as a SWIFT wire, with the RBI purpose code the customer
-declared: an S-code on the way out, a P-code on the way in. Domestic rails never touch a
-foreign counterparty.
-
-Patterns planted here, all driven by the shared planting plan rather than decided locally:
-  - structuring: a burst of deposits parked just under the ten-lakh CTR threshold
-  - cross-border funnelling: international ring members repeatedly wiring one offshore cluster
-  - round-tripping: money wired to one foreign company comes back from a second company
-    registered at the same address
-  - unexplained inward money: foreign wires a modest earner's profile cannot account for
-and the legitimate look-alikes each one needs:
-  - benign round-amount clustering, against structuring
-  - NRIs' own remittances into their NRE accounts, family money sent home, university fees
-    and LRS gifts or investments abroad, against the cross-border typologies
-The mule block's flows - money-mule pass-through and its look-alikes - live in mules.py.
-
-Every account draws from a stream keyed by its own id, and transaction ids are built from
-each transaction's own posting time and account number (TXN-20260722-143512-0042) rather
-than a bank-wide serial, so appending a block of customers changes no existing transaction
-(streams.py).
+Amounts respect each rail's real limits (RTGS >= 2 lakh, UPI <= 1 lakh ...). Cross-border
+money moves only by SWIFT, with an RBI purpose code. Planted from the shared plan:
+structuring, cross-border funnelling, round-tripping, unexplained inward money, plus their
+look-alikes (round amounts, NRI remittances, family money, fees, LRS). Mule flows: mules.py.
+Ids come from posting time + account (TXN-20260722-143512-0042), so adding data renumbers nothing.
 """
 
 from __future__ import annotations
@@ -59,9 +35,7 @@ from src.schemas import (
 CREDIT = TransactionDirection.CREDIT
 DEBIT = TransactionDirection.DEBIT
 
-#: Per-rail amount bounds in INR, reflecting the real limits each rail operates under. SWIFT
-#: is absent on purpose: it is never chosen for ordinary domestic activity, and its amounts
-#: are set by the cross-border flow that uses it.
+#: Real per-rail amount bounds (INR). No SWIFT: never used for domestic activity.
 RAIL_BOUNDS: dict[TransactionType, tuple[int, int]] = {
     TransactionType.UPI: (500, 100_000),
     TransactionType.IMPS: (1_000, 500_000),
@@ -88,9 +62,7 @@ RAIL_WEIGHTS: dict[TransactionType, float] = {
     TransactionType.RTGS: 0.02,
 }
 
-#: Rails whose direction is fixed by what they are: a cash deposit is always money in, a
-#: withdrawal, an ATM draw or a card payment always money out. The transfer rails (UPI,
-#: IMPS, NEFT, RTGS, cheque) carry both, and their direction is set by _assign_directions.
+#: Rails with a fixed direction. Transfer rails get theirs from _assign_directions.
 FIXED_DIRECTION: dict[TransactionType, TransactionDirection] = {
     TransactionType.CASH_DEPOSIT: CREDIT,
     TransactionType.CASH_WITHDRAWAL: DEBIT,
@@ -98,10 +70,7 @@ FIXED_DIRECTION: dict[TransactionType, TransactionDirection] = {
     TransactionType.POS: DEBIT,
 }
 
-#: Rails a customer can initiate from their own phone or computer - mobile or net banking.
-#: A device and IP exist only on an outgoing transaction over one of these. Money coming in
-#: was initiated by the sender, on the sender's device; a branch teller, an ATM, a shop's card
-#: terminal or a paper cheque involves no customer device at all.
+#: Rails sent from the customer's own device. Only outgoing rows on these carry device / IP.
 DIGITAL_RAILS = frozenset(
     {
         TransactionType.UPI,
@@ -112,10 +81,7 @@ DIGITAL_RAILS = frozenset(
     }
 )
 
-#: Rails the planted structuring uses. Cash only (Amendment 3): structuring means splitting
-#: cash to stay under the CTR, and no other domestic rail carries an amount-based report
-#: (rulebook STR-002), so an in-band NEFT, RTGS or cheque payment avoids nothing. Kept as a
-#: weighted table so the draw sequence below stays the same shape.
+#: Planted structuring is cash only (only cash has an amount-based report).
 STRUCTURING_RAILS: tuple[tuple[TransactionType, float], ...] = (
     (TransactionType.CASH_DEPOSIT, 1.00),
 )
@@ -175,9 +141,7 @@ COMPANY_SUFFIX_BY_COUNTRY: dict[str, tuple[str, ...]] = {
     "United Kingdom": ("Ltd",),
 }
 
-#: Remittance providers the diaspora actually uses to send money home, one or two per NRI
-#: country. Gulf remittances overwhelmingly move through exchange houses; the legal-form
-#: suffix follows each country's convention. Names are invented.
+#: Invented remittance providers, one or two per NRI country.
 REMITTANCE_PROVIDERS: tuple[tuple[str, str], ...] = (
     ("Al Noor Exchange LLC", "United Arab Emirates"),
     ("Gulf Crescent Exchange LLC", "United Arab Emirates"),
@@ -207,9 +171,7 @@ BROKERAGES: tuple[tuple[str, str], ...] = (
     ("Meridian Securities LLC", "United States"),
 )
 
-#: Registered addresses shared by unrelated legitimate companies - the look-alike for a
-#: round-trip pair. A Dubai business centre or a Singapore office tower hosts many unrelated
-#: registrations, so two linked-looking foreign companies are a lead, not proof.
+#: Addresses shared by unrelated legit companies: the round-trip look-alike.
 SHARED_ADDRESS_DECOYS: tuple[tuple[str, ...], ...] = (
     ("Al Noor Exchange LLC", "Gulf Crescent Exchange LLC", "Crescent Wealth Brokerage FZE"),
     ("Straits Remittance Pte Ltd", "Harbourline Capital Pte Ltd"),
@@ -229,25 +191,15 @@ UNEXPLAINED_PAYER_JURISDICTIONS = (
 EDUCATION_COUNTRIES = ("United States", "United Kingdom", "Canada", "Australia")
 
 
-#: How far an account's annualised throughput may sit from the customer's declared income
-#: before the profile stops being defensible. Money flows both in and out, so turnover above
-#: income is entirely normal; an order of magnitude above it is not.
+#: Allowed spread of a clean account's yearly turnover around declared income.
 CLEAN_THROUGHPUT_MULTIPLE = (0.6, 2.5)
 
-#: What a planted KYC mismatch looks like: an account moving many times what its holder says
-#: they earn. Stage 3's judgement only means something if the gap is this unambiguous - a
-#: profile off by twenty percent is noise, not a finding.
+#: A planted KYC mismatch moves many times the declared income (unambiguous on purpose).
 MISMATCH_THROUGHPUT_MULTIPLE = (8.0, 25.0)
 
 
 def _rail_for_amount(rng: random.Random, amount: float) -> TransactionType:
-    """Pick a domestic payment rail that can actually carry this amount.
-
-    Amount is drawn first and the rail second, rather than the other way round, because the
-    account's total turnover has to track the customer's declared income - and that only
-    works if the amount is chosen against a throughput target. Picking the rail first would
-    let its bounds dictate the total.
-    """
+    """A domestic rail that can carry this amount (amount first, so turnover tracks income)."""
     candidates = {
         rail: RAIL_WEIGHTS[rail]
         for rail, (low, high) in RAIL_BOUNDS.items()
@@ -267,17 +219,8 @@ def _rail_for_amount(rng: random.Random, amount: float) -> TransactionType:
 
 
 def _avoid_structuring_band(rng: random.Random, amount: float) -> float:
-    """Keep ordinary activity out of the sub-threshold band.
-
-    Without this, a routine large transfer lands between nine and ten lakh often enough that
-    the band fills with innocent traffic and stops distinguishing anything. Real banks do see
-    incidental amounts there, but this is a labelled benchmark: an unplanted transaction in
-    the band would be an unlabelled positive, and Phase 11 would score the pipeline against
-    ground truth that does not describe the data.
-
-    The deliberate false positives come from the decoy types instead, where they are labelled
-    and measurable.
-    """
+    """Keep ordinary activity out of the ₹9–10 lakh band, so every in-band amount is planted
+    and labelled."""
     if cfg.STRUCTURING_BAND_LOW <= amount <= cfg.STRUCTURING_BAND_HIGH:
         if rng.random() < 0.5:
             return float(rng.randint(400_000, cfg.STRUCTURING_BAND_LOW - 1))
@@ -313,18 +256,8 @@ def _company_name(faker_intl: Faker, rng: random.Random, country: str) -> str:
 
 
 def generate_counterparties(streams: Streams) -> list[Counterparty]:
-    """The base pool every transaction draws its other side from.
-
-    Foreign counterparties are purpose-built rather than a generic pool, because every
-    foreign wire in the data belongs to a specific flow: the offshore cluster, a round-trip
-    pair, a remittance provider, a university, a brokerage, a relative abroad, or an
-    unexplained foreign payer. The reserved CPF block comes first, in the order rings.py
-    expects, so both generators agree on those IDs without either importing the other's
-    output.
-
-    This list is fixed: a later population block brings counterparties of its own rather
-    than drawing new ones here, so the base pool never changes.
-    """
+    """The fixed base counterparty pool. Each foreign party belongs to one flow. The reserved
+    ids come first, in the order rings.py expects."""
     rng = streams.rng("counterparties", "base")
     faker_in = Faker("en_IN")
     faker_intl = Faker("en_US")
@@ -344,11 +277,8 @@ def generate_counterparties(streams: Streams) -> list[Counterparty]:
             )
         )
 
-    # The offshore cluster the international rings funnel into. Companies in one
-    # jurisdiction share a registered address - a single formation agent's office, which is
-    # how shell companies set up together usually look.
-    # Sorted, not set order: Python randomises string hashing per process, so iterating the
-    # set directly drew these addresses in a different order from run to run.
+    # The offshore cluster: companies in one jurisdiction share one address. Sorted, since
+    # set order changes per process.
     cluster_addresses = {
         country: foreign_business_address(rng, country) for country in sorted(set(CLUSTER_JURISDICTIONS))
     }
@@ -409,13 +339,7 @@ def _account_identifiers(
     fraud_rings: list[FraudRing],
     coincidence_clusters: list[dict],
 ) -> dict[str, dict]:
-    """Assign each account its own devices and IPs, plus any shared ones.
-
-    An ordinary customer has one or two devices and a couple of IPs. A ring member also has
-    the ring's shared handset, and uses it often enough for the shared edge to be visible in
-    the graph without the account's own device disappearing. A mule network's handler runs
-    the rented accounts' banking themselves, so there the shared handset dominates.
-    """
+    """Each account's own devices and IPs, plus a ring's shared handset (dominant for mules)."""
     identifiers: dict[str, dict] = {}
     for account in accounts:
         rng = streams.rng("identifiers", account.account_id)
@@ -461,16 +385,8 @@ def _pick_device_ip(rng: random.Random, entry: dict) -> tuple[str, str]:
 
 
 def _assign_directions(pending: list[dict]) -> None:
-    """Set CREDIT or DEBIT on an account's ordinary activity, in place.
-
-    Cash deposits, withdrawals, ATM and card payments have a fixed direction. The transfer
-    rails carry both, and are assigned so that money in and money out stay roughly level
-    over the window - what an ordinary account looks like, where income arrives and is spent.
-    Largest transfers are placed first, each onto whichever side is currently lighter, which
-    tends to make the big transfers the credits (salary, client fees) and leaves the many
-    small ones as spending, as on a real statement. No randomness is used, so this adds
-    nothing to the shared random stream.
-    """
+    """Set CREDIT / DEBIT in place, keeping in and out roughly level. Largest transfers go
+    first onto the lighter side. No randomness."""
     totals = {CREDIT: 0.0, DEBIT: 0.0}
     flexible: list[dict] = []
     for row in pending:
@@ -499,24 +415,16 @@ def ordinary_rows(
     domestic_cps: list[Counterparty],
     is_round_decoy: bool = False,
 ) -> list[dict]:
-    """Everyday domestic activity spread across the 90 days, directions not yet assigned.
-
-    Shared with mules.py, so every account's everyday life is drawn the same way whatever
-    else is planted on top of it.
-    """
+    """Everyday activity over the 90 days, directions unset (shared with mules.py)."""
     window_start = cfg.REFERENCE_DATE - timedelta(days=cfg.HISTORY_DAYS)
     rows: list[dict] = []
     for _ in range(count):
-        # Transaction sizes are heavily right-skewed in real accounts - many small payments
-        # and a few large ones - so a lognormal draw around the mean fits far better than a
-        # uniform one.
+        # Lognormal: many small payments, a few large ones.
         amount = mean_amount * rng.lognormvariate(-0.3, 0.75)
         amount = min(max(amount, 500.0), 2_500_000.0)
 
         if is_round_decoy and rng.random() < 0.55:
-            # The benign round-amount decoy: a shopkeeper banking takings in neat figures.
-            # Round, repetitive and entirely legitimate - and well below the structuring
-            # band, which is the only thing separating it from a real case.
+            # Round-amount decoy: neat takings, well below the structuring band.
             amount = float(min(cfg.ROUND_AMOUNTS, key=lambda value: abs(value - amount)))
         elif rng.random() < 0.18:
             # Everyone transacts at round figures sometimes.
@@ -530,13 +438,8 @@ def ordinary_rows(
 
 
 def _transaction_id(txn: Transaction, clash: int) -> str:
-    """TXN-<posting date>-<posting time>-<account number>, e.g. TXN-20260722-143512-0042.
-
-    Built only from the transaction's own posting time and account, the way a real payment
-    reference encodes its date and time (a UPI reference number opens with the year, day of
-    year and hour), so ids still sort bank-wide in time order - and adding customers never
-    renumbers anyone else's. `clash` numbers a second posting by one account in one second.
-    """
+    """TXN-<date>-<time>-<account>, e.g. TXN-20260722-143512-0042. Sorts in time order.
+    `clash` numbers a second posting by one account in one second."""
     stamp = txn.timestamp.strftime("%Y%m%d-%H%M%S")
     suffix = f"-{clash}" if clash > 1 else ""
     return f"TXN-{stamp}-{txn.account_id.split('-')[1]}{suffix}"
@@ -549,11 +452,7 @@ def generate(
     fraud_rings: list[FraudRing],
     plan,
 ) -> tuple[list[Transaction], list[Counterparty]]:
-    """Build the full transaction history for every account.
-
-    `plan` is the PlantingPlan from evidence_ledger; it is typed loosely here only to avoid
-    a circular import between the two generator modules.
-    """
+    """Every account's history. `plan` is a PlantingPlan (typed loosely: circular import)."""
     # Imported here: mules.py builds on this module's helpers.
     from src.generators import mules as mules_module
 
@@ -659,9 +558,7 @@ def generate(
         # activity stays at a clean level rather than being inflated as well.
         inflate = account_id in plan.kyc_mismatch and account_id not in plan.cross_border_mismatch
 
-        # An account's turnover is anchored to what its holder says they earn. Without this
-        # anchor a clean account could plausibly move twenty times its declared income, and
-        # the KYC-mismatch channel would be indistinguishable from ordinary variation.
+        # Turnover anchored to declared income, so a KYC mismatch stands out.
         low_mult, high_mult = MISMATCH_THROUGHPUT_MULTIPLE if inflate else CLEAN_THROUGHPUT_MULTIPLE
         annual_target = income * rng.uniform(low_mult, high_mult)
         window_target = annual_target * (cfg.HISTORY_DAYS / 365)
@@ -674,10 +571,7 @@ def generate(
         _assign_directions(ordinary)
 
         # ---------------------------------------------------------------------------
-        # Planted structuring: a cluster of deposits just under the CTR threshold, inside
-        # a single 30-day window. Rule 3 aggregates integrally connected cash transactions
-        # over a month, so a month is the window a real analyst would look at. Always money
-        # in, always from domestic sources.
+        # Planted structuring: cash deposits just under the CTR line, in one 30-day window.
         # ---------------------------------------------------------------------------
         if is_structuring:
             burst_start = rng.randint(0, cfg.HISTORY_DAYS - cfg.STRUCTURING_WINDOW_DAYS)
@@ -697,9 +591,7 @@ def generate(
                 planted.append(row(amount, txn_type, day, rng.choice(domestic_cps), CREDIT))
 
         # ---------------------------------------------------------------------------
-        # NRIs: overseas earnings wired into the NRE account through a remittance provider
-        # in their country of residence - the ordinary cross-border traffic every other
-        # cross-border signal has to stand out from.
+        # NRIs: overseas earnings wired in through a remittance provider (normal traffic).
         # ---------------------------------------------------------------------------
         if is_nri:
             providers = providers_by_country.get(customer.country) or [by_name[REMITTANCE_PROVIDERS[0][0]]]
@@ -709,9 +601,7 @@ def generate(
                 planted.append(row(amount, TransactionType.SWIFT, day, rng.choice(providers), CREDIT, "P0014"))
 
         # ---------------------------------------------------------------------------
-        # Cross-border funnelling: international ring members wire the same small offshore
-        # cluster again and again. Stage 5 sees a shared foreign counterparty cluster, and
-        # Stage 6 cites the cross-border clause category afterwards.
+        # Cross-border funnelling: ring members wire the same offshore cluster again and again.
         # ---------------------------------------------------------------------------
         if account_id in international_ring_members:
             for _ in range(rng.randint(5, 12)):
@@ -723,10 +613,8 @@ def generate(
                 planted.append(row(amount, TransactionType.SWIFT, day, rng.choice(cluster_cps), DEBIT, purpose))
 
         # ---------------------------------------------------------------------------
-        # Round-tripping. A core member wires money to company A and, two to four weeks
-        # later, receives nearly the same amount back from company B - registered at A's
-        # address - declared as consultancy income, a loan or a gift. The ring's solo member
-        # only sends money out: the one placing funds into the scheme.
+        # Round-tripping: out to company A, back 2-4 weeks later from B at A's address.
+        # The solo member only sends money out.
         # ---------------------------------------------------------------------------
         if account_id in round_trip_pair_of:
             outbound, returning = round_trip_pair_of[account_id]
@@ -836,10 +724,7 @@ def _finish_account(
         if not (item["direction"] == DEBIT and item["type"] in DIGITAL_RAILS):
             item["device_id"] = item["ip_address"] = None
 
-    # A ring member or household look-alike must actually show the shared phone. With
-    # phones recorded only on payments the customer sent, an account that sends few of
-    # them could otherwise miss it by chance, and the ring would silently lose a member
-    # in the graph. The earliest sent payment is moved onto the shared phone if needed.
+    # Make sure every ring / household member shows the shared phone at least once.
     if entry["shared_device"]:
         sent = sorted((r for r in rows if r["device_id"]), key=lambda r: r["timestamp"])
         if sent and not any(r["device_id"] == entry["shared_device"] for r in sent):

@@ -2,14 +2,9 @@
 
     python -m src.evaluation.stage0_coverage
 
-The only Phase 2 code that reads data/_ground_truth/. It runs Stage 0 in periodic-review mode
-over every account (fresh run memory, so the known-bad list is empty, as at the start of any
-run), then joins the routes with the evidence ledger. Pipeline code never imports this module.
-
-Each evidence channel is checked against the stage that can actually see it. Hard checks are
-only the numbers accepted at Phase 2's kickoff (phase_2_execution.md D12); everything else is
-reported, not judged - including ring members that only Phase 11's re-screening rounds reach.
-Exits non-zero if a hard check fails.
+Runs Stage 0 on every account with fresh run memory and joins the routes with the ledger.
+Each evidence channel is checked against the stage that can see it. A few hard checks fail
+the run (exit non-zero); the rest is reported. Evaluation only.
 """
 
 from __future__ import annotations
@@ -104,7 +99,7 @@ def measure(bank: BankData, ledger: list[EvidenceLedgerEntry]) -> Coverage:
         beyond = sum(bool(routes[e.account_id] & weighted_beyond_kyc) for e in group)
         lines.append(f"  {label:<16} {len(group):>4} accounts, {beyond:>3} reached")
 
-    # Ring members only Phase 11's re-screening can reach
+    # Ring members only the batch's re-screening rounds can reach
     ring_gap = [
         e
         for e in ledger
@@ -113,7 +108,7 @@ def measure(bank: BankData, ledger: list[EvidenceLedgerEntry]) -> Coverage:
     lines += [
         "",
         f"  Reported gap: {len(ring_gap)} ring-only accounts are not routed to Graph on a first "
-        "pass; Phase 11's re-screening rounds reach them through the known-bad list.",
+        "pass; the batch's re-screening rounds reach them through the known-bad list.",
     ]
 
     # Decoys
@@ -134,7 +129,7 @@ def measure(bank: BankData, ledger: list[EvidenceLedgerEntry]) -> Coverage:
             n = sum(bool(routes[e.account_id] & weighted_beyond_kyc) for e in group)
             lines.append(f"  {decoy:<24} {n:>3} of {total:<3} routed beyond the KYC review")
 
-    # Name-similarity decoys under the real matcher (MASTER_PLAN Section 8, item 10)
+    # Name-similarity decoys under the real matcher
     scores = []
     for e in ledger:
         if "name_similarity" in e.decoy_types:
@@ -150,7 +145,7 @@ def measure(bank: BankData, ledger: list[EvidenceLedgerEntry]) -> Coverage:
         f"{sum(s == 100 for s in scores)} identical to the customer's name",
     ]
 
-    # Hard checks (D12)
+    # Hard checks
     structuring_reached, structuring_planted = reached_by["structuring"]
     if structuring_reached != structuring_planted:
         failures.append(
@@ -164,7 +159,7 @@ def measure(bank: BankData, ledger: list[EvidenceLedgerEntry]) -> Coverage:
     if missing_review:
         failures.append(f"{len(missing_review)} accounts not routed to KYC and Vision")
 
-    lines += ["", "  Hard checks (phase_2_execution.md D12)"]
+    lines += ["", "  Hard checks"]
     lines.append(
         f"  {'PASS' if structuring_reached == structuring_planted else 'FAIL'}  "
         f"structuring {structuring_reached}/{structuring_planted} -> TransactionPattern"

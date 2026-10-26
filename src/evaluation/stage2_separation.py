@@ -2,22 +2,11 @@
 
     python -m src.evaluation.stage2_separation
 
-Reads the subset saved by `stage2_subset` (Stage 2's slots plus the shared linked set), runs
-Stage 2 on each account at the bank's review date, and prints one row per account: slot,
-structuring sub-score, pass-through sub-score, confidence and the band the answer key expects.
-Only the subset is run (decisions_and_progress.md Part 11); the full 370-account evaluation
-happens once, in Phase 11.
+Runs Stage 2 on the saved subset and prints slot, sub-scores, confidence and expected band.
 
-Hard checks (phase_3_execution.md step 8, from Q7), applied to every subset account by its
-answer-key role, slotted or shared:
-
-- every structurer and every network or solo mule scores at least 0.40;
-- every round-amount, merchant look-alike, life-event and legitimate cross-border decoy scores
-  below 0.40.
-
-Reported only: complicit merchants' scores (their path is Graph's collector link, Phase 7), how
-many subset accounts reach 0.75, and the shared set's scores. Exits non-zero if a hard check
-fails. Pipeline code never imports this module.
+Hard checks (exit non-zero on failure): every structurer and mule scores >= 0.40, every
+round-amount, merchant, life-event and legit cross-border decoy scores < 0.40.
+Evaluation only.
 """
 
 from __future__ import annotations
@@ -32,7 +21,7 @@ from src.stages.stage0_triage import TriageContext
 from src.stages.stage2_transaction_pattern import pass_through, run, structuring
 
 
-#: The Q7 line between "Stage 2 sees it" and "Stage 2 clears it".
+#: The line between "Stage 2 sees it" and "Stage 2 clears it".
 SEPARATION_LINE = 0.40
 #: A clear-cut case reaches this (reported only).
 CLEAR_CUT = 0.75
@@ -117,7 +106,7 @@ def measure(ctx: TriageContext, subsets: dict[str, list], truth: dict[str, Truth
         for r in rows
         if not r.passes
     ]
-    lines += ["", "  Hard checks (phase_3_execution.md step 8, Q7)"]
+    lines += ["", "  Hard checks"]
     for label, group in (
         (f"structurers and network/solo mules >= {SEPARATION_LINE:.2f}", reach),
         (

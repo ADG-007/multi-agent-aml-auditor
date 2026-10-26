@@ -2,27 +2,9 @@
 
     python -m src.generators
 
-The order is not arbitrary. Customers come first because every other artefact keys off a
-customer or account id. Rings come next because ring membership is one of the five evidence
-channels and has to be settled before the planting plan is drawn. The plan itself is then
-fixed once, and every generator downstream reads it rather than deciding independently -
-which is what keeps a structuring case in the transaction data and a structuring row in the
-ledger describing the same account.
-
-The adverse-media corpus is built straight after the transactions, because it is fixed
-against the founding population and every later block's customer and counterparty names are
-then cleared against it before anything else - KYC narratives, document images, the graph -
-uses them.
-
-Every random choice comes from an isolated stream keyed by what it is for (streams.py), so a
-population block can be appended at any phase without changing existing data.
-`--exclude-block` generates without a block, which is how that guarantee is checked.
-
-Output lands in data/, and the JSON is committed to the repository rather than regenerated
-per run. That is deliberate: a library version change in a different environment would
-otherwise shift the data underneath the ground-truth labels without anything appearing to
-break. The two binary outputs are the exception - the document images and the rulebook's
-search index are rebuilt locally from the committed JSON:
+Order: customers -> rings -> planting plan -> transactions -> blacklist -> the rest, so every
+generator reads one plan. `--exclude-block` checks that adding a block changes nothing else.
+The JSON in data/ is committed. Rebuild the images and the search index locally:
 
     python -m src.generators.id_documents
     python -m src.generators.rulebook

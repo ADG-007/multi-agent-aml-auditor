@@ -1,24 +1,9 @@
-"""Generator 2 of 9 - fraud ring definitions.
+"""The 13 fraud rings (answer key): 6 local, 2 international, 3 round-trip, 2 mule networks.
 
-No pipeline stage ever reads this file. It shapes what transactions.py and graph.py emit,
-and Stage 5 has to rediscover the cluster from graph topology alone. That separation is the
-whole point: if the ring label reached the graph, Stage 5 would be reading the answer rather
-than finding it, and Phase 11's per-stage recall number would mean nothing.
-
-Thirteen rings: six local, two international, three round-trip and two mule networks. A
-ring is a set of accounts sharing an identifier with no legitimate reason to share one - the
-same handset, the same broadband connection, sometimes the same registered address.
-
-A round-trip ring sends money abroad to one foreign company and receives it back from a
-second one registered at the same premises, so that the return looks like unrelated foreign
-income. Its members come from the cross-border block in customers.py.
-
-A mule network is four rented accounts operated from the handler's phone, each sweeping scam
-victims' money into one shared collector account. Its members come from the mule block.
-
-Each ring draws from a stream keyed by its own id, and each pool of candidate members is
-shuffled from a stream keyed by the pool - which only ever holds its own population block -
-so a new block never reshuffles who is in an existing ring (streams.py).
+A ring = accounts sharing a device, connection or address for no good reason. No stage reads
+this file: Stage 5 must find the shape in the graph. Round-trip rings send money abroad and
+get it back via a second company at the same address. Mule networks share one phone and one
+collector. Each ring has its own stream.
 """
 
 from __future__ import annotations
@@ -29,16 +14,12 @@ from src.generators.identifiers import device_id, ip_address
 from src.generators.streams import Streams, opaque_id
 from src.schemas import Account, Customer, FraudRing, ResidencyStatus, RingType
 
-#: Reserved counterparty IDs for the offshore cluster the international rings funnel into.
-#: transactions.py guarantees these exist as foreign counterparties, so both generators
-#: agree on the cluster without either one importing the other's output.
+#: Reserved ids for the offshore cluster (transactions.py creates them).
 FOREIGN_RING_CLUSTER_IDS: tuple[str, ...] = tuple(
     f"CPF-{i + 1:04d}" for i in range(cfg.FOREIGN_RING_CLUSTER_SIZE)
 )
 
-#: Reserved counterparty IDs for the round-trip rings: one (outbound, return) pair per ring,
-#: each pair registered at the same foreign address. Numbered straight after the offshore
-#: cluster so transactions.py can create them in a fixed position.
+#: Reserved (outbound, return) pairs for the round-trip rings, one shared address each.
 ROUND_TRIP_ENTITY_PAIRS: tuple[tuple[str, str], ...] = tuple(
     (
         f"CPF-{cfg.FOREIGN_RING_CLUSTER_SIZE + 2 * i + 1:04d}",
@@ -47,11 +28,7 @@ ROUND_TRIP_ENTITY_PAIRS: tuple[tuple[str, str], ...] = tuple(
     for i in range(cfg.NUM_ROUND_TRIP_RINGS)
 )
 
-#: Reserved counterparty IDs for the mule block's collectors: the accounts victims' money is
-#: swept into. One per mule network, then one per solo mule. A collector sits at another
-#: bank, so from this bank it is only ever a counterparty - the single-institution limit.
-#: Opaque, like every mule-block counterparty id: a readable "collector" id would hand the
-#: answer to any stage that looked at it.
+#: Reserved opaque ids for the collectors (one per network, then per solo mule).
 MULE_NETWORK_COLLECTOR_IDS: tuple[str, ...] = tuple(
     opaque_id("CPM", "collector", "network", i) for i in range(cfg.NUM_MULE_RINGS)
 )
@@ -59,9 +36,7 @@ SOLO_MULE_COLLECTOR_IDS: tuple[str, ...] = tuple(
     opaque_id("CPM", "collector", "solo", i) for i in range(dict(cfg.MULE_BLOCK_COHORTS)["solo_mule"])
 )
 
-#: Addresses a ring re-registers several accounts against. Deliberately mundane commercial
-#: premises - a shared address is only suspicious because of who shares it, and a
-#: conspicuous address would hand Stage 5 the answer for the wrong reason.
+#: Mundane commercial addresses rings share (only who shares them is suspicious).
 RING_SHARED_ADDRESSES = (
     "Shop 14, Ganesh Complex, MG Road, Pune, Maharashtra 411001",
     "2nd Floor, Sai Arcade, Old Madras Road, Bengaluru, Karnataka 560016",
@@ -80,14 +55,8 @@ def generate(
     accounts: list[Account],
     cohorts: dict[str, str],
 ) -> list[FraudRing]:
-    """Assemble the rings and assign their members.
-
-    International rings are seeded preferentially from NRI accounts, because a cross-border
-    funnel run entirely through resident accounts would be an odd shape for the cross-border
-    clause category to cite. Local rings draw from base domestic accounts, round-trip rings
-    from the cross-border block's round_trip cohort, and mule networks from the mule block's
-    network_mule cohort.
-    """
+    """Build the rings: international from NRIs, local from base domestic accounts, round-trip
+    and mule rings from their own blocks."""
     residency_by_customer = {c.customer_id: c.residency_status for c in customers}
     domestic_accounts = [
         a.account_id
@@ -127,9 +96,7 @@ def generate(
         # meant to weight most heavily, so it is the one signal present in every ring.
         shared_device = device_id(rng)
 
-        # Roughly half also share a connection, and a quarter also share a registered
-        # address. Varying this matters: a ring that shares all three every time would let
-        # Stage 5 succeed on a single rule instead of on topology.
+        # About half also share an IP, a quarter an address, so no single rule finds them all.
         shared_ip = ip_address(rng) if rng.random() < 0.55 else None
         shared_address = RING_SHARED_ADDRESSES[index] if rng.random() < 0.30 else None
 
@@ -166,10 +133,7 @@ def generate(
             )
         )
 
-    # Mule networks. The handler runs every rented account's mobile banking from their own
-    # phone, so the shared handset is the network's hard identifier, exactly as in the other
-    # rings. What sets a mule network apart is where its money goes: every member sweeps
-    # into the same collector. Skipped when the mule block is not being generated.
+    # Mule networks: one handler phone, one shared collector. Skipped without the mule block.
     mule_pool = sorted(a for a, cohort in cohorts.items() if cohort == "network_mule")
     streams.rng("rings", "pool", "network_mule").shuffle(mule_pool)
     first_mule_ring = cfg.NUM_LOCAL_RINGS + cfg.NUM_INTERNATIONAL_RINGS + cfg.NUM_ROUND_TRIP_RINGS
@@ -198,13 +162,8 @@ def generate_coincidence_clusters(
     accounts: list[Account],
     ring_member_ids: set[str],
 ) -> list[dict]:
-    """Legitimate shared-identifier clusters - the graph false-positive decoy.
-
-    A married couple on one handset, or two small traders in one shop sharing a broadband
-    line, produce exactly the topology a ring does. Phase 11 measures the false-positive
-    rate against these, so they have to be genuinely indistinguishable at the graph level
-    and separated only by the absence of any other planted channel.
-    """
+    """Legit shared-identifier clusters (a couple on one phone, traders on one line): decoys
+    that look exactly like a ring in the graph."""
     available = [a.account_id for a in accounts if a.account_id not in ring_member_ids]
     streams.rng("coincidence", "pool").shuffle(available)
 
@@ -219,9 +178,7 @@ def generate_coincidence_clusters(
                 "member_account_ids": pair,
                 "shared_device_id": device_id(rng),
                 "shared_ip_address": ip_address(rng),
-                # Half are a household (shared address too), half a shared business line. A
-                # household's address is a home of its own, never one of the rings' premises -
-                # reusing those would wire an innocent couple straight into a real ring.
+                # Half households (own home address), half a shared business line.
                 "shared_address": indian_address(rng) if share_address else None,
                 "reason": "household" if share_address else "shared business premises",
             }

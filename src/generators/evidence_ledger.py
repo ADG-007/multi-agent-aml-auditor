@@ -1,27 +1,9 @@
-"""Generator 9 of 9 - the hidden ground-truth record, and the planting plan behind it.
+"""The planting plan and the answer-key ledger (data/_ground_truth/).
 
-Two responsibilities that belong together:
-
-`build_planting_plan` decides, once and deterministically, which accounts get which evidence
-channels. Every other generator reads that decision rather than making its own, which is
-what keeps the six channels consistent - an account marked as a structuring case gets the
-sub-threshold deposits in transactions.py, and the same account is what the ledger records.
-Letting each generator plant independently would eventually drift, and the drift would show
-up as unexplainable Phase 11 metrics rather than as an obvious bug.
-
-`write` then emits the ledger itself, into data/_ground_truth/. Nothing under that path may
-be read by a pipeline stage at inference time. It exists solely as the input to Phase 11's
-label-derivation rule, which is written independently of the scoring formula so that
-evaluation is not simply the scoring engine grading its own homework.
-
-Planting density follows phase_1_execution.md: about 10% of accounts carry two or more real
-channels (escalate-worthy), about 20% carry exactly one (monitor-worthy), and the remaining
-70% carry none - though a good number of those still carry a deliberate decoy, which is what
-makes the false-positive rate measurable.
-
-The base population is planted from a stream of its own and from pools that never contain a
-later block, and each later block plants its own cases. That is what lets a block be added at
-any phase without moving a single existing label (streams.py).
+`build_planting_plan` decides once which accounts get which channels. Every generator reads
+it, so the data and the ledger always agree. `write` saves the ledger, which no stage reads.
+About 10% of accounts carry 2+ channels, 20% one, 70% none (many of those carry a decoy).
+Each block plants from its own stream, so adding a block moves no existing label.
 """
 
 from __future__ import annotations
@@ -40,9 +22,7 @@ CROSS_BORDER_DECOY_COHORTS = frozenset({"family_inward", "education_outward", "l
 #: Mule-block cohorts that carry the pass-through channel.
 PASS_THROUGH_COHORTS = frozenset({"network_mule", "solo_mule", "complicit_merchant"})
 
-#: The legitimate life events, dealt out across the life_event cohort in this order. Each is
-#: one sudden spike an ordinary customer can have for a perfectly good reason, and each looks
-#: like pass-through for a few days:
+#: Legitimate one-off spikes for the life_event cohort, dealt in this order:
 #:   moneylender_payoff  relatives chip in over a day or two; the lot goes to one lender
 #:   medical_emergency   relatives send money; it goes to a hospital within hours
 #:   windfall            one large receipt (a share of a land sale) spread to new payees
@@ -95,12 +75,7 @@ class PlantingPlan:
 
     @property
     def cross_border_mismatch(self) -> set[str]:
-        """KYC mismatches whose contradiction is foreign money, not inflated domestic turnover.
-
-        transactions.py keeps these accounts' ordinary activity at a clean level and lets the
-        foreign flows carry the mismatch, so the contradiction is the one the typology is
-        actually about.
-        """
+        """KYC mismatches carried by foreign money (domestic activity stays clean)."""
         unexplained = {a for a, c in self.cohorts.items() if c == "unexplained_inward"}
         return self.round_trip_core | unexplained
 
@@ -113,11 +88,7 @@ class PlantingPlan:
         }
 
     def real_channels_for(self, account_id: str) -> int:
-        """How many genuine evidence channels this account carries.
-
-        A NAME_SIMILARITY_ONLY hit is excluded on purpose - it is the decoy, and counting it
-        would quietly relabel every false-positive bait case as monitor-worthy.
-        """
+        """Real channels on this account. A look-alike name hit is a decoy, not counted."""
         tier = self.adverse_media.get(account_id)
         return sum(
             [
@@ -143,14 +114,8 @@ def build_planting_plan(
     fraud_rings: list[FraudRing],
     cohorts: dict[str, str],
 ) -> PlantingPlan:
-    """Decide the full planting layout.
-
-    Ring members are handled first because ring membership is already fixed by rings.py.
-    Within each ring, three members become escalate-worthy by picking up a second channel
-    alongside graph membership, and the fourth carries ring membership alone. That fourth
-    account is deliberate: it is monitor-worthy on a single circumstantial signal, and it is
-    exactly the case Stage 5 has to catch without any corroboration from the other stages.
-    """
+    """Decide the full layout. Per ring: 3 members get a second channel (ESCALATE), the
+    fourth has the ring alone (MONITOR, for Stage 5 to catch unaided)."""
     plan = PlantingPlan(cohorts=dict(cohorts))
     rng = streams.rng("planting", "base")
 
@@ -159,10 +124,7 @@ def build_planting_plan(
             plan.ring_membership[account_id] = ring.ring_id
 
     # ---------------------------------------------------------------------------------
-    # Round-trip rings: three members complete the loop and also carry a KYC mismatch (the
-    # money that comes back is foreign income their profile cannot explain), so they are
-    # escalate-worthy. The fourth only sends money out and carries ring membership alone.
-    # Handled separately from the other rings, whose second channels are drawn below.
+    # Round-trip rings: 3 close the loop + KYC mismatch (ESCALATE), the 4th sends out only.
     # ---------------------------------------------------------------------------------
     round_trip_rings = [r for r in fraud_rings if r.ring_type == RingType.ROUND_TRIP]
     for ring in round_trip_rings:
@@ -192,16 +154,12 @@ def build_planting_plan(
         core = sorted(members[: cfg.RING_CORE_MEMBERS])
         core_members.extend(core)
 
-        # Exactly one core member per ring picks up an adverse-media hit. That leaves two
-        # planted actors per ring with no media footprint at all, which is the condition
-        # MASTER_PLAN.md calls out: those accounts are only reachable through Stage 5.
+        # One core member per ring gets a media hit; the others are reachable only by Stage 5.
         plan.adverse_media[core[0]] = (
             SeverityTier.CONFIRMED_SANCTIONS if rng.random() < 0.35 else SeverityTier.ADVERSE_NEWS
         )
 
-    # The remaining two core members per ring split the other three channels. Structuring is
-    # the most common second channel because a ring moving money is the typical pattern; the
-    # KYC and document channels are rarer, matching how often each is actually the giveaway.
+    # The other two split structuring (most common), KYC and document channels.
     remaining_core = [m for m in core_members if m not in plan.adverse_media]
     rng.shuffle(remaining_core)
     for account_id in _take(remaining_core, 8):
@@ -268,14 +226,8 @@ def build_planting_plan(
 
 
 def _plant_mule_block(plan: PlantingPlan, fraud_rings: list[FraudRing], cohorts: dict[str, str]) -> None:
-    """The mule block's planting, fixed entirely by cohort - no random draws needed.
-
-    Network mules carry ring membership (from rings.py) plus pass-through, so they are
-    escalate-worthy. Solo mules and complicit merchants carry pass-through alone and are
-    monitor-worthy: a solo mule is the case Stage 2 must catch on its own, a complicit
-    merchant the case where the illicit layer hides inside real trade and the collector link
-    is what gives it away. The look-alikes and life events carry nothing and are decoys.
-    """
+    """Mule-block planting, fixed by cohort: network mules ring + pass-through (ESCALATE),
+    solo mules and complicit merchants pass-through only (MONITOR), the rest are decoys."""
     mule_rings = sorted(
         (r for r in fraud_rings if r.ring_type == RingType.MULE), key=lambda r: r.ring_id
     )

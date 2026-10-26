@@ -1,28 +1,9 @@
-"""Generator 1 of 9 - customers and their accounts.
+"""Customers and accounts. Runs first: everything else keys off their ids.
 
-Produces the reference data Stages 0, 1, 3, 5 and 7 all read. Runs first because every
-other generator keys off customer_id / account_id.
-
-Population blocks, in customer_id order (config.POPULATION_BLOCKS):
-  - base: 225 domestic customers living in India, then 75 Non-Resident Indians
-  - cross_border: 44 domestic customers - planted cross-border typologies and their
-    legitimate look-alikes
-  - mule: 26 domestic customers - planted money-mule typologies and their legitimate
-    look-alikes (Amendment 2)
-
-Every customer draws from a random stream keyed by its own id (streams.py), and each block
-shuffles its cohorts from a stream of its own, so appending a block never changes anyone
-already generated. A new block brings its own occupation list for the same reason: adding an
-occupation to OCCUPATIONS would change what every base customer draws from it.
-
-NRIs are modelled as Indian nationals resident abroad rather than as foreign nationals - that
-is what the term actually means, and it is why an NRI here carries an Indian name, a foreign
-residential address and a passport as the primary identity document, while a domestic
-customer carries an Aadhaar. Every NRI holds an NRE account: FEMA does not allow a
-non-resident to keep an ordinary resident savings account.
-
-Which cross-border cohort each account belongs to is ground truth, so it is returned to the
-caller rather than written anywhere a pipeline stage could read it.
+Blocks: base (225 domestic + 75 NRI), cross_border (44), mule (26). Each customer and block
+has its own random stream, so adding a block changes no one already made.
+NRIs are Indian nationals abroad: Indian name, foreign address, passport, NRE account.
+Cohorts are answer key, returned to the caller only.
 """
 
 from __future__ import annotations
@@ -41,12 +22,7 @@ from src.generators.identifiers import (
 )
 from src.schemas import Account, AccountType, Customer, Gender, IdDocumentType, ResidencyStatus
 
-#: Occupation paired with the annual-income band that occupation plausibly earns, in INR,
-#: and the account type it would normally open. Stage 3 judges whether a customer's stated
-#: profile is behaviourally plausible, so the income attached to an occupation has to be
-#: defensible on its own - otherwise a genuine mismatch is indistinguishable from generator
-#: noise. CURRENT accounts go to business occupations, SAVINGS to salaried and retired ones,
-#: which is how the two account types are actually used.
+#: Occupation -> plausible income band (INR) and account type (CURRENT for business).
 OCCUPATIONS: tuple[tuple[str, int, int, AccountType], ...] = (
     ("Government school teacher", 300_000, 750_000, AccountType.SAVINGS),
     ("Staff nurse", 300_000, 650_000, AccountType.SAVINGS),
@@ -70,10 +46,7 @@ OCCUPATIONS: tuple[tuple[str, int, int, AccountType], ...] = (
     ("Freelance graphic designer", 400_000, 1_400_000, AccountType.SAVINGS),
 )
 
-#: Occupations an NRI plausibly holds abroad, with income bands reflecting overseas earnings
-#: converted to INR. Gulf-corridor blue-collar work and Western professional work are both
-#: represented because the real diaspora is both, and a corpus of only high earners would
-#: make every large remittance look normal.
+#: NRI occupations abroad (Gulf blue-collar and Western professional), income in INR.
 NRI_OCCUPATIONS: tuple[tuple[str, int, int, AccountType], ...] = (
     ("Site supervisor, construction (Gulf)", 600_000, 1_600_000, AccountType.SAVINGS),
     ("Heavy vehicle driver (Gulf)", 400_000, 900_000, AccountType.SAVINGS),
@@ -88,11 +61,7 @@ NRI_OCCUPATIONS: tuple[tuple[str, int, int, AccountType], ...] = (
 )
 
 
-#: Occupations each cross-border cohort draws from. The legitimate look-alikes need an
-#: occupation that makes their foreign activity make sense - a parent paying overseas
-#: university fees earns enough to, a household receiving family money is a pensioner or a
-#: homemaker. The unexplained-inward cohort is deliberately modest earners, because that
-#: typology is foreign money arriving that the stated profile cannot account for.
+#: Occupations per cross-border cohort: look-alikes fit their foreign money, the planted ones do not.
 COHORT_OCCUPATIONS: dict[str, tuple[str, ...] | None] = {
     "round_trip": None,  # any occupation - round-tripping is not tied to a profession
     "unexplained_inward": (
@@ -113,11 +82,7 @@ COHORT_OCCUPATIONS: dict[str, tuple[str, ...] | None] = {
     ),
 }
 
-#: Occupations for the mule block, kept apart from OCCUPATIONS so the base draws are
-#: undisturbed. Mules are recruited from people with modest, irregular incomes - students,
-#: gig workers, homemakers - which is who published typologies describe renting out an
-#: account. The merchants run the kind of small business that takes customer payments on a
-#: personal UPI ID linked to a savings account, which is exactly why they resemble a mule.
+#: Mule-block occupations (kept apart from OCCUPATIONS): modest-income mules, small merchants.
 MULE_BLOCK_OCCUPATIONS: dict[str, tuple[tuple[str, int, int, AccountType], ...]] = {
     "mule": (
         ("Postgraduate student", 300_000, 450_000, AccountType.SAVINGS),
@@ -178,13 +143,7 @@ def _occupation_options(is_nri: bool, cohort: str | None):
 
 
 def _opened_date(rng: random.Random, cohort: str | None):
-    """When the account was opened.
-
-    Accounts open before the 90-day history window, so every account has a settled baseline
-    for Stage 2 to compare a burst against. Mules are the exception that proves the rule:
-    published red flags single out accounts opened within the last year, or long-dormant
-    ones suddenly reactivated - a rented account is usually one of the two.
-    """
+    """Opening date: before the 90-day window. Mules open recently or sit dormant (red flags)."""
     today = cfg.REFERENCE_DATE
     if cohort in ("network_mule", "solo_mule"):
         if rng.random() < 0.3:
@@ -197,12 +156,9 @@ def generate(
     streams: Streams,
     blocks: tuple[str, ...] | None = None,
 ) -> tuple[list[Customer], list[Account], dict[str, str]]:
-    """Build the customer and account population.
+    """Customers, accounts and each cohort account's cohort (answer key).
 
-    Returns the customers, their accounts, and the cohort of each account in a cohort block
-    (ground truth - see the module docstring). `blocks` restricts generation to the named
-    population blocks; it exists so the isolation guarantee can be checked by generating
-    with and without a block and comparing.
+    `blocks` limits generation to the named blocks, to check block isolation.
     """
     included = set(blocks) if blocks else {name for name, _ in cfg.POPULATION_BLOCKS}
 
@@ -253,9 +209,7 @@ def _customer(
     rng = streams.rng("customer", customer_id)
     today = cfg.REFERENCE_DATE
 
-    # Indian name for both populations: an NRI is an Indian national living abroad. Gender
-    # is drawn first so the name can agree with it - a card reading "Aryan Maharaj / FEMALE"
-    # is exactly the kind of detail a reader notices.
+    # Gender first, so the (Indian) name agrees with it.
     gender = Gender.MALE if rng.random() < 0.5 else Gender.FEMALE
     name = indian_name(streams.faker("en_IN", "customer", customer_id), gender.value)
 
@@ -322,9 +276,5 @@ def _customer(
 
 
 def account_numbers_for(accounts: list[Account], rng: random.Random) -> dict[str, str]:
-    """Printable bank account numbers, used on rendered documents only.
-
-    Kept out of the Account model deliberately: account_id is the pipeline's key, and giving
-    the model a second identifier would invite stages to join on the wrong one.
-    """
+    """Printable account numbers for rendered documents only (account_id stays the one key)."""
     return {account.account_id: account_number(rng) for account in accounts}

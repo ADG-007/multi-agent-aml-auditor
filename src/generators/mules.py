@@ -1,40 +1,12 @@
-"""The mule block's transaction flows (Amendment 2).
+"""The mule block's money flows. The cohorts differ by the shape of the money, not its size.
 
-Called from transactions.py for every account in the mule block. Five cohorts, two of them
-planted typologies, one a planted typology hidden inside a legitimate one, and two legitimate
-look-alikes. They are built to be hard to tell apart on volume alone - what separates them
-is the shape of the money:
+- network_mule / solo_mule: quiet, then one-off payments from strangers swept to a collector
+  within hours.
+- merchant_lookalike: many one-off payers, but money builds for days and goes to suppliers.
+- complicit_merchant: a real merchant with a thin layer of victims' money in its last 30 days.
+- life_event: one legitimate spike (relatives pay a lender or a hospital, a land-sale share).
 
-  network_mule / solo_mule
-      A rented account: quiet for weeks, then a burst of payments from strangers - scam
-      victims, each paying once - swept on to one collector account within minutes to hours,
-      minus the mule's commission. Published red flags describe exactly this: accounts opened
-      in the last year or long dormant, inward bursts from unrelated UPI IDs, then an outward
-      sweep. A network's four accounts are run from the handler's phone (rings.py).
-
-  merchant_lookalike
-      A fuel outlet or a roadside mobile/electronics shop taking customer payments on the
-      owner's personal UPI ID. Just as many strangers pay once, and amounts range from a
-      hundred rupees to tens of thousands - but the money builds up for days and then goes, in
-      a lump, to the same one or two suppliers every time.
-
-  complicit_merchant
-      A genuine merchant, generated exactly like a look-alike, with a thin layer of victims'
-      money in its last 30 days only, each payment forwarded within hours to a mule network's
-      collector. Small against the real trade, so whole-account averages miss it; a
-      recent-versus-own-baseline comparison and the shared collector are what catch it.
-
-  life_event
-      An ordinary salaried customer with one sudden, legitimate spike: relatives chipping in
-      to pay off a moneylender, relatives covering a hospital bill, or a share of a land sale
-      spread to new payees. For a few days it looks like pass-through; it happens once, the
-      senders share the customer's surname, and the recipients are a lender, a hospital, a
-      car dealer - not a collector.
-
-Counterparties created here are the account's own, drawn from the account's own stream, so
-the block adds counterparties without touching the base list. Their ids are opaque
-(CPM-3F9A1C22): numbering them after the account that introduced them, or calling a collector
-"COL-01", would tell a pipeline stage what it is looking at.
+Counterparty ids are opaque (CPM-3F9A1C22), so no id hints at what it is.
 """
 
 from __future__ import annotations
@@ -84,10 +56,7 @@ HOSPITAL_NAMES = (
 #: customers a day it takes to reach the account's turnover.
 MEAN_TICKET = {"fuel": 1_850.0, "electronics": 1_950.0}
 
-#: A merchant's annual turnover through this account (money in plus money out), as a multiple
-#: of declared income. The personal UPI ID carries only part of the takings - cards, cash and
-#: the business's own merchant QR carry the rest - so the account moves a few times what the
-#: owner earns rather than the full turnover of the business.
+#: Merchant turnover through this account as a multiple of declared income (UPI is only part).
 MERCHANT_TURNOVER_MULTIPLE = (2.0, 4.0)
 
 #: Price points a mobile-accessories counter actually charges.
@@ -107,12 +76,7 @@ def _rupees(amount: float) -> float:
 
 
 def collector_counterparties(streams: Streams) -> list[Counterparty]:
-    """The collectors every mule sweeps into.
-
-    Individuals at other banks - usually themselves the next layer of mules - so from this
-    bank they are ordinary-looking domestic payees. Nothing about the counterparty record
-    marks them out; only the money flowing to them does.
-    """
+    """The collectors mules sweep into: ordinary-looking payees at other banks."""
     parties = []
     for counterparty_id in MULE_NETWORK_COLLECTOR_IDS + SOLO_MULE_COLLECTOR_IDS:
         faker = streams.faker("en_IN", "counterparty", counterparty_id)
@@ -295,12 +259,8 @@ def merchant_flow(book: _Book, customer: Customer, cash_cps: list[Counterparty])
 
 
 def complicit_layer(book: _Book, takings: float, collector: Counterparty) -> None:
-    """Victims' money slipped into the merchant's last 30 days, each payment forwarded alone.
-
-    Timed inside opening hours so it does not stand out by hour of day; what gives it away is
-    that these payers are strangers paying scam-sized sums, and that each one's money leaves
-    within hours for an account the merchant has never paid before - one a mule network uses.
-    """
+    """Victims' payments in the merchant's last 30 days (opening hours), each forwarded within
+    hours to a new payee a mule network uses."""
     rng = book.rng
     target = takings * rng.uniform(*cfg.COMPLICIT_LAYER_SHARE)
     first_day = cfg.HISTORY_DAYS - cfg.COMPLICIT_LAYER_DAYS
@@ -408,9 +368,7 @@ def account_activity(
     book = _Book(streams, rng, account_id, row)
     income = customer.stated_income
 
-    # Everyone also has a little ordinary life: groceries, bills, a transfer to family.
-    # Mules are quiet (a rented account is not anyone's main account); merchants' personal
-    # spending is small beside their takings; salaried customers look like anyone else.
+    # A little ordinary spending for everyone (least for mules).
     if cohort in ("network_mule", "solo_mule"):
         count, multiple = rng.randint(12, 24), rng.uniform(0.3, 0.8)
     elif cohort in ("merchant_lookalike", "complicit_merchant"):
@@ -433,12 +391,7 @@ def account_activity(
 
 
 def burst_start_day(streams: Streams, account_id: str, ring_id: str | None) -> int:
-    """When a mule's burst begins.
-
-    A handler activates a network's accounts together, so members start within days of one
-    another; a solo mule starts on its own schedule. Either way the burst sits in the back
-    half of the window, leaving weeks of quiet baseline before it.
-    """
+    """Burst start: network members within days of each other, always in the window's back half."""
     if ring_id:
         start = streams.rng("mule_burst", ring_id).randint(45, 60)
         return start + streams.rng("mule_burst", account_id).randint(0, 4)

@@ -2,17 +2,9 @@
 
     python -m src.generators.verify
 
-Two jobs, and the distinction matters. The assertions check that the data on disk matches
-the exact quantities phase_1_execution.md decided - 370 customers (300 plus the cross-border
-and mule blocks), 13 rings, 160 adverse-media entries, 47 accounts with two or more evidence
-channels (49 escalate-worthy labels, Amendment 3). They exist
-to catch a generator bug immediately, at the point it is cheap to find, rather than in Phase
-11 when the evaluation numbers look strange and the cause is six phases back. They are not Phase 2's boundary tests and do not pretend to
-be.
-
-The summary then prints the data back in human-readable form, including one full sample
-record from each generator, because a dataset that passes its own assertions can still be
-subtly wrong in a way only a person reading it will notice.
+Asserts the data matches its design (370 customers, 13 rings, 160 list entries, 47 accounts
+with 2+ channels, 49 ESCALATE labels), then prints a readable summary with one sample record
+per generator.
 """
 
 from __future__ import annotations
@@ -76,16 +68,7 @@ def _rupees(amount: float) -> str:
     return f"Rs {amount:,.0f}"
 
 
-#: One probe per clause category, phrased the way Stage 6's query text will be - concatenated
-#: finding strings from the upstream reasoning trails - rather than as keyword lookups, so
-#: this measures what retrieval will actually face.
-#:
-#: Each probe names every clause that would properly cover that finding, not a single answer.
-#: That is not a loosened bar, it is the accurate one: a finding that a name matched a
-#: designated party is covered by the screening-and-match-resolution clause just as
-#: legitimately as by the freezing-obligation clause, and unexplained turnover is covered by
-#: both the surge clause and the profile-inconsistency clause. Demanding one exact clause
-#: would be asserting a preference the rulebook does not actually express.
+#: One probe per category, worded like Stage 6's queries. Each lists every clause that fits.
 RETRIEVAL_PROBES: tuple[tuple[str, frozenset[str]], ...] = (
     (
         "repeated cash deposits just below the ten lakh reporting limit",
@@ -131,12 +114,7 @@ RETRIEVAL_PROBES: tuple[tuple[str, frozenset[str]], ...] = (
 
 
 def _check_retrieval(clause_count: int) -> None:
-    """Query the embedded rulebook and confirm the right clause comes back first.
-
-    A collection that embedded without error can still be useless - wrong distance metric,
-    text that does not discriminate, clauses too similar to each other. Stage 6 is six phases
-    away, so this is where an unusable index gets caught.
-    """
+    """Probe the ChromaDB index: the right clause must come back near the top."""
     try:
         import chromadb
 
@@ -155,12 +133,7 @@ def _check_retrieval(clause_count: int) -> None:
         "collection uses cosine distance, as Stage 6's cutoff assumes",
     )
 
-    # Top-1 exactness is the wrong bar. Stage 6 retrieves k=5 and cites from within that set,
-    # and clauses inside a category are genuinely close in meaning - a query about
-    # unexplained turnover legitimately surfaces STRUCT-003 ("sudden surge in account
-    # turnover") ahead of KYC-002. What the data layer has to guarantee is that the right
-    # clause is in the retrieved set at all, and that the top hit is at least in the right
-    # category.
+    # A right clause in the set and a top hit in the right category (not top-1 exact).
     top_hit_ok = 0
     in_top_k = 0
     top_distances: list[float] = []
@@ -183,24 +156,17 @@ def _check_retrieval(clause_count: int) -> None:
         f"every probe retrieves a covering clause within k=5 "
         f"({in_top_k}/{len(RETRIEVAL_PROBES)})",
     )
-    # Reported rather than asserted. The Phase 8 relevance cutoff was raised from 0.5 to 0.75
-    # on these measurements (correct matches ~0.35-0.53, an irrelevant query ~0.96); this
-    # note is what shows whether that bar still holds if the clauses change.
+    # Reported, not asserted: shows whether Stage 6's 0.75 cutoff still fits.
     print(
         f"  [note] top-hit cosine distances "
         f"{min(top_distances):.3f}-{max(top_distances):.3f} "
-        f"(the 0.75 cutoff agreed for Phase 8 would drop "
+        f"(Stage 6's 0.75 cutoff would drop "
         f"{sum(1 for d in top_distances if d > 0.75)}/{len(top_distances)} top hits)"
     )
 
 
 def _check_ocr(customers, accounts, ledger) -> None:
-    """OCR a sample of clean and forged documents and confirm the fields come through.
-
-    Skipped with a visible note if the Tesseract binary is absent, rather than failing: it is
-    an OS-level install, it blocks Phase 5 rather than Phase 1, and a missing binary is not a
-    defect in the generated data.
-    """
+    """OCR a sample of clean and forged cards. Skipped with a note if Tesseract is missing."""
     try:
         import pytesseract
         from PIL import Image
@@ -471,7 +437,7 @@ def main() -> int:
     check(all(t.direction.value == "CREDIT" for t in band), "structuring deposits are all credits")
     check(
         all(t.type.value == "CASH_DEPOSIT" for t in band),
-        "structuring deposits are all cash (Amendment 3: structuring is a cash-only signal)",
+        "structuring deposits are all cash (structuring is a cash-only signal)",
     )
 
     # Every round-trip core member's loop has to actually close: a debit to the ring's
@@ -506,7 +472,7 @@ def main() -> int:
     )
 
     # ==================================================================================
-    print("\n=== Money-mule pass-through (Amendment 2) ===")
+    print("\n=== Money-mule pass-through ===")
     _check_mules(ledger, rings, transactions, counterparties)
 
     # ==================================================================================
@@ -521,8 +487,7 @@ def main() -> int:
         len(clean) == cfg.NUM_CUSTOMERS - cfg.NUM_MULTI_CHANNEL - cfg.NUM_SINGLE_CHANNEL,
         f"{cfg.NUM_CUSTOMERS - cfg.NUM_MULTI_CHANNEL - cfg.NUM_SINGLE_CHANNEL} accounts with no real channel",
     )
-    # Labels (Amendment 3, A4): channels decide, except that a confirmed sanctions hit
-    # escalates on its own.
+    # Labels: channels decide, except that a sanctions hit escalates on its own.
     sanctions_only = [
         e for e in single if e.adverse_media_hit == SeverityTier.CONFIRMED_SANCTIONS
     ]
@@ -549,7 +514,7 @@ def main() -> int:
     )
 
     # Every ring must contain at least one member with no adverse-media footprint at all.
-    # Those are the accounts only Stage 5 can reach, and MASTER_PLAN.md calls for them by name.
+    # Those are the accounts only Stage 5 can reach.
     by_ring: dict[str, list[EvidenceLedgerEntry]] = {}
     for entry in ledger:
         if entry.graph_ring_membership:
@@ -568,17 +533,13 @@ def main() -> int:
         planted_structuring <= accounts_with_band,
         "every account marked as structuring actually has sub-threshold transactions",
     )
-    # The converse matters just as much. An unplanted account sitting in the band would be
-    # an unlabelled positive, and Phase 11 would be scoring the pipeline against ground
-    # truth that does not describe the data.
+    # And no unplanted account in the band (it would be an unlabelled positive).
     check(
         accounts_with_band <= planted_structuring,
         "no unplanted account has transactions in the structuring band",
     )
 
-    # Turnover has to track declared income, or the KYC-mismatch channel carries no signal:
-    # if every clean account already moves twenty times its stated income, a planted mismatch
-    # is indistinguishable from ordinary variation.
+    # Clean turnover tracks declared income, so a KYC mismatch stands out.
     income_by_account = {
         a.account_id: next(c.stated_income for c in customers if c.customer_id == a.customer_id)
         for a in accounts
@@ -591,10 +552,7 @@ def main() -> int:
         for account_id, total in throughput.items()
     }
     mismatch_accounts = {e.account_id for e in ledger if e.kyc_mismatch_planted}
-    # Only accounts with no planted channel at all are held to the clean bound. A structuring
-    # burst or a cross-border funnel legitimately inflates turnover, and suppressing that to
-    # protect a tidy ratio would make the structuring channel invisible in the account's
-    # overall activity - which is the opposite of what a real case looks like.
+    # Only accounts with no planted channel are held to the clean bound.
     untouched = {e.account_id for e in ledger if e.real_channel_count == 0}
     clean_ratios = [r for a, r in ratios.items() if a in untouched]
     mismatch_ratios = [r for a, r in ratios.items() if a in mismatch_accounts]
@@ -612,9 +570,7 @@ def main() -> int:
         min(mismatch_ratios) > max(clean_ratios) * 0.9,
         "planted mismatches sit above the clean population, not inside it",
     )
-    # A mule's giveaway is the shape of its money, not the size. If pass-through accounts
-    # moved as much as a planted KYC mismatch, the KYC channel would be planted on them too
-    # without the ledger saying so.
+    # Mules stay below KYC-mismatch volume, so no KYC channel is planted by accident.
     check(
         not pass_through_ratios or max(pass_through_ratios) < min(mismatch_ratios),
         f"pass-through accounts stay below planted KYC-mismatch turnover "
@@ -702,10 +658,7 @@ def main() -> int:
         {customer_of[a] for a in ledger_media_accounts} <= linked_customers,
         "every planted adverse-media account has a corpus entry",
     )
-    # Stage 4 screens counterparties too. A counterparty whose name sits close to a corpus
-    # entry would give every account that pays it a hit nobody planted. difflib stands in
-    # for Stage 4's matcher here, at Stage 4's own 85 cutoff. The cheap upper bounds are
-    # checked first only to keep this fast over thousands of mule-block payers.
+    # No counterparty name near a list entry (difflib at 85; cheap bounds first for speed).
     corpus_names = [n.lower() for m in media for n in [m.entity_name, *m.aliases]]
 
     def near_corpus(name: str) -> bool:
@@ -776,10 +729,7 @@ def main() -> int:
         "manifest leaks no forgery ground truth",
     )
 
-    # End-to-end check of the one thing Phase 5 actually depends on: that Tesseract can read
-    # these renders, and that a forged document's printed date really does disagree with the
-    # customer record. A rendered card that OCRs to nothing would leave Stage 1 with no
-    # signal at all, and that is worth finding here rather than six phases later.
+    # Tesseract reads the renders, and a forged card's DOB disagrees with the record.
     _check_ocr(customers, accounts, ledger)
 
     # ==================================================================================
@@ -893,12 +843,7 @@ def main() -> int:
 
 
 def _check_mules(ledger, rings, transactions, counterparties) -> None:
-    """The pass-through typology and its look-alikes are separable by shape, as designed.
-
-    Checked from the data itself, the way a reader would: where each account's money goes,
-    and how long it stays. Nothing here reads a cohort label, because none is written to
-    pipeline-readable data - only the ledger knows which account is which.
-    """
+    """Mules and their look-alikes differ by where money goes and how long it stays."""
     by_account: dict[str, list] = defaultdict(list)
     for txn in transactions:
         by_account[txn.account_id].append(txn)
@@ -912,9 +857,7 @@ def _check_mules(ledger, rings, transactions, counterparties) -> None:
         len({c.counterparty_id for c in counterparties}) == len(counterparties),
         "every counterparty id is unique",
     )
-    # The generator times flows to the minute. If planted postings all landed on :00 seconds,
-    # or collectors carried a telling id, a stage could find the planted cases without doing
-    # any analysis at all.
+    # No planted tell: no :00-second postings, no telling collector ids.
     zero_seconds = sum(1 for t in transactions if t.timestamp.second == 0) / len(transactions)
     check(zero_seconds < 0.05, f"postings are not marked by round seconds ({zero_seconds:.1%} on :00)")
     check(

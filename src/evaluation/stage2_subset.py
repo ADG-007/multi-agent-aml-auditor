@@ -2,21 +2,12 @@
 
     python -m src.evaluation.stage2_subset
 
-Phases 3-7 are build-tested on small per-stage subsets plus one shared set of linked accounts
-(decisions_and_progress.md Part 11); the full 370-account run happens once, in Phase 11. This
-script picks Stage 2's accounts (phase_3_execution.md D7) and writes them to
-data/_ground_truth/stage_subsets.json, in the answer-key folder no pipeline module reads.
+Writes Stage 2's accounts to data/_ground_truth/stage_subsets.json, picked by rule:
 
-The rule, so the pick is reproducible and nobody chooses accounts by hand:
+1. Shared set: all of RING-04 and the two lowest-id members of RING-12.
+2. Each slot takes a shared account that fits, else the lowest fitting id (one slot each).
 
-1. The shared set: every member of RING-04 (one structurer, one KYC-mismatch member) and the
-   two lowest-id members of RING-12 (mules that share one collector).
-2. Each slot, in order, takes a shared account that fits it, else the lowest account id that
-   fits; an account fills at most one slot. The k = 4 structurer slot prefers an account whose
-   only real channel is structuring.
-
-`k` is computed with Stage 2's own structuring code at the bank's review date. Running the
-script twice writes the same file. Other stages' keys in the file are left as they are.
+Same output every run. Other stages' keys in the file are kept.
 """
 
 from __future__ import annotations
@@ -85,7 +76,7 @@ def _structurer(k: int) -> Callable[[Truth], bool]:
     return lambda t: t.role == "structurer" and t.k == k
 
 
-#: The slots, in filling order (D7): (slot name, fits).
+#: The slots, in filling order: (slot name, fits).
 SLOTS: tuple[tuple[str, Callable[[Truth], bool]], ...] = (
     ("structurer_k4", _structurer(4)),
     ("structurer_k6", _structurer(6)),

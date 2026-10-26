@@ -1,15 +1,7 @@
-"""The simulated bank, as the pipeline is allowed to see it.
+"""The simulated bank, as the pipeline may see it. Every stage reads data through here.
 
-Read-only access to the committed dataset (accounts, customers, transactions, counterparties,
-KYC profiles, the adverse-media corpus), indexed per account. Every stage reads bank data
-through here rather than opening JSON itself, so the one rule that must never break - no
-pipeline stage sees the answer key - is enforced in exactly one place:
-
-- nothing under `data/_ground_truth/` is ever read;
-- `AdverseMediaEntry.linked_actor_id`, the corpus's ground-truth link to a planted customer,
-  is blanked on load.
-
-Only `src/evaluation/` reads ground truth, and it does so directly, never through this module.
+It never reads `data/_ground_truth/` and blanks the blacklist's answer-key link on load.
+Only `src/evaluation/` reads the answer key.
 """
 
 from __future__ import annotations
@@ -35,11 +27,7 @@ GROUND_TRUTH_DIR_NAME = "_ground_truth"
 
 
 class BankData:
-    """In-memory view of the bank, with per-account lookups.
-
-    Transactions for an account are kept in time order (ties broken by transaction id), which
-    every time-window rule in Stage 0 relies on.
-    """
+    """In-memory bank. Each account's transactions stay in time order (ties by id)."""
 
     def __init__(
         self,
@@ -103,12 +91,7 @@ class BankData:
         return tuple(self._transactions.get(account_id, ()))
 
     def review_date(self) -> datetime | None:
-        """The bank's review date: its latest transaction timestamp, across every account.
-
-        A periodic review looks at every account as of this one moment (phase_3_execution.md
-        D2). It is read from the data itself, never from the generator's config, so a live
-        transaction posted later moves it. None only for a bank with no transactions at all.
-        """
+        """The latest transaction time across the bank. Periodic reviews use it as "now"."""
         latest = [rows[-1].timestamp for rows in self._transactions.values() if rows]
         return max(latest, default=None)
 
@@ -124,7 +107,7 @@ class BankData:
         return self._adverse_media
 
     # ----------------------------------------------------------------------------------
-    # Live additions (used by live-mode tests now, by the Phase 12 injectors later)
+    # Live additions
     # ----------------------------------------------------------------------------------
 
     def add_transaction(self, transaction: Transaction) -> None:

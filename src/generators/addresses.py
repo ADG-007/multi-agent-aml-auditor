@@ -1,19 +1,7 @@
-"""Residential addresses for customers, in each country's real format.
+"""Customer addresses in each country's real format. Cosmetic: no stage parses an address.
 
-Cosmetic, and said so up front: nothing in the pipeline parses an address. The entity graph
-matches addresses as exact strings, Stage 1 cross-checks name, date of birth and document
-number but not address, and Stage 3 reads the customer's country rather than the street. So
-none of this changes a verdict - it exists so that a person browsing the data or looking at a
-rendered card does not find "Ludhiana-338908" (Punjab PIN codes start 14 or 15) or
-"2751 George Rest, New Ryanstad, Canada" and start doubting everything else.
-
-What is real here: every Indian locality is paired with the PIN code India Post actually
-assigns it, and each city sits in its correct state. Every foreign address follows its
-country's own convention - UAE and Qatar have no postcodes, Singapore HDB flats carry a
-block-derived six-digit code, UK postcodes use a real outward district. Saudi and Qatari
-area codes are in the right range but not individually verified. House numbers, flat
-numbers, building names and street choices are invented, which is the point of a synthetic
-customer.
+Indian localities carry their real PIN codes. Foreign addresses follow local conventions.
+House numbers and streets are invented.
 """
 
 from __future__ import annotations
@@ -152,8 +140,7 @@ def indian_address(rng: random.Random) -> str:
 
 
 # --- Foreign addresses ---------------------------------------------------------------------
-# One builder per NRI country. Each follows that country's real address convention, and the
-# areas are ones with large Indian diaspora populations - which is where an NRI plausibly lives.
+# One builder per NRI country, in areas with large Indian diaspora populations.
 
 _US_STREETS = ("Oak Street", "Maple Avenue", "Park Avenue", "Washington Street", "Elm Street",
                "Cedar Lane", "Lakeview Drive", "Hillcrest Road", "Sunset Boulevard", "Main Street")
@@ -188,9 +175,7 @@ def _uae(rng: random.Random) -> str:
     return f"Apartment {rng.randint(1, 25)}{rng.randint(0, 1)}{rng.randint(1, 9)}, {building}, {area}, {emirate}"
 
 
-#: (city, district, postal code) - five-digit national-address postcodes within each city's
-#: real range (Riyadh 11-14xxx, Jeddah 21-23xxx, Eastern Province 31-34xxx); the exact
-#: district-to-code pairing is plausible rather than looked up.
+#: (city, district, postal code). Codes sit in each city's real range, pairing not verified.
 _SAUDI_DISTRICTS = (
     ("Riyadh", "Al Olaya", "12211"), ("Riyadh", "Al Malaz", "12831"), ("Riyadh", "Al Sulimaniyah", "12245"),
     ("Jeddah", "Al Rawdah", "23434"), ("Jeddah", "Al Aziziyah", "23334"),
@@ -299,10 +284,7 @@ def foreign_address(rng: random.Random, country: str) -> str:
 
 
 # --- Registered addresses for foreign companies --------------------------------------------
-# Commercial rather than residential: the premises a company registers at. Several of these
-# are shared by more than one company on purpose - a Dubai free-zone business centre or a
-# Mauritius management company genuinely hosts hundreds of unrelated registrations, which is
-# exactly why a shared registered address is a lead for Stage 5 rather than proof.
+# Some are shared on purpose (free-zone business centres): a lead for Stage 5, not proof.
 
 _BUSINESS_BUILDERS = {
     "United Arab Emirates": lambda rng: (
@@ -341,11 +323,7 @@ _BUSINESS_BUILDERS = {
 
 
 def foreign_business_address(rng: random.Random, country: str) -> str:
-    """A company's registered address in `country`, ending in the country name.
-
-    Countries without a dedicated commercial format reuse the residential builder, which
-    produces a street address in the right shape for that country.
-    """
+    """A company's registered address in `country` (residential format where none exists)."""
     builder = _BUSINESS_BUILDERS.get(country)
     if builder is None:
         return foreign_address(rng, country)
