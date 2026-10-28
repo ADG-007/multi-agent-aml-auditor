@@ -37,3 +37,17 @@ def test_unrelated_name_does_not_match():
     index = NameIndex([media_entry(entity_name="Vikram Sethi")])
     assert index.best_match("Asha Verma", cutoff=85) is None
     assert index.best_match("", cutoff=85) is None
+def test_all_matches_lists_each_entry_once_best_first():
+    index = NameIndex([
+        media_entry(entry_id="AM-T001", entity_name="Vikram Sethi", aliases=["Vicky Sethi"]),
+        media_entry(entry_id="AM-T002", entity_name="Vikram Sethia", tier=SeverityTier.ADVERSE_NEWS),
+    ])
+    matches = index.all_matches("Vikram Sethi", cutoff=70)
+    assert [m.entry_id for m in matches] == ["AM-T001", "AM-T002"]
+    assert matches[0].score == 100 and not matches[0].via_alias
+    assert matches[1].score < 100
+
+
+def test_all_matches_of_an_empty_name_is_empty():
+    index = NameIndex([media_entry()])
+    assert index.all_matches("", cutoff=85) == []
