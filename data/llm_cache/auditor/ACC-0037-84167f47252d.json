@@ -1,0 +1,14 @@
+{
+  "key": "84167f47252de9f8f1d65dec679e6db09c5846da82ea54178ecb2783244207c8",
+  "case_id": "CASE-ACC-0037-1",
+  "model": "gemini-3.5-flash",
+  "prompt_version": "auditor-v1",
+  "seconds": 13.9,
+  "made_at": "2026-10-28T15:48:39",
+  "draft": {
+    "executive_summary": "An investigation of account ACC-0037 revealed potential cash structuring and transaction volumes significantly exceeding declared profile expectations. Although document verification, adverse media, and graph analysis yielded clear results, the observed cash deposit patterns require ongoing review. The recommended disposition for lead analyst consideration is MONITOR with a computed confidence of 0.5667.",
+    "investigation_narrative": "The investigation covered five distinct stages for account ACC-0037. Document verification via Vision confirmed perfect alignment across Aadhaar and PAN details with 0 forgery confidence. Adverse Media screening for holder Chatura Bawa and 54 counterparties returned zero matches, while Graph analysis established zero links to flagged accounts. However, Transaction Pattern analysis detected 4 cash deposits ranging from ₹9,00,000 to ₹10,00,000 totaling ₹37,06,991 between July 2 and July 29, 2026, indicating potential sub-threshold structuring, alongside a 30-day velocity ratio of 1.21. KYC review highlighted substantial profile discrepancies for the customer, a software engineer with a declared annual income of ₹12,60,000. Total credits over 90 days reached ₹38,30,028 across 32 transactions, which annualizes to ₹1,55,32,893—12.3 times the declared income. This activity was heavily driven by 9 cash deposits totaling ₹37,29,515, contrasting with debits of only ₹1,23,275 over the same period.",
+    "compliance_conclusion": "The customer's transaction activity exhibits significant inconsistencies with declared income and potential structuring under standard cash reporting thresholds, referencing KYC-002 and STRUCT-001. Given the absence of negative media or network exposure, immediate escalation is not required at this time. It is recommended to keep the account under MONITOR status for continued oversight.",
+    "str_narrative": null
+  }
+}

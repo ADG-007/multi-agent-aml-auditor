@@ -16,6 +16,7 @@ from src.newdata import (
     listed_people,
     make_custom_pack,
     make_pack,
+    profile_text,
     run_pack,
 )
 from src.rulebook import RulebookLookup
@@ -131,3 +132,25 @@ def test_a_sanctions_pack_escalates_with_models_off(tmp_path, bank):
     report = result.latest[pack.account_ids[0]]
     assert report.disposition == Disposition.SUSPICIOUS_ESCALATE
     assert report.judge_trail and (pack.path / "outputs" / "run.jsonl").exists()
+
+
+def test_the_profile_template_is_filled_from_the_job_and_income():
+    text = profile_text("clean", "Software engineer", 15 * 100_000)
+    assert "The customer works as a software engineer" in text
+    assert "annual income of Rs 15.00 lakh" in text
+    assert "Rs 1.25 lakh per month" in text
+
+
+def test_every_pattern_fills_without_placeholders():
+    for pattern, kind in KINDS.items():
+        text = profile_text(pattern, kind.occupations[0], 10 * 100_000, name="Asha Rao")
+        assert "{" not in text and "Asha Rao works as" in text
+
+
+def test_a_filled_profile_is_stored_as_written(tmp_path, bank):
+    sale = {"sale_lakh": 60}
+    text = profile_text("trap", "Retired bank officer", 9 * 100_000, settings=sale)
+    spec = AccountSpec("trap", income=9 * 100_000, profile=text, settings=sale)
+    pack = make_custom_pack([spec], "Filled profile", root=tmp_path, bank=bank)
+    assert "about Rs 60.00 lakh" in text
+    assert _rows(pack, "kyc_profiles")[0]["narrative"] == text

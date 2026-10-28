@@ -13,10 +13,15 @@ Four sections, picked in the sidebar:
 from __future__ import annotations
 
 import copy
+import hashlib
 import html
+import json
+import os
 import shutil
 import sys
 import time
+import urllib.request
+import zlib
 from dataclasses import asdict, dataclass, replace
 from pathlib import Path
 
@@ -29,6 +34,7 @@ import streamlit as st  # noqa: E402
 from src.bank import BankData  # noqa: E402
 from src.evaluation.mvp_report import SHORT, Row, confusion, rows  # noqa: E402
 from src.evaluation.mvp_subset import load_subset  # noqa: E402
+from src.llm import get_stage_config  # noqa: E402
 from src.llm.cache import LLMMode, ResponseCache  # noqa: E402
 from src.newdata import (  # noqa: E402
     KINDS,
@@ -42,6 +48,7 @@ from src.newdata import (  # noqa: E402
     make_custom_pack,
     make_pack,
     mix_title,
+    profile_text,
     run_pack,
 )
 from src.orchestration.batch import BatchResult, review, run_batch  # noqa: E402
@@ -64,13 +71,17 @@ from src.schemas import (  # noqa: E402
     StageName,
 )
 from src.stages.stage0_triage import TriageContext  # noqa: E402
+from src.stages.stage1_vision import config as vision_config  # noqa: E402
 from src.stages.stage3_kyc import config as kyc_config  # noqa: E402
 from src.stages.stage3_kyc.agent import stale_warning  # noqa: E402
+from src.stages.stage7_auditor import config as auditor_config  # noqa: E402
 
 
 SAMPLE = "sample"
 SAMPLE_TITLE = "Bank sample: 50 known accounts"
 SECONDS_PER_AI_ANSWER = 30  # the local 8B on this 4 GB laptop
+SECONDS_PER_REPORT = 30  # one Gemini call plus the free-tier gap between calls
+PROMPT_VERSIONS = {"kyc": kyc_config.PROMPT_VERSION, "auditor": auditor_config.PROMPT_VERSION}
 
 #: colour, icon, what the bank does next
 VERDICT = {
@@ -154,15 +165,21 @@ st.set_page_config(page_title="AML Auditor", page_icon="🛡️", layout="wide")
 class Run:
     key: str
     title: str
-    ctx: TriageContext
+    ctx: TriageContext | None  # None for a run loaded from its saved results
     answers: dict
     result: BatchResult
     seconds: float
     kyc: str
+    saved_at: str | None = None  # when a loaded run finished
+    case_count: int | None = None
 
     @property
     def table(self) -> list[Row]:
         return rows(self.answers, self.result.latest)
+
+    @property
+    def cases(self) -> int:
+        return len(self.result.cases) if self.case_count is None else self.case_count
 
 
 # --------------------------------------------------------------------------------------
@@ -213,35 +230,160 @@ def packs_now() -> dict[str, Pack]:
     return out
 
 
-def saved_kyc(pack: Pack) -> int:
-    folder = ResponseCache("kyc", root=pack.cache_root).folder
-    return _saved_kyc(str(folder), folder.stat().st_mtime_ns if folder.exists() else 0)
+def saved_answers(pack: Pack, stage: str) -> int:
+    """Saved answers of one model stage ("kyc" or "auditor") in the pack's own folder."""
+    folder = ResponseCache(stage, root=pack.cache_root).folder
+    stamp = folder.stat().st_mtime_ns if folder.exists() else 0
+    return _saved(str(folder), stamp, PROMPT_VERSIONS[stage])
 
 
 @st.cache_data(show_spinner=False)
-def _saved_kyc(folder: str, stamp: int) -> int:
+def _saved(folder: str, stamp: int, version: str) -> int:
     """Counted again only when the folder changes (a new answer is a new file)."""
-    return ResponseCache("kyc", root=Path(folder).parent).count(kyc_config.PROMPT_VERSION)
+    return ResponseCache(Path(folder).name, root=Path(folder).parent).count(version)
 
 
-def run_pack_now(pack: Pack, kyc: str) -> Run:
-    new = len(pack.account_ids) - saved_kyc(pack) if kyc == "live" else 0
-    label = f"Checking {len(pack.account_ids)} accounts of “{pack.title}”"
-    if new > 0:
-        label += f": {new} need the AI profile check (about {minutes(new)})"
+def saved_kyc(pack: Pack) -> int:
+    return saved_answers(pack, "kyc")
+
+
+def still_needed(pack: Pack) -> tuple[int, int]:
+    """New 8B answers and new Gemini reports a run of this pack would ask for."""
+    n = len(pack.account_ids)
+    return max(n - saved_kyc(pack), 0), max(n - saved_answers(pack, "auditor"), 0)
+
+
+def models() -> tuple[str, str]:
+    """The model IDs Stage 3 and Stage 7 use now (an .env override included)."""
+    kyc = get_stage_config("KYC").model_id or "unset"
+    return kyc, get_stage_config("Auditor").model_id or "unset"
+
+
+def model_problems() -> list[str]:
+    """Why the local 8B or Gemini cannot answer now. Checked before new accounts run."""
+    kyc_model, _ = models()
+    problems = []
+    host = os.environ.get("OLLAMA_HOST", "localhost:11434")
+    host = host if host.startswith("http") else f"http://{host}"
+    try:
+        with urllib.request.urlopen(f"{host}/api/tags", timeout=3) as reply:
+            pulled = {m["name"] for m in json.load(reply).get("models", [])}
+        if kyc_model not in pulled:
+            problems.append(
+                f"The local model `{kyc_model}` is not pulled. Run `ollama pull {kyc_model}`."
+            )
+    except (OSError, ValueError):
+        problems.append(
+            f"The local model server (Ollama) is not answering at {host}. "
+            "Start it with `ollama serve`."
+        )
+    if not os.environ.get("GOOGLE_API_KEY"):
+        problems.append("No Gemini key: put GOOGLE_API_KEY in the .env file.")
+    return problems
+
+
+def save_run(pack: Pack, run: Run) -> None:
+    """Writes the run's summary beside its reports (outputs/run.jsonl), so the results open
+    later without running the pipeline again."""
+    kyc_model, writer_model = models()
+    summary = {
+        "finished": time.strftime("%d %b %Y %H:%M"),
+        "seconds": round(run.seconds, 1),
+        "cases": len(run.result.cases),
+        "rounds": run.result.rounds,
+        "order": run.result.order,
+        "kyc_model": kyc_model,
+        "writer_model": writer_model,
+    }
+    out = pack.path / "outputs" / "summary.json"
+    out.write_text(json.dumps(summary, indent=2), encoding="utf-8")
+
+
+def saved_run(pack: Pack) -> Run | None:
+    """The pack's last run, read from its saved reports. None if it was never run here."""
+    folder = pack.path / "outputs"
+    reports = folder / "run.jsonl"
+    if not reports.exists():
+        return None
+    latest = {}
+    for line in reports.read_text(encoding="utf-8").splitlines():
+        if line.strip():
+            report = InvestigationReport.model_validate_json(line)
+            latest[report.target_account] = report
+    if set(latest) != set(pack.account_ids):
+        return None
+    summary = {  # a run saved before summaries existed: what the reports alone can tell
+        "finished": time.strftime("%d %b %Y %H:%M", time.localtime(reports.stat().st_mtime)),
+        "seconds": 0.0,
+        "cases": len(latest),
+        "rounds": [list(latest)],
+        "order": list(latest),
+    }
+    if (folder / "summary.json").exists():
+        summary |= json.loads((folder / "summary.json").read_text(encoding="utf-8"))
+    result = BatchResult(order=summary["order"], latest=latest, rounds=summary["rounds"])
+    return Run(
+        pack.name,
+        pack.title,
+        None,
+        pack.answers,
+        result,
+        summary["seconds"],
+        "live",
+        saved_at=summary["finished"],
+        case_count=summary["cases"],
+    )
+
+
+def pack_run(pack: Pack) -> Run | None:
+    """This session's run of the pack, else its saved run. Never runs the pipeline."""
+    return pack_runs().get((pack.name, "live")) or saved_run(pack)
+
+
+def run_pack_now(pack: Pack) -> Run | None:
+    """Runs the pack through the whole pipeline: the local 8B for the profile, Gemini for each
+    report. Saved answers are reused; None when a model cannot be reached."""
+    new_kyc, new_reports = still_needed(pack)
+    if (new_kyc or new_reports) and (problems := model_problems()):
+        for problem in problems:
+            st.error(problem)
+        return None
+    kyc_model, writer_model = models()
+    label = (
+        f"Checking {len(pack.account_ids)} accounts of “{pack.title}” "
+        f"with {kyc_model} and {writer_model}"
+    )
+    if new_kyc or new_reports:
+        label += (
+            f": {new_kyc} new profile check(s), {new_reports} new report(s), "
+            f"about {minutes(new_kyc, new_reports)}"
+        )
     started = time.perf_counter()
     with st.status(label + "...", expanded=True) as status:
-        ctx, result = run_pack(pack, rulebook(), kyc=LLMMode(kyc), progress=status.write)
+        ctx, result = run_pack(
+            pack, rulebook(), kyc=LLMMode.LIVE, writer=LLMMode.LIVE, progress=status.write
+        )
         seconds = time.perf_counter() - started
         status.update(label=f"Done in {seconds:.0f} s", state="complete", expanded=False)
-    run = Run(pack.name, pack.title, ctx, pack.answers, result, seconds, kyc)
-    pack_runs()[(pack.name, kyc)] = run
+    run = Run(pack.name, pack.title, ctx, pack.answers, result, seconds, "live")
+    pack_runs()[(pack.name, "live")] = run
+    save_run(pack, run)
     return run
 
 
-def minutes(ai_answers: int) -> str:
-    s = ai_answers * SECONDS_PER_AI_ANSWER
+def minutes(ai_answers: int, reports: int = 0) -> str:
+    s = ai_answers * SECONDS_PER_AI_ANSWER + reports * SECONDS_PER_REPORT
     return f"{s} s" if s < 90 else f"{round(s / 60)} min"
+
+
+def full_run_note(accounts: int) -> None:
+    kyc_model, writer_model = models()
+    st.caption(
+        f"Each new account runs the whole pipeline: the local **{kyc_model}** (Ollama) checks "
+        f"the profile and **{writer_model}** (Gemini) writes the report. About "
+        f"{minutes(accounts, accounts)} for {accounts} account{'s' * (accounts > 1)} "
+        "(performance reduced by hardware limits)."
+    )
 
 
 # --------------------------------------------------------------------------------------
@@ -261,9 +403,7 @@ def main() -> None:
     )
     nav = st.navigation(list(PAGES.values()))
     if "next_dataset" in st.session_state:  # set before a page switch, applied before widgets
-        st.session_state["dataset"], st.session_state["kyc-pack"] = st.session_state.pop(
-            "next_dataset"
-        )
+        st.session_state["dataset"] = st.session_state.pop("next_dataset")
     with st.sidebar:
         st.markdown("### Data set")
         packs = packs_now()
@@ -278,16 +418,22 @@ def main() -> None:
             label_visibility="collapsed",
             help="The 50 sample accounts, or a batch you made under Test with new accounts.",
         )
-        modes = ["cached", "live", "off"] if key == SAMPLE else ["live", "off"]
-        st.selectbox(
-            "Customer profile check",
-            modes,
-            format_func=KYC_MODES.get,
-            key="kyc-sample" if key == SAMPLE else "kyc-pack",
-            help="Stage 3 asks a local AI model whether the customer's profile explains the "
-            f"money. A new answer takes about {SECONDS_PER_AI_ANSWER} s on this laptop "
-            "(performance reduced by hardware limits). Saved answers make runs repeatable.",
-        )
+        if key == SAMPLE:
+            st.selectbox(
+                "Customer profile check",
+                ["cached", "live", "off"],
+                format_func=KYC_MODES.get,
+                key="kyc-sample",
+                help="Stage 3 asks a local AI model whether the customer's profile explains "
+                f"the money. A new answer takes about {SECONDS_PER_AI_ANSWER} s on this laptop "
+                "(performance reduced by hardware limits). Saved answers make runs repeatable.",
+            )
+        else:
+            kyc_model, writer_model = models()
+            st.caption(
+                f"New accounts run the whole pipeline: **{kyc_model}** (local) checks the "
+                f"profile and **{writer_model}** writes each report. Saved answers are reused."
+            )
         st.session_state["packs"] = packs
     nav.run()
 
@@ -302,21 +448,14 @@ def current_run(wait: bool = True) -> Run | None:
         if kyc == "cached" and (warning := stale_warning(len(run.answers["accounts"]))):
             st.warning(warning)
         return run
-    kyc = st.session_state.get("kyc-pack", "live")
     pack = st.session_state["packs"][key]
-    run = pack_runs().get((key, kyc))
-    if run is None and (kyc == "off" or saved_kyc(pack) >= len(pack.account_ids)):
-        run = run_pack_now(pack, kyc)
+    run = pack_run(pack)
     if run is None and wait:
-        new = len(pack.account_ids) - saved_kyc(pack)
-        st.info(
-            f"“{pack.title}” has not been checked yet. {new} of its {len(pack.account_ids)} "
-            f"accounts need the AI profile check: about {minutes(new)}. You can also switch "
-            "the profile check off in the sidebar to see the result in seconds."
-        )
+        st.info(f"“{pack.title}” has not been run through the pipeline yet.")
         st.dataframe(planted(pack), hide_index=True, width="stretch")
-        if st.button("▶ Check these accounts now", type="primary"):
-            run = run_pack_now(pack, kyc)
+        full_run_note(len(pack.account_ids))
+        if st.button("▶ Run through the pipeline", type="primary"):
+            run = run_pack_now(pack)
     return run
 
 
@@ -461,12 +600,25 @@ def results() -> None:
     )
     for col, (label, value, help_text) in zip(st.columns(len(cards)), cards, strict=True):
         col.metric(label, value, border=True, help=help_text)
-    st.caption(
-        f"{len(run.result.order)} accounts, {len(run.result.cases)} cases, "
-        f"{len(run.result.rounds)} round(s), {run.seconds:.1f} s. Profile check: "
-        f"{KYC_MODES[run.kyc].lower()}. The report writer is off for this table; the verdict "
-        "never depends on it. A paused ID check is approved."
+    counts = (
+        f"{len(run.result.order)} accounts, {run.cases} cases, "
+        f"{len(run.result.rounds)} round(s), {run.seconds:.1f} s."
     )
+    if run.saved_at:
+        counts = f"Saved results of the run on {run.saved_at} (not run again). " + counts
+    if run.key == SAMPLE:
+        st.caption(
+            f"{counts} Profile check: {KYC_MODES[run.kyc].lower()}. The report writer is off "
+            "for this table (replay a case for its report); the verdict never depends on it. "
+            "A paused ID check is approved."
+        )
+    else:
+        kyc_model, writer_model = models()
+        st.caption(
+            f"{counts} Profile check: {kyc_model} on Ollama. Reports: {writer_model}. Open a "
+            "case to read its report. A paused ID check is approved."
+        )
+        model_failures(run)
 
     left, right_col = st.columns([3, 1])
     with left:
@@ -539,6 +691,28 @@ def results() -> None:
         judge_rules(expanded=False)
 
 
+def model_failures(run: Run) -> None:
+    """Warns when the 8B or Gemini did not answer for some accounts of a run."""
+    reports = [run.result.latest[a] for a in run.result.order]
+    no_kyc = [r.target_account for r in reports if StageName.KYC.value in r.degraded_stages]
+    no_report = [
+        r.target_account
+        for r in reports
+        if r.auditor_trail and r.auditor_trail[0].finding.startswith("Writer failed")
+    ]
+    if no_kyc:
+        st.warning(
+            f"The local 8B did not answer for {len(no_kyc)} account(s) ({', '.join(no_kyc)}), "
+            "so their profile check FAILED and the judge held them at Monitor at least. Check "
+            "that Ollama is running, then delete the batch and make it again."
+        )
+    if no_report:
+        st.warning(
+            f"Gemini did not answer for {len(no_report)} account(s) ({', '.join(no_report)}): "
+            "they show template text. Open the case to see the error."
+        )
+
+
 # --------------------------------------------------------------------------------------
 # Investigate a case
 # --------------------------------------------------------------------------------------
@@ -584,16 +758,24 @@ def investigate() -> None:
     )
     case = run.result.latest[account_id]
     key = f"replay-{run.key}-{run.kyc}-{account_id}-{writer}-{kyc}"
-    if go_col.button("▶ Replay live", type="primary", width="stretch"):
+    can_replay = run.ctx is not None and case.case_id in run.result.before
+    if go_col.button("▶ Replay live", type="primary", width="stretch", disabled=not can_replay):
         st.session_state[key] = replay(run, case, writer, kyc)
-    st.caption(
-        "Below is the case as the batch saw it, shown at once. **Replay live** runs it again "
-        "through the LangGraph pipeline from the same starting point, shows each step as it "
-        "finishes, writes the report, and stops at a fake ID card for your decision."
-    )
+    if can_replay:
+        st.caption(
+            "Below is the case as the batch saw it, shown at once. **Replay live** runs it "
+            "again through the LangGraph pipeline from the same starting point, shows each "
+            "step as it finishes, writes the report, and stops at a fake ID card for your "
+            "decision."
+        )
+    else:
+        st.caption(
+            f"Saved result of the run on {run.saved_at}, with its saved report: shown as it "
+            "was, not run again. Replay works on a batch run in this session."
+        )
 
     expected = answers.get(account_id)
-    rb = run.ctx.rulebook
+    rb = rulebook()
     done: Replay | None = st.session_state.get(key)
     if done is None:
         report_view(case, expected, rb, "from the batch")
@@ -796,9 +978,10 @@ def report_view(
     st.caption(how)
     if how.endswith("template text."):
         escalated = r.str_narrative is not None or r.disposition.value == "SUSPICIOUS-ESCALATE"
+        off = how.startswith("Model off") and source == "from the batch"
         st.info(
             "This is plain template text, not the AI report"
-            + (": the batch runs with the writer off. " if source == "from the batch" else ". ")
+            + (": the batch runs with the writer off. " if off else ". ")
             + "Pick **Gemini AI, live** as the report writer and press **▶ Replay live** for "
             + ("the AI report and STR draft." if escalated else "the AI report.")
         )
@@ -954,28 +1137,77 @@ def new_data() -> None:
         quick_batch()
     with build:
         build_your_own()
+    current_batch("made")
     st.divider()
     your_batches()
+    current_batch("list")
 
 
-def profile_choice(key: str, accounts: int) -> str:
-    return st.radio(
-        "Customer profile check for the new accounts",
-        ["live", "off"],
-        horizontal=True,
-        key=key,
-        format_func=lambda m: (
-            f"AI check (about {minutes(accounts)} for {accounts} new account{'s' * (accounts > 1)})"
-            if m == "live"
-            else "Skip it (seconds; the profile then never adds to the score)"
-        ),
-    )
+def set_current(name: str, where: str) -> None:
+    """Shows this batch's panel below the tabs ("made") or below Your batches ("list")."""
+    st.session_state["current_pack"], st.session_state["current_from"] = name, where
+    st.rerun()
 
 
-def check_and_open(pack: Pack, kyc: str) -> None:
-    run_pack_now(pack, kyc)
-    st.session_state["next_dataset"] = (pack.name, kyc)
+def open_case(pack_name: str, account_id: str) -> None:
+    st.session_state["next_dataset"] = pack_name
+    st.session_state[f"acct-{pack_name}"] = account_id
+    st.switch_page(PAGES["case"])
+
+
+def open_results(pack_name: str) -> None:
+    st.session_state["next_dataset"] = pack_name
     st.switch_page(PAGES["results"])
+
+
+def current_batch(where: str) -> None:
+    """The batch just made or picked: a Run button, then each account's verdict below it."""
+    name = st.session_state.get("current_pack")
+    packs = st.session_state["packs"]
+    if st.session_state.get("current_from") != where or name not in packs:
+        return
+    pack = packs[name]
+    run = pack_run(pack)
+    n = len(pack.account_ids)
+    with st.container(border=True):
+        if run is None:
+            st.markdown(f"**{pack.title}** is made: {n} account{'s' * (n > 1)}, not run yet.")
+            st.dataframe(planted(pack), hide_index=True, width="stretch")
+            full_run_note(n)
+            left, right = st.columns(2)
+            if left.button(
+                "▶ Run through the pipeline", type="primary", key=f"run-{where}", width="stretch"
+            ):
+                if run_pack_now(pack) is not None:
+                    st.rerun()
+            if right.button("Close", key=f"close-{where}", width="stretch"):
+                del st.session_state["current_pack"]
+                st.rerun()
+            return
+        table = run.table
+        when = f" · saved run of {run.saved_at}" if run.saved_at else ""
+        st.success(
+            f"**{pack.title}**{when}: {sum(t.right for t in table)} of {len(table)} right. "
+            "Open an account to see why, the evidence and its report."
+        )
+        for t in table:
+            trail = run.result.latest[t.account_id].auditor_trail
+            ai = bool(trail) and trail[0].finding.startswith(("New answer", "Saved answer"))
+            a, b, c, d = st.columns([1.4, 3.2, 2.6, 1.2], vertical_alignment="center")
+            a.markdown(f"**{t.account_id}**")
+            b.markdown(f"{t.group}  \n{'📝 Gemini report' if ai else '📄 template text'}")
+            c.markdown(
+                f"Right answer {SAY.get(t.expected, t.expected)}  \nSystem said "
+                f"{SAY.get(t.got, t.got)} {'✓' if t.right else '✗'}"
+            )
+            if d.button("🔎 Open", key=f"open-{where}-{t.account_id}", width="stretch"):
+                open_case(name, t.account_id)
+        left, right = st.columns(2)
+        if left.button("📊 All results for this batch", key=f"all-{where}", width="stretch"):
+            open_results(name)
+        if right.button("Close", key=f"close-{where}", width="stretch"):
+            del st.session_state["current_pack"]
+            st.rerun()
 
 
 def quick_batch() -> None:
@@ -1010,8 +1242,8 @@ def quick_batch() -> None:
         k = KINDS[pattern]
         st.caption(f"**Plants:** {k.what}. **Right answer:** {SAY_FULL[k.expected]}.")
         accounts = int(count)
-    kyc = profile_choice("quick-kyc", accounts)
-    if st.button("Create and check", type="primary", key="quick-go"):
+    full_run_note(accounts)
+    if st.button("➕ Create batch", type="primary", key="quick-go"):
         title = (
             mix_title(int(seed))
             if pattern == "mix"
@@ -1027,9 +1259,8 @@ def quick_batch() -> None:
             None,
         )
         if made is not None:
-            st.toast("Already made: opening it (same pattern and variation, same accounts).")
-            check_and_open(made, kyc)
-            return
+            st.toast("Already made: showing it (same pattern and variation, same accounts).")
+            set_current(made.name, "made")
         folder = free_folder(title)
         try:
             pack = make_pack(
@@ -1038,7 +1269,7 @@ def quick_batch() -> None:
         except (FileExistsError, ValueError) as exc:
             st.error(str(exc))
             return
-        check_and_open(pack, kyc)
+        set_current(pack.name, "made")
 
 
 def build_your_own() -> None:
@@ -1098,14 +1329,21 @@ def build_your_own() -> None:
             count = cols[-1].number_input("Ring members", 2, 10, 3, key="b-ring")
 
     st.markdown("**4 · The KYC profile the bank holds**")
+    filled = profile_text(
+        pattern,
+        occupation or k.occupations[0],
+        int(income) * 100_000,
+        name=listed if pattern == "sanctions" else (None if pattern == "mule_ring" else name),
+        settings=settings,
+    )
     profile = st.text_area(
         "Profile",
-        value=k.profile,
+        value=filled,
         height=140,
-        key=f"b-profile-{pattern}",
+        key=f"b-profile-{pattern}-{zlib.crc32(filled.encode())}",
         label_visibility="collapsed",
-        help="Words in {braces} are filled in for each account: {name}, {age}, {occupation}, "
-        "{income}, {monthly}, and {sale} for a property sale.",
+        help="Written from the job, income and money above. Edit it freely; changing those "
+        "fields writes it again.",
     )
     st.markdown("**5 · The right answer**")
     expected = st.radio(
@@ -1127,7 +1365,7 @@ def build_your_own() -> None:
                     name=name,
                     occupation=occupation or None,
                     income=int(income) * 100_000,
-                    profile=None if profile.strip() == k.profile else profile,
+                    profile=profile.strip() or filled,
                     expected=expected,
                     settings=settings,
                     listed_name=listed,
@@ -1151,8 +1389,8 @@ def build_your_own() -> None:
             draft.pop(i)
             st.rerun()
     title = st.text_input("Name this batch", value="My test accounts", key="b-title")
-    kyc = profile_choice("build-kyc", sum(d["count"] for d in draft))
-    if st.button("Create and check my batch", type="primary", key="b-go"):
+    full_run_note(sum(d["count"] for d in draft))
+    if st.button("➕ Create my batch", type="primary", key="b-go"):
         try:
             pack = make_custom_pack(
                 [AccountSpec(**d) for d in draft],
@@ -1163,42 +1401,89 @@ def build_your_own() -> None:
             st.error(str(exc))
             return
         st.session_state["draft"] = []
-        check_and_open(pack, kyc)
+        set_current(pack.name, "made")
 
 
 def your_batches() -> None:
     packs: dict[str, Pack] = st.session_state["packs"]
     st.subheader("Your batches")
     if not packs:
-        st.caption("None yet. Batches you create appear here and in the sidebar's data set list.")
+        st.caption("None yet. Batches you create appear here.")
         return
-    st.caption("Pick one in the sidebar's data set list to see its results.")
-    st.dataframe(
+    st.caption(
+        "Click a batch. A batch that has run opens its saved results: nothing is run again."
+    )
+    names = list(packs)
+    runs = {n: pack_run(p) for n, p in packs.items()}
+    picked = st.dataframe(
         pd.DataFrame(
             [
                 {
                     "Batch": p.title,
                     "Accounts": len(p.account_ids),
-                    "Saved AI answers": f"{saved_kyc(p)} of {len(p.account_ids)}",
+                    "Status": (
+                        "not run yet"
+                        if runs[n] is None
+                        else f"run {runs[n].saved_at or 'in this session'}"
+                    ),
+                    "Right": (
+                        "-"
+                        if runs[n] is None
+                        else f"{sum(r.right for r in runs[n].table)} of {len(p.account_ids)}"
+                    ),
                     "Made": time.strftime("%d %b %H:%M", time.localtime(p.path.stat().st_mtime)),
                 }
-                for p in packs.values()
+                for n, p in packs.items()
             ]
         ),
         hide_index=True,
         width="stretch",
+        on_select="rerun",
+        selection_mode="single-row",
+        key=f"batches-table-{st.session_state.get('batches_v', 0)}",
     )
+    if picked.selection.rows:
+        name = names[picked.selection.rows[0]]
+        left, mid, right = st.columns(3)
+        if runs[name] is None:
+            if left.button("▶ Run through the pipeline", type="primary", width="stretch"):
+                if run_pack_now(packs[name]) is not None:
+                    set_current(name, "list")
+        else:
+            if left.button("Show here", type="primary", width="stretch"):
+                set_current(name, "list")
+            if mid.button("📊 See its results", width="stretch"):
+                open_results(name)
+            if right.button("🔎 Open its accounts", width="stretch"):
+                open_case(name, packs[name].account_ids[0])
     with st.expander("Delete a batch"):
         name = st.selectbox(
             "Batch", list(packs), format_func=lambda n: packs[n].title, key="del-pick"
         )
-        sure = st.checkbox("Yes, delete it and its saved AI answers", key="del-sure")
+        st.caption(
+            "Deletes its accounts, transactions, ID images and their OCR text, the saved Llama "
+            "and Gemini answers, its answer key and its saved results."
+        )
+        sure = st.checkbox("Yes, delete it and all its data", key="del-sure")
         if st.button("Delete", disabled=not sure, key="del-go"):
-            shutil.rmtree(packs[name].path)
-            for key in [k for k in pack_runs() if k[0] == name]:
-                del pack_runs()[key]
-            st.toast(f"Deleted “{packs[name].title}”")
+            title = packs[name].title
+            delete_pack(packs[name])
+            st.toast(f"Deleted “{title}” and its data")
             st.rerun()
 
+
+def delete_pack(pack: Pack) -> None:
+    """Removes the pack folder, the OCR text of its ID images and every copy held in memory."""
+    for image in pack.documents_dir.rglob("*.png"):
+        digest = hashlib.sha1(image.read_bytes()).hexdigest()
+        (vision_config.OCR_CACHE_DIR / f"{digest}.txt").unlink(missing_ok=True)
+    shutil.rmtree(pack.path)
+    for key in [k for k in pack_runs() if k[0] == pack.name]:
+        del pack_runs()[key]
+    for key in [k for k in known_packs() if k[0] == pack.path]:
+        del known_packs()[key]
+    if st.session_state.get("current_pack") == pack.name:
+        del st.session_state["current_pack"]
+    st.session_state["batches_v"] = st.session_state.get("batches_v", 0) + 1
 
 main()

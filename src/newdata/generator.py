@@ -318,6 +318,35 @@ def listed_people(bank: BankData) -> list[str]:
     )
 
 
+_GENERIC_INTRO = (
+    "Profile updated at the customer's most recent KYC refresh. {name} works as {occupation} "
+    "and declares an annual income of {income}. Customer resides at the address on record in "
+    "India. "
+)
+
+
+def profile_text(
+    pattern: str,
+    occupation: str,
+    income: int,
+    name: str | None = None,
+    settings: dict[str, float] | None = None,
+) -> str:
+    """The pattern's KYC text with this job and income (₹ a year) filled in, ready to store
+    as written: no placeholders left."""
+    kind = KINDS[pattern]
+    sale = (settings or {}).get("sale_lakh")
+    if sale is None and pattern == "trap":
+        sale = sum(next(k for k in kind.knobs if k.key == "sale_lakh").draw) / 2
+    return (_GENERIC_INTRO + kind.profile.removeprefix(_INTRO)).format(
+        name=name or "The customer",
+        occupation=("an " if occupation[:1].lower() in "aeiou" else "a ") + occupation.lower(),
+        income=_lakh(income),
+        monthly=_lakh(kind.monthly or income / 12),
+        sale=_lakh(round(sale or 0) * LAKH),
+    )
+
+
 def _build(specs, seed, path, title, how, data_dir, bank) -> Pack:
     if path.exists():
         raise FileExistsError(f"{path} already exists: pick another name")

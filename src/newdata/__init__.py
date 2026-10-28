@@ -14,6 +14,7 @@ from src.newdata.generator import (
     make_custom_pack,
     make_pack,
     mix_title,
+    profile_text,
 )
 from src.newdata.pack import PACKS_DIR, Pack, list_packs
 from src.newdata.runner import run_pack
@@ -33,5 +34,6 @@ __all__ = [
     "make_custom_pack",
     "make_pack",
     "mix_title",
+    "profile_text",
     "run_pack",
 ]
