@@ -113,9 +113,7 @@ def run_auditor_stub(disposition: Disposition, confidence: float, plan: StubPlan
             ),
             compliance_conclusion=f"STUB: {verdict}.",
             str_narrative=(
-                "STUB - STR draft."
-                if disposition == Disposition.SUSPICIOUS_ESCALATE
-                else None
+                "STUB - STR draft." if disposition == Disposition.SUSPICIOUS_ESCALATE else None
             ),
         ),
     )

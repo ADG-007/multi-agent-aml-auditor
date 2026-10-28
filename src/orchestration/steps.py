@@ -16,6 +16,7 @@ from datetime import datetime
 
 from pydantic import BaseModel
 
+from src.llm.cache import ResponseCache
 from src.orchestration.run_state import RunState
 from src.rulebook import RulebookLookup
 from src.schemas import (
@@ -224,7 +225,9 @@ def step_writer(work: CaseWork, ctx: TriageContext, state: RunState, plan: StubP
             )
         return
     brief = case_brief(work, ctx, state, disposition, confidence)
-    work.auditor = stage7_auditor.run(brief, ctx.writer_mode)
+    work.auditor = stage7_auditor.run(
+        brief, ctx.writer_mode, cache=ResponseCache("auditor", root=ctx.cache_root)
+    )
     work.stage_status[StageName.AUDITOR.value] = work.auditor.status
 
 
@@ -323,6 +326,7 @@ def build_report(work: CaseWork, ctx: TriageContext, state: RunState) -> Investi
         str_narrative=draft.str_narrative if draft else None,
         compliance_conclusion=draft.compliance_conclusion if draft else "",
         triage_findings=work.triage_out,
+        judge_trail=work.score.reasoning_trail,
         auditor_trail=work.auditor.trail if work.auditor else [],
         **work.findings,
     )

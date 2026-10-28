@@ -9,6 +9,7 @@ Never scored. No model calls.
 
 from __future__ import annotations
 
+import hashlib
 import json
 import re
 from dataclasses import dataclass
@@ -53,7 +54,7 @@ def run(
     reader=None,
 ) -> Stage1VisionOutput:
     """`reader` turns an image path into text; tests pass a fake, the pipeline uses Tesseract."""
-    folder = documents_dir or config.DOCUMENTS_DIR
+    folder = documents_dir or ctx.documents_dir or config.DOCUMENTS_DIR
     read_text = reader or _tesseract
     customer = ctx.bank.customer_for(account_id)
     documents = _documents_for(folder, customer.customer_id)
@@ -112,7 +113,14 @@ def run(
 
 
 def _tesseract(path: Path) -> str:
-    return pytesseract.image_to_string(Image.open(path))
+    """Tesseract's text, saved by image hash: the same image always reads the same."""
+    saved = config.OCR_CACHE_DIR / f"{hashlib.sha1(path.read_bytes()).hexdigest()}.txt"
+    if saved.exists():
+        return saved.read_text(encoding="utf-8")
+    text = pytesseract.image_to_string(Image.open(path))
+    saved.parent.mkdir(parents=True, exist_ok=True)
+    saved.write_text(text, encoding="utf-8")
+    return text
 
 
 def _documents_for(folder: Path, customer_id: str) -> list[tuple[str, str]]:

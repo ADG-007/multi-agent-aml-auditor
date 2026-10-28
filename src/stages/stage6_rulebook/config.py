@@ -4,7 +4,10 @@ from pathlib import Path
 
 
 CHROMA_DIR: Path = Path("data") / "rulebook" / "chroma"
+CLAUSES_FILE: Path = Path("data") / "rulebook" / "clauses.json"  # what the index is built from
 COLLECTION_NAME: str = "rulebook"  # the generator's name (src/generators/rulebook.py)
+#: Saved search hits, one file per query + index build (git-ignored, rebuilt on demand).
+SEARCH_CACHE_DIR: Path = Path("outputs") / "cache" / "rulebook"
 
 #: Clauses kept per query.
 TOP_K: int = 3

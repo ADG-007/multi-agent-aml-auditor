@@ -9,6 +9,8 @@ validate_citations() is the check Stage 7's text must pass.
 
 from __future__ import annotations
 
+import hashlib
+import json
 import re
 from collections.abc import Iterable
 from dataclasses import dataclass
@@ -94,10 +96,27 @@ def _collection(path: str):
     return client.get_collection(config.COLLECTION_NAME)
 
 
+@lru_cache(maxsize=1)
+def _index_build() -> str:
+    """One build of the index: the clause text, the chromadb version and the collection's
+    segment folders (a rebuild makes new ones). Same build, same hits."""
+    segments = sorted(p.name for p in config.CHROMA_DIR.iterdir() if p.is_dir())
+    parts = [hashlib.sha1(config.CLAUSES_FILE.read_bytes()).hexdigest(), chromadb.__version__]
+    return "|".join(parts + segments)
+
+
 def search(text: str, k: int = config.TOP_K) -> list[tuple[str, float]]:
-    """(clause id, cosine distance) for the k nearest clauses, nearest first."""
+    """(clause id, cosine distance) for the k nearest clauses, nearest first. Saved per query
+    and index build, so a repeat query skips the embedding."""
+    key = hashlib.sha1(f"{_index_build()}|{k}|{text}".encode()).hexdigest()
+    saved = config.SEARCH_CACHE_DIR / f"{key}.json"
+    if saved.exists():
+        return [tuple(hit) for hit in json.loads(saved.read_text(encoding="utf-8"))]
     result = _collection(str(config.CHROMA_DIR)).query(query_texts=[text], n_results=k)
-    return list(zip(result["ids"][0], result["distances"][0], strict=True))
+    hits = list(zip(result["ids"][0], result["distances"][0], strict=True))
+    saved.parent.mkdir(parents=True, exist_ok=True)
+    saved.write_text(json.dumps(hits), encoding="utf-8")
+    return hits
 
 
 def run(queries: Iterable[Query], searcher=search) -> RulebookResult:

@@ -35,6 +35,8 @@ desktop.ini
 #         python -m src.generators.id_documents
 data/rulebook/chroma/
 data/documents/*.png
+# Generated account packs (python -m src.demo.cli generate), local only
+data/packs/
 
 # --- Markdown documentation stays local ---
 # Per the project owner: all markdown docs (MASTER_PLAN, decisions_and_progress,

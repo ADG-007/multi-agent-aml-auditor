@@ -90,3 +90,38 @@ def test_a_stage_that_raises_is_failed_not_a_crash(monkeypatch):
     assert report.stage_status[S.TRANSACTION_PATTERN.value] == StageStatus.FAILED
     assert report.disposition != Disposition.CLEAR  # the degraded floor
     assert "disk on fire" in report.investigation_narrative
+
+
+def test_each_node_is_reported_as_it_finishes():
+    seen = []
+    report = Pipeline(_setup(), plan=_forged(0.0)).run(
+        _review(), on_node=lambda node, work, seconds: seen.append((node, seconds >= 0))
+    )
+    assert [n for n, _ in seen] == [
+        "triage",
+        "vision",
+        "transaction_pattern",
+        "kyc",
+        "adverse_media",
+        "graph",
+        "judge",
+        "admin_gate",
+        "rulebook",
+        "writer",
+    ]
+    assert all(ok for _, ok in seen) and report.disposition is not None
+
+
+def test_a_paused_case_can_be_previewed_and_then_finished():
+    seen = []
+    p = Pipeline(_setup(), plan=_forged())
+    paused = p.run(_review(), on_node=lambda node, work, seconds: seen.append(node))
+    assert seen[-1] == "judge"  # the gate stopped before admin_gate returned
+    preview = p.preview(paused)
+    assert preview.pipeline_status == PipelineStatus.PAUSED_PENDING_ADMIN_REVIEW
+    assert preview.transaction_pattern_findings is not None and preview.judge_trail
+    assert p.state.history("ACC-T001") == ()  # a preview hands nothing over
+
+    report = p.resume(paused, "approve", on_node=lambda node, work, seconds: seen.append(node))
+    assert seen[-3:] == ["admin_gate", "rulebook", "writer"]
+    assert report.disposition == preview.disposition

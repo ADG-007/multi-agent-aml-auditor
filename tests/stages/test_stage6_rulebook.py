@@ -58,3 +58,21 @@ def test_real_index_finds_structuring_clauses():
         [Query("TransactionPattern", "6 cash deposits of ₹9,00,000–₹10,00,000, each under the CTR")]
     )
     assert "STRUCT-001" in out.output.retrieved_clause_ids
+
+
+def test_saved_hits_change_with_the_index_build(tmp_path, monkeypatch):
+    from src.stages.stage6_rulebook import agent, config
+
+    clauses = tmp_path / "clauses.json"
+    clauses.write_text("[]", encoding="utf-8")
+    chroma = tmp_path / "chroma"
+    (chroma / "segment-a").mkdir(parents=True)
+    monkeypatch.setattr(config, "CLAUSES_FILE", clauses)
+    monkeypatch.setattr(config, "CHROMA_DIR", chroma)
+    agent._index_build.cache_clear()
+    first = agent._index_build()
+    (chroma / "segment-a").rmdir()
+    (chroma / "segment-b").mkdir()  # a rebuild makes a new collection folder
+    agent._index_build.cache_clear()
+    assert agent._index_build() != first
+    agent._index_build.cache_clear()

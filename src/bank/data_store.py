@@ -102,6 +102,11 @@ class BankData:
         return self._counterparties.get(counterparty_id)
 
     @property
+    def transaction_count(self) -> int:
+        """Changes with every posted transaction, so derived views know to rebuild."""
+        return len(self._transaction_ids)
+
+    @property
     def adverse_media(self) -> tuple[AdverseMediaEntry, ...]:
         """The screening corpus, with its ground-truth links removed."""
         return self._adverse_media

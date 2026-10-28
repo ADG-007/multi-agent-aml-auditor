@@ -5,6 +5,8 @@ from pathlib import Path
 
 DOCUMENTS_DIR: Path = Path("data") / "documents"
 MANIFEST_NAME: str = "manifest.json"
+#: Saved OCR text, one file per image hash (git-ignored, rebuilt on demand).
+OCR_CACHE_DIR: Path = Path("outputs") / "cache" / "ocr"
 
 #: A printed name agrees at or above this token-sort ratio (after normalising OCR noise).
 NAME_MATCH_MIN: float = 90.0

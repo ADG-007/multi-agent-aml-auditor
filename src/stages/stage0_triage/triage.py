@@ -11,6 +11,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from datetime import datetime
+from pathlib import Path
 
 from src.bank import BankData
 from src.llm.cache import LLMMode
@@ -41,6 +42,9 @@ class TriageContext:
     llm_mode: LLMMode = LLMMode.OFF
     #: The same for Stage 7, the writer. The verdict never depends on it.
     writer_mode: LLMMode = LLMMode.OFF
+    #: Where Stage 1 finds ID images and Stages 3 and 7 keep saved answers (None = data/).
+    documents_dir: Path | None = None
+    cache_root: Path | None = None
 
     @classmethod
     def build(
@@ -49,6 +53,8 @@ class TriageContext:
         rulebook: RulebookLookup,
         llm_mode: LLMMode = LLMMode.OFF,
         writer_mode: LLMMode = LLMMode.OFF,
+        documents_dir: Path | None = None,
+        cache_root: Path | None = None,
     ) -> TriageContext:
         return cls(
             bank=bank,
@@ -57,6 +63,8 @@ class TriageContext:
             review_date=bank.review_date(),
             llm_mode=llm_mode,
             writer_mode=writer_mode,
+            documents_dir=documents_dir,
+            cache_root=cache_root,
         )
 
 

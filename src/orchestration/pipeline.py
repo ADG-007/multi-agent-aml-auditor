@@ -10,6 +10,8 @@ through the graph config, not the checkpoint, so a pause stays small.
 
 from __future__ import annotations
 
+import time
+from collections.abc import Callable
 from dataclasses import dataclass
 from enum import Enum
 from typing import Any, TypedDict
@@ -24,6 +26,7 @@ from src.orchestration.run_state import RunState
 from src.orchestration.steps import (
     EVIDENCE_STAGES,
     CaseWork,
+    build_report,
     finalise,
     step_admin,
     step_evidence,
@@ -32,7 +35,7 @@ from src.orchestration.steps import (
     step_triage,
     step_writer,
 )
-from src.schemas import InvestigationReport, StageName, TriageEvent
+from src.schemas import InvestigationReport, PipelineStatus, StageName, TriageEvent
 from src.stages.stage0_triage import TriageContext
 from src.stages.stubs import StubPlan
 
@@ -50,6 +53,9 @@ class Paused:
     account_id: str
     evidence: dict[str, Any]
 
+
+#: Called after each node finishes: (node name, the case so far, seconds the node took).
+OnNode = Callable[[str, CaseWork, float], None]
 
 NODE = {
     StageName.VISION: "vision",
@@ -182,21 +188,42 @@ class Pipeline:
             }
         }
 
-    def run(self, event: TriageEvent) -> InvestigationReport | Paused | None:
+    def run(
+        self, event: TriageEvent, on_node: OnNode | None = None
+    ) -> InvestigationReport | Paused | None:
         """A report, a Paused case awaiting resume(), or None (quiet transaction)."""
         self._count += 1
         thread_id = f"{event.account_id}-{self._count}"
-        out = self._graph.invoke({"work": CaseWork(event=event)}, self._config(thread_id))
-        return self._result(thread_id, event.account_id, out)
+        return self._drive({"work": CaseWork(event=event)}, thread_id, event.account_id, on_node)
 
-    def resume(self, paused: Paused, decision: str) -> InvestigationReport:
-        out = self._graph.invoke(Command(resume=decision), self._config(paused.thread_id))
-        result = self._result(paused.thread_id, paused.account_id, out)
+    def resume(
+        self, paused: Paused, decision: str, on_node: OnNode | None = None
+    ) -> InvestigationReport:
+        result = self._drive(Command(resume=decision), paused.thread_id, paused.account_id, on_node)
         if not isinstance(result, InvestigationReport):  # pragma: no cover - defensive
             raise RuntimeError(f"case {paused.thread_id} did not finish after resume")
         return result
 
-    def _result(self, thread_id: str, account_id: str, out: dict):
-        if "__interrupt__" in out:
-            return Paused(thread_id, account_id, out["__interrupt__"][0].value)
-        return out.get("report")
+    def preview(self, paused: Paused) -> InvestigationReport:
+        """The paused case as a report: every check and the judge's verdict, no writer text."""
+        work = self._graph.get_state(self._config(paused.thread_id)).values["work"]
+        report = build_report(work, self.ctx, self.state)
+        return report.model_copy(
+            update={"pipeline_status": PipelineStatus.PAUSED_PENDING_ADMIN_REVIEW}
+        )
+
+    def _drive(self, payload, thread_id: str, account_id: str, on_node: OnNode | None):
+        """Stream the graph node by node; report each finished node to `on_node`."""
+        paused, report = None, None
+        last = time.perf_counter()
+        for chunk in self._graph.stream(payload, self._config(thread_id), stream_mode="updates"):
+            now = time.perf_counter()
+            for node, update in chunk.items():
+                if node == "__interrupt__":
+                    paused = Paused(thread_id, account_id, update[0].value)
+                elif update and "report" in update:
+                    report = update["report"]
+                elif on_node and update and "work" in update:
+                    on_node(node, update["work"], now - last)
+            last = now
+        return paused or report

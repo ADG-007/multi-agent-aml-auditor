@@ -9,6 +9,7 @@ No model calls.
 
 from __future__ import annotations
 
+import weakref
 from collections import defaultdict
 from datetime import datetime
 
@@ -26,20 +27,35 @@ SOFT = ("address",)
 
 
 def build_graph(bank: BankData, extra: Transaction | None = None) -> nx.Graph:
-    """Accounts joined to their devices, IPs and address. Counterparties are hubs, left out."""
-    g = nx.Graph()
-    for account_id in bank.account_ids():
-        g.add_node(account_id, kind="account")
-        rows = list(bank.transactions(account_id))
-        if extra is not None and extra.account_id == account_id:
-            rows.append(extra)
-        for t in rows:
-            if t.device_id:
-                g.add_edge(account_id, ("device", t.device_id))
-            if t.ip_address:
-                g.add_edge(account_id, ("ip", t.ip_address))
-        g.add_edge(account_id, ("address", bank.customer_for(account_id).address))
+    """Accounts joined to their devices, IPs and address. Counterparties are hubs, left out.
+
+    Built once per bank state and reused; `extra` goes on a copy, never on the saved graph.
+    """
+    size = bank.transaction_count
+    saved = _GRAPHS.get(bank)
+    if saved is None or saved[0] != size:
+        g = nx.Graph()
+        for account_id in bank.account_ids():
+            g.add_node(account_id, kind="account")
+            for t in bank.transactions(account_id):
+                _link(g, t)
+            g.add_edge(account_id, ("address", bank.customer_for(account_id).address))
+        saved = _GRAPHS[bank] = (size, g)
+    if extra is None:
+        return saved[1]
+    g = saved[1].copy()
+    _link(g, extra)
     return g
+
+
+_GRAPHS: weakref.WeakKeyDictionary[BankData, tuple[int, nx.Graph]] = weakref.WeakKeyDictionary()
+
+
+def _link(g: nx.Graph, t: Transaction) -> None:
+    if t.device_id:
+        g.add_edge(t.account_id, ("device", t.device_id))
+    if t.ip_address:
+        g.add_edge(t.account_id, ("ip", t.ip_address))
 
 
 def links(g: nx.Graph, account_id: str) -> dict[str, dict[str, set[str]]]:

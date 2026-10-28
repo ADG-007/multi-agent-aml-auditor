@@ -69,6 +69,10 @@ class InvestigationReport(BaseModel):
     adverse_media_findings: Stage4AdverseMediaOutput | None = None
     graph_findings: Stage5GraphOutput | None = None
     rulebook_findings: Stage6RulebookOutput | None = None
+    judge_trail: list[ReasoningStep] = Field(
+        default_factory=list,
+        description="The judge's own trail: veto, weighted average, thresholds, gate, floors.",
+    )
     auditor_trail: list[ReasoningStep] = Field(
         default_factory=list,
         description="Stage 7's own trail: how the text was made and which citations were removed.",

@@ -4,8 +4,10 @@
     python -m src.demo.cli show                  # the 5 show cases, full reports
     python -m src.demo.cli case ACC-0044         # one account's full report
     python -m src.demo.cli kyc-precompute        # Stage 3 on the 50, once, saved (needs Ollama)
+    python -m src.demo.cli generate --kind mix --seed 7   # new accounts -> data/packs/mix-seed7
+    python -m src.demo.cli pack mix-seed7        # run a pack on the bank, graded (KYC live)
 
-Every command runs the 50-account batch underneath (Stage 5 needs the run's flagged accounts).
+The 50-account commands run the whole batch underneath (Stage 5 needs the flagged accounts).
 --kyc defaults to cached (a missing answer makes Stage 3 FAILED). --writer defaults to off for
 run50 and live for show and case. The verdict never depends on the writer.
 """
@@ -22,6 +24,7 @@ from src.bank import BankData
 from src.evaluation.mvp_report import format_summary, format_table, rows
 from src.evaluation.mvp_subset import load_subset
 from src.llm.cache import LLMMode
+from src.newdata import KINDS, PACKS_DIR, Pack, list_packs, make_pack, run_pack
 from src.orchestration.batch import run_batch
 from src.rulebook import RulebookLookup
 from src.schemas import InvestigationReport
@@ -55,7 +58,21 @@ def main(argv: list[str] | None = None) -> int:
     common(p, "live")
     p = sub.add_parser("kyc-precompute", help="Stage 3 on the 50 accounts, saved")
     p.add_argument("accounts", nargs="*", help="default: the 50")
+    p = sub.add_parser("generate", help="make a pack of new accounts")
+    p.add_argument("--kind", choices=[*KINDS, "mix"], default="mix")
+    p.add_argument("--count", type=int, default=1, help="accounts (ring size for mule_ring)")
+    p.add_argument("--seed", type=int, default=7)
+    p.add_argument("--name", help="pack folder name (default <kind>-seed<seed>)")
+    p = sub.add_parser("pack", help="run a pack on the bank, graded against its answer key")
+    p.add_argument("name", help="folder under data/packs/")
+    p.add_argument("--kyc", choices=[m.value for m in LLMMode], default="live")
+    p.add_argument("--writer", choices=[m.value for m in LLMMode], default="off")
     args = parser.parse_args(argv)
+
+    if args.command == "generate":
+        return _generate(args)
+    if args.command == "pack":
+        return _pack(args)
 
     bank = BankData.load()
     rulebook = RulebookLookup.load()
@@ -173,6 +190,48 @@ def render(r: InvestigationReport) -> str:
     if r.str_narrative:
         lines += ["", "STR draft: " + r.str_narrative]
     return "\n".join(lines)
+
+
+def _generate(args) -> int:
+    try:
+        pack = make_pack(args.kind, args.count, args.seed, args.name)
+    except FileExistsError as exc:
+        print(exc)
+        return 1
+    print(f"Pack written: {pack.path}")
+    for r in pack.answers["accounts"]:
+        print(f"  {r['account_id']}  {r['group']:<28} expected {r['expected']}")
+    print(f"Run it:  python -m src.demo.cli pack {pack.name}")
+    return 0
+
+
+def _pack(args) -> int:
+    pack = Pack(PACKS_DIR / args.name)
+    if pack.name not in {p.name for p in list_packs()}:
+        print(f"No pack {pack.path}. Packs: {', '.join(p.name for p in list_packs()) or 'none'}")
+        return 1
+    print(
+        f"{pack.name}: {len(pack.account_ids)} accounts. KYC {args.kyc}: a new account calls "
+        "the local 8B (about 30 s each, performance reduced by hardware limits)."
+    )
+    started = time.perf_counter()
+    _, result = run_pack(
+        pack,
+        RulebookLookup.load(),
+        kyc=LLMMode(args.kyc),
+        writer=LLMMode(args.writer),
+        progress=lambda s: print("  " + s, flush=True),
+    )
+    print(
+        f"\n{len(result.order)} accounts, {len(result.cases)} cases, {len(result.rounds)} "
+        f"round(s) in {time.perf_counter() - started:.0f}s. Reports: "
+        f"{pack.path / 'outputs' / 'run.jsonl'}\n"
+    )
+    table = rows(pack.answers, result.latest)
+    print(format_table(table))
+    print()
+    print(format_summary(table))
+    return 0
 
 
 _asked: dict[str, str] = {}

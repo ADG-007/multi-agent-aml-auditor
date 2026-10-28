@@ -13,6 +13,7 @@ from __future__ import annotations
 import platform
 import time
 from datetime import datetime
+from pathlib import Path
 
 from src.llm import LLMFailureReason, LLMStageFailure, get_stage_config, get_structured_response
 from src.llm.cache import LLMMode, ResponseCache, fingerprint
@@ -44,7 +45,7 @@ def run(
 
     model_id = get_stage_config(STAGE).model_id or "unset"
     key = fingerprint(model_id, config.PROMPT_VERSION, prompt)
-    cache = cache or ResponseCache("kyc")
+    cache = cache or ResponseCache("kyc", root=ctx.cache_root)
     name = f"{account_id}-{key[:12]}"  # one file per input: a new prompt keeps the old answer
     saved = cache.load(name, key)
     if saved is not None:
@@ -86,9 +87,9 @@ def run(
     return _output(facts, judgement, how)
 
 
-def stale_warning(accounts: int) -> str | None:
+def stale_warning(accounts: int, root: Path | None = None) -> str | None:
     """A warning when fewer saved answers match the current prompt than there are accounts."""
-    saved = ResponseCache("kyc").count(config.PROMPT_VERSION)
+    saved = ResponseCache("kyc", root=root).count(config.PROMPT_VERSION)
     if saved >= accounts:
         return None
     return (
