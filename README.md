@@ -197,12 +197,12 @@ tests/             mirrors src/
 data/              committed seeded bank (JSON, graph, rulebook source)
 ```
 
-Code size: 89 source files (about 15,000 lines) and 40 test files (about 3,000 lines).
+Code size: 89 Python files in `src/` (about 15,000 lines) and 40 in `tests/` (about 3,000 lines, including package markers and shared test helpers).
 
 ## Testing and linting
 
 ```powershell
-python -m pytest -q      # 220 test functions in 40 files
+python -m pytest -q      # 220 test functions, which pytest expands to 279 test cases
 ruff check .             # lint, configured in pyproject.toml
 ```
 
