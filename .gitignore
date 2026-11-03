@@ -41,9 +41,14 @@ data/packs/
 # --- Markdown documentation stays local ---
 # Per the project owner: all markdown docs (MASTER_PLAN, decisions_and_progress,
 # learning_guide, every phase_<N>_execution.md) are personal reference material and are not
-# pushed. README.md is the one exception — it is the repo's front page.
+# pushed. The repo's public-facing files are the exceptions: README.md is its front page,
+# CONTRIBUTING.md and SECURITY.md are its community files, and .github/ holds the issue and
+# pull-request templates.
 *.md
 !README.md
+!CONTRIBUTING.md
+!SECURITY.md
+!.github/**/*.md
 
 # --- Per-phase docs (phase<N>.md explainers, phase_<N>_execution.md specs) — local only ---
 phases/
