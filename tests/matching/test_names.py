@@ -40,7 +40,9 @@ def test_unrelated_name_does_not_match():
 def test_all_matches_lists_each_entry_once_best_first():
     index = NameIndex([
         media_entry(entry_id="AM-T001", entity_name="Vikram Sethi", aliases=["Vicky Sethi"]),
-        media_entry(entry_id="AM-T002", entity_name="Vikram Sethia", tier=SeverityTier.ADVERSE_NEWS),
+        media_entry(
+            entry_id="AM-T002", entity_name="Vikram Sethia", tier=SeverityTier.ADVERSE_NEWS
+        ),
     ])
     matches = index.all_matches("Vikram Sethi", cutoff=70)
     assert [m.entry_id for m in matches] == ["AM-T001", "AM-T002"]
