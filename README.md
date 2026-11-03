@@ -46,7 +46,7 @@ The bank in this repository is **fully synthetic**: 370 customers, 23,448 transa
 | Stage | Job | Technique |
 |---|---|---|
 | 0 Triage | Seven cheap rules decide which accounts need a full look | Rule engine |
-| 1 ID check | Reads the ID image with OCR and rates how likely it is forged. Never scored. A forgery rating of 0.90 or more pauses the case for an admin | Tesseract OCR, Pillow |
+| 1 ID check | OCR reads the name and ID number on the ID image and checks them against the account record (no image forensics). A clear mismatch rates 0.95 forgery confidence, and 0.90 or more pauses the case for an admin. Never scored | Tesseract OCR, Pillow |
 | 2 Money movements | Detects structuring (repeated amounts in the ₹9 to ₹10 lakh band) and pass-through accounts | Rule-based analysis of transactions |
 | 3 Customer profile | Reads the KYC narrative and picks a risk level. Code maps the level to a score. If money in is at least 3 times stated income, the level is lifted to HIGH | Llama 3.1 8B (`llama3.1:8b-instruct-q4_K_M`) on Ollama |
 | 4 Watch lists | Fuzzy-matches names against sanctions and adverse-media lists. A date-of-birth rule separates a true sanctions hit from a look-alike name | RapidFuzz |
@@ -57,11 +57,13 @@ The bank in this repository is **fully synthetic**: 370 customers, 23,448 transa
 
 ### How the judge decides
 
-- **Veto.** Any stage that scores 0.90 or more sets the case score on its own.
-- **Weighted average.** Otherwise the score is the weighted average of the stages that scored above zero.
+Only four stages are scored, each with a fixed weight: money movements 0.25, customer profile 0.20, watch lists 0.25 and links 0.30. Triage, the ID check, the rulebook search and the writer never feed the score.
+
+- **Veto.** If Stage 4 (watch lists) or Stage 5 (links) reports confidence of 0.90 or more, the case escalates on its own without averaging.
+- **Weighted average.** Otherwise the score is the weighted average of the stages that found something. A stage that found nothing is left out, and the weights are renormalised over the rest.
 - **Bands.** Below 0.35 is **Clear**, 0.35 to 0.60 is **Monitor**, and 0.60 or more is **Escalate**.
-- **Corroboration gate.** An Escalate needs at least two stages that agree, so one loud stage alone stays at Monitor. A veto skips this gate.
-- **Floors.** A failed stage or a missing input cannot produce a Clear.
+- **Corroboration gate.** A score of 0.60 or more escalates only if two stages are at 0.40 or higher, or one stage is at 0.75 or higher while at least two stages found something. Otherwise the case stays at Monitor.
+- **Floors.** A failed stage lifts a Clear to Monitor. So does any single stage at 0.40 or higher, so a real signal is never averaged away.
 
 The same step functions run under two runners: a LangGraph `StateGraph` with an `interrupt()` for the admin gate, and a plain loop for batches. A batch re-checks accounts when new evidence appears, for at most six rounds.
 
@@ -212,7 +214,7 @@ The test folders mirror the source folders, so each module's tests sit in the ma
 - **Slow local model.** On a 4 GB GPU laptop Stage 3 takes about 20 seconds per account. Saved answers exist so demos and tests do not wait for it.
 - **Tuned on this bank.** Thresholds were set against the seeded data. Real deployment would need recalibration on real alert history.
 - **One free-tier writer.** Stage 7 depends on a free-tier Gemini model. When it is unavailable the template report is used.
-- **Three of 50 verdicts are wrong** in the graded run. They are reported, not hidden.
+- **Three of 50 verdicts are wrong** in the graded run. They are reported, not hidden. One example is `ACC-0004`, a fake ID with no other signal. It comes out Clear in the batch table, where a paused ID check is approved automatically.
 
 ## Responsible use
 
