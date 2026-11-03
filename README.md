@@ -149,6 +149,12 @@ streamlit run src/demo/app.py      # the web app
 | Investigate a case | Verdict, score on the bands, why the judge decided, evidence tabs and the report. **Replay live** runs the case through LangGraph node by node and pauses at a fake ID |
 | Test with new accounts | Build or generate fresh accounts and run them through the pipeline |
 
+![How well it did: 47 of 50 right verdicts, with the table of known answers against what the system said](docs/images/app-results.png)
+
+![Investigate a case: an Escalate verdict at score 0.65, with the judge's steps and each check's score and weight](docs/images/app-case.png)
+
+![Test with new accounts: pick a pattern, create a batch and see the saved results of past batches](docs/images/app-new.png)
+
 ### Model modes
 
 Both language-model stages can run in one of three modes. Saved answers are keyed on a SHA-256 fingerprint of the model, prompt version and input, so any change produces a fresh key.
