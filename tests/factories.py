@@ -10,6 +10,7 @@ from datetime import date, datetime
 from itertools import count
 
 from src.bank.data_store import BankData
+from src.llm import LLMClient, LLMMode
 from src.schemas import (
     Account,
     AccountType,
@@ -120,3 +121,38 @@ def bank(
         kyc_profiles=kyc_profiles or [],
         adverse_media=media or [],
     )
+
+
+class FakeOllama:
+    """Stands in for the Ollama server: replies to chat calls in order, records requests."""
+
+    def __init__(self, *replies) -> None:
+        self.replies = list(replies)
+        self.requests: list[tuple[str, dict]] = []
+
+    def __call__(self, path: str, payload: dict) -> dict:
+        self.requests.append((path, payload))
+        if path != "/api/chat":
+            return {}
+        reply = self.replies.pop(0)
+        if isinstance(reply, Exception):
+            raise reply
+        if callable(reply):
+            reply = reply(payload)
+        return {"message": {"content": reply}, "eval_count": 7, "prompt_eval_count": 11}
+
+    def chats(self) -> list[dict]:
+        return [p for path, p in self.requests if path == "/api/chat"]
+
+    def prompts(self) -> list[str]:
+        return [p["messages"][-1]["content"] for p in self.chats()]
+
+
+def fake_client(tmp_path, *replies, mode: LLMMode = LLMMode.LIVE) -> LLMClient:
+    """A client whose model answers with `replies`, with its own cache and audit folder."""
+    fake = FakeOllama(*replies)
+    client = LLMClient(
+        mode, cache_root=tmp_path / "cache", audit_path=tmp_path / "audit.jsonl", transport=fake
+    )
+    client.fake = fake
+    return client
