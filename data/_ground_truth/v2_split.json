@@ -1,0 +1,777 @@
+{
+  "seed": 42,
+  "tuning": [
+    {
+      "account_id": "ACC-0002",
+      "group": "clean",
+      "slot": "clean"
+    },
+    {
+      "account_id": "ACC-0004",
+      "group": "monitor",
+      "slot": "fake_id"
+    },
+    {
+      "account_id": "ACC-0007",
+      "group": "trap",
+      "slot": "graph_coincidence"
+    },
+    {
+      "account_id": "ACC-0008",
+      "group": "escalate",
+      "slot": "kyc+fake_id"
+    },
+    {
+      "account_id": "ACC-0009",
+      "group": "trap",
+      "slot": "cash_business_shop"
+    },
+    {
+      "account_id": "ACC-0011",
+      "group": "monitor",
+      "slot": "structuring_mixed"
+    },
+    {
+      "account_id": "ACC-0013",
+      "group": "ring",
+      "slot": "RING-07 INTERNATIONAL"
+    },
+    {
+      "account_id": "ACC-0015",
+      "group": "trap",
+      "slot": "round_amount"
+    },
+    {
+      "account_id": "ACC-0016",
+      "group": "clean",
+      "slot": "clean"
+    },
+    {
+      "account_id": "ACC-0017",
+      "group": "clean",
+      "slot": "clean"
+    },
+    {
+      "account_id": "ACC-0019",
+      "group": "clean",
+      "slot": "clean"
+    },
+    {
+      "account_id": "ACC-0021",
+      "group": "clean",
+      "slot": "clean"
+    },
+    {
+      "account_id": "ACC-0022",
+      "group": "ring",
+      "slot": "RING-01 LOCAL"
+    },
+    {
+      "account_id": "ACC-0023",
+      "group": "clean",
+      "slot": "clean"
+    },
+    {
+      "account_id": "ACC-0025",
+      "group": "trap",
+      "slot": "name_similarity"
+    },
+    {
+      "account_id": "ACC-0033",
+      "group": "trap",
+      "slot": "round_amount"
+    },
+    {
+      "account_id": "ACC-0034",
+      "group": "monitor",
+      "slot": "news"
+    },
+    {
+      "account_id": "ACC-0036",
+      "group": "monitor",
+      "slot": "kyc"
+    },
+    {
+      "account_id": "ACC-0037",
+      "group": "monitor",
+      "slot": "structuring_medium"
+    },
+    {
+      "account_id": "ACC-0038",
+      "group": "ring",
+      "slot": "RING-07 INTERNATIONAL"
+    },
+    {
+      "account_id": "ACC-0044",
+      "group": "escalate",
+      "slot": "structuring+kyc"
+    },
+    {
+      "account_id": "ACC-0045",
+      "group": "ring",
+      "slot": "RING-01 LOCAL"
+    },
+    {
+      "account_id": "ACC-0047",
+      "group": "clean",
+      "slot": "clean"
+    },
+    {
+      "account_id": "ACC-0051",
+      "group": "clean",
+      "slot": "clean"
+    },
+    {
+      "account_id": "ACC-0052",
+      "group": "clean",
+      "slot": "clean"
+    },
+    {
+      "account_id": "ACC-0055",
+      "group": "monitor",
+      "slot": "kyc"
+    },
+    {
+      "account_id": "ACC-0057",
+      "group": "clean",
+      "slot": "clean"
+    },
+    {
+      "account_id": "ACC-0064",
+      "group": "monitor",
+      "slot": "kyc"
+    },
+    {
+      "account_id": "ACC-0065",
+      "group": "clean",
+      "slot": "clean"
+    },
+    {
+      "account_id": "ACC-0067",
+      "group": "monitor",
+      "slot": "structuring_naive"
+    },
+    {
+      "account_id": "ACC-0068",
+      "group": "monitor",
+      "slot": "structuring_small"
+    },
+    {
+      "account_id": "ACC-0070",
+      "group": "clean",
+      "slot": "clean"
+    },
+    {
+      "account_id": "ACC-0072",
+      "group": "monitor",
+      "slot": "news"
+    },
+    {
+      "account_id": "ACC-0074",
+      "group": "escalate",
+      "slot": "sanctions"
+    },
+    {
+      "account_id": "ACC-0083",
+      "group": "clean",
+      "slot": "clean"
+    },
+    {
+      "account_id": "ACC-0085",
+      "group": "clean",
+      "slot": "clean"
+    },
+    {
+      "account_id": "ACC-0086",
+      "group": "clean",
+      "slot": "clean"
+    },
+    {
+      "account_id": "ACC-0088",
+      "group": "monitor",
+      "slot": "kyc"
+    },
+    {
+      "account_id": "ACC-0097",
+      "group": "monitor",
+      "slot": "kyc"
+    },
+    {
+      "account_id": "ACC-0101",
+      "group": "clean",
+      "slot": "clean"
+    },
+    {
+      "account_id": "ACC-0114",
+      "group": "clean",
+      "slot": "clean"
+    },
+    {
+      "account_id": "ACC-0115",
+      "group": "clean",
+      "slot": "clean"
+    },
+    {
+      "account_id": "ACC-0121",
+      "group": "ring",
+      "slot": "RING-01 LOCAL"
+    },
+    {
+      "account_id": "ACC-0137",
+      "group": "clean",
+      "slot": "clean"
+    },
+    {
+      "account_id": "ACC-0143",
+      "group": "escalate",
+      "slot": "structuring+news"
+    },
+    {
+      "account_id": "ACC-0144",
+      "group": "clean",
+      "slot": "clean"
+    },
+    {
+      "account_id": "ACC-0147",
+      "group": "clean",
+      "slot": "clean"
+    },
+    {
+      "account_id": "ACC-0149",
+      "group": "clean",
+      "slot": "clean"
+    },
+    {
+      "account_id": "ACC-0152",
+      "group": "trap",
+      "slot": "name_similarity"
+    },
+    {
+      "account_id": "ACC-0154",
+      "group": "ring",
+      "slot": "RING-01 LOCAL"
+    },
+    {
+      "account_id": "ACC-0164",
+      "group": "clean",
+      "slot": "clean"
+    },
+    {
+      "account_id": "ACC-0169",
+      "group": "clean",
+      "slot": "clean"
+    },
+    {
+      "account_id": "ACC-0170",
+      "group": "clean",
+      "slot": "clean"
+    },
+    {
+      "account_id": "ACC-0171",
+      "group": "escalate",
+      "slot": "sanctions"
+    },
+    {
+      "account_id": "ACC-0174",
+      "group": "trap",
+      "slot": "graph_coincidence"
+    },
+    {
+      "account_id": "ACC-0178",
+      "group": "clean",
+      "slot": "clean"
+    },
+    {
+      "account_id": "ACC-0181",
+      "group": "clean",
+      "slot": "clean"
+    },
+    {
+      "account_id": "ACC-0184",
+      "group": "clean",
+      "slot": "clean"
+    },
+    {
+      "account_id": "ACC-0186",
+      "group": "clean",
+      "slot": "clean"
+    },
+    {
+      "account_id": "ACC-0192",
+      "group": "clean",
+      "slot": "clean"
+    },
+    {
+      "account_id": "ACC-0193",
+      "group": "clean",
+      "slot": "clean"
+    },
+    {
+      "account_id": "ACC-0194",
+      "group": "clean",
+      "slot": "clean"
+    },
+    {
+      "account_id": "ACC-0195",
+      "group": "trap",
+      "slot": "name_similarity"
+    },
+    {
+      "account_id": "ACC-0208",
+      "group": "clean",
+      "slot": "clean"
+    },
+    {
+      "account_id": "ACC-0209",
+      "group": "clean",
+      "slot": "clean"
+    },
+    {
+      "account_id": "ACC-0210",
+      "group": "clean",
+      "slot": "clean"
+    },
+    {
+      "account_id": "ACC-0217",
+      "group": "clean",
+      "slot": "clean"
+    },
+    {
+      "account_id": "ACC-0222",
+      "group": "clean",
+      "slot": "clean"
+    },
+    {
+      "account_id": "ACC-0224",
+      "group": "trap",
+      "slot": "round_amount"
+    },
+    {
+      "account_id": "ACC-0233",
+      "group": "trap",
+      "slot": "name_similarity"
+    },
+    {
+      "account_id": "ACC-0243",
+      "group": "clean",
+      "slot": "clean"
+    },
+    {
+      "account_id": "ACC-0247",
+      "group": "trap",
+      "slot": "round_amount"
+    },
+    {
+      "account_id": "ACC-0250",
+      "group": "trap",
+      "slot": "graph_coincidence"
+    },
+    {
+      "account_id": "ACC-0259",
+      "group": "clean",
+      "slot": "clean"
+    },
+    {
+      "account_id": "ACC-0262",
+      "group": "clean",
+      "slot": "clean"
+    },
+    {
+      "account_id": "ACC-0265",
+      "group": "ring",
+      "slot": "RING-07 INTERNATIONAL"
+    },
+    {
+      "account_id": "ACC-0271",
+      "group": "clean",
+      "slot": "clean"
+    },
+    {
+      "account_id": "ACC-0273",
+      "group": "ring",
+      "slot": "RING-07 INTERNATIONAL"
+    },
+    {
+      "account_id": "ACC-0285",
+      "group": "clean",
+      "slot": "clean"
+    },
+    {
+      "account_id": "ACC-0287",
+      "group": "clean",
+      "slot": "clean"
+    },
+    {
+      "account_id": "ACC-0291",
+      "group": "clean",
+      "slot": "clean"
+    },
+    {
+      "account_id": "ACC-0301",
+      "group": "trap",
+      "slot": "cross_border_legitimate"
+    },
+    {
+      "account_id": "ACC-0303",
+      "group": "ring",
+      "slot": "RING-09 ROUND_TRIP"
+    },
+    {
+      "account_id": "ACC-0305",
+      "group": "ring",
+      "slot": "RING-09 ROUND_TRIP"
+    },
+    {
+      "account_id": "ACC-0306",
+      "group": "trap",
+      "slot": "cross_border_legitimate"
+    },
+    {
+      "account_id": "ACC-0312",
+      "group": "trap",
+      "slot": "cross_border_legitimate"
+    },
+    {
+      "account_id": "ACC-0314",
+      "group": "trap",
+      "slot": "cross_border_legitimate"
+    },
+    {
+      "account_id": "ACC-0327",
+      "group": "ring",
+      "slot": "RING-09 ROUND_TRIP"
+    },
+    {
+      "account_id": "ACC-0332",
+      "group": "ring",
+      "slot": "RING-09 ROUND_TRIP"
+    },
+    {
+      "account_id": "ACC-0336",
+      "group": "trap",
+      "slot": "cross_border_legitimate"
+    },
+    {
+      "account_id": "ACC-0339",
+      "group": "trap",
+      "slot": "cross_border_legitimate"
+    },
+    {
+      "account_id": "ACC-0346",
+      "group": "trap",
+      "slot": "cash_business_merchant"
+    },
+    {
+      "account_id": "ACC-0347",
+      "group": "ring",
+      "slot": "RING-12 MULE"
+    },
+    {
+      "account_id": "ACC-0350",
+      "group": "trap",
+      "slot": "merchant_lookalike"
+    },
+    {
+      "account_id": "ACC-0352",
+      "group": "monitor",
+      "slot": "solo_mule"
+    },
+    {
+      "account_id": "ACC-0359",
+      "group": "trap",
+      "slot": "life_event"
+    },
+    {
+      "account_id": "ACC-0365",
+      "group": "trap",
+      "slot": "merchant_lookalike"
+    },
+    {
+      "account_id": "ACC-0366",
+      "group": "ring",
+      "slot": "RING-12 MULE"
+    },
+    {
+      "account_id": "ACC-0367",
+      "group": "ring",
+      "slot": "RING-12 MULE"
+    },
+    {
+      "account_id": "ACC-0368",
+      "group": "ring",
+      "slot": "RING-12 MULE"
+    }
+  ],
+  "held_out": [
+    "ACC-0001",
+    "ACC-0003",
+    "ACC-0005",
+    "ACC-0006",
+    "ACC-0010",
+    "ACC-0012",
+    "ACC-0014",
+    "ACC-0018",
+    "ACC-0020",
+    "ACC-0024",
+    "ACC-0026",
+    "ACC-0027",
+    "ACC-0028",
+    "ACC-0029",
+    "ACC-0030",
+    "ACC-0031",
+    "ACC-0032",
+    "ACC-0035",
+    "ACC-0039",
+    "ACC-0040",
+    "ACC-0041",
+    "ACC-0042",
+    "ACC-0043",
+    "ACC-0046",
+    "ACC-0048",
+    "ACC-0049",
+    "ACC-0050",
+    "ACC-0053",
+    "ACC-0054",
+    "ACC-0056",
+    "ACC-0058",
+    "ACC-0059",
+    "ACC-0060",
+    "ACC-0061",
+    "ACC-0062",
+    "ACC-0063",
+    "ACC-0066",
+    "ACC-0069",
+    "ACC-0071",
+    "ACC-0073",
+    "ACC-0075",
+    "ACC-0076",
+    "ACC-0077",
+    "ACC-0078",
+    "ACC-0079",
+    "ACC-0080",
+    "ACC-0081",
+    "ACC-0082",
+    "ACC-0084",
+    "ACC-0087",
+    "ACC-0089",
+    "ACC-0090",
+    "ACC-0091",
+    "ACC-0092",
+    "ACC-0093",
+    "ACC-0094",
+    "ACC-0095",
+    "ACC-0096",
+    "ACC-0098",
+    "ACC-0099",
+    "ACC-0100",
+    "ACC-0102",
+    "ACC-0103",
+    "ACC-0104",
+    "ACC-0105",
+    "ACC-0106",
+    "ACC-0107",
+    "ACC-0108",
+    "ACC-0109",
+    "ACC-0110",
+    "ACC-0111",
+    "ACC-0112",
+    "ACC-0113",
+    "ACC-0116",
+    "ACC-0117",
+    "ACC-0118",
+    "ACC-0119",
+    "ACC-0120",
+    "ACC-0122",
+    "ACC-0123",
+    "ACC-0124",
+    "ACC-0125",
+    "ACC-0126",
+    "ACC-0127",
+    "ACC-0128",
+    "ACC-0129",
+    "ACC-0130",
+    "ACC-0131",
+    "ACC-0132",
+    "ACC-0133",
+    "ACC-0134",
+    "ACC-0135",
+    "ACC-0136",
+    "ACC-0138",
+    "ACC-0139",
+    "ACC-0140",
+    "ACC-0141",
+    "ACC-0142",
+    "ACC-0145",
+    "ACC-0146",
+    "ACC-0148",
+    "ACC-0150",
+    "ACC-0151",
+    "ACC-0153",
+    "ACC-0155",
+    "ACC-0156",
+    "ACC-0157",
+    "ACC-0158",
+    "ACC-0159",
+    "ACC-0160",
+    "ACC-0161",
+    "ACC-0162",
+    "ACC-0163",
+    "ACC-0165",
+    "ACC-0166",
+    "ACC-0167",
+    "ACC-0168",
+    "ACC-0172",
+    "ACC-0173",
+    "ACC-0175",
+    "ACC-0176",
+    "ACC-0177",
+    "ACC-0179",
+    "ACC-0180",
+    "ACC-0182",
+    "ACC-0183",
+    "ACC-0185",
+    "ACC-0187",
+    "ACC-0188",
+    "ACC-0189",
+    "ACC-0190",
+    "ACC-0191",
+    "ACC-0196",
+    "ACC-0197",
+    "ACC-0198",
+    "ACC-0199",
+    "ACC-0200",
+    "ACC-0201",
+    "ACC-0202",
+    "ACC-0203",
+    "ACC-0204",
+    "ACC-0205",
+    "ACC-0206",
+    "ACC-0207",
+    "ACC-0211",
+    "ACC-0212",
+    "ACC-0213",
+    "ACC-0214",
+    "ACC-0215",
+    "ACC-0216",
+    "ACC-0218",
+    "ACC-0219",
+    "ACC-0220",
+    "ACC-0221",
+    "ACC-0223",
+    "ACC-0225",
+    "ACC-0226",
+    "ACC-0227",
+    "ACC-0228",
+    "ACC-0229",
+    "ACC-0230",
+    "ACC-0231",
+    "ACC-0232",
+    "ACC-0234",
+    "ACC-0235",
+    "ACC-0236",
+    "ACC-0237",
+    "ACC-0238",
+    "ACC-0239",
+    "ACC-0240",
+    "ACC-0241",
+    "ACC-0242",
+    "ACC-0244",
+    "ACC-0245",
+    "ACC-0246",
+    "ACC-0248",
+    "ACC-0249",
+    "ACC-0251",
+    "ACC-0252",
+    "ACC-0253",
+    "ACC-0254",
+    "ACC-0255",
+    "ACC-0256",
+    "ACC-0257",
+    "ACC-0258",
+    "ACC-0260",
+    "ACC-0261",
+    "ACC-0263",
+    "ACC-0264",
+    "ACC-0266",
+    "ACC-0267",
+    "ACC-0268",
+    "ACC-0269",
+    "ACC-0270",
+    "ACC-0272",
+    "ACC-0274",
+    "ACC-0275",
+    "ACC-0276",
+    "ACC-0277",
+    "ACC-0278",
+    "ACC-0279",
+    "ACC-0280",
+    "ACC-0281",
+    "ACC-0282",
+    "ACC-0283",
+    "ACC-0284",
+    "ACC-0286",
+    "ACC-0288",
+    "ACC-0289",
+    "ACC-0290",
+    "ACC-0292",
+    "ACC-0293",
+    "ACC-0294",
+    "ACC-0295",
+    "ACC-0296",
+    "ACC-0297",
+    "ACC-0298",
+    "ACC-0299",
+    "ACC-0300",
+    "ACC-0302",
+    "ACC-0304",
+    "ACC-0307",
+    "ACC-0308",
+    "ACC-0309",
+    "ACC-0310",
+    "ACC-0311",
+    "ACC-0313",
+    "ACC-0315",
+    "ACC-0316",
+    "ACC-0317",
+    "ACC-0318",
+    "ACC-0319",
+    "ACC-0320",
+    "ACC-0321",
+    "ACC-0322",
+    "ACC-0323",
+    "ACC-0324",
+    "ACC-0325",
+    "ACC-0326",
+    "ACC-0328",
+    "ACC-0329",
+    "ACC-0330",
+    "ACC-0331",
+    "ACC-0333",
+    "ACC-0334",
+    "ACC-0335",
+    "ACC-0337",
+    "ACC-0338",
+    "ACC-0340",
+    "ACC-0341",
+    "ACC-0342",
+    "ACC-0343",
+    "ACC-0344",
+    "ACC-0345",
+    "ACC-0348",
+    "ACC-0349",
+    "ACC-0351",
+    "ACC-0353",
+    "ACC-0354",
+    "ACC-0355",
+    "ACC-0356",
+    "ACC-0357",
+    "ACC-0358",
+    "ACC-0360",
+    "ACC-0361",
+    "ACC-0362",
+    "ACC-0363",
+    "ACC-0364",
+    "ACC-0369",
+    "ACC-0370"
+  ]
+}
