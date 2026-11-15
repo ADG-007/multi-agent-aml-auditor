@@ -41,7 +41,10 @@ class ModelSpec:
 #: Ollama's own split leaves half of the 4B on the CPU (8 tokens/s). With every layer forced
 #: onto the GPU and a 2k context it fits the 4 GB card (46 tokens/s, measured in the gate).
 QWEN_4B = ModelSpec("qwen3.5:4b-q4_K_M", think=False, num_ctx=2048, num_gpu=99)
-GEMMA = ModelSpec("gemma4:e4b-it-qat")
+#: Ollama's own split leaves 76% of Gemma on the CPU (7.6 tokens/s, about 100 s per call). With
+#: every layer forced onto the GPU it loads in 3.1 GB and runs at 45 tokens/s. Thinking stays
+#: on: with it off the label answers ran away and were wrong (measured in the gate).
+GEMMA = ModelSpec("gemma4:e4b-it-qat", think=True, num_gpu=99, num_predict=2500)
 QWEN_9B = ModelSpec("qwen3.5:9b-q4_K_M", think=True, num_predict=2000)
 EMBEDDING = ModelSpec("qwen3-embedding:0.6b", num_gpu=0)
 
