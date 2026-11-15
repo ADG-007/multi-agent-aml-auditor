@@ -8,7 +8,7 @@ from __future__ import annotations
 
 from pydantic import BaseModel, Field, computed_field
 
-from src.schemas.common import Disposition, PipelineStatus, StageStatus
+from src.schemas.common import Disposition, PipelineStatus, ReasoningStep, StageStatus
 from src.schemas.stages import (
     Stage0TriageOutput,
     Stage1VisionOutput,
@@ -79,6 +79,35 @@ class InvestigationReport(BaseModel):
     adverse_media_findings: Stage4AdverseMediaOutput | None = None
     graph_findings: Stage5GraphOutput | None = None
     rulebook_findings: Stage6RulebookOutput | None = None
+
+    judge_inputs: dict[str, float] = Field(
+        default_factory=dict,
+        description=(
+            "The confidence each weighted stage gave the judge. It differs from the stage's "
+            "own confidence only when declared cash set the monthly-cash finding aside."
+        ),
+    )
+    judge_trail: list[ReasoningStep] = Field(
+        default_factory=list,
+        description="The judge's own trail: veto, weighted average, thresholds, gate, floors.",
+    )
+    graph_label: str | None = Field(
+        default=None,
+        description="The Graph agent's pattern label. Never scored.",
+    )
+    agent_trails: dict[str, list[ReasoningStep]] = Field(
+        default_factory=dict,
+        description="Each agent's full reasoning trail, by agent name.",
+    )
+    report_outline: list[str] = Field(
+        default_factory=list,
+        description="The outline the report text was written from; every number and clause "
+        "in the text must appear here.",
+    )
+    is_draft: bool = Field(
+        default=False,
+        description="A batch report waits for the analyst's sign-off on the page.",
+    )
 
     @computed_field
     @property

@@ -210,6 +210,11 @@ CORROBORATION_STAGE_MIN: float = 0.40
 #: Corroboration gate, second branch: one weighted stage at or above this is strong enough
 #: to escalate on its own.
 SOLO_SIGNAL_MIN: float = 0.75
+#: ...but only when at least this many stages found something (confidence above 0).
+SOLO_SIGNAL_MIN_RAN: int = 2
+
+#: Any stage at or above this lifts a CLEAR to MONITOR: a real signal is never averaged away.
+SIGNAL_FLOOR_MIN: float = 0.40
 
 #: Every confidence and score is rounded to this many decimals before any comparison, so
 #: floating-point error (0.3499999999999999 for two stages at 0.35) cannot flip a boundary.

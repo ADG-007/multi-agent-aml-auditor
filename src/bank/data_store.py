@@ -85,6 +85,10 @@ class BankData:
     # Lookups
     # ----------------------------------------------------------------------------------
 
+    @property
+    def transaction_count(self) -> int:
+        return len(self._transaction_ids)
+
     def account_ids(self) -> list[str]:
         return sorted(self._accounts)
 

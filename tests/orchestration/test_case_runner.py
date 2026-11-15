@@ -56,9 +56,10 @@ def test_routed_stages_run_and_unrouted_stay_empty():
     assert report.transaction_pattern_findings.confidence == 0.5
     assert report.kyc_findings is None
     assert report.stage_status[S.KYC.value] == StageStatus.NOT_ROUTED
-    # (0.25*0.5 + 0.25*0.1 + 0.30*0.4) / 0.80 = 0.3375, just under the 0.35 line
+    # (0.25*0.5 + 0.25*0.1 + 0.30*0.4) / 0.80 = 0.3375, just under the 0.35 line, but the
+    # signal floor lifts it: Transaction Pattern 0.5 and Graph 0.4 are >= 0.40.
     assert report.confidence == 0.3375
-    assert report.disposition == Disposition.CLEAR
+    assert report.disposition == Disposition.MONITOR
 
 
 def test_scoring_matches_the_engine_through_the_runner():
