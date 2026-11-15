@@ -17,6 +17,7 @@ listings. Zero model calls. Exceptions are not caught here; failure handling is 
 from __future__ import annotations
 
 from collections.abc import Sequence
+from dataclasses import dataclass
 from datetime import datetime, timedelta
 
 from src.rulebook import MONTHLY_CASH_CLAUSE_ID, MULE_FLOOR_CLAUSE_ID, STRUCTURING_CLAUSE_ID
@@ -97,6 +98,43 @@ def run(
         velocity_summary=velocity,
         confidence=confidence,
         reasoning_trail=trail[: config.MAX_TRAIL_STEPS],
+    )
+
+
+@dataclass(frozen=True)
+class SubScores:
+    """The three sub-scores behind the confidence, with the counts they map."""
+
+    structuring: float
+    k: int
+    monthly: float
+    m: int
+    pass_through: float
+
+    @property
+    def cash(self) -> float:
+        """The stronger of the two cash sub-scores."""
+        return max(self.structuring, self.monthly)
+
+
+def sub_scores(
+    account_id: str,
+    ctx: TriageContext,
+    as_of: datetime | None,
+    transaction: Transaction | None = None,
+) -> SubScores:
+    """The same numbers `run` reports, apart: single deposits, monthly totals, pass-through."""
+    rows = _rows(ctx, account_id, transaction) if as_of is not None else ()
+    end = as_of or datetime.max
+    s = structuring.score(rows, end, ctx.rulebook)
+    mo = monthly.score(rows, end, ctx.rulebook)
+    p = pass_through.score(rows, end, ctx.rulebook)
+    return SubScores(
+        structuring=round(s.score, SCORE_DECIMALS),
+        k=s.k,
+        monthly=round(mo.score, SCORE_DECIMALS),
+        m=mo.m,
+        pass_through=round(p.score, SCORE_DECIMALS),
     )
 
 
