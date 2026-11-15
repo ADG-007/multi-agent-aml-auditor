@@ -52,6 +52,37 @@ class NameIndex:
             self._cache[key] = self._search(name, cutoff)
         return self._cache[key]
 
+    def all_matches(self, name: str, cutoff: float) -> list[NameMatch]:
+        """Every entry at or above `cutoff`, best first, so a sanctions entry never hides
+        behind a higher-scoring look-alike."""
+        query = normalise(name)
+        if not query:
+            return []
+        found = process.extract(
+            query,
+            self._choices,
+            scorer=fuzz.token_sort_ratio,
+            processor=None,
+            score_cutoff=cutoff,
+            limit=None,
+        )
+        best: dict[str, NameMatch] = {}
+        for _, score, index in found:
+            text, entry = self._targets[index]
+            current = best.get(entry.entry_id)
+            if current is None or score > current.score:
+                best[entry.entry_id] = NameMatch(
+                    entry_id=entry.entry_id,
+                    entity_name=entry.entity_name,
+                    matched_text=text,
+                    score=round(score, 2),
+                    tier=entry.severity_tier,
+                )
+        return sorted(best.values(), key=lambda m: (-m.score, m.entry_id))
+
+    def entry(self, entry_id: str) -> AdverseMediaEntry:
+        return next(e for _, e in self._targets if e.entry_id == entry_id)
+
     def _search(self, name: str, cutoff: float) -> NameMatch | None:
         query = normalise(name)
         if not query:
