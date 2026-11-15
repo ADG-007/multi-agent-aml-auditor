@@ -1,118 +1,65 @@
-"""Per-stage LLM provider/model configuration.
+"""Which local model serves which role. Every model runs on Ollama on this laptop.
 
-MASTER_PLAN.md Section 4: the pipeline's LLM strategy is a hybrid of locally-run Ollama
-models and free-tier cloud APIs,
-chosen per stage based on that stage's real reasoning demands.
+Two models can change a verdict input (both Qwen): the Vision agent's KYC claims and the Web
+Research agent's same-person call. The Gemma roles label, quote and write; they never score.
+The 9B backup takes queued jobs only. The embedding model stays on the CPU, so it never
+competes with an LLM for the 4 GB card.
 
-Only three stages ever call an LLM: Stage 3 (KYC plausibility), Stage 6 (rulebook clause
-wording) and Stage 7 (auditor synthesis). Stages 0, 1, 2, 4 and 5 are pure deterministic
-Python and must stay that way.
-
-The concrete model for each stage is deliberately NOT decided here. Section 4 commits only
-Stage 7 (free-tier cloud, because it assembles seven reasoning trails into the pipeline's
-heaviest single context load and a quantized local model's usable context on a 4-6GB card
-is far below its advertised maximum). Stage 3 and Stage 6 stay open until their own phase
-kickoffs, when real local-model benchmarking is possible - matching the project's
-decide-with-real-information approach rather than guessing now.
+The tags and settings were fixed by the model gate (src/evaluation/model_gate.py).
 """
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+import os
+from dataclasses import dataclass
 from enum import Enum
 
 
-class LLMProvider(str, Enum):
-    """Provider families this project is allowed to route to.
-
-    Only these families are permitted. Adding any other provider here would silently violate
-    MASTER_PLAN.md Section 4.
-    """
-
-    OLLAMA = "ollama"
-    GOOGLE_GENAI = "google_genai"
-    OPENAI_COMPATIBLE = "openai"
+class Role(str, Enum):
+    VISION = "vision"
+    WEB_RESEARCH = "web_research"
+    GRAPH = "graph"
+    RAG = "rag"
+    AUDITOR = "auditor"
+    BACKUP = "backup"
+    EMBED = "embed"
 
 
 @dataclass(frozen=True)
-class StageLLMConfig:
-    """How one stage calls a model.
+class ModelSpec:
+    """One Ollama model and how it is called."""
 
-    model_id is pinned to an exact tag once chosen, for the same reproducibility reason the
-    data generation pins a fixed seed - an Ollama tag like 'llama3.1:8b-instruct-q4_K_M'
-    rather than a floating 'llama3.1'.
-    """
-
-    stage_name: str
-    provider: LLMProvider | None = None
-    model_id: str | None = None
-    temperature: float = 0.0
-    fallback_provider: LLMProvider | None = None
-    fallback_model_id: str | None = None
-    decided_in_phase: str = ""
-    notes: str = ""
-
-    @property
-    def is_decided(self) -> bool:
-        return self.provider is not None and self.model_id is not None
+    model: str
+    #: True / False switches thinking on models that have it; None sends no switch.
+    think: bool | None = None
+    num_ctx: int = 4096
+    num_predict: int = 800
+    #: 0 keeps the model on the CPU; None lets Ollama place it.
+    num_gpu: int | None = None
 
 
-#: The synthetic/research framing every cloud prompt carries.
-#:
-#: Step 1 of the six-step content-policy chain. Free-tier consumer-facing APIs run safety
-#: classifiers that can refuse a request discussing financial crime even when the scenario
-#: is entirely fabricated. Stating the context up front reduces the false-trigger rate; it
-#: is not a jailbreak and does not ask the model to relax any policy.
-SYNTHETIC_CONTEXT_PREAMBLE = (
-    "You are assisting a compliance analyst inside a research prototype. All customers, "
-    "accounts, transactions and documents referenced below are synthetic data generated for "
-    "a laboratory evaluation of an anti-money-laundering workflow. No real person, account "
-    "or institution is involved. Your output is a recommendation for a human analyst to "
-    "review, never an autonomous decision."
-)
+QWEN_4B = ModelSpec("qwen3.5:4b-q4_K_M", think=False)
+GEMMA = ModelSpec("gemma4:e4b-it-qat")
+QWEN_9B = ModelSpec("qwen3.5:9b-q4_K_M", think=True, num_predict=2000)
+EMBEDDING = ModelSpec("qwen3-embedding:0.6b", num_gpu=0)
 
-
-STAGE_LLM_CONFIG: dict[str, StageLLMConfig] = {
-    "KYC": StageLLMConfig(
-        stage_name="KYC",
-        decided_in_phase="Phase 4",
-        notes=(
-            "Small context: one KYC narrative plus a transaction summary. Local Ollama is "
-            "plausible but not committed - benchmark before choosing."
-        ),
-    ),
-    "Rulebook": StageLLMConfig(
-        stage_name="Rulebook",
-        decided_in_phase="Phase 8",
-        notes=(
-            "Wording only. Retrieval and citation validation are deterministic, so this "
-            "stage's model never selects which clauses exist - it phrases findings against "
-            "an already-retrieved set."
-        ),
-    ),
-    "Auditor": StageLLMConfig(
-        stage_name="Auditor",
-        decided_in_phase="Phase 9",
-        notes=(
-            "Section 4 commits this stage to a free-tier cloud API rather than a local "
-            "model: it is the heaviest context load in the pipeline and local KV-cache VRAM "
-            "is the binding constraint on the available 4-6GB hardware."
-        ),
-    ),
+MODELS: dict[Role, ModelSpec] = {
+    Role.VISION: QWEN_4B,
+    Role.WEB_RESEARCH: QWEN_4B,
+    Role.GRAPH: GEMMA,
+    Role.RAG: GEMMA,
+    Role.AUDITOR: GEMMA,
+    Role.BACKUP: QWEN_9B,
+    Role.EMBED: EMBEDDING,
 }
 
+OLLAMA_URL: str = os.environ.get("OLLAMA_URL", "http://127.0.0.1:11434")
 
-def get_stage_config(stage_name: str) -> StageLLMConfig:
-    """Look up a stage's model configuration.
+#: A model stays loaded this long after a call, so one phase pays one load.
+KEEP_ALIVE: str = "30m"
 
-    Raises KeyError for a stage that is not supposed to call an LLM at all, which is the
-    intended behaviour: a deterministic stage reaching for this module is a bug, not a
-    configuration gap.
-    """
-    if stage_name not in STAGE_LLM_CONFIG:
-        raise KeyError(
-            f"Stage {stage_name!r} has no LLM configuration. Only "
-            f"{sorted(STAGE_LLM_CONFIG)} are LLM-backed; every other stage is deterministic "
-            f"Python by design (MASTER_PLAN.md Section 2.1)."
-        )
-    return STAGE_LLM_CONFIG[stage_name]
+#: A stuck call is cut off after this many seconds and counts as TIMED_OUT.
+TIMEOUT_SECONDS: float = 600.0
+
+TEMPERATURE: float = 0.0
+SEED: int = 42

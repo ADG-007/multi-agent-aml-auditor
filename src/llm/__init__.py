@@ -1,17 +1,20 @@
-"""Shared structured-LLM-calling abstraction used by every LLM-backed stage."""
+"""The shared call path to the local models."""
 
-from src.llm.client import get_structured_response, looks_like_refusal, soften_prompt
-from src.llm.config import STAGE_LLM_CONFIG, LLMProvider, StageLLMConfig, get_stage_config
+from src.llm.cache import LLMMode, ResponseCache, fingerprint
+from src.llm.client import CallResult, LLMClient
+from src.llm.config import MODELS, ModelSpec, Role
 from src.llm.errors import LLMFailureReason, LLMStageFailure
 
+
 __all__ = [
-    "STAGE_LLM_CONFIG",
+    "MODELS",
+    "CallResult",
+    "LLMClient",
     "LLMFailureReason",
-    "LLMProvider",
+    "LLMMode",
     "LLMStageFailure",
-    "StageLLMConfig",
-    "get_stage_config",
-    "get_structured_response",
-    "looks_like_refusal",
-    "soften_prompt",
+    "ModelSpec",
+    "ResponseCache",
+    "Role",
+    "fingerprint",
 ]

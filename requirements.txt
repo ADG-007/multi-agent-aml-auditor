@@ -25,5 +25,10 @@ rapidfuzz==3.14.6     # token-sort-ratio fuzzy matching of names and aliases
 pytest==9.1.1         # boundary and unit tests under tests/
 ruff==0.17.0          # lint, run on Phase 2 code only (see pyproject.toml)
 
-# --- LLM abstraction (src/llm/, used by Stages 3, 6, 7 in later phases) ---
-langchain==1.4.2      # unified chat-model interface + with_structured_output()
+# --- Local models and orchestration ---
+httpx==0.28.1         # calls to the local Ollama server (src/llm/)
+langchain==1.4.2      # LangGraph's base library
+langgraph==1.2.22     # the live case graph with the admin pause (src/orchestration/)
+
+# --- Demo page ---
+streamlit==1.67.0     # src/demo/app.py

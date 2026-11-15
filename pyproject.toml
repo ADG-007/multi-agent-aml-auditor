@@ -8,11 +8,12 @@ addopts = "-q"
 [tool.ruff]
 line-length = 100
 target-version = "py314"
-# Lint covers the code Phase 2 writes or edits. Phase 1's generators and LLM layer are left
-# as they are (phase_2_execution.md D13) - linting them would mean editing data generators
-# outside this phase's scope.
+# Lint covers everything except Phase 1's generators and schemas, which are left as they are.
 include = [
+    "src/agents/**/*.py",
     "src/bank/**/*.py",
+    "src/demo/**/*.py",
+    "src/llm/**/*.py",
     "src/matching/**/*.py",
     "src/rulebook/**/*.py",
     "src/scoring/**/*.py",
