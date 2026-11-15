@@ -137,6 +137,8 @@ class _Book:
         self.row = row
         self.counterparties: list[Counterparty] = []
         self.planted: list[dict] = []
+        #: A merchant's regular suppliers, set by merchant_flow.
+        self.suppliers: list[Counterparty] = []
 
     def party(self, name: str | None = None, surname: str | None = None, business: str | None = None) -> Counterparty:
         """A new counterparty of this account's own, named from its own stream."""
@@ -255,6 +257,7 @@ def merchant_flow(book: _Book, customer: Customer, cash_cps: list[Counterparty])
         book.party(business=rng.choice(SUPPLIER_SUFFIXES[trade]))
         for _ in range(rng.randint(1, 2) if trade == "fuel" else rng.randint(2, 3))
     ]
+    book.suppliers = suppliers
     regulars = [book.party() for _ in range(rng.randint(15, 30))]
     closed_weekday = None if trade == "fuel" else rng.randint(0, 6)
     open_hours = (6, 22) if trade == "fuel" else (10, 21)
@@ -292,6 +295,52 @@ def merchant_flow(book: _Book, customer: Customer, cash_cps: list[Counterparty])
             book.add(float(rng.choice((2_000, 3_000, 5_000, 10_000))), ATM,
                      _at(day, rng.randint(8, 20), rng.randint(0, 59)), rng.choice(cash_cps), DEBIT)
     return takings
+
+
+def cash_takings_flow(book: _Book, streams: Streams, customer: Customer, ordinary: list[dict]) -> None:
+    """The counter's cash takings, banked at the branch on working days (Amendment 4, Q6).
+
+    Each full month's cash comes to just under or just inside the structuring band - an
+    honest business whose takings happen to sit there, declared in the KYC profile. The cash
+    is paid on to the same suppliers as the UPI takings, so money in and out stay level.
+    Drawn from its own stream, so the merchant's UPI trade is unchanged. The owner's own
+    ordinary cash deposits count towards the month too, so the month never passes the CTR.
+    """
+    from src.generators.transactions import cash_takings
+
+    # The business itself pays the cash in: one counterparty for every deposit.
+    counter = book.party(business="Fuel Station" if _trade(customer) == "fuel" else "Mobile Centre")
+    for amount, rail, when, party, direction in cash_takings(
+        streams, book.account_id, ordinary, counter, book.suppliers
+    ):
+        book.add(amount, rail, when, party, direction)
+
+
+def declared_cash_business_income(
+    streams: Streams, customers: list[Customer], accounts, transactions, plan
+) -> list[Customer]:
+    """Raise a cash business's declared income to fit its turnover (S14).
+
+    Without this the banked cash would make the account move far more than its owner says
+    they earn - an unlabelled KYC mismatch. Set once the account's history exists.
+    """
+    if not plan.cash_business:
+        return customers
+    owner = {a.account_id: a.customer_id for a in accounts}
+    turnover: dict[str, float] = {}
+    for t in transactions:
+        if t.account_id in plan.cash_business:
+            turnover[owner[t.account_id]] = turnover.get(owner[t.account_id], 0.0) + t.amount
+    updated = []
+    for customer in customers:
+        if customer.customer_id in turnover:
+            rng = streams.rng("cash_business", "income", customer.customer_id)
+            annual = turnover[customer.customer_id] * 365 / cfg.HISTORY_DAYS
+            income = round(annual / rng.uniform(*cfg.CASH_BUSINESS_TURNOVER_MULTIPLE), -4)
+            income = min(max(income, customer.stated_income), cfg.INCOME_MAX)
+            customer = customer.model_copy(update={"stated_income": int(income)})
+        updated.append(customer)
+    return updated
 
 
 def complicit_layer(book: _Book, takings: float, collector: Counterparty) -> None:
@@ -424,6 +473,8 @@ def account_activity(
         mule_flow(book, customer, collectors[plan.mule_collector[account_id]], burst_start, rng.choice(domestic_cps))
     elif cohort in ("merchant_lookalike", "complicit_merchant"):
         takings = merchant_flow(book, customer, domestic_cps)
+        if account_id in plan.cash_business:
+            cash_takings_flow(book, streams, customer, ordinary)
         if cohort == "complicit_merchant":
             complicit_layer(book, takings, collectors[plan.mule_collector[account_id]])
     elif cohort == "life_event":

@@ -75,11 +75,11 @@ def test_trail_is_short_and_fixed(rulebook):
     assert len(out.reasoning_trail) <= config.MAX_TRAIL_STEPS
     assert [s.step for s in out.reasoning_trail] == [
         "Structuring",
+        "Monthly cash",
         "Pass-through",
         "Combined confidence",
         "Velocity",
         "Round-amount share",
-        "Calendar-month cash totals",
         "In-band non-cash payments",
         "Stranger share",
     ]

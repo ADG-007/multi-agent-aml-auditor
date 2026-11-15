@@ -9,16 +9,24 @@
   ],
   "stage2": [
     {
-      "account_id": "ACC-0037",
-      "slot": "structurer_k4"
+      "account_id": "ACC-0067",
+      "slot": "structurer_naive_low_k"
+    },
+    {
+      "account_id": "ACC-0293",
+      "slot": "structurer_naive_high_k"
     },
     {
       "account_id": "ACC-0068",
-      "slot": "structurer_k6"
+      "slot": "structurer_small"
     },
     {
-      "account_id": "ACC-0125",
-      "slot": "structurer_k8"
+      "account_id": "ACC-0037",
+      "slot": "structurer_medium"
+    },
+    {
+      "account_id": "ACC-0011",
+      "slot": "structurer_mixed"
     },
     {
       "account_id": "ACC-0347",
@@ -38,7 +46,11 @@
     },
     {
       "account_id": "ACC-0346",
-      "slot": "merchant_lookalike"
+      "slot": "cash_business_merchant"
+    },
+    {
+      "account_id": "ACC-0009",
+      "slot": "cash_business_shop"
     },
     {
       "account_id": "ACC-0350",

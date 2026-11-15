@@ -8,6 +8,7 @@ rather than in Phase 11 when the evaluation numbers look strange.
 
 from __future__ import annotations
 
+import os
 from datetime import date
 from pathlib import Path
 
@@ -35,7 +36,8 @@ REFERENCE_DATE = date(2026, 9, 22)
 # --------------------------------------------------------------------------------------
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
-DATA_DIR = PROJECT_ROOT / "data"
+#: AML_DATA_DIR redirects a build to another folder (the same-seed and fresh-seed checks).
+DATA_DIR = Path(os.environ.get("AML_DATA_DIR") or PROJECT_ROOT / "data")
 DOCUMENTS_DIR = DATA_DIR / "documents"
 RULEBOOK_DIR = DATA_DIR / "rulebook"
 RULEBOOK_MARKDOWN_DIR = RULEBOOK_DIR / "clauses"
@@ -179,6 +181,52 @@ TXNS_PER_ACCOUNT_MAX = 90
 STRUCTURING_WINDOW_DAYS = 30
 STRUCTURING_TXN_MIN = 4
 STRUCTURING_TXN_MAX = 8
+
+#: Structurer shapes (Amendment 4, Q2/Q3, S8). A "naive" structurer keeps the shape above:
+#: single deposits in the band, which breaks the monthly aggregate (STRUCT-002). The rest
+#: keep each calendar month's cash under the CTR instead, with deposits of one amount style.
+NUM_NAIVE_STRUCTURERS = 6
+STRUCTURING_STYLES = ("small", "medium", "mixed")
+
+#: Monthly cash deposits are counted against the same ceiling as a single deposit
+#: (Rule 3(1)(B)), and the band under it uses the same fraction.
+MONTHLY_BAND_LOW = int(CTR_THRESHOLD_INR * NEAR_THRESHOLD_PCT)
+MONTHLY_BAND_HIGH = CTR_THRESHOLD_INR
+
+#: What a new-shape structurer brings a planted month's cash deposits to: inside the band,
+#: and never at the ceiling.
+STRUCTURING_MONTH_TOTAL = (905_000, 995_000)
+
+#: Smallest and largest single deposit per style (S8). "mixed" is a few large deposits plus
+#: many small ones.
+STRUCTURING_DEPOSIT_MIN = 20_000
+STRUCTURING_STYLE_MAX = {"small": 200_000, "medium": 500_000}
+MIXED_LARGE = (200_000, 500_000)
+MIXED_LARGE_COUNT = (1, 3)
+MIXED_SMALL_MAX = 100_000
+
+#: How many of the three full-or-partial months (July, August, 1-21 September) a new-shape
+#: structurer plants in.
+STRUCTURING_MONTHS = (2, 3)
+
+#: Honest cash businesses whose month's cash lands near the band, sometimes in it, for a
+#: reason the profile states (Q6, Q12): 4 of the merchant look-alikes bank their counter's
+#: cash, and 8 clean base-population shopkeepers and traders bank their takings. 12 traps
+#: against 24 monthly-cap structurers: a ratio chosen, not measured.
+NUM_MERCHANT_CASH_BUSINESSES = 4
+NUM_SHOP_CASH_BUSINESSES = 8
+NUM_CASH_BUSINESS_DECOYS = NUM_MERCHANT_CASH_BUSINESSES + NUM_SHOP_CASH_BUSINESSES
+#: Occupations a base-population cash business is drawn from.
+CASH_BUSINESS_OCCUPATIONS = (
+    "Kirana store proprietor",
+    "Textile trader",
+    "Jewellery shop proprietor",
+)
+CASH_BUSINESS_MONTH_TOTAL = (860_000, 980_000)
+#: The share of banked cash paid on to the merchant's suppliers.
+CASH_BUSINESS_SUPPLIER_SHARE = (0.80, 0.92)
+#: Their declared income is set so the whole account's turnover is this multiple of it.
+CASH_BUSINESS_TURNOVER_MULTIPLE = (4.5, 6.0)
 
 # --------------------------------------------------------------------------------------
 # Fraud rings

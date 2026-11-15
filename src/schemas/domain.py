@@ -217,11 +217,19 @@ class EvidenceLedgerEntry(BaseModel):
             "within hours. Network mules, solo mules and complicit merchants."
         ),
     )
+    structuring_style: str | None = Field(
+        default=None,
+        description=(
+            "Structurers only (Amendment 4): naive (single deposits in the band), or the "
+            "amount style of a structurer who keeps each month under the CTR: small, medium, "
+            "mixed."
+        ),
+    )
     decoy_types: list[str] = Field(
         default_factory=list,
         description=(
             "Deliberate false-positive bait: name_similarity, graph_coincidence, round_amount, "
-            "cross_border_legitimate, merchant_lookalike, life_event."
+            "cross_border_legitimate, merchant_lookalike, life_event, cash_business."
         ),
     )
 

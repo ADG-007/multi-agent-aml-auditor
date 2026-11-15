@@ -14,6 +14,7 @@ from src.matching import NameIndex
 from src.orchestration.run_state import RunState
 from src.rulebook import (
     CROSS_BORDER_CLAUSE_ID,
+    MONTHLY_CASH_CLAUSE_ID,
     MULE_FLOOR_CLAUSE_ID,
     STRUCTURING_CLAUSE_ID,
     RulebookLookup,
@@ -27,6 +28,7 @@ from src.schemas import (
     TriageEventKind,
     TriageRule,
 )
+from src.stages import cash_aggregate
 from src.stages.stage0_triage import config
 
 
@@ -37,6 +39,7 @@ S = StageName
 #: except where the table lists them explicitly.
 RULE_ROUTES: dict[TriageRule, frozenset[StageName]] = {
     TriageRule.CASH_THRESHOLD: frozenset({S.TRANSACTION_PATTERN, S.ADVERSE_MEDIA, S.GRAPH}),
+    TriageRule.MONTHLY_CASH: frozenset({S.TRANSACTION_PATTERN, S.ADVERSE_MEDIA, S.GRAPH}),
     TriageRule.CROSS_BORDER: frozenset({S.TRANSACTION_PATTERN, S.KYC, S.GRAPH}),
     TriageRule.KYC_EVENT: frozenset({S.KYC, S.VISION}),
     TriageRule.KNOWN_BAD_IDENTIFIER: frozenset({S.GRAPH, S.ADVERSE_MEDIA}),
@@ -273,6 +276,81 @@ def pass_through(
                     ]
         i += 1
     return hits
+
+
+def monthly_cash(
+    history: Sequence[Transaction],
+    rulebook: RulebookLookup,
+    within: Transaction | None = None,
+) -> list[Hit]:
+    """Cash of one direction kept just under the monthly report (Amendment 4, Q4, Q10, S12).
+
+    Review mode (`within` None): one hit per calendar month in the band and per separate
+    30-day window of the floor or more with no month above the threshold, on the row that
+    brought the total in. Live mode: fires once if `within` is cash and, with the history
+    ending at it, its month's total is in the band or the 30 days ending at it meet the
+    window test.
+    """
+    band = rulebook.monthly_structuring()
+    span = config.MONTHLY_CASH_WINDOW
+    hits: list[Hit] = []
+    for kind in sorted(config.CASH_TYPES, key=lambda k: k.value):
+        rows = [t for t in history if t.type == kind]
+        if within is not None:
+            if within.type != kind:
+                continue
+            hit = _monthly_live(rows, within, band, span)
+            return [hit] if hit else []
+        seen: set[str] = set()
+        for b in cash_aggregate.band_months(rows, band):
+            seen.add(b.reached_by.transaction_id)
+            hits.append(_monthly_hit(kind, f"{b.month:%b %Y}", b.total, band, b.reached_by))
+        for w in cash_aggregate.sliding_windows(rows, band, span):
+            if w.reached_by.transaction_id in seen:
+                continue
+            seen.add(w.reached_by.transaction_id)
+            when = f"{w.first:%Y-%m-%d} to {w.last:%Y-%m-%d}"
+            hits.append(_monthly_hit(kind, when, w.total, band, w.reached_by, window=True))
+    return hits
+
+
+def _monthly_live(rows, within, band, span) -> Hit | None:
+    month = cash_aggregate.month_of(within.timestamp)
+    totals = cash_aggregate.month_totals(rows)
+    if band.band_floor_inr <= totals[month] <= band.threshold_inr:
+        return _monthly_hit(within.type, f"{month:%b %Y} to date", totals[month], band, within)
+    recent = [t for t in rows if within.timestamp - span < t.timestamp <= within.timestamp]
+    touched = {cash_aggregate.month_of(t.timestamp) for t in recent}
+    total = sum(t.amount for t in recent)
+    if total >= band.band_floor_inr and all(totals[m] <= band.threshold_inr for m in touched):
+        when = f"{recent[0].timestamp:%Y-%m-%d} to {within.timestamp:%Y-%m-%d}"
+        return _monthly_hit(within.type, when, total, band, within, window=True)
+    return None
+
+
+def _monthly_hit(kind, when, total, band, t, window=False) -> Hit:
+    what = f"{_label(kind.value)}s"
+    if window:
+        detail = f"{kind.value} {inr(total)} {when}, no month above {inr(band.threshold_inr)}"
+        reason = (
+            f"{what} from {when} total {inr(total)}, with no calendar month above "
+            f"{inr(band.threshold_inr)}, so no monthly cash report was due "
+            f"({MONTHLY_CASH_CLAUSE_ID})."
+        )
+    else:
+        detail = f"{kind.value} {inr(total)} in {when}"
+        reason = (
+            f"{what} in {when} total {inr(total)}, in the band {inr(band.band_floor_inr)}-"
+            f"{inr(band.threshold_inr)} just under the monthly cash report "
+            f"({MONTHLY_CASH_CLAUSE_ID})."
+        )
+    return _hit(
+        TriageRule.MONTHLY_CASH,
+        detail=detail,
+        reason=reason,
+        transaction_id=t.transaction_id,
+        clause_id=MONTHLY_CASH_CLAUSE_ID,
+    )
 
 
 def reinvestigation(account_id: str, state: RunState, other_hits: Sequence[Hit]) -> Hit | None:

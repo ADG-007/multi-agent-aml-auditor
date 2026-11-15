@@ -33,6 +33,7 @@ than a bank-wide serial, so appending a block of customers changes no existing t
 
 from __future__ import annotations
 
+import math
 import random
 from collections import defaultdict
 from datetime import date, datetime, time, timedelta
@@ -40,6 +41,7 @@ from datetime import date, datetime, time, timedelta
 from faker import Faker
 
 from src.generators import config as cfg
+from src.generators import monthly_cash
 from src.generators.addresses import foreign_business_address
 from src.generators.identifiers import device_id, ip_address
 from src.generators.names import indian_name
@@ -529,6 +531,189 @@ def ordinary_rows(
     return rows
 
 
+def _to_transfer(item: dict) -> None:
+    """Move one cash row onto NEFT: same amount, same direction, same time."""
+    item["type"] = TransactionType.NEFT
+
+
+def keep_cash_out_of_band(rows: list[dict], keep_deposits: bool = False) -> None:
+    """Keep an account's monthly cash clear of the structuring tests, in place (S9).
+
+    Single amounts already avoid the band when drawn. This does the same for the monthly
+    totals (monthly_cash.py): while a calendar month of one cash direction totals 9-10 lakh,
+    or a 30-day window reaches 9 lakh with no month over 10 lakh, the largest cash row
+    involved becomes a NEFT transfer. No randomness, so the account's stream is untouched.
+    `keep_deposits` leaves planted deposits (structurers, cash businesses) alone.
+    """
+    kinds = [TransactionType.CASH_WITHDRAWAL]
+    if not keep_deposits:
+        kinds.append(TransactionType.CASH_DEPOSIT)
+    for kind in kinds:
+        while True:
+            cash = sorted((r for r in rows if r["type"] == kind), key=lambda r: r["timestamp"])
+            hit = monthly_cash.first_violation([(r["timestamp"], r["amount"]) for r in cash])
+            if hit is None:
+                break
+            _to_transfer(max((cash[i] for i in hit), key=lambda r: r["amount"]))
+
+
+def history_months() -> list[date]:
+    """The first day of each calendar month the 90-day history touches."""
+    first = cfg.REFERENCE_DATE - timedelta(days=cfg.HISTORY_DAYS)
+    months = []
+    day = first
+    while day < cfg.REFERENCE_DATE:
+        if day.replace(day=1) not in months:
+            months.append(day.replace(day=1))
+        day += timedelta(days=1)
+    return months
+
+
+def branch_weekdays(month: date) -> list[date]:
+    """The weekdays of `month` inside the 90-day history."""
+    first = cfg.REFERENCE_DATE - timedelta(days=cfg.HISTORY_DAYS)
+    days = []
+    day = month
+    while day.month == month.month:
+        if first <= day < cfg.REFERENCE_DATE and day.weekday() < 5:
+            days.append(day)
+        day += timedelta(days=1)
+    return days
+
+
+def style_max(style: str) -> int:
+    """The largest single deposit a monthly-cap structurer of this style makes."""
+    return cfg.MIXED_LARGE[1] if style == "mixed" else cfg.STRUCTURING_STYLE_MAX[style]
+
+
+def cash_takings(
+    streams: Streams,
+    account_id: str,
+    ordinary: list[dict],
+    counter: Counterparty,
+    suppliers: list[Counterparty],
+) -> list[tuple]:
+    """A cash business's banked takings and the supplier payments they fund (Q6, Q12).
+
+    Returns (amount, rail, when, counterparty, direction) rows. Cash is banked on most
+    working days; each full month comes to 8.6-9.8 lakh, a part month to its share, and no
+    month passes the CTR once the owner's own ordinary cash deposits are counted. Every 2
+    lakh or so banked is paid on to a supplier. Drawn from the account's own cash_business
+    stream, so nothing else about the account moves.
+    """
+    rng = streams.rng("cash_business", account_id)
+    full_month = rng.uniform(*cfg.CASH_BUSINESS_MONTH_TOTAL)
+    out: list[tuple] = []
+    for month in history_months():
+        weekdays = branch_weekdays(month)
+        if not weekdays:
+            continue
+        target = full_month * rng.uniform(0.96, 1.04) * len(weekdays) / 22
+        own = sum(
+            r["amount"] for r in ordinary
+            if r["type"] == TransactionType.CASH_DEPOSIT and monthly_cash.month_of(r["timestamp"]) == month
+        )
+        target = min(target, cfg.MONTHLY_BAND_HIGH * 0.985 - own)
+        banked_days = [d for d in weekdays if rng.random() < 0.9] or weekdays[:1]
+        weights = [rng.uniform(0.6, 1.4) for _ in banked_days]
+        unpaid = 0.0
+        for day, weight in zip(banked_days, weights):
+            amount = float(round(target * weight / sum(weights), -1))
+            when = datetime.combine(day, time(rng.randint(10, 14), rng.randint(0, 59)))
+            out.append((amount, TransactionType.CASH_DEPOSIT, when, counter, CREDIT))
+            unpaid += amount
+            if unpaid >= 200_000 and suppliers:
+                payment = unpaid * rng.uniform(*cfg.CASH_BUSINESS_SUPPLIER_SHARE)
+                pay_at = when + timedelta(hours=rng.randint(1, 3))
+                rail = TransactionType.RTGS if payment >= 200_000 else TransactionType.NEFT
+                out.append((payment, rail, pay_at, rng.choice(suppliers), DEBIT))
+                unpaid = 0.0
+    return out
+
+
+def _style_amount(rng: random.Random, style: str, large: bool = False) -> float:
+    """One planted deposit. Log-uniform, so small amounts are the more common."""
+    if large:
+        low, high = cfg.MIXED_LARGE
+    elif style == "mixed":
+        low, high = cfg.STRUCTURING_DEPOSIT_MIN, cfg.MIXED_SMALL_MAX
+    else:
+        low, high = cfg.STRUCTURING_DEPOSIT_MIN, cfg.STRUCTURING_STYLE_MAX[style]
+    amount = math.exp(rng.uniform(math.log(low), math.log(high)))
+    # Cash is counted out in notes, so most deposits are whole hundreds.
+    return float(round(amount, -2) if rng.random() < 0.8 else round(amount))
+
+
+def _plant_monthly_structuring(
+    rng: random.Random,
+    row,
+    ordinary: list[dict],
+    style: str,
+    domestic_cps: list[Counterparty],
+) -> list[dict]:
+    """Cash deposits that bring 2-3 calendar months to just under the CTR (Q2, S8, S10).
+
+    A month's total counts every cash deposit, ordinary ones too. Ordinary cash deposits in a
+    planted month are capped first (the largest move to NEFT), then planted deposits fill the
+    month to its target. Planted deposits fall on weekdays, so a weekend shift to Friday
+    cannot carry one into the month before.
+    """
+    # July, August and 1-21 September: June has only its last week in the history.
+    months = [m for m in history_months() if len(branch_weekdays(m)) >= 10]
+    chosen = sorted(rng.sample(months, rng.randint(*cfg.STRUCTURING_MONTHS)))
+    planted: list[dict] = []
+    for month in chosen:
+        target = float(rng.randint(*cfg.STRUCTURING_MONTH_TOTAL))
+        own = [
+            r for r in ordinary
+            if r["type"] == TransactionType.CASH_DEPOSIT and monthly_cash.month_of(r["timestamp"]) == month
+        ]
+        # Ordinary cash also keeps to the style's largest deposit, so the month reads as one
+        # shape (a small-style month has no single deposit above 2 lakh).
+        while own and (
+            sum(r["amount"] for r in own) > target / 3
+            or max(r["amount"] for r in own) > style_max(style)
+        ):
+            largest = max(own, key=lambda r: r["amount"])
+            _to_transfer(largest)
+            own.remove(largest)
+        remaining = target - sum(r["amount"] for r in own)
+
+        floor = cfg.STRUCTURING_DEPOSIT_MIN
+        amounts: list[float] = []
+        if style == "mixed":
+            for _ in range(rng.randint(*cfg.MIXED_LARGE_COUNT)):
+                amount = min(_style_amount(rng, style, large=True), remaining - floor)
+                if amount >= cfg.MIXED_LARGE[0]:
+                    amounts.append(amount)
+                    remaining -= amount
+        while remaining >= 2 * floor:
+            amount = min(_style_amount(rng, style), remaining - floor)
+            amounts.append(amount)
+            remaining -= amount
+        amounts.append(float(round(remaining, 2)))
+
+        weekdays = branch_weekdays(month)
+        for amount in amounts:
+            planted.append(
+                row(amount, TransactionType.CASH_DEPOSIT, rng.choice(weekdays), rng.choice(domestic_cps), CREDIT)
+            )
+
+    # The other months keep ordinary cash under the band, so no month is ever over the CTR.
+    for month in history_months():
+        if month in chosen:
+            continue
+        own = [
+            r for r in ordinary
+            if r["type"] == TransactionType.CASH_DEPOSIT and monthly_cash.month_of(r["timestamp"]) == month
+        ]
+        while sum(r["amount"] for r in own) >= cfg.MONTHLY_BAND_LOW:
+            largest = max(own, key=lambda r: r["amount"])
+            _to_transfer(largest)
+            own.remove(largest)
+    return planted
+
+
 def _transaction_id(txn: Transaction, clash: int) -> str:
     """TXN-<posting date>-<posting time>-<account number>, e.g. TXN-20260722-143512-0042.
 
@@ -649,6 +834,9 @@ def generate(
             )
             counterparties.extend(own_counterparties)
             _assign_directions(ordinary)
+            keep_cash_out_of_band(
+                ordinary + planted, keep_deposits=account_id in plan.cash_business
+            )
             _finish_account(rng, account_id, entry, ordinary + planted, transactions)
             continue
 
@@ -674,12 +862,16 @@ def generate(
         _assign_directions(ordinary)
 
         # ---------------------------------------------------------------------------
-        # Planted structuring: a cluster of deposits just under the CTR threshold, inside
-        # a single 30-day window. Rule 3 aggregates integrally connected cash transactions
-        # over a month, so a month is the window a real analyst would look at. Always money
-        # in, always from domestic sources.
+        # Planted structuring (Amendment 4). Most structurers keep each calendar month's
+        # cash under the CTR, which Rule 3(1)(B) aggregates over a month. A few "naive"
+        # ones still park single deposits just under the threshold, inside one 30-day
+        # window. Always money in, always from domestic sources.
         # ---------------------------------------------------------------------------
-        if is_structuring:
+        if is_structuring and plan.structuring_style[account_id] != "naive":
+            planted += _plant_monthly_structuring(
+                rng, row, ordinary, plan.structuring_style[account_id], domestic_cps
+            )
+        elif is_structuring:
             burst_start = rng.randint(0, cfg.HISTORY_DAYS - cfg.STRUCTURING_WINDOW_DAYS)
             for _ in range(rng.randint(cfg.STRUCTURING_TXN_MIN, cfg.STRUCTURING_TXN_MAX)):
                 roll = rng.random()
@@ -804,6 +996,24 @@ def generate(
                 planted.append(row(amount, TransactionType.SWIFT, day_at(rng.randint(0, cfg.HISTORY_DAYS - 1)),
                                    counterparty, DEBIT, purpose))
 
+        # ---------------------------------------------------------------------------
+        # A shop or trader that banks its takings (Amendment 4, Q12): an honest trap for
+        # the monthly-cash check, declared in the KYC profile.
+        # ---------------------------------------------------------------------------
+        if account_id in plan.cash_business:
+            picker = streams.rng("cash_business", "parties", account_id)
+            businesses = [c for c in domestic_cps if c.name.endswith(INDIAN_BUSINESS_SUFFIXES)]
+            counter = picker.choice(domestic_cps)
+            suppliers = picker.sample(businesses, 2)
+            for amount, rail, when, party, direction in cash_takings(
+                streams, account_id, ordinary, counter, suppliers
+            ):
+                when = when.replace(second=rng.randint(0, 59))
+                planted.append(row(float(round(amount, 2)), rail, when, party, direction))
+
+        keep_cash_out_of_band(
+            ordinary + planted, keep_deposits=is_structuring or account_id in plan.cash_business
+        )
         _finish_account(rng, account_id, entry, ordinary + planted, transactions)
 
     # Ids come from each transaction's own posting time and account, so they still sort

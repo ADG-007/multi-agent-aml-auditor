@@ -4,7 +4,7 @@
 
 Phases 3-7 are build-tested on small per-stage subsets plus one shared set of linked accounts
 (decisions_and_progress.md Part 11); the full 370-account run happens once, in Phase 11. This
-script picks Stage 2's accounts (phase_3_execution.md D7) and writes them to
+script picks Stage 2's accounts (phase_3_execution.md D7, Amendment 4 Q11) and writes them to
 data/_ground_truth/stage_subsets.json, in the answer-key folder no pipeline module reads.
 
 The rule, so the pick is reproducible and nobody chooses accounts by hand:
@@ -12,8 +12,10 @@ The rule, so the pick is reproducible and nobody chooses accounts by hand:
 1. The shared set: every member of RING-04 (one structurer, one KYC-mismatch member) and the
    two lowest-id members of RING-12 (mules that share one collector).
 2. Each slot, in order, takes a shared account that fits it, else the lowest account id that
-   fits; an account fills at most one slot. The k = 4 structurer slot prefers an account whose
-   only real channel is structuring.
+   fits; an account fills at most one slot. The two naive-structurer slots instead take the
+   lowest and the highest k (lowest id on a tie). One cash-business slot takes a merchant
+   look-alike, the other a base shopkeeper or trader (Amendment 4, Q12). The small-style
+   structurer slot prefers an account whose only real channel is structuring.
 
 `k` is computed with Stage 2's own structuring code at the bank's review date. Running the
 script twice writes the same file. Other stages' keys in the file are left as they are.
@@ -67,6 +69,7 @@ class Truth:
                 return "network_mule"
             return "complicit_merchant" if self.pays_mule_collector else "solo_mule"
         for decoy in (
+            "cash_business",
             "merchant_lookalike",
             "life_event",
             "round_amount",
@@ -81,28 +84,40 @@ def _is(role: str) -> Callable[[Truth], bool]:
     return lambda t: t.role == role
 
 
-def _structurer(k: int) -> Callable[[Truth], bool]:
-    return lambda t: t.role == "structurer" and t.k == k
+def _structurer(style: str) -> Callable[[Truth], bool]:
+    return lambda t: t.role == "structurer" and t.entry.structuring_style == style
 
 
-#: The slots, in filling order (D7): (slot name, fits).
+def _cash_business(merchant: bool) -> Callable[[Truth], bool]:
+    return lambda t: (
+        t.role == "cash_business" and (("merchant_lookalike" in t.entry.decoy_types) == merchant)
+    )
+
+
+#: The slots, in filling order (D7, Amendment 4 Q11): (slot name, fits).
 SLOTS: tuple[tuple[str, Callable[[Truth], bool]], ...] = (
-    ("structurer_k4", _structurer(4)),
-    ("structurer_k6", _structurer(6)),
-    ("structurer_k8", _structurer(8)),
+    ("structurer_naive_low_k", _structurer("naive")),
+    ("structurer_naive_high_k", _structurer("naive")),
+    ("structurer_small", _structurer("small")),
+    ("structurer_medium", _structurer("medium")),
+    ("structurer_mixed", _structurer("mixed")),
     ("network_mule", _is("network_mule")),
     ("solo_mule", _is("solo_mule")),
     ("solo_mule", _is("solo_mule")),
     ("complicit_merchant", _is("complicit_merchant")),
-    ("merchant_lookalike", _is("merchant_lookalike")),
+    ("cash_business_merchant", _cash_business(merchant=True)),
+    ("cash_business_shop", _cash_business(merchant=False)),
     ("merchant_lookalike", _is("merchant_lookalike")),
     ("life_event", _is("life_event")),
     ("round_amount", _is("round_amount")),
     ("cross_border_legitimate", _is("cross_border_legitimate")),
 )
 
+#: Slots that order their candidates by k instead of shared-first, lowest id.
+BY_K = {"structurer_naive_low_k": 1, "structurer_naive_high_k": -1}
+
 #: The slot that prefers a structuring-only account.
-PREFERS_STRUCTURING_ONLY = "structurer_k4"
+PREFERS_STRUCTURING_ONLY = "structurer_small"
 
 
 def load_truth(
@@ -140,7 +155,13 @@ def pick(truth: dict[str, Truth]) -> dict[str, list]:
     taken: set[str] = set()
     stage2 = []
     for slot, fits in SLOTS:
-        candidates = [a for a in shared if a not in taken and fits(truth[a])]
+        if slot in BY_K:
+            candidates = sorted(
+                (a for a in truth if a not in taken and fits(truth[a])),
+                key=lambda a: (BY_K[slot] * truth[a].k, a),
+            )
+        else:
+            candidates = [a for a in shared if a not in taken and fits(truth[a])]
         if not candidates:
             candidates = [a for a in sorted(truth) if a not in taken and fits(truth[a])]
         if slot == PREFERS_STRUCTURING_ONLY:

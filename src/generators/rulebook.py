@@ -69,6 +69,11 @@ def build_clauses() -> list[RulebookClause]:
             metadata={
                 "threshold_inr": cfg.CTR_THRESHOLD_INR,
                 "near_threshold_pct": cfg.NEAR_THRESHOLD_PCT,
+                # The monthly aggregate (STRUCT-002, Rule 3(1)(B)) and the band under it,
+                # kept here beside the single-amount pair so every stage reads one clause
+                # (Amendment 4, S3).
+                "monthly_threshold_inr": cfg.MONTHLY_BAND_HIGH,
+                "monthly_near_threshold_pct": cfg.NEAR_THRESHOLD_PCT,
             },
         ),
         RulebookClause(

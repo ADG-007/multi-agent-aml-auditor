@@ -14,6 +14,8 @@ def test_reads_the_committed_values():
     assert structuring.band_floor_inr == 900_000
     assert rulebook.cross_border_threshold() == 500_000
     assert rulebook.mule_floor() == 1_000
+    monthly = rulebook.monthly_structuring()
+    assert (monthly.threshold_inr, monthly.band_floor_inr) == (1_000_000, 900_000)
 
 
 def test_a_changed_clause_changes_the_value():
@@ -42,3 +44,5 @@ def test_missing_clause_or_key_raises():
         rulebook.structuring()
     with pytest.raises(KeyError):
         rulebook.mule_floor()
+    with pytest.raises(KeyError):
+        rulebook.monthly_structuring()

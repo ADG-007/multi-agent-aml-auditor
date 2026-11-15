@@ -175,6 +175,7 @@ class TriageRule(str, Enum):
     """The rows of Stage 0's routing table (MASTER_PLAN.md Phase 2), one value per row."""
 
     CASH_THRESHOLD = "CASH_THRESHOLD"
+    MONTHLY_CASH = "MONTHLY_CASH"
     CROSS_BORDER = "CROSS_BORDER"
     KYC_EVENT = "KYC_EVENT"
     KNOWN_BAD_IDENTIFIER = "KNOWN_BAD_IDENTIFIER"

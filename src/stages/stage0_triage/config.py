@@ -23,6 +23,10 @@ PASS_THROUGH_WINDOW: timedelta = timedelta(hours=24)
 #: and PASS_THROUGH_WINDOW after its last.
 PASS_THROUGH_FORWARD_SHARE: float = 0.70
 
+#: The monthly-cash rule's sliding window (Amendment 4, Q10). The law sets no window; 30 days
+#: matches the calendar month in length, as Stage 2's window does.
+MONTHLY_CASH_WINDOW: timedelta = timedelta(days=30)
+
 #: The CTR is a cash report, so only these types fire the cash-threshold rule.
 CASH_TYPES: frozenset[TransactionType] = frozenset(
     {TransactionType.CASH_DEPOSIT, TransactionType.CASH_WITHDRAWAL}

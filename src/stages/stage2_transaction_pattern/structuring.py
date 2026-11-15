@@ -105,12 +105,16 @@ def score(
 
 def structuring_map(k: int) -> float:
     """The decided map (D4), linear between its points, flat beyond the last."""
-    points = config.STRUCTURING_MAP
-    if k <= points[0][0]:
+    return piecewise(config.STRUCTURING_MAP, k)
+
+
+def piecewise(points: tuple[tuple[int, float], ...], x: int) -> float:
+    """Linear between `points`, flat before the first and beyond the last."""
+    if x <= points[0][0]:
         return points[0][1]
-    for (k0, s0), (k1, s1) in zip(points, points[1:], strict=False):
-        if k <= k1:
-            return s0 + (s1 - s0) * (k - k0) / (k1 - k0)
+    for (x0, s0), (x1, s1) in zip(points, points[1:], strict=False):
+        if x <= x1:
+            return s0 + (s1 - s0) * (x - x0) / (x1 - x0)
     return points[-1][1]
 
 

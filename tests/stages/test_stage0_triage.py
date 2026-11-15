@@ -194,9 +194,12 @@ def test_real_bank_review_counts():
         for rule in {f.rule for f in out.fired_rules}:
             per_rule[rule] = per_rule.get(rule, 0) + 1
     assert per_rule[TriageRule.KYC_EVENT] == 370
-    assert per_rule[TriageRule.CASH_THRESHOLD] == 30
+    # Amendment 4: 6 naive structurers keep single deposits in the band; the 24 monthly-cap
+    # structurers and the 12 cash businesses fire the monthly rule instead.
+    assert per_rule[TriageRule.CASH_THRESHOLD] == 6
+    assert per_rule[TriageRule.MONTHLY_CASH] == 36
     assert per_rule[TriageRule.CROSS_BORDER] == 30
-    assert per_rule[TriageRule.PASS_THROUGH] == 28
+    assert per_rule[TriageRule.PASS_THROUGH] == 32
     assert per_rule[TriageRule.NAME_MATCH] == 37
 
 

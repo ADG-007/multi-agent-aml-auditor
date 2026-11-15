@@ -15,7 +15,7 @@ def real_bank() -> BankData:
 
 def test_loads_the_committed_dataset(real_bank):
     assert len(real_bank.account_ids()) == 370
-    assert sum(len(real_bank.transactions(a)) for a in real_bank.account_ids()) == 23_448
+    assert sum(len(real_bank.transactions(a)) for a in real_bank.account_ids()) == 24_702
     assert len(real_bank.adverse_media) == 160
 
 

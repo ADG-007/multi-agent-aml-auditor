@@ -78,6 +78,12 @@ class PlantingPlan:
     #: Which legitimate life event each life_event account goes through.
     life_events: dict[str, str] = field(default_factory=dict)
 
+    #: Each structurer's shape (Amendment 4): "naive" (single deposits in the band) or the
+    #: amount style of a monthly-cap structurer, "small", "medium" or "mixed".
+    structuring_style: dict[str, str] = field(default_factory=dict)
+    #: Merchant look-alikes that also bank their counter's cash takings (Amendment 4, Q6).
+    cash_business: set[str] = field(default_factory=set)
+
     def cohort(self, account_id: str) -> str | None:
         return self.cohorts.get(account_id)
 
@@ -142,6 +148,7 @@ def build_planting_plan(
     accounts: list[Account],
     fraud_rings: list[FraudRing],
     cohorts: dict[str, str],
+    occupations: dict[str, str] | None = None,
 ) -> PlantingPlan:
     """Decide the full planting layout.
 
@@ -264,7 +271,55 @@ def build_planting_plan(
     )
 
     _plant_mule_block(plan, fraud_rings, cohorts)
+    _assign_structuring_styles(streams, plan, accounts, occupations or {})
     return plan
+
+
+def _assign_structuring_styles(
+    streams: Streams, plan: PlantingPlan, accounts: list[Account], occupations: dict[str, str]
+) -> None:
+    """Split the structurers into shapes, and pick the cash businesses (Amendment 4).
+
+    Own streams, drawn after everything else, so no earlier planting decision moves. The new
+    shapes are dealt out evenly, so each amount style is present (Q11 needs one of each). The
+    shop cash businesses (Q12) come from base accounts that carry nothing at all: no channel,
+    no other decoy. `occupations` maps account id to the holder's occupation.
+    """
+    rng = streams.rng("planting", "structuring_style")
+    structurers = sorted(plan.structuring)
+    rng.shuffle(structurers)
+    naive = structurers[: cfg.NUM_NAIVE_STRUCTURERS]
+    rest = structurers[cfg.NUM_NAIVE_STRUCTURERS :]
+    for account_id in naive:
+        plan.structuring_style[account_id] = "naive"
+    for position, account_id in enumerate(rest):
+        plan.structuring_style[account_id] = cfg.STRUCTURING_STYLES[position % len(cfg.STRUCTURING_STYLES)]
+
+    merchants = sorted(plan.merchant_lookalike_decoys)
+    if merchants:
+        picker = streams.rng("planting", "cash_business")
+        plan.cash_business = set(
+            picker.sample(merchants, min(cfg.NUM_MERCHANT_CASH_BUSINESSES, len(merchants)))
+        )
+
+    taken = (
+        plan.name_similarity_decoys
+        | plan.round_amount_decoys
+        | plan.graph_coincidence_decoys
+        | set(plan.cohorts)
+    )
+    shops = sorted(
+        a.account_id
+        for a in accounts
+        if cfg.block_of(a.account_id) == "base"
+        and occupations.get(a.account_id) in cfg.CASH_BUSINESS_OCCUPATIONS
+        and plan.real_channels_for(a.account_id) == 0
+        and a.account_id not in taken
+        and a.account_id not in plan.adverse_media
+    )
+    if shops:
+        picker = streams.rng("planting", "shop_cash_business")
+        plan.cash_business |= set(picker.sample(shops, min(cfg.NUM_SHOP_CASH_BUSINESSES, len(shops))))
 
 
 def _plant_mule_block(plan: PlantingPlan, fraud_rings: list[FraudRing], cohorts: dict[str, str]) -> None:
@@ -323,6 +378,8 @@ def build_ledger(accounts: list[Account], plan: PlantingPlan) -> list[EvidenceLe
             decoys.append("merchant_lookalike")
         if account_id in plan.life_event_decoys:
             decoys.append("life_event")
+        if account_id in plan.cash_business:
+            decoys.append("cash_business")
 
         ledger.append(
             EvidenceLedgerEntry(
@@ -334,6 +391,7 @@ def build_ledger(accounts: list[Account], plan: PlantingPlan) -> list[EvidenceLe
                 graph_ring_membership=plan.ring_membership.get(account_id),
                 forged_document_planted=account_id in plan.forged_document,
                 pass_through_planted=account_id in plan.pass_through,
+                structuring_style=plan.structuring_style.get(account_id),
                 decoy_types=decoys,
             )
         )

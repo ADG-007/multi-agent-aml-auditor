@@ -10,7 +10,9 @@
     ],
     "metadata": {
       "threshold_inr": 1000000,
-      "near_threshold_pct": 0.9
+      "near_threshold_pct": 0.9,
+      "monthly_threshold_inr": 1000000,
+      "monthly_near_threshold_pct": 0.9
     }
   },
   {

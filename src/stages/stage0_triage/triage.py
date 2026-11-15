@@ -2,11 +2,12 @@
 
 One entry point for every event kind (phase_2_execution.md D2):
 
-- TRANSACTION (live): the per-transaction rules on that transaction, pass-through on the
-  history ending at it, and the whole-account rules.
+- TRANSACTION (live): the per-transaction rules on that transaction, pass-through and the
+  monthly-cash rule on the history ending at it, and the whole-account rules.
 - KYC_SUBMITTED: the KYC row plus the whole-account rules.
 - PERIODIC_REVIEW (Phase 11): the per-transaction rules on every transaction in the history,
-  every pass-through burst, the whole-account rules, and the KYC row for the profile on file.
+  every pass-through burst, every monthly-cash finding, the whole-account rules, and the KYC
+  row for the profile on file.
 
 The route is the union of every fired rule's stages. A flagged account that trips any rule is
 re-investigated by every stage. Rulebook joins whenever a weighted stage is routed; Auditor is
@@ -66,12 +67,14 @@ def triage(event: TriageEvent, ctx: TriageContext, state: RunState) -> Stage0Tri
         history = _history_until(ctx.bank, event.transaction)
         hits = _transaction_hits(event.transaction, account_id, ctx, state)
         hits += rules.pass_through(history, ctx.rulebook, within=event.transaction)
+        hits += rules.monthly_cash(history, ctx.rulebook, within=event.transaction)
     elif event.kind == TriageEventKind.PERIODIC_REVIEW:
         history = list(ctx.bank.transactions(account_id))
         hits = []
         for t in history:
             hits += _transaction_hits(t, account_id, ctx, state)
         hits += rules.pass_through(history, ctx.rulebook)
+        hits += rules.monthly_cash(history, ctx.rulebook)
     else:
         history = list(ctx.bank.transactions(account_id))
         hits = []

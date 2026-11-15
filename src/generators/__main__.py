@@ -46,6 +46,7 @@ from src.generators import evidence_ledger as ledger_module
 from src.generators import graph as graph_module
 from src.generators import id_documents as documents_module
 from src.generators import kyc_profiles as kyc_module
+from src.generators import mules as mules_module
 from src.generators import rings as rings_module
 from src.generators import rulebook as rulebook_module
 from src.generators import transactions as transactions_module
@@ -95,7 +96,9 @@ def main(
     _done(started, f"{len(fraud_rings)} rings covering {sum(len(r.member_account_ids) for r in fraud_rings)} accounts")
 
     started = _step(3, total, "planting plan (drives every channel below)")
-    plan = ledger_module.build_planting_plan(streams, accounts, fraud_rings, cohorts)
+    occupation_of = {c.customer_id: c.occupation for c in customers}
+    occupations = {a.account_id: occupation_of[a.customer_id] for a in accounts}
+    plan = ledger_module.build_planting_plan(streams, accounts, fraud_rings, cohorts, occupations)
     multi = sum(1 for a in accounts if plan.real_channels_for(a.account_id) >= 2)
     single = sum(1 for a in accounts if plan.real_channels_for(a.account_id) == 1)
     _done(started, f"{multi} accounts with two or more channels, {single} with one")
@@ -104,6 +107,7 @@ def main(
     transactions, counterparties = transactions_module.generate(
         streams, customers, accounts, fraud_rings, plan
     )
+    customers = mules_module.declared_cash_business_income(streams, customers, accounts, transactions, plan)
     _done(started, f"{len(transactions)} transactions, {len(counterparties)} counterparties")
 
     started = _step(5, total, "adverse media corpus, and later-block name clearance")

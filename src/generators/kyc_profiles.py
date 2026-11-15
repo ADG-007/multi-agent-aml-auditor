@@ -170,8 +170,13 @@ def _clean_narrative(
     account: Account,
     observed: dict,
     foreign_line: str = "",
+    cash_business: bool = False,
 ) -> str:
-    """A profile that holds up against the account's actual behaviour."""
+    """A profile that holds up against the account's actual behaviour.
+
+    A cash business (Amendment 4, Q12) declares its turnover and its banked cash instead of
+    the salaried default, as a branch officer would record a shop's takings.
+    """
     is_nri = customer.residency_status == ResidencyStatus.NRI
     purpose = _purpose_for(rng, customer, account)
     opener = rng.choice(OPENERS)
@@ -183,13 +188,24 @@ def _clean_narrative(
         else f"Customer resides at the address on record in India."
     )
 
+    if cash_business:
+        activity = (
+            f"Expected activity is in the range of {_lakh(observed['total'] / 3)} per month across "
+            f"roughly {max(1, observed['count'] // 3)} transactions. The business's cash takings "
+            f"are deposited at the branch on most working days, around "
+            f"{_lakh(observed['cash_in'] / 3)} a month, and paid on to suppliers by NEFT or RTGS. "
+        )
+    else:
+        activity = (
+            f"Expected activity is in the range of {_lakh(customer.stated_income / 12 * 1.5)} per "
+            f"month across roughly {max(1, observed['count'] // 3)} transactions, mostly through "
+            f"digital channels. "
+        )
     return (
         f"{opener} {customer.name}, aged {_age(customer)}, {_occupation_phrase(customer)} "
         f"and declares an annual income of "
         f"{_lakh(customer.stated_income)}. {residency_line} The {_account_label(account)} "
-        f"account is maintained for {purpose}.{foreign_line} Expected activity is in the range of "
-        f"{_lakh(customer.stated_income / 12 * 1.5)} per month across roughly "
-        f"{max(1, observed['count'] // 3)} transactions, mostly through digital channels. "
+        f"account is maintained for {purpose}.{foreign_line} {activity}"
         f"Source of funds is stated as {_source_of_funds(customer)}. No adverse information "
         f"was noted at the time of verification."
     )
@@ -251,6 +267,7 @@ def _merchant_narrative(
     customer: Customer,
     account: Account,
     observed: dict,
+    cash_business: bool = False,
 ) -> str:
     """A small merchant who takes customer payments on a personal UPI ID.
 
@@ -263,6 +280,15 @@ def _merchant_narrative(
     premises = "outlet" if fuel else "shop"
     stock = "fuel and lubricant stock" if fuel else "handsets and accessories"
     receipts_per_month = max(50, observed["upi_in"] // 3)
+    # A cash business declares its banked cash too (Amendment 4, Q6): the explanation a
+    # reviewer needs for monthly cash near the reporting threshold.
+    cash_line = (
+        f" The {premises}'s cash takings are deposited at the branch on most working days, "
+        f"around {_lakh(observed['cash_in'] / 3)} a month, and paid on to suppliers with the "
+        f"UPI receipts."
+        if cash_business
+        else ""
+    )
     return (
         f"{rng.choice(OPENERS)} {customer.name}, aged {_age(customer)}, runs {business} and "
         f"declares an annual income of {_lakh(customer.stated_income)}. Customer resides at "
@@ -271,8 +297,8 @@ def _merchant_narrative(
         f"is used to pay suppliers for {stock} by NEFT or RTGS every few days. Expected "
         f"activity is a large number of small UPI receipts from customers, around "
         f"{receipts_per_month} a month, with periodic lump-sum supplier payments and cash "
-        f"withdrawals for wages. Source of funds is stated as business receipts. No adverse "
-        f"information was noted at the time of verification."
+        f"withdrawals for wages.{cash_line} Source of funds is stated as business receipts. "
+        f"No adverse information was noted at the time of verification."
     )
 
 
@@ -383,7 +409,9 @@ def generate(
         observed = _observed(by_account.get(account.account_id, []))
 
         if plan.cohort(account.account_id) in ("merchant_lookalike", "complicit_merchant"):
-            narrative = _merchant_narrative(rng, customer, account, observed)
+            narrative = _merchant_narrative(
+                rng, customer, account, observed, account.account_id in plan.cash_business
+            )
         elif account.account_id in plan.kyc_mismatch:
             narrative = _mismatch_narrative(
                 rng,
@@ -404,7 +432,10 @@ def generate(
                 account.account_id in plan.round_trip_solo,
                 swift,
             )
-            narrative = _clean_narrative(rng, customer, account, observed, foreign_line)
+            narrative = _clean_narrative(
+                rng, customer, account, observed, foreign_line,
+                cash_business=account.account_id in plan.cash_business,
+            )
 
         profiles.append(KYCProfile(customer_id=customer.customer_id, narrative=narrative))
 

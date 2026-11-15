@@ -562,19 +562,20 @@ def main() -> int:
         "every ring contains a member with zero adverse-media hits (Graph-only cases)",
     )
 
-    planted_structuring = {e.account_id for e in ledger if e.structuring_planted}
+    naive_structuring = {e.account_id for e in ledger if e.structuring_style == "naive"}
     accounts_with_band = {t.account_id for t in band}
     check(
-        planted_structuring <= accounts_with_band,
-        "every account marked as structuring actually has sub-threshold transactions",
+        naive_structuring <= accounts_with_band,
+        "every naive structurer actually has sub-threshold transactions",
     )
     # The converse matters just as much. An unplanted account sitting in the band would be
     # an unlabelled positive, and Phase 11 would be scoring the pipeline against ground
     # truth that does not describe the data.
     check(
-        accounts_with_band <= planted_structuring,
-        "no unplanted account has transactions in the structuring band",
+        accounts_with_band <= naive_structuring,
+        "no other account has single transactions in the structuring band",
     )
+    _check_monthly_cash(ledger, transactions, profiles, clauses, customers)
 
     # Turnover has to track declared income, or the KYC-mismatch channel carries no signal:
     # if every clean account already moves twenty times its stated income, a planted mismatch
@@ -890,6 +891,153 @@ def main() -> int:
         return 1
     print("All checks passed.")
     return 0
+
+
+def _check_monthly_cash(ledger, transactions, profiles, clauses, customers) -> None:
+    """Amendment 4: structurer shapes, the cash businesses, and nobody else near the monthly band."""
+    from src.generators import monthly_cash
+    from src.generators.transactions import style_max
+
+    print("\n=== Monthly cash (Amendment 4) ===")
+    cash: dict[str, dict[str, list]] = defaultdict(lambda: defaultdict(list))
+    for t in transactions:
+        if t.type.value in monthly_cash.CASH_TYPES:
+            cash[t.account_id][t.type.value].append((t.timestamp, t.amount))
+    for kinds in cash.values():
+        for rows in kinds.values():
+            rows.sort()
+
+    styles = Counter(e.structuring_style for e in ledger if e.structuring_planted)
+    new_count = sum(styles.values()) - styles["naive"]
+    check(
+        styles["naive"] == cfg.NUM_NAIVE_STRUCTURERS
+        and all(e.structuring_planted == (e.structuring_style is not None) for e in ledger),
+        f"{cfg.NUM_NAIVE_STRUCTURERS} naive structurers and {new_count} monthly-cap structurers, "
+        f"every structurer with a style ({dict(sorted(styles.items()))})",
+    )
+    check(
+        {s for s in styles if s != "naive"} == set(cfg.STRUCTURING_STYLES),
+        "every monthly-cap amount style is present (small, medium, mixed)",
+    )
+
+    window = timedelta(days=cfg.STRUCTURING_WINDOW_DAYS)
+    naive = [e for e in ledger if e.structuring_style == "naive"]
+    naive_ok = 0
+    for e in naive:
+        in_band = sorted(
+            when
+            for when, amount in cash[e.account_id]["CASH_DEPOSIT"]
+            if cfg.STRUCTURING_BAND_LOW <= amount <= cfg.STRUCTURING_BAND_HIGH
+        )
+        naive_ok += bool(in_band) and in_band[-1] - in_band[0] < window and (
+            cfg.STRUCTURING_TXN_MIN <= len(in_band) <= cfg.STRUCTURING_TXN_MAX
+        )
+    check(
+        naive_ok == len(naive),
+        f"naive structurers keep the old shape: {cfg.STRUCTURING_TXN_MIN}-{cfg.STRUCTURING_TXN_MAX} "
+        f"in-band cash deposits inside {cfg.STRUCTURING_WINDOW_DAYS} days ({naive_ok}/{len(naive)})",
+    )
+
+    monthly = [e for e in ledger if e.structuring_style in cfg.STRUCTURING_STYLES]
+    over: set[str] = set()
+    band_counts: list[int] = []
+    style_ok = 0
+    for e in monthly:
+        deposits = cash[e.account_id]["CASH_DEPOSIT"]
+        totals = monthly_cash.month_totals(deposits)
+        if any(total > cfg.CTR_THRESHOLD_INR for total in totals.values()):
+            over.add(e.account_id)
+        months = monthly_cash.band_months(deposits)
+        band_counts.append(len(months))
+        in_months = [a for when, a in deposits if monthly_cash.month_of(when) in months]
+        large = [
+            [a for when, a in deposits if monthly_cash.month_of(when) == m and a >= cfg.MIXED_LARGE[0]]
+            for m in months
+        ]
+        style_ok += max(in_months, default=0) <= style_max(e.structuring_style) and (
+            e.structuring_style != "mixed" or all(large)
+        )
+    check(
+        not over,
+        f"no monthly-cap structurer has more than {_rupees(cfg.CTR_THRESHOLD_INR)} of cash deposits "
+        f"in any calendar month ({len(over)} do)",
+    )
+    low, high = cfg.STRUCTURING_MONTHS
+    check(
+        all(low <= n <= high for n in band_counts),
+        f"every monthly-cap structurer has {low}-{high} calendar months of cash deposits in the "
+        f"band (months: accounts {dict(sorted(Counter(band_counts).items()))})",
+    )
+    check(
+        not any(
+            cfg.STRUCTURING_BAND_LOW <= a <= cfg.STRUCTURING_BAND_HIGH
+            for e in monthly
+            for _, a in cash[e.account_id]["CASH_DEPOSIT"]
+        ),
+        "monthly-cap structurers make no single deposit in the band",
+    )
+    check(
+        style_ok == len(monthly),
+        "band-month deposits keep to each style's largest deposit, and every mixed month has a "
+        f"deposit of {_rupees(cfg.MIXED_LARGE[0])} or more ({style_ok}/{len(monthly)})",
+    )
+
+    business = [e for e in ledger if "cash_business" in e.decoy_types]
+    narrative = {p.customer_id: p.narrative for p in profiles}
+    near = 0
+    for e in business:
+        totals = monthly_cash.month_totals(cash[e.account_id]["CASH_DEPOSIT"])
+        near += max(totals.values(), default=0) >= cfg.CASH_BUSINESS_MONTH_TOTAL[0] * 0.95 and all(
+            total <= cfg.CTR_THRESHOLD_INR for total in totals.values()
+        )
+    occupation = {c.customer_id: c.occupation for c in customers}
+    merchants = [e for e in business if "merchant_lookalike" in e.decoy_types]
+    shops = [e for e in business if "merchant_lookalike" not in e.decoy_types]
+    check(
+        len(merchants) == cfg.NUM_MERCHANT_CASH_BUSINESSES
+        and len(shops) == cfg.NUM_SHOP_CASH_BUSINESSES
+        and all(
+            e.decoy_types == ["cash_business"]
+            and e.real_channel_count == 0
+            and occupation[e.customer_id] in cfg.CASH_BUSINESS_OCCUPATIONS
+            and cfg.block_of(e.account_id) == "base"
+            for e in shops
+        ),
+        f"{cfg.NUM_CASH_BUSINESS_DECOYS} cash-business decoys: {len(merchants)} merchant "
+        f"look-alikes and {len(shops)} clean base shopkeepers or traders with no other tag",
+    )
+    check(
+        near == len(business),
+        "each cash business banks monthly cash near the band and never above the CTR "
+        f"({near}/{len(business)})",
+    )
+    check(
+        all("cash takings are deposited" in narrative[e.customer_id] for e in business),
+        "each cash business declares its banked cash in the KYC profile",
+    )
+
+    planted = {
+        e.account_id for e in ledger if e.structuring_planted or "cash_business" in e.decoy_types
+    }
+    stray = sorted(
+        (a, kind)
+        for a, kinds in cash.items()
+        if a not in planted
+        for kind, rows in kinds.items()
+        if monthly_cash.band_months(rows) or monthly_cash.sliding_hits(rows)
+    )
+    check(
+        not stray,
+        "no other account has a calendar month of cash in the band, or 30 days of "
+        f"{_rupees(cfg.MONTHLY_BAND_LOW)} or more with no month over the CTR ({len(stray)} do)",
+    )
+
+    struct = next(c for c in clauses if c.clause_id == "STRUCT-001")
+    check(
+        struct.metadata.get("monthly_threshold_inr") == cfg.MONTHLY_BAND_HIGH
+        and struct.metadata.get("monthly_near_threshold_pct") == cfg.NEAR_THRESHOLD_PCT,
+        "STRUCT-001 carries the monthly band edges",
+    )
 
 
 def _check_mules(ledger, rings, transactions, counterparties) -> None:

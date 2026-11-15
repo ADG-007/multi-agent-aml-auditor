@@ -19,8 +19,11 @@ from pathlib import Path
 from src.schemas import RulebookClause
 
 
-#: The cash-reporting (CTR) clause: threshold_inr and near_threshold_pct.
+#: The cash-reporting (CTR) clause: threshold_inr and near_threshold_pct, and the monthly
+#: pair monthly_threshold_inr and monthly_near_threshold_pct (Amendment 4).
 STRUCTURING_CLAUSE_ID = "STRUCT-001"
+#: The monthly aggregate of connected cash (Rule 3(1)(B)): cited, carries no numbers.
+MONTHLY_CASH_CLAUSE_ID = "STRUCT-002"
 #: The cross-border wire-reporting (CBWTR) clause: threshold_inr.
 CROSS_BORDER_CLAUSE_ID = "XB-004"
 #: The suspected-mule transaction floor: txn_floor_inr.
@@ -69,6 +72,15 @@ class RulebookLookup:
         return StructuringThreshold(
             threshold_inr=self.metadata_value(STRUCTURING_CLAUSE_ID, "threshold_inr"),
             near_threshold_pct=self.metadata_value(STRUCTURING_CLAUSE_ID, "near_threshold_pct"),
+        )
+
+    def monthly_structuring(self) -> StructuringThreshold:
+        """The monthly cash ceiling and the band under it (Amendment 4, S3)."""
+        return StructuringThreshold(
+            threshold_inr=self.metadata_value(STRUCTURING_CLAUSE_ID, "monthly_threshold_inr"),
+            near_threshold_pct=self.metadata_value(
+                STRUCTURING_CLAUSE_ID, "monthly_near_threshold_pct"
+            ),
         )
 
     def cross_border_threshold(self) -> float:

@@ -3,10 +3,11 @@
     run(account_id, ctx, as_of) -> Stage2TransactionPatternOutput
 
 The frame is the 90 days ending at `as_of`: the bank's review date for a periodic review, a
-live transaction's own time for a transaction event (D2). Two sub-scores are computed on it -
-cash structuring and any-rail pass-through - and confidence is the stronger of the two (Q6),
-so neither dilutes the other. Velocity, round-amount share, the calendar-month cash totals,
-in-band non-cash payments and stranger share are reported in the trail and never scored (Q3).
+live transaction's own time for a transaction event (D2). Three sub-scores are computed on
+it - cash structuring by single deposits, cash structuring by monthly totals (Amendment 4) and
+any-rail pass-through - and confidence is the strongest of them (Q6), so none dilutes another.
+Velocity, round-amount share, in-band non-cash payments and stranger share are reported in the
+trail and never scored (Q3).
 
 Everything is a fixed template (D8): counts, dates, Indian-format amounts through Stage 0's
 `inr()`, and the clause ids the numbers come from - no free text and no transaction-id
@@ -18,7 +19,7 @@ from __future__ import annotations
 from collections.abc import Sequence
 from datetime import datetime, timedelta
 
-from src.rulebook import MULE_FLOOR_CLAUSE_ID, STRUCTURING_CLAUSE_ID
+from src.rulebook import MONTHLY_CASH_CLAUSE_ID, MULE_FLOOR_CLAUSE_ID, STRUCTURING_CLAUSE_ID
 from src.schemas import (
     SCORE_DECIMALS,
     ReasoningStep,
@@ -28,14 +29,14 @@ from src.schemas import (
 )
 from src.stages.stage0_triage import TriageContext
 from src.stages.stage0_triage.rules import inr
-from src.stages.stage2_transaction_pattern import config, pass_through, structuring
+from src.stages.stage2_transaction_pattern import config, monthly, pass_through, structuring
+from src.stages.stage2_transaction_pattern.monthly import MonthlyResult
 from src.stages.stage2_transaction_pattern.pass_through import PassThroughResult
 from src.stages.stage2_transaction_pattern.structuring import StructuringResult
 
 
-#: Clauses the trail cites beside STRUCT-001 and MULE-002: the monthly cash aggregate
-#: (Rule 3(1)(B)), the turnover surge, and the non-cash rails' lack of an amount report.
-MONTHLY_CASH_CLAUSE_ID = "STRUCT-002"
+#: Clauses the trail cites beside STRUCT-001, STRUCT-002 and MULE-002: the turnover surge,
+#: and the non-cash rails' lack of an amount report.
 TURNOVER_CLAUSE_ID = "STRUCT-003"
 NON_CASH_CLAUSE_ID = "STR-002"
 
@@ -65,17 +66,20 @@ def run(
     frame = structuring.in_window(rows, end, config.FRAME)
 
     s = structuring.score(rows, end, ctx.rulebook)
+    mo = monthly.score(rows, end, ctx.rulebook)
     p = pass_through.score(rows, end, ctx.rulebook)
-    confidence = round(max(s.score, p.score), SCORE_DECIMALS)
+    confidence = round(max(s.score, mo.score, p.score), SCORE_DECIMALS)
     velocity = _velocity_summary(frame, as_of)
 
     trail = [
         _structuring_step(s),
+        _monthly_step(s, mo),
         _pass_through_step(p),
         ReasoningStep(
             step="Combined confidence",
-            finding=f"Structuring {s.score:.4f}, pass-through {p.score:.4f}.",
-            impact=f"Confidence is the stronger of the two: {confidence:.4f}.",
+            finding=f"Structuring {s.score:.4f}, monthly cash {mo.score:.4f}, "
+            f"pass-through {p.score:.4f}.",
+            impact=f"Confidence is the strongest of the three: {confidence:.4f}.",
         ),
         ReasoningStep(
             step="Velocity",
@@ -84,12 +88,11 @@ def run(
             f"({TURNOVER_CLAUSE_ID}).",
         ),
         _round_share_step(frame),
-        _month_totals_step(s),
         _non_cash_step(s),
         _stranger_share_step(p),
     ]
     return Stage2TransactionPatternOutput(
-        structuring_indicators=_structuring_indicators(s),
+        structuring_indicators=_structuring_indicators(s) + _monthly_indicators(mo),
         pass_through_indicators=_pass_through_indicators(p),
         velocity_summary=velocity,
         confidence=confidence,
@@ -128,6 +131,31 @@ def _structuring_indicators(s: StructuringResult) -> list[str]:
             lines.append(
                 f"{window.count} {many} of {band} between {_span(window.first, window.last)}, "
                 f"each under the CTR ({STRUCTURING_CLAUSE_ID})"
+            )
+    return lines
+
+
+def _monthly_indicators(mo: MonthlyResult) -> list[str]:
+    lines = []
+    band = f"{inr(mo.band.band_floor_inr)}–{inr(mo.band.threshold_inr)}"
+    for kind, d in mo.by_direction.items():
+        many = _DIRECTION_WORDS[kind][1]
+        if d.band_months:
+            months = ", ".join(f"{inr(b.total)} in {b.month:%b %Y}" for b in d.band_months)
+            lines.append(
+                f"Monthly {many} of {months}: each in the band {band}, just under the "
+                f"monthly cash report ({MONTHLY_CASH_CLAUSE_ID})"
+            )
+        for w in d.windows:
+            if any(
+                b.month <= w.first.date() <= _month_end(b.month)
+                and b.month <= w.last.date() <= _month_end(b.month)
+                for b in d.band_months
+            ):
+                continue  # the same money as a band month already listed
+            lines.append(
+                f"{inr(w.total)} of {many} between {_span(w.first, w.last)}, with no calendar "
+                f"month above {inr(mo.band.threshold_inr)} ({MONTHLY_CASH_CLAUSE_ID})"
             )
     return lines
 
@@ -196,7 +224,8 @@ def _round_share_step(frame: Sequence[Transaction]) -> ReasoningStep:
     )
 
 
-def _month_totals_step(s: StructuringResult) -> ReasoningStep:
+def _monthly_step(s: StructuringResult, mo: MonthlyResult) -> ReasoningStep:
+    """The calendar-month totals are the legal figure (A2); the sliding count only adds."""
     if s.month_totals:
         finding = (
             "; ".join(
@@ -207,11 +236,19 @@ def _month_totals_step(s: StructuringResult) -> ReasoningStep:
         )
     else:
         finding = "No cash in the frame."
+    kind, d = mo.leading
+    floor, ceiling = inr(mo.band.band_floor_inr), inr(mo.band.threshold_inr)
+    windows = _count(len(d.windows), f"separate {config.WINDOW_DAYS}-day window")
+    finding += (
+        f" m = {mo.m}: {_count(len(d.band_months), 'calendar month')} of "
+        f"{_DIRECTION_WORDS[kind][1]} in the band {floor}–{ceiling}, {windows} of {floor} or "
+        f"more with no month above {ceiling}."
+    )
     return ReasoningStep(
-        step="Calendar-month cash totals",
+        step="Monthly cash",
         finding=finding,
-        impact=f"The legal monthly cash aggregate ({MONTHLY_CASH_CLAUSE_ID}); reported, "
-        "not scored.",
+        impact=f"Monthly cash sub-score {mo.score:.4f} from the month map; the calendar months "
+        f"are the legal aggregate ({MONTHLY_CASH_CLAUSE_ID}).",
     )
 
 
@@ -255,6 +292,15 @@ def _velocity_summary(frame: Sequence[Transaction], as_of: datetime | None) -> s
 
 def _day(moment: datetime, year: bool = True) -> str:
     return f"{moment.day} {moment:%b}" + (f" {moment.year}" if year else "")
+
+
+def _count(n: int, word: str) -> str:
+    return f"{n} {word}" + ("" if n == 1 else "s")
+
+
+def _month_end(month):
+    following = (month.replace(day=28) + timedelta(days=4)).replace(day=1)
+    return following - timedelta(days=1)
 
 
 def _span(first: datetime, last: datetime) -> str:

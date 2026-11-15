@@ -25,8 +25,24 @@ def test_every_slot_holds_an_account_that_fits_it(truth):
     assert len(ids) == len(stage2_subset.SLOTS) == len(set(ids))
     for s in picked["stage2"]:
         assert fits[s["slot"]](truth[s["account_id"]])
-    k4 = next(s["account_id"] for s in picked["stage2"] if s["slot"] == "structurer_k4")
-    assert truth[k4].structuring_only
+    small = next(s["account_id"] for s in picked["stage2"] if s["slot"] == "structurer_small")
+    assert truth[small].structuring_only
+
+
+def test_naive_slots_take_the_lowest_and_highest_k(truth):
+    picked = {s["slot"]: s["account_id"] for s in stage2_subset.pick(truth)["stage2"]}
+    naive_k = [t.k for t in truth.values() if t.entry.structuring_style == "naive"]
+    assert truth[picked["structurer_naive_low_k"]].k == min(naive_k)
+    assert truth[picked["structurer_naive_high_k"]].k == max(naive_k)
+
+
+def test_cash_business_slots_hold_a_merchant_and_a_shop(truth):
+    picked = {s["slot"]: s["account_id"] for s in stage2_subset.pick(truth)["stage2"]}
+    merchant = truth[picked["cash_business_merchant"]].entry.decoy_types
+    shop = truth[picked["cash_business_shop"]].entry.decoy_types
+    assert merchant == ["merchant_lookalike", "cash_business"]
+    assert shop == ["cash_business"]
+    assert "cash_business" not in truth[picked["merchant_lookalike"]].entry.decoy_types
 
 
 def test_shared_set_is_ring04_and_two_ring12_mules(truth):

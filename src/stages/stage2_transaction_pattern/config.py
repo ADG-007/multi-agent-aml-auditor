@@ -30,6 +30,15 @@ STRUCTURING_MAP: tuple[tuple[int, float], ...] = (
     (8, 1.0),
 )
 
+#: Monthly cash map (Amendment 4, Q9): m, the band months or separate 30-day windows over the
+#: floor (whichever is higher, Q10) -> score, linear between points, flat beyond the last.
+MONTHLY_MAP: tuple[tuple[int, float], ...] = (
+    (0, 0.0),
+    (1, 0.30),
+    (2, 0.60),
+    (3, 0.85),
+)
+
 #: A matched stranger credit counts towards n when sent on within this many hours (D6).
 FAST_HOLD_HOURS: float = 12.0
 #: A run of stranger credits closes when its debits reach this share of its credits (D5).

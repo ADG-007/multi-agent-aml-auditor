@@ -2681,6 +2681,13 @@
     "registered_address": null
   },
   {
+    "counterparty_id": "CPM-D4F8D7A2",
+    "name": "Krishnamurthy Mobile Centre",
+    "country": "India",
+    "is_foreign": false,
+    "registered_address": null
+  },
+  {
     "counterparty_id": "CPM-C16D7B9B",
     "name": "Lohit Mittal",
     "country": "India",
@@ -7413,6 +7420,13 @@
     "registered_address": null
   },
   {
+    "counterparty_id": "CPM-E72085E0",
+    "name": "Vora Mobile Centre",
+    "country": "India",
+    "is_foreign": false,
+    "registered_address": null
+  },
+  {
     "counterparty_id": "CPM-46F91F69",
     "name": "Viraj Tank",
     "country": "India",
@@ -9620,6 +9634,13 @@
   {
     "counterparty_id": "CPM-3DC4382C",
     "name": "Sneha Kanda",
+    "country": "India",
+    "is_foreign": false,
+    "registered_address": null
+  },
+  {
+    "counterparty_id": "CPM-0B45F9E4",
+    "name": "Jhaveri Fuel Station",
     "country": "India",
     "is_foreign": false,
     "registered_address": null
@@ -12259,6 +12280,13 @@
   {
     "counterparty_id": "CPM-A7FEF0B4",
     "name": "Madhavi Chaudhary",
+    "country": "India",
+    "is_foreign": false,
+    "registered_address": null
+  },
+  {
+    "counterparty_id": "CPM-57FDADAE",
+    "name": "Parsa Fuel Station",
     "country": "India",
     "is_foreign": false,
     "registered_address": null
