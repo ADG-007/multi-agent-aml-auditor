@@ -31,6 +31,7 @@ from src.bank import BankData
 from src.llm import config as llm_config
 from src.orchestration.pipeline import NODES
 from src.rulebook import RulebookLookup
+from src.schemas import common as rules
 from src.stages.stage0_triage import TriageContext
 
 
@@ -205,6 +206,7 @@ def create_app(
             "node_weights": node_weights(summary),
             "hardware": HARDWARE_NOTE,
             "queue": s.jobs.busy(),
+            "rules": judge_rules(),
         }
 
     # ----------------------------------------------------------------------------------
@@ -357,7 +359,9 @@ def create_app(
 
     @app.post("/api/live/{job}/decision")
     def live_decision(job: str, body: Decision, request: Request):
-        writer(request)
+        # A replay changes nothing, so whoever started it may decide its pause.
+        if site().jobs.get(job).mode == "live":
+            writer(request)
         try:
             site().jobs.decide(job, body.decision)
         except ValueError:
@@ -398,6 +402,20 @@ def create_app(
             )
 
     return app
+
+
+def judge_rules() -> dict:
+    """The judge's fixed numbers, so the site draws its marks from the code that scores."""
+    return {
+        "weights": {stage.value: weight for stage, weight in rules.STAGE_WEIGHTS.items()},
+        "clear_below": rules.CLEAR_BELOW,
+        "escalate_from": rules.ESCALATE_FROM,
+        "veto": rules.AUTO_VETO_THRESHOLD,
+        "corroboration_min": rules.CORROBORATION_STAGE_MIN,
+        "solo_min": rules.SOLO_SIGNAL_MIN,
+        "id_pause": rules.FORGERY_PAUSE_THRESHOLD,
+        "id_notice": rules.FORGERY_NOTICE_THRESHOLD,
+    }
 
 
 def build_case_page(site: Site, run: str, account: str) -> dict:

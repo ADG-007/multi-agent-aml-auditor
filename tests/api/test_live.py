@@ -152,12 +152,12 @@ def test_stream_route_sends_events_and_ends(make_client):
     assert c.post("/api/live", json={"account_id": "ACC-X", "mode": "replay"}).status_code == 404
 
 
-def test_replay_is_open_to_a_visitor_but_a_decision_is_not(make_client):
+def test_replay_is_open_to_a_visitor_who_may_decide_only_a_real_pause(make_client):
     c = make_client(client=VISITOR)
     started = c.post("/api/live", json={"account_id": "ACC-T001", "mode": "replay"})
     assert started.status_code == 200
     job = started.json()["job_id"]
-    assert c.post(f"/api/live/{job}/decision", json={"decision": "block"}).status_code == 403
+    assert c.post(f"/api/live/{job}/decision", json={"decision": "block"}).status_code == 409
 
 
 def test_full_queue_is_a_429(make_client, pausing):

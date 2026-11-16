@@ -143,6 +143,10 @@ def _detail(name: str, work: CaseWork) -> str | None:
         rules = work.findings.get("rulebook_findings")
         if rules is not None:
             return "Clauses: " + (", ".join(rules.retrieved_clause_ids) or "none")
+    if name == "auditor" and work.auditor is not None:
+        return "Report text written and checked against the Python outline."
+    if name == "report" and work.score is not None:
+        return f"Case file ready: {work.score.disposition.value}."
     return None
 
 
