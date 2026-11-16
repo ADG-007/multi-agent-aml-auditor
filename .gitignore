@@ -34,6 +34,7 @@ desktop.ini
 #   - the rendered identity document images (manifest.json stays committed)
 #         python -m src.generators.id_documents
 data/rulebook/chroma/
+data/rulebook/chroma_v2/
 data/documents/*.png
 
 # --- Markdown documentation stays local ---
