@@ -11,6 +11,7 @@ target-version = "py314"
 # Lint covers everything except Phase 1's generators and schemas, which are left as they are.
 include = [
     "src/agents/**/*.py",
+    "src/api/**/*.py",
     "src/bank/**/*.py",
     "src/demo/**/*.py",
     "src/llm/**/*.py",
