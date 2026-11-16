@@ -10,7 +10,8 @@ The tuning set is what every threshold and prompt was set on. The held-out set i
 at the end: a live run on it needs --final, and nothing is changed afterwards. A cached
 replay calls no model and gives the same reports.
 
-Writes outputs/<run>/: reports.jsonl, cases.jsonl, admin_queue.json, summary.json, grade.txt.
+Writes outputs/<run>/: reports.jsonl, cases.jsonl, admin_queue.json, summary.json, grade.txt,
+grade.json and scoreboard.json (the grade in the form the demo site reads).
 """
 
 from __future__ import annotations
@@ -69,6 +70,90 @@ def show_cases(latest: dict[str, InvestigationReport], ledger) -> list[str]:
             + (f" label {report.graph_label}" if report.graph_label else "")
         )
     return lines
+
+
+def show_case_title(entry) -> str:
+    """A plain title for a show case, from what the answer key planted (never from its id)."""
+    if entry.structuring_style:
+        return f"Monthly-cap structurer ({entry.structuring_style})"
+    if "cash_business" in entry.decoy_types:
+        return "Cash-business trap (looks like structuring, is not)"
+    if entry.forged_document_planted:
+        return "Forged ID card"
+    if entry.graph_ring_membership:
+        return "Linked to a flagged ring"
+    if entry.adverse_media_hit:
+        return "Sanctions or adverse-media hit"
+    return "Clean account"
+
+
+def grade_numbers(grade: grader.Grade) -> dict:
+    return {
+        "accounts": grade.accounts,
+        "exact_key": grade.exact_key,
+        "exact_design": grade.exact_design,
+        "caught": grade.caught,
+        "bad": grade.bad,
+        "false_alarms": grade.false_alarms,
+        "clean": grade.clean,
+        "kyc_found": grade.kyc_found,
+        "kyc_planted": grade.kyc_planted,
+        "kyc_false_high": grade.kyc_false_high,
+        "cash_business_alarms": grade.cash_business_alarms,
+        "cash_business": grade.cash_business,
+        "fake_ids_paused": grade.fake_ids_paused,
+        "fake_ids": grade.fake_ids,
+        "false_pauses": grade.false_pauses,
+        "structurers": dict(grade.structurers),
+        "structurers_caught": dict(grade.structurers_caught),
+    }
+
+
+def build_scoreboard(
+    grade: grader.Grade,
+    latest: dict[str, InvestigationReport],
+    ledger,
+    show: tuple[str, ...] = SHOW_CASES,
+    run_set: str = "",
+    mode: str = "",
+) -> dict:
+    """The grade as the demo site reads it: numbers, confusion, misses and the show cases."""
+    confusion: dict[str, dict[str, int]] = {}
+    for (key, got), n in sorted(grade.confusion.items()):
+        confusion.setdefault(key, {})[got] = n
+    misses = []
+    for account_id in sorted(latest):
+        entry, got = ledger[account_id], latest[account_id].disposition.value
+        if entry.expected_disposition.value != got:
+            misses.append(
+                {
+                    "account": account_id,
+                    "key": entry.expected_disposition.value,
+                    "design": grader.design_label(entry),
+                    "got": got,
+                }
+            )
+    cases = [
+        {
+            "account": a,
+            "title": show_case_title(ledger[a]),
+            "key_label": ledger[a].expected_disposition.value,
+            "design_label": grader.design_label(ledger[a]),
+            "got": latest[a].disposition.value,
+            "confidence": latest[a].confidence,
+        }
+        for a in show
+        if a in latest
+    ]
+    return {
+        "set": run_set,
+        "mode": mode,
+        "accounts": grade.accounts,
+        "metrics": grade_numbers(grade),
+        "confusion": confusion,
+        "misses": misses,
+        "show_cases": cases,
+    }
 
 
 def timing_lines(stats: dict[str, dict]) -> list[str]:
@@ -141,29 +226,17 @@ def main(argv: list[str] | None = None) -> int:
             {
                 "set": args.set,
                 "mode": args.mode,
-                "accounts": grade.accounts,
-                "exact_key": grade.exact_key,
-                "exact_design": grade.exact_design,
-                "caught": grade.caught,
-                "bad": grade.bad,
-                "false_alarms": grade.false_alarms,
-                "clean": grade.clean,
-                "kyc_found": grade.kyc_found,
-                "kyc_planted": grade.kyc_planted,
-                "kyc_false_high": grade.kyc_false_high,
-                "cash_business_alarms": grade.cash_business_alarms,
-                "cash_business": grade.cash_business,
-                "fake_ids_paused": grade.fake_ids_paused,
-                "fake_ids": grade.fake_ids,
-                "false_pauses": grade.false_pauses,
-                "structurers": dict(grade.structurers),
-                "structurers_caught": dict(grade.structurers_caught),
+                **grade_numbers(grade),
                 "wall_seconds": round(wall, 1),
             },
             indent=2,
         )
         + "\n",
         encoding="utf-8",
+    )
+    scoreboard = build_scoreboard(grade, result.latest, ledger, SHOW_CASES, args.set, args.mode)
+    (out_dir / "scoreboard.json").write_text(
+        json.dumps(scoreboard, indent=2) + "\n", encoding="utf-8"
     )
     print(text)
     print(f"\nWritten to {out_dir}")
