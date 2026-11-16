@@ -16,7 +16,7 @@ No signal, no model call.
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from datetime import datetime
 from typing import Literal
 
@@ -207,29 +207,52 @@ class GraphAgent(Agent):
     # Label (the model; never scored)
     # ----------------------------------------------------------------------------------
 
-    def label(self, scores: GraphScores, ctx: TriageContext, state: RunState) -> str:
+    def label(
+        self,
+        scores: GraphScores,
+        ctx: TriageContext,
+        state: RunState,
+        role: Role | None = None,
+        cash_explained: bool = False,
+    ) -> str:
+        """`cash_explained`: the judge set the monthly cash aside as a declared cash business,
+        so the monthly totals are not labelled as structuring."""
         run = scores.run
-        fallback = python_label(scores.sub, scores.link.confidence)
+        sub = replace(scores.sub, monthly=0.0, m=0) if cash_explained else scores.sub
+        fallback = python_label(sub, scores.link.confidence)
         scores.label, scores.label_by = fallback, "python"
-        if not scores.has_signal:
+        signal = scores.has_signal
+        if cash_explained:
+            signal = scores.link.confidence > 0 or max(sub.structuring, sub.pass_through) > 0
+            note = "The monthly cash totals are explained by the declared cash business."
+            if not signal:
+                run.step("Pattern label", note, "NO_PATTERN; no model call.")
+                return scores.label
+            if not any(f.text.startswith("Explained:") for f in run.facts):
+                run.facts.add("explained", f"Explained: {note} Do not label them.")
+        if not signal:
             run.step("Pattern label", "No signal from the tools.", "NO_PATTERN; no model call.")
             return scores.label
 
         what = "Pattern label"
-        answer = self.ask(run, PROMPT.format(facts=run.facts.render()), PatternLabel, what)
+        answer = self.ask(
+            run, PROMPT.format(facts=run.facts.render()), PatternLabel, what, role=role
+        )
         if answer is not None and answer.more:
             tools = {
                 "path_to_flagged": lambda: self._path(scores, ctx, state),
                 "counterparty_overlap": lambda: self._overlap(scores, ctx, state),
             }
             if self.optional(run, answer.more, tools):
-                answer = self.ask(run, PROMPT.format(facts=run.facts.render()), PatternLabel, what)
+                answer = self.ask(
+                    run, PROMPT.format(facts=run.facts.render()), PatternLabel, what, role=role
+                )
         if answer is None:
             run.step(what, f"No model answer: Python label {fallback}.", "Never scored.")
             return scores.label
 
         cited, unknown = known_ids(answer.fact_ids, run.facts)
-        allowed = supported_labels(scores.sub, scores.link.confidence)
+        allowed = supported_labels(sub, scores.link.confidence)
         if not cited:
             verdict = f"cited no real fact id: Python label {fallback} kept."
         elif answer.label not in allowed:

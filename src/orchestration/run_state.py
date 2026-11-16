@@ -45,6 +45,15 @@ class RunState:
         self.known_bad_addresses: dict[str, str] = {}
         self._history: dict[str, list[CaseRecord]] = {}
 
+    def copy(self) -> RunState:
+        """A snapshot: records are frozen, so copying the containers is enough."""
+        other = RunState()
+        other.known_bad_devices = dict(self.known_bad_devices)
+        other.known_bad_ips = dict(self.known_bad_ips)
+        other.known_bad_addresses = dict(self.known_bad_addresses)
+        other._history = {a: list(cases) for a, cases in self._history.items()}
+        return other
+
     # ----------------------------------------------------------------------------------
     # Case history
     # ----------------------------------------------------------------------------------

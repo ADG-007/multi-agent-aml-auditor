@@ -194,3 +194,12 @@ def test_counterparty_overlap_ignores_hubs(monkeypatch):
     _flag(state, "ACC-T002")
     assert links.counterparty_overlap(b, "ACC-T001", state) == [("CP-RARE", ["ACC-T002"])]
     assert links.counterparty_overlap(b, "ACC-T003", state) == []
+
+
+def test_explained_monthly_cash_is_not_labelled_as_structuring(tmp_path):
+    client = fake_client(tmp_path, _say("MONTHLY_CAP_STRUCTURING", ["F2"]))
+    agent, ctx, scores = _score(_bank(), RunState(), client)
+    scores.sub = SubScores(0, 0, 0.6, 2, 0)
+    assert agent.label(scores, ctx, RunState(), cash_explained=True) == "NO_PATTERN"
+    assert client.fake.requests == []
+    assert "explained" in scores.run.trail[-1].finding

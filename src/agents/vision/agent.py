@@ -78,14 +78,18 @@ class FieldResult:
 
 @dataclass
 class VisionResult:
-    vision: Stage1VisionOutput
-    kyc: Stage3KYCOutput
+    """Both halves of the agent. A half that failed is None, with its error beside it."""
+
+    vision: Stage1VisionOutput | None
+    kyc: Stage3KYCOutput | None
     #: The profile's declared cash takings explain the account's monthly cash (plan D14).
     cash_explained: bool
     claims: Claims
     verdict: rules.KycVerdict
     run: AgentRun
     id_fields: list[FieldResult] = field(default_factory=list)
+    id_error: str | None = None
+    kyc_error: str | None = None
 
 
 class VisionAgent(Agent):
@@ -116,17 +120,23 @@ class VisionAgent(Agent):
     ) -> VisionResult:
         """`reader` turns an image path into text; tests pass a fake, the pipeline Tesseract."""
         run = self.start(account_id)
-        vision, id_fields = self._id_check(run, account_id, ctx, documents_dir, reader)
-        kyc, parsed, verdict = self._kyc(run, account_id, ctx, as_of, transaction)
-        return VisionResult(
-            vision=vision,
-            kyc=kyc,
-            cash_explained=verdict.cash_explained,
-            claims=parsed,
-            verdict=verdict,
-            run=run,
-            id_fields=id_fields,
-        )
+        result = VisionResult(None, None, False, Claims(), rules.KycVerdict(), run)
+        try:
+            result.vision, result.id_fields = self._id_check(
+                run, account_id, ctx, documents_dir, reader
+            )
+        except Exception as exc:  # noqa: BLE001 - a failed ID check must not stop the KYC half
+            result.id_error = f"{type(exc).__name__}: {str(exc)[:200]}"
+            run.step("ID check", f"Failed: {result.id_error}", "The ID check is FAILED.")
+        try:
+            result.kyc, result.claims, result.verdict = self._kyc(
+                run, account_id, ctx, as_of, transaction
+            )
+            result.cash_explained = result.verdict.cash_explained
+        except Exception as exc:  # noqa: BLE001
+            result.kyc_error = f"{type(exc).__name__}: {str(exc)[:200]}"
+            run.step("KYC", f"Failed: {result.kyc_error}", "KYC is FAILED.")
+        return result
 
     # ----------------------------------------------------------------------------------
     # ID check
@@ -245,6 +255,7 @@ class VisionAgent(Agent):
             self.tool(run, "claim_read_1")
             self.tool(run, "claim_read_2")
         parsed = claim_forms.reconcile(read_1, read_2, profile)
+        parsed.unread = bool(profile) and not self.client.off and read_1 is None and read_2 is None
         verdict = rules.judge(parsed, activity, cash_scored)
         if parsed.unsure:
             # The backup model is asked only when the disagreement could change the result.

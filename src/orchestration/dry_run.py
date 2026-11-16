@@ -1,18 +1,16 @@
-"""Dry run: review every account end to end with the stages built so far.
+"""Dry run: review every account with the models off (Python only).
 
-    python -m src.orchestration.dry_run                  # all 370 accounts
+    python -m src.orchestration.dry_run                      # all 370 accounts
     python -m src.orchestration.dry_run --account ACC-0001   # one case, printed in full
 
-Runs Phase 11's periodic-review mode (phase_2_execution.md): accounts in order of their
-earliest alerting transaction (ties by account id, accounts nothing alerted on last), each
-through Stage 0 -> the evidence stages (real where built, stubs otherwise) -> scoring ->
-report. Every report is written as one JSON line to
-outputs/phase2_dry_run.jsonl.
+Accounts are reviewed in order of their earliest alerting transaction (ties by account id,
+accounts nothing alerted on last), each through Stage 0, the agents' Python tools, the judge
+and the template report. Every report is written as one JSON line to
+outputs/dry_run.jsonl.
 
-Stage 2 runs for real since Phase 3; the other evidence stages are neutral stubs (RAN at 0.0).
-Those zeros stay in the weighted average (the dilution question, MASTER_PLAN Section 8 item
-12), so every verdict is still CLEAR - that is expected until more stages are real. The dry
-run proves routing and plumbing on the real bank; scoring correctness is proven by the tests.
+With the models off the Vision agent reads no claim from a profile and makes no image read,
+so KYC shows only its Python volume rule and the ID check never pauses. The dry run proves
+routing and plumbing on the real bank. The graded runs live with the evaluation scripts.
 No model is called.
 """
 
@@ -34,7 +32,7 @@ from src.schemas import InvestigationReport, TriageEvent, TriageEventKind
 from src.stages.stage0_triage import TriageContext, first_alert, triage
 
 
-DEFAULT_OUTPUT = Path("outputs") / "phase2_dry_run.jsonl"
+DEFAULT_OUTPUT = Path("outputs") / "dry_run.jsonl"
 
 
 def review_order(ctx: TriageContext) -> list[str]:
@@ -81,7 +79,7 @@ def summarise(reports: list[InvestigationReport], seconds: float) -> str:
         lines.append(f"  {rule:<22} {n:>8}   {hits_per_rule[rule]:>4}")
     lines += ["", "  Route mix"]
     lines += [f"  {n:>5}  {route}" for route, n in routes.most_common()]
-    lines += ["", "  Dispositions (other stages still stubs at 0.0, so CLEAR is expected)"]
+    lines += ["", "  Dispositions (models off: Python-only results)"]
     lines += [f"  {n:>5}  {d}" for d, n in dispositions.most_common()]
     return "\n".join(lines)
 

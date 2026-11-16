@@ -182,6 +182,8 @@ class Claims:
     dropped: list[str] = field(default_factory=list)
     #: The disagreement could change the KYC result, so the backup model is asked.
     matters: bool = False
+    #: Both reads failed (not: the models are off), so nothing could be checked.
+    unread: bool = False
 
     def is_(self, name: str, value: str) -> bool:
         return self.values[name] == value

@@ -71,7 +71,7 @@ def test_scoring_matches_the_engine_through_the_runner():
     assert report.confidence == 0.6437
     assert report.disposition == Disposition.SUSPICIOUS_ESCALATE
     assert report.str_narrative is not None
-    assert "Corroboration gate" in report.investigation_narrative
+    assert any(s.step == "Corroboration gate" for s in report.judge_trail)
 
 
 def test_a_failed_stub_floors_the_case():
@@ -108,8 +108,10 @@ def test_reinvestigation_reruns_every_stage_as_a_new_case():
     report = run_case(_event(wire), ctx, state, _plan(tp=0.5))
     assert report.case_id == "CASE-ACC-T001-2"
     assert TriageRule.REINVESTIGATION in [f.rule for f in report.triage_findings.fired_rules]
-    for stage in (S.VISION, S.TRANSACTION_PATTERN, S.KYC, S.ADVERSE_MEDIA, S.GRAPH):
+    for stage in (S.TRANSACTION_PATTERN, S.KYC, S.ADVERSE_MEDIA, S.GRAPH):
         assert report.stage_status[stage.value] == StageStatus.RAN
+    # Vision is routed too; the test bank has no ID card image, so it fails and degrades.
+    assert report.stage_status[S.VISION.value] == StageStatus.FAILED
 
 
 def test_escalation_reroutes_a_ring_mate():

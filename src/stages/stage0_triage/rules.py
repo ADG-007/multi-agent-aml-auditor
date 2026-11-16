@@ -41,7 +41,8 @@ RULE_ROUTES: dict[TriageRule, frozenset[StageName]] = {
     TriageRule.CASH_THRESHOLD: frozenset({S.TRANSACTION_PATTERN, S.ADVERSE_MEDIA, S.GRAPH}),
     TriageRule.MONTHLY_CASH: frozenset({S.TRANSACTION_PATTERN, S.ADVERSE_MEDIA, S.GRAPH}),
     TriageRule.CROSS_BORDER: frozenset({S.TRANSACTION_PATTERN, S.KYC, S.GRAPH}),
-    TriageRule.KYC_EVENT: frozenset({S.KYC, S.VISION}),
+    # Links too, so a quiet ring member still meets its flagged ring-mates.
+    TriageRule.KYC_EVENT: frozenset({S.KYC, S.VISION, S.GRAPH}),
     TriageRule.KNOWN_BAD_IDENTIFIER: frozenset({S.GRAPH, S.ADVERSE_MEDIA}),
     TriageRule.NAME_MATCH: frozenset({S.ADVERSE_MEDIA}),
     TriageRule.PASS_THROUGH: frozenset({S.TRANSACTION_PATTERN, S.KYC, S.GRAPH}),

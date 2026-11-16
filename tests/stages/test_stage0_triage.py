@@ -68,11 +68,11 @@ def test_cash_structuring_route():
     ]
 
 
-def test_kyc_submission_routes_kyc_and_vision_plus_rulebook():
+def test_kyc_submission_routes_kyc_vision_and_graph_plus_rulebook():
     b = bank()
     event = TriageEvent(kind=TriageEventKind.KYC_SUBMITTED, account_id="ACC-T001")
     out = triage(event, _ctx(b), RunState())
-    assert out.routed_stages == [S.VISION, S.KYC, S.RULEBOOK, S.AUDITOR]
+    assert out.routed_stages == [S.VISION, S.KYC, S.GRAPH, S.RULEBOOK, S.AUDITOR]
 
 
 def test_name_match_alone_routes_adverse_media():

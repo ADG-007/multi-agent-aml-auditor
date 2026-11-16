@@ -10,7 +10,16 @@ from src.evaluation.stage0_coverage import load_ledger, measure
 #: Packages that make up the pipeline. They may never read ground truth or the corpus's
 #: ground-truth link. src/bank names `_ground_truth` only to refuse it, src/generators writes
 #: it, src/evaluation reads it, and src/schemas defines the models - all excluded.
-PIPELINE_PACKAGES = ["stages", "scoring", "orchestration", "matching", "rulebook", "llm"]
+PIPELINE_PACKAGES = [
+    "agents",
+    "demo",
+    "stages",
+    "scoring",
+    "orchestration",
+    "matching",
+    "rulebook",
+    "llm",
+]
 FORBIDDEN = re.compile(r"_ground_truth|evidence_ledger|fraud_rings|linked_actor_id|src\.evaluation")
 
 
