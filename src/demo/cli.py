@@ -3,6 +3,8 @@
     python -m src.demo.cli case --account ACC-0044                 # live graph, node by node
     python -m src.demo.cli case --account ACC-0121 --admin block   # decide the ID pause
     python -m src.demo.cli case --account ACC-0044 --mode cached   # saved answers only
+    python -m src.demo.cli case --account ACC-0045 --after outputs/v2_tuning/live
+                                                 # review again, knowing that run's verdicts
     python -m src.demo.cli batch --accounts ACC-0044 ACC-0045      # the 6-phase batch
     python -m src.demo.cli batch --all --mode off                  # Python only, no model
 
@@ -23,6 +25,7 @@ from src.bank import BankData
 from src.llm import LLMClient, LLMMode
 from src.orchestration import batch
 from src.orchestration.pipeline import Paused, Pipeline
+from src.orchestration.run_state import RunState
 from src.orchestration.steps import Agents, CaseWork
 from src.rulebook import RulebookLookup
 from src.schemas import InvestigationReport
@@ -63,7 +66,10 @@ def render(report: InvestigationReport) -> str:
 
 def cmd_case(args: argparse.Namespace) -> int:
     ctx, agents = build(args.mode, Path("outputs") / "audit" / "llm_calls.jsonl")
-    pipeline = Pipeline(ctx, agents)
+    state = None
+    if args.after:
+        state = RunState.from_cases(batch.load_cases(args.after), ctx.bank, skip=args.account)
+    pipeline = Pipeline(ctx, agents, state=state)
 
     def on_node(name: str, work: CaseWork, seconds: float) -> None:
         extra = ""
@@ -115,6 +121,11 @@ def main(argv: list[str] | None = None) -> int:
     case.add_argument("--account", required=True)
     case.add_argument("--mode", choices=("live", "cached", "off"), default="live")
     case.add_argument("--admin", choices=("approve", "block", "ask"), default="approve")
+    case.add_argument(
+        "--after",
+        type=Path,
+        help="a saved run folder: the other accounts' verdicts from that run are known",
+    )
     case.set_defaults(run=cmd_case)
     many = sub.add_parser("batch", help="the 6-phase batch")
     group = many.add_mutually_exclusive_group(required=True)

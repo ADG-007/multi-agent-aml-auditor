@@ -334,6 +334,12 @@ def save(result: BatchResult, out_dir: Path, client_calls: list[dict] | None = N
     (out_dir / "summary.json").write_text(json.dumps(summary, indent=2) + "\n", encoding="utf-8")
 
 
+def load_cases(folder: Path) -> list[InvestigationReport]:
+    """Every case of a saved run, in the order the run judged them."""
+    with (folder / "cases.jsonl").open(encoding="utf-8") as f:
+        return [InvestigationReport.model_validate_json(line) for line in f if line.strip()]
+
+
 def call_stats(calls: list[dict]) -> dict[str, dict]:
     """Per agent and model: calls, failures, and seconds per call (as measured when made)."""
     stats: dict[str, dict] = {}

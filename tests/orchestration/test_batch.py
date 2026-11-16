@@ -155,3 +155,23 @@ def test_call_stats_group_by_agent_and_model():
     stats = batch.call_stats(calls)["vision (q)"]
     assert (stats["calls"], stats["failed"], stats["from_cache"], stats["retried"]) == (3, 1, 1, 2)
     assert stats["seconds_per_call"] == 3.0
+
+
+def test_a_saved_run_can_seed_a_live_review_of_one_account(tmp_path):
+    from src.orchestration.pipeline import Pipeline
+    from src.orchestration.run_state import RunState
+
+    ctx = _news_ring()
+    result = run_batch(ctx, ["ACC-T001", "ACC-T002"], Agents.build())
+    batch.save(result, tmp_path)
+    cases = batch.load_cases(tmp_path)
+    assert [c.case_id for c in cases] == [c.case_id for c in result.cases]
+    linked = next(a for a, r in result.latest.items() if r.graph_findings.confidence > 0)
+
+    alone = Pipeline(ctx).run(batch.review(linked))
+    state = RunState.from_cases(cases, ctx.bank, skip=linked)
+    after = Pipeline(ctx, state=state).run(batch.review(linked))
+    assert alone.graph_findings.confidence == 0
+    assert after.case_id.endswith("-1")
+    assert after.disposition == result.latest[linked].disposition
+    assert after.graph_findings.confidence == result.latest[linked].graph_findings.confidence

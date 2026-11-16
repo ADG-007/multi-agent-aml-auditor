@@ -7,6 +7,7 @@
 
 from __future__ import annotations
 
+from collections.abc import Iterable
 from dataclasses import dataclass
 
 from src.bank import BankData
@@ -57,6 +58,18 @@ class RunState:
     # ----------------------------------------------------------------------------------
     # Case history
     # ----------------------------------------------------------------------------------
+
+    @classmethod
+    def from_cases(
+        cls, reports: Iterable[InvestigationReport], bank: BankData, skip: str | None = None
+    ) -> RunState:
+        """The state after a saved run's cases, in their order. `skip` leaves one account's
+        cases out, so that account can be reviewed again against what the run found."""
+        state = cls()
+        for report in reports:
+            if report.target_account != skip:
+                state.record_case(report, bank)
+        return state
 
     def next_case_id(self, account_id: str) -> str:
         return f"CASE-{account_id}-{len(self._history.get(account_id, ())) + 1}"
