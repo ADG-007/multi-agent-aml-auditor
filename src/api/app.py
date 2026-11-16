@@ -371,7 +371,10 @@ def create_app(
         return {"job_id": job, "decision": body.decision}
 
     @app.delete("/api/live/{job}")
-    def live_cancel(job: str):
+    def live_cancel(job: str, request: Request):
+        # A replay changes nothing, so whoever started it may stop it.
+        if site().jobs.get(job).mode == "live":
+            writer(request)
         site().jobs.cancel(job)
         return {"job_id": job, "cancelled": True}
 

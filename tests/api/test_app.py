@@ -7,6 +7,7 @@ from fastapi.testclient import TestClient
 
 from src.api.app import create_app
 from src.api.evidence import DocumentIndex, build_evidence
+from src.api.live import Job, LiveJobs
 from src.api.store import RunStore, UnknownRun
 from tests.api.conftest import RUN, VISITOR
 
@@ -142,3 +143,12 @@ def test_evidence_months_cap_counterparties_and_graph(ctx, data_dir):
 def test_document_index_refuses_unlisted_names(data_dir):
     with pytest.raises(KeyError):
         DocumentIndex(data_dir).path("../../customers.json")
+
+
+def test_only_the_presenter_can_cancel_a_live_model_run(make_client, ctx):
+    jobs = LiveJobs(ctx)
+    jobs._jobs["job-1"] = Job("job-1", "ACC-T001", "live", None)
+    assert make_client(client=VISITOR, jobs=jobs).delete("/api/live/job-1").status_code == 403
+    assert jobs.get("job-1").cancel is False
+    assert make_client(jobs=jobs).delete("/api/live/job-1").status_code == 200
+    assert jobs.get("job-1").cancel is True
