@@ -33,4 +33,3 @@ langgraph==1.2.22     # the live case graph with the admin pause (src/orchestrat
 # --- Demo site ---
 fastapi==0.163.1      # src/api/: the site's server
 uvicorn==0.54.0       # runs it (python -m src.api)
-streamlit==1.67.0     # src/demo/app.py
